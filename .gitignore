@@ -1,0 +1,5 @@
+# ignore ALL .mth files
+*.mth
+
+# ignore ALL files in ANY directory named ignore
+ignore/
