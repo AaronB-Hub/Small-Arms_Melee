@@ -1,3 +1,6 @@
-1. Shine and Up-B broken from non PlTs.dat or PlTsAj.dat file (does not crash game)
+1. Shine and Up-B broken from EfTsData.dat file (does not crash game)
+- Replacing only this file will cause this error, so must be localized or pointer broken somewhere
 
-2. PlTs.dat (and perhaps it's interaction with something else) crashes game on side-B
+2. Being a new character breaks side-B and Kirby model and crashes game (perfect fox clone still crashes)
+
+3. Cannot save PlTsAj.dat with modified node name
