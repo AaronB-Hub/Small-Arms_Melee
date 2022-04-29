@@ -1,7 +1,7 @@
-#include "mario.h"
+#include "test.h"
 
 ///////////////////////
-//    Mario Basic    //
+//    Test Basic    //
 ///////////////////////
 ///
 /// 0x800E0960

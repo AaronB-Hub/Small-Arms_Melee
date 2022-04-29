@@ -1,4 +1,4 @@
-#include "../../../MexTK/mex.h"
+#include "../../m-ex/MexTK/mex.h"
 
 ///////////////////////
 //      m-ex IDs     //

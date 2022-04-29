@@ -1,0 +1,5 @@
+1. Test run the FS to see if changes have broken anything
+2. Modify files to match the fewer special moves for the Ts C code
+3. Save
+4. Test build (see if item stuff needs to be fixed in files)
+5. Start Modding Ts from there
