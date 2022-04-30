@@ -1,6 +1,31 @@
 1. Shine and Up-B broken from EfTsData.dat file (does not crash game)
 - Replacing only this file will cause this error, so must be localized or pointer broken somewhere
-- this issue goes away when fighting against fox/falco
+- this issue goes away when fighting against fox/falco (falco also uses EfFxData.dat)
+- location and value of errors independent of player number and can be replicated during different runs/sessions of dolphin
+
+
+laser
+- error on 12th frame (on the 12th frame, in SpecialNLoop at #6, graphic effect [ID 1015] gets loaded)
+
+Shine
+- first error on 1st frame advance
+- hitbox comes out after 3rd frame advance (on the 1st frame, in SpecialLwStart at #0, graphic effects [ID 1011,1018] get loaded)
+- second error on 4th frame advance if no hit, 7th frame advance if hit (same error)
+- fox starts coming out of shine on 28th frame advance
+- fox returns to neutral stance on ~34th frame advance
+
+Up-B
+- first error on 1st frame advance
+- second error on 42nd frame advance
+
+Side-B
+- error on 24th frame advance
+- Fox jumps forward on the 23rd frame advance
 
 2. Being a new character breaks side-B/Kirby model and crashes game (perfect fox clone still crashes)
 - this issue goes away when fighting against falco
+
+
+
+
+See item structs (https://docs.google.com/spreadsheets/d/1MIcQkeoKeXdZEoaz9EWIP1FNXSDjT3_DtHNbH3WkQMs/edit#gid=1986823202)

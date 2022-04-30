@@ -1,6 +1,6 @@
 #include "test.h"
 ///////////////////////
-//  Inital SpecialM  //
+//  Initial SpecialN  //
 ///////////////////////
 /// SpecialN
 /// 0x800E0DA8

@@ -1,6 +1,6 @@
 #include "test.h"
 ////////////////////////
-//  Inital SpecialHi  //
+//  Initial SpecialHi  //
 ////////////////////////
 ///
 /// 0x800E1A54

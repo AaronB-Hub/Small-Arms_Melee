@@ -1,6 +1,6 @@
 #include "test.h"
 ////////////////////////
-//  Inital SpecialLw  //
+//  Initial SpecialLw  //
 ////////////////////////
 ///
 /// 0x800e2050

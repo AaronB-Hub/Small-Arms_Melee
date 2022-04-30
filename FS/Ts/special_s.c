@@ -1,6 +1,6 @@
 #include "test.h"
 ///////////////////////
-//  Inital SpecialS  //
+//  Initial SpecialS  //
 ///////////////////////
 /// SpecialS
 /// 0x800E1450
