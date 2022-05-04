@@ -53,8 +53,8 @@ void OnSpawn(GOBJ *gobj)
 ///
 ///
 ///
-// Copy this using the 'Copy Move Logic struct' functionality in the mexTool
 __attribute__((used)) static struct FtState move_logic[] = {
+// Copy this using the 'Copy Move Logic struct' functionality in the mexTool
 	// State: 341 - SpecialNStart
 	{
 		295,        // AnimationID

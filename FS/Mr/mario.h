@@ -4,7 +4,6 @@
 //      m-ex IDs     //
 ///////////////////////
 
-/*
 #define MEX_ITEM_FIREBALL 0
 #define MEX_ITEM_CAPE 2
 
@@ -13,15 +12,11 @@
 #define MEX_EFFECT_DSPECIAL 5002
 
 #define MEX_SOUND_FIREBALL_DESTROY 5025
-*/
-#define MEX_ITEM_FXLASER 0
-#define MEX_ITEM_FXSHADOW 2
 
 ///////////////////////
 //    Vanilla IDs    //
 ///////////////////////
 
-/*
 #define VANILLA_ITEM_FIREBALL 0x30
 //#define VANILLA_ITEM_CAPE (item id is defined in Mario's special attributes)
 
@@ -30,16 +25,13 @@
 #define VANILLA_EFFECT_DSPECIAL 0x47C
 
 #define VANILLA_SOUND_FIREBALL_DESTROY 180025
-*/
-// Item ID (Column F in https://docs.google.com/spreadsheets/d/1MIcQkeoKeXdZEoaz9EWIP1FNXSDjT3_DtHNbH3WkQMs/edit#gid=20)
-#define VANILLA_ITEM_FXLASER 0x36
-#define VANILLA_ITEM_FXSHADOW 0x38
 
 ///////////////////////
 //  Special States   //
 ///////////////////////
 
-/*
+#define STATE_KNEEBEND 24
+
 #define STATE_SPECIALN 343
 #define STATE_SPECIALNAIR 344
 #define STATE_SPECIALS 345
@@ -48,50 +40,12 @@
 #define STATE_SPECIALHIAIR 348
 #define STATE_SPECIALLW 349
 #define STATE_SPECIALLWAIR 350
-*/
-// (Known ID's unique to characters from https://smashboards.com/threads/internal-action-state-hack.440318/)
-#define STATE_SPECIALNSTART 341
-#define STATE_SPECIALNLOOP 342
-#define STATE_SPECIALNEND 343
-#define STATE_SPECIALAIRNSTART 344
-#define STATE_SPECIALAIRNLOOP 345
-#define STATE_SPECIALAIRNEND 346
-
-#define STATE_SPECIALSSTART 347
-#define STATE_SPECIALS 348
-#define STATE_SPECIALSEND 349
-#define STATE_SPECIALAIRSSTART 350
-#define STATE_SPECIALAIRS 351
-#define STATE_SPECIALAIRSEND 352
-
-#define STATE_SPECIALHIHOLD 353
-#define STATE_SPECIALHIHOLDAIR 354
-#define STATE_SPECIALHI 355
-#define STATE_SPECIALHI 356  // This extra state likely comes from a subroutine referenced by this action
-#define STATE_SPECIALHILANDING 357
-#define STATE_SPECIALHIFALL 358
-#define STATE_SPECIALHIBOUND 359
-
-#define STATE_SPECIALLWSTART 360
-#define STATE_SPECIALLWLOOP 361
-#define STATE_SPECIALLWHIT 362
-#define STATE_SPECIALLWEND 363
-#define STATE_SPECIALLWLOOP 364  // This extra state likely comes from turning while in shine
-#define STATE_SPECIALAIRLWSTART 365
-#define STATE_SPECIALAIRLWLOOP 366
-#define STATE_SPECIALAIRLWHIT 367
-#define STATE_SPECIALAIRLWEND 368
-#define STATE_SPECIALAIRLWLOOP 369  // This extra state likely comes from turning while in shine
 
 ///////////////////////
 //    Item States    //
 ///////////////////////
 
-/*
 #define STATE_FIREBALL 0
-*/
-#define STATE_FXLASER1 0
-#define STATE_FXLASER2 0
 
 ///////////////////////
 //      Structs      //
@@ -183,7 +137,7 @@ typedef struct SpecialLwVar
 void FireBallThink(GOBJ *);
 void MarioCapeThink(GOBJ *);
 
-// SpecialN
+// Special N
 void SpecialN_AnimationCallback(GOBJ *gobj);
 void SpecialN_IASACallback(GOBJ *gobj);
 void SpecialN_PhysicCallback(GOBJ *gobj);
@@ -205,7 +159,7 @@ void SpecialAirS_IASACallback(GOBJ *gobj);
 void SpecialAirS_PhysicCallback(GOBJ *gobj);
 void SpecialAirS_CollisionCallback(GOBJ *gobj);
 
-// SpecialHi
+// Specialhi
 void SpecialHi_AnimationCallback(GOBJ *gobj);
 void SpecialHi_IASACallback(GOBJ *gobj);
 void SpecialHi_PhysicCallback(GOBJ *gobj);

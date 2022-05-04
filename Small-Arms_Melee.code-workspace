@@ -6,7 +6,9 @@
 	],
 	"settings": {
 		"files.associations": {
-			"mario.h": "c"
+			"mario.h": "c",
+			"preload.h": "c",
+			"mex.h": "c"
 		}
 	}
 }
