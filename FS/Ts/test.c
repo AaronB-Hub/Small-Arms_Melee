@@ -11,11 +11,11 @@ void OnLoad(GOBJ *gobj)
 	// get fighter data
 	FighterData *fighter_data = gobj->userdata;
 
-	// copy attributes
-	for (int i = 0; i < 0x21; i++)
-	{
-		fighter_data->special_attributes2[i] = fighter_data->ftData->ext_attr[i];
-	}
+	// // copy attributes
+	// for (int i = 0; i < 0x21; i++)
+	// {
+	// 	fighter_data->special_attributes2[i] = fighter_data->ftData->ext_attr[i];
+	// }
 
 	// copy pointer to attributes
 	fighter_data->special_attributes = fighter_data->special_attributes2;
@@ -23,13 +23,17 @@ void OnLoad(GOBJ *gobj)
 	// get fighter item pointer
 	int *fighter_items = fighter_data->ftData->items;
 
-	// init fire ball
-	//Item_StoreItemDataToCharItemTable(fighter_items[0], VANILLA_ITEM_FIREBALL);
-	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FIREBALL], MEX_ITEM_FIREBALL);
+	// init Fxlaser
+	//Item_StoreItemDataToCharItemTable(fighter_items[0], VANILLA_ITEM_FXLASER);
+	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXLASER], MEX_ITEM_FXLASER);
 
-	// init cape
-	//Item_StoreItemDataToCharItemTable(fighter_items[2], fighter_data->special_attributes[5]);
-	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_CAPE], MEX_ITEM_CAPE);
+	// // init Fxshadow
+	// MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXSHADOW], MEX_ITEM_FXSHADOW);
+
+	// This block runs fox's pre-existing onload
+    // void (*cb_OnLoad)(GOBJ *gobj) = (void *) 0x800E57AC; // <- char specific onload function (can get from MexTool)
+    // cb_OnLoad(gobj);
+
 }
 ///
 /// 0x800E08CC
@@ -55,30 +59,57 @@ void OnSpawn(GOBJ *gobj)
 ///
 __attribute__((used)) static struct FtState move_logic[] = {
 // Copy this using the 'Copy Move Logic struct' functionality in the mexTool
-	// State: 341 - SpecialNStart
+
+	// State: 341 - SpecialN
 	{
-		295,        // AnimationID
-		0x340111,   // StateFlags
-		0x12,       // AttackID
-		0x0,        // BitFlags
-		0x800E62A4, // AnimationCallback
-		0x800E6AB4, // IASACallback
-		0x800E6B5C, // PhysicsCallback
-		0x800E6C1C, // CollisionCallback
-		0x800761C8, // CameraCallback
+		296,						// AnimationID
+		0x340111,					// StateFlags
+		0x12,						// AttackID
+		0x0,						// BitFlags
+		SpecialN_AnimationCallback, // AnimationCallback
+		SpecialN_IASACallback,		// IASACallback
+		SpecialN_PhysicCallback,	// PhysicsCallback
+		SpecialN_CollisionCallback, // CollisionCallback
+		Fighter_UpdateCameraBox,	// CameraCallback
 	},
-	// State: 342 - SpecialNLoop
+	// State: 342 - SpecialAirN
 	{
-		296,        // AnimationID
-		0x3C0111,   // StateFlags
-		0x12,       // AttackID
-		0x0,        // BitFlags
-		0x800E6368, // AnimationCallback
-		0x800E6ADC, // IASACallback
-		0x800E6B7C, // PhysicsCallback
-		0x800E6C3C, // CollisionCallback
-		0x800761C8, // CameraCallback
+		299,						   // AnimationID
+		0x340511,					   // StateFlags
+		0x12,						   // AttackID
+		0x0,						   // BitFlags
+		SpecialAirN_AnimationCallback, // AnimationCallback
+		SpecialAirN_IASACallback,	   // IASACallback
+		SpecialAirN_PhysicCallback,	   // PhysicsCallback
+		SpecialAirN_CollisionCallback, // CollisionCallback
+		Fighter_UpdateCameraBox,	   // CameraCallback
 	},
+
+
+	// // State: 341 - SpecialNStart
+	// {
+	// 	295,        // AnimationID
+	// 	0x340111,   // StateFlags
+	// 	0x12,       // AttackID
+	// 	0x0,        // BitFlags
+	// 	0x800E62A4, // AnimationCallback
+	// 	0x800E6AB4, // IASACallback
+	// 	0x800E6B5C, // PhysicsCallback
+	// 	0x800E6C1C, // CollisionCallback
+	// 	0x800761C8, // CameraCallback
+	// },
+	// // State: 342 - SpecialNLoop
+	// {
+	// 	296,        // AnimationID
+	// 	0x3C0111,   // StateFlags
+	// 	0x12,       // AttackID
+	// 	0x0,        // BitFlags
+	// 	0x800E6368, // AnimationCallback
+	// 	0x800E6ADC, // IASACallback
+	// 	0x800E6B7C, // PhysicsCallback
+	// 	0x800E6C3C, // CollisionCallback
+	// 	0x800761C8, // CameraCallback
+	// },
 	// State: 343 - SpecialNEnd
 	{
 		297,        // AnimationID

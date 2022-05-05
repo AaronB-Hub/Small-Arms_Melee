@@ -3,8 +3,9 @@
 //  Initial SpecialN  //
 ///////////////////////
 /// SpecialN
-/// 0x800E0DA8
+/// 0x800E608C???
 ///
+
 void SpecialN(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
@@ -18,9 +19,9 @@ void SpecialN(GOBJ *gobj)
 	ActionStateChange(0, 1, 0, gobj, STATE_SPECIALN, 0, 0);
 	Fighter_AdvanceScript(gobj);
 
-	// set the accessory callback for mario's fireball
-	// this function will spawn the fireball when the flag0 is set
-	fighter_data->cb.Accessory4 = FireBallThink;
+	// set the accessory callback for Fxlaser
+	// this function will spawn the Fxlaser when the flag0 is set
+	fighter_data->cb.Accessory4 = FxlaserThink;
 	return;
 }
 /// SpecialNAir
@@ -39,11 +40,57 @@ void SpecialAirN(GOBJ *gobj)
 	ActionStateChange(0, 1, 0, gobj, STATE_SPECIALNAIR, 0, 0);
 	Fighter_AdvanceScript(gobj);
 
-	// set the accessory callback for mario's fireball
-	// this function will actually spawn the fireball
-	fighter_data->cb.Accessory4 = FireBallThink;
+	// set the accessory callback for Fxlaser
+	// this function will actually spawn the Fxlaser
+	fighter_data->cb.Accessory4 = FxlaserThink;
 	return;
 }
+
+/*
+void SpecialN(GOBJ *gobj)
+{
+	FighterData *fighter_data = gobj->userdata;
+
+	// change to special n state and update subaction
+	ActionStateChange(0, 1, 0, gobj, STATE_SPECIALNSTART, 0x0, 0);
+	return;
+
+	// FighterData
+	// flags
+	// unsigned char item_visible : 1;                // 0x10 - 0x221e
+
+	// FighterData
+	//  struct script                          //  0x3E4
+    // {                                      //
+    //     float script_event_timer;          // 0x3E4
+    //     float script_frame_timer;          // 0x3E8
+    //     int *script_current;               // 0x3EC
+    //     int script_loop_num;               // 0x3F0
+    //     int *script_return;                // 0x3F4
+    // } script;
+	// script_event_timer
+
+	// Change the held item invisibility
+
+	//Fighter_AdvanceScript(gobj);
+	
+}
+
+/// SpecialNAir
+/// 
+///
+void SpecialAirN(GOBJ *gobj)
+{
+	FighterData *fighter_data = gobj->userdata;
+
+	// change to special n state and update subaction
+	ActionStateChange(0, 1, 0, gobj, STATE_SPECIALAIRNSTART, 0, 0);
+	Fighter_AdvanceScript(gobj);
+
+}
+*/
+
+
 ///////////////////////
 // Grounded SpecialN //
 ///////////////////////
@@ -71,7 +118,7 @@ void SpecialN_IASACallback(GOBJ *gobj)
 	// flag0 is set by ftCmd and determines when you can interupt
 	if (script_flags->interruptable != 0)
 	{
-		Fighter_Interrupt_AllGrounded(gobj);
+		//Fighter_Interrupt_AllGrounded(gobj);
 	}
 	return;
 }
@@ -85,7 +132,7 @@ void SpecialN_PhysicCallback(GOBJ *gobj)
 }
 ///
 /// 0x800e1178
-/// changes the fireball state to the aerial version
+/// changes the Fxlaser state to the aerial version
 ///
 void SpecialN_EnterAerial(GOBJ *gobj)
 {
@@ -95,7 +142,7 @@ void SpecialN_EnterAerial(GOBJ *gobj)
 
 	ActionStateChange(fighter_data->state.frame, 1, 0, gobj, STATE_SPECIALNAIR, 0x5000, 0);
 
-	fighter_data->cb.Accessory4 = FireBallThink;
+	fighter_data->cb.Accessory4 = FxlaserThink;
 	return;
 }
 ///
@@ -111,6 +158,9 @@ void SpecialN_CollisionCallback(GOBJ *gobj)
 
 	return;
 }
+
+
+
 ///////////////////////
 //  Aerial SpecialN  //
 ///////////////////////
@@ -138,7 +188,7 @@ void SpecialAirN_IASACallback(GOBJ *gobj)
 	// ftcmd_var.flag0 is set by ftCmd and determines when you can interupt
 	if (script_flags->interruptable != 0)
 	{
-		Fighter_Interrupt_AllAerial(gobj);
+		//Fighter_Interrupt_AllAerial(gobj);
 	}
 
 	return;
@@ -162,7 +212,7 @@ void SpecialAirN_EnterGrounded(GOBJ *gobj)
 
 	ActionStateChange(fighter_data->state.frame, 1, 0, gobj, STATE_SPECIALN, 0x5000, 0);
 
-	fighter_data->cb.Accessory4 = FireBallThink;
+	fighter_data->cb.Accessory4 = FxlaserThink;
 
 	return;
 }
@@ -182,33 +232,33 @@ void SpecialAirN_CollisionCallback(GOBJ *gobj)
 ///
 /// 0x8029b7c0
 ///
-void IS_MarioFireballSpawn(GOBJ *gobj)
+void IS_FxlaserSpawn(GOBJ *gobj)
 {
 	ItemData *item_data = gobj->userdata;
 
-	// get the fireball custom attributes
-	FireballAttr *attributes = item_data->itData->param_ext;
+	// get the Fxlaser custom attributes
+	FxlaserAttr *attributes = item_data->itData->param_ext;
 
 	float speed = attributes->speed;
 	float angle = attributes->angle;
 
-	// set velocity of fireball accordint to params
+	// set velocity of Fxlaser according to params
 	item_data->self_vel.X = item_data->facing_direction * speed * cos(angle);
 	item_data->self_vel.Y = speed * sin(angle);
 	item_data->self_vel.Z = 0;
 
-	// set the fireball lifetime
+	// set the Fxlaser lifetime
 	Item_SetLifeTimer(gobj, attributes->life);
 
 	// change the item's state
-	ItemStateChange(gobj, STATE_FIREBALL, 2);
+	ItemStateChange(gobj, STATE_FXLASER1, 2);
 
 	return;
 }
 ///
 /// 0x8029b6f8
 ///
-void CreateFireball(float facing_direction, GOBJ *gobj, Vec3 *position, int it_kind)
+void CreateFxlaser(float facing_direction, GOBJ *gobj, Vec3 *position, int it_kind)
 {
 	Vec3 ecb_center_pos;
 	Fighter_GetECBPosition(gobj, &ecb_center_pos);
@@ -233,8 +283,8 @@ void CreateFireball(float facing_direction, GOBJ *gobj, Vec3 *position, int it_k
 	// create the new item
 	GOBJ *item = Item_CreateItem1(&spawnItem);
 
-	// initialize the fireball behavior
-	IS_MarioFireballSpawn(item);
+	// initialize the Fxlaser behavior
+	IS_FxlaserSpawn(item);
 
 	// develop mode stuff
 	Item_CopyDevelopState(item, gobj);
@@ -247,10 +297,14 @@ void CreateFireball(float facing_direction, GOBJ *gobj, Vec3 *position, int it_k
 ///
 /// 0x800e0ee0 (Only ported Mario's specific code; not Dr. Mario)
 ///
-void FireBallThink(GOBJ *gobj)
+void FxlaserThink(GOBJ *gobj)
 {
 	// get fighter data
 	FighterData *fighter_data = (FighterData *)gobj->userdata;
+
+	// force bitflag to allow spawn
+	// fighter_data->ftcmd_var.flag1 = 1;
+	fighter_data->flags.throw_1 = 1;
 
 	// check for bitflag set by ftCmd subaction
 	if (fighter_data->flags.throw_1 != 0)
@@ -259,18 +313,18 @@ void FireBallThink(GOBJ *gobj)
 		fighter_data->flags.throw_1 = 0;
 
 		// grab bone index
-		int bone_index = Fighter_BoneLookup(fighter_data, L1stNa);
+		int bone_index = Fighter_BoneLookup(fighter_data, 0x1B);
 
 		// get position of bone in world
 		Vec3 bone_position;
 		JOBJ_GetWorldPosition(fighter_data->bones[bone_index].joint, 0, &bone_position);
 
-		// create fireball item
-		int fireball_id = MEX_GetFtItemID(gobj, MEX_ITEM_FIREBALL);
-		CreateFireball(fighter_data->facing_direction, gobj, &bone_position, fireball_id); //VANILLA_ITEM_FIREBALL);
+		// create Fxlaser item
+		int Fxlaser_id = MEX_GetFtItemID(gobj, MEX_ITEM_FXLASER);
+		CreateFxlaser(fighter_data->facing_direction, gobj, &bone_position, Fxlaser_id); //VANILLA_ITEM_FXLASER);
 
-		// create fireball effect
-		Effect_SpawnSync(VANILLA_EFFECT_FIREBALL, gobj, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
+		// create Fxlaser effect
+		Effect_SpawnSync(VANILLA_EFFECT_FXLASER, gobj, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
 	}
 	return;
 }

@@ -87,7 +87,7 @@ int OnUnknown2(GOBJ *gobj)
 ///
 /// 0x8029b8a0
 ///
-int Fireball_AnimCallback(GOBJ *gobj)
+int Fxlaser_AnimCallback(GOBJ *gobj)
 {
     ItemData *item_data = gobj->userdata;
 
@@ -103,7 +103,7 @@ int Fireball_AnimCallback(GOBJ *gobj)
 ///
 /// 0x8029b8a0
 ///
-int Fireball_PhysCallback(GOBJ *gobj)
+int Fxlaser_PhysCallback(GOBJ *gobj)
 {
     ItemData *item_data = gobj->userdata;
 
@@ -120,7 +120,7 @@ int Fireball_PhysCallback(GOBJ *gobj)
 ///
 /// 0x8027781c
 ///
-int Fireball_HitStageUpdate(GOBJ *gobj)
+int Fxlaser_HitStageUpdate(GOBJ *gobj)
 {
     ItemData *item_data = gobj->userdata;
     itCommonAttr *itCommonAttr = item_data->common_attr;
@@ -283,7 +283,7 @@ int Fireball_HitStageUpdate(GOBJ *gobj)
 ///
 /// 0x8029B8EC
 ///
-int Fireball_CollCallback(GOBJ *gobj)
+int Fxlaser_CollCallback(GOBJ *gobj)
 {
     ItemData *item_data = gobj->userdata;
     double speed;
@@ -294,7 +294,7 @@ int Fireball_CollCallback(GOBJ *gobj)
 
     Item_UpdatePositionCollision(gobj);
 
-    if (Fireball_HitStageUpdate(gobj) != 0)
+    if (Fxlaser_HitStageUpdate(gobj) != 0)
     {
 
         float magnitude = (x_vel * x_vel + y_vel * y_vel);
@@ -308,18 +308,18 @@ int Fireball_CollCallback(GOBJ *gobj)
             magnitude = magnitude * 0.5 * speed * -(magnitude * speed * speed - 3);
         }
 
-        FireballAttr *attr = item_data->itData->param_ext;
+        FxlaserAttr *attr = item_data->itData->param_ext;
         if (magnitude < attr->max_speed)
         {
             return 1;
         }
 
-        Item_PlayOnDestroySFXAgain(item_data, VANILLA_SOUND_FIREBALL_DESTROY, 0x7f, 0x40);
+        Item_PlayOnDestroySFXAgain(item_data, VANILLA_SOUND_FXLASER_DESTROY, 0x7f, 0x40);
 
-        Effect_SpawnAsync(gobj, &item_data->xbc0, 1, VANILLA_EFFECT_FIREBALL_FLAME, jobj);
+        Effect_SpawnAsync(gobj, &item_data->xbc0, 1, VANILLA_EFFECT_FXLASER_FLAME, jobj);
 
         /*if (item_data->kind == 0x30) {
-            // this for mario fireball
+            // this for Fxlaser
             Item_PlayOnDestroySFXAgain(item_data,0x2bf39,0x7f,0x40);
             Effect_SpawnAsync(gobj,(int)gobj->userdata + 0xbc0,1,0x47b,jobj);
         }
@@ -336,7 +336,7 @@ __attribute__((used)) static struct ItemState item_state_table[] =
     {
         {
             0,                     // anim ID
-            Fireball_AnimCallback, // anim callback
-            Fireball_PhysCallback, // phys callback
-            Fireball_CollCallback, // coll callback
+            Fxlaser_AnimCallback,  // anim callback
+            Fxlaser_PhysCallback,  // phys callback
+            Fxlaser_CollCallback,  // coll callback
         }};

@@ -4,51 +4,33 @@
 //      m-ex IDs     //
 ///////////////////////
 
-/*
-#define MEX_ITEM_FIREBALL 0
-#define MEX_ITEM_CAPE 2
-
-#define MEX_EFFECT_FIREBALL 5000
-#define MEX_EFFECT_FIREBALL_FLAME 5001
-#define MEX_EFFECT_DSPECIAL 5002
-
-#define MEX_SOUND_FIREBALL_DESTROY 5025
-*/
 #define MEX_ITEM_FXLASER 0
-#define MEX_ITEM_FXSHADOW 2
+//#define MEX_ITEM_FXSHADOW 2
+
+	#define MEX_EFFECT_FXLASER 5000
+	#define MEX_EFFECT_FXLASER_FLAME 5001
+	#define MEX_EFFECT_DSPECIAL 5002
+
+	#define MEX_SOUND_FXLASER_DESTROY 5025
 
 ///////////////////////
 //    Vanilla IDs    //
 ///////////////////////
 
-/*
-#define VANILLA_ITEM_FIREBALL 0x30
-//#define VANILLA_ITEM_CAPE (item id is defined in Mario's special attributes)
-
-#define VANILLA_EFFECT_FIREBALL 0x47A
-#define VANILLA_EFFECT_FIREBALL_FLAME 0x47B
-#define VANILLA_EFFECT_DSPECIAL 0x47C
-
-#define VANILLA_SOUND_FIREBALL_DESTROY 180025
-*/
 // Item ID (Column F in https://docs.google.com/spreadsheets/d/1MIcQkeoKeXdZEoaz9EWIP1FNXSDjT3_DtHNbH3WkQMs/edit#gid=20)
 #define VANILLA_ITEM_FXLASER 0x36
-#define VANILLA_ITEM_FXSHADOW 0x38
+//#define VANILLA_ITEM_FXSHADOW 0x38
+
+	#define VANILLA_EFFECT_FXLASER 0x47A
+	#define VANILLA_EFFECT_FXLASER_FLAME 0x47B
+	#define VANILLA_EFFECT_DSPECIAL 0x47C
+
+	#define VANILLA_SOUND_FXLASER_DESTROY 180025
 
 ///////////////////////
 //  Special States   //
 ///////////////////////
 
-/*
-#define STATE_SPECIALN 343
-#define STATE_SPECIALNAIR 344
-#define STATE_SPECIALS 345
-#define STATE_SPECIALSAIR 346
-#define STATE_SPECIALHI 347
-#define STATE_SPECIALHIAIR 348
-#define STATE_SPECIALLW 349
-#define STATE_SPECIALLWAIR 350
-*/
 // (Known ID's unique to characters from https://smashboards.com/threads/internal-action-state-hack.440318/)
 #define STATE_SPECIALNSTART 341
 #define STATE_SPECIALNLOOP 342
@@ -83,30 +65,31 @@
 #define STATE_SPECIALAIRLWEND 368
 #define STATE_SPECIALAIRLWLOOP 369  // This extra state likely comes from turning while in shine
 
+// Added in states for modifying mario fireball code
+#define STATE_SPECIALN 341
+#define STATE_SPECIALNAIR 342
+
 ///////////////////////
 //    Item States    //
 ///////////////////////
 
-/*
-#define STATE_FIREBALL 0
-*/
 #define STATE_FXLASER1 0
-#define STATE_FXLASER2 0
+// #define STATE_FXLASER2 1
 
 ///////////////////////
 //      Structs      //
 ///////////////////////
 
-typedef struct FireballAttr
+typedef struct FxlaserAttr
 {
     float speed;
     float angle;
     float life;
     float unk1;
     float max_speed;
-} FireballAttr;
+} FxlaserAttr;
 
-typedef struct MarioAttr
+typedef struct TestAttr
 {
     float specialS_horizontal_momentum;       //x00
     float specialS_horizontal_velocity;       //x04
@@ -133,14 +116,15 @@ typedef struct MarioAttr
     float specialLw_terminal_velocity;        //x58
     int specialLw_freefall_toggle;            //x5C
     ReflectDesc reflect_data;                 //0x60
-} MarioAttr;
+} TestAttr;
+
 
 typedef struct SpecialNFtCmd
 {
 	int interruptable;
 } SpecialNFtCmd;
 
-
+/*
 typedef struct SpecialSFtCmd
 {
 	int create_wind;
@@ -174,14 +158,16 @@ typedef struct SpecialLwVar
 	float on_ground;	// x0C
 } SpecialLwVar;
 
+*/
 
 ///////////////////////
 //     Functions     //
 ///////////////////////
 
 // Think
-void FireBallThink(GOBJ *);
-void MarioCapeThink(GOBJ *);
+void FxlaserThink(GOBJ *);
+// void MarioCapeThink(GOBJ *);
+
 
 // SpecialN
 void SpecialN_AnimationCallback(GOBJ *gobj);
@@ -194,35 +180,37 @@ void SpecialAirN_IASACallback(GOBJ *gobj);
 void SpecialAirN_PhysicCallback(GOBJ *gobj);
 void SpecialAirN_CollisionCallback(GOBJ *gobj);
 
-// SpecialS
-void SpecialS_AnimationCallback(GOBJ *gobj);
-void SpecialS_IASACallback(GOBJ *gobj);
-void SpecialS_PhysicCallback(GOBJ *gobj);
-void SpecialS_CollisionCallback(GOBJ *gobj);
+/*
+// // SpecialS
+// void SpecialS_AnimationCallback(GOBJ *gobj);
+// void SpecialS_IASACallback(GOBJ *gobj);
+// void SpecialS_PhysicCallback(GOBJ *gobj);
+// void SpecialS_CollisionCallback(GOBJ *gobj);
 
-void SpecialAirS_AnimationCallback(GOBJ *gobj);
-void SpecialAirS_IASACallback(GOBJ *gobj);
-void SpecialAirS_PhysicCallback(GOBJ *gobj);
-void SpecialAirS_CollisionCallback(GOBJ *gobj);
+// void SpecialAirS_AnimationCallback(GOBJ *gobj);
+// void SpecialAirS_IASACallback(GOBJ *gobj);
+// void SpecialAirS_PhysicCallback(GOBJ *gobj);
+// void SpecialAirS_CollisionCallback(GOBJ *gobj);
 
-// SpecialHi
-void SpecialHi_AnimationCallback(GOBJ *gobj);
-void SpecialHi_IASACallback(GOBJ *gobj);
-void SpecialHi_PhysicCallback(GOBJ *gobj);
-void SpecialHi_CollisionCallback(GOBJ *gobj);
+// // SpecialHi
+// void SpecialHi_AnimationCallback(GOBJ *gobj);
+// void SpecialHi_IASACallback(GOBJ *gobj);
+// void SpecialHi_PhysicCallback(GOBJ *gobj);
+// void SpecialHi_CollisionCallback(GOBJ *gobj);
 
-void SpecialAirHi_AnimationCallback(GOBJ *gobj);
-void SpecialAirHi_IASACallback(GOBJ *gobj);
-void SpecialAirHi_PhysicCallback(GOBJ *gobj);
-void SpecialAirHi_CollisionCallback(GOBJ *gobj);
+// void SpecialAirHi_AnimationCallback(GOBJ *gobj);
+// void SpecialAirHi_IASACallback(GOBJ *gobj);
+// void SpecialAirHi_PhysicCallback(GOBJ *gobj);
+// void SpecialAirHi_CollisionCallback(GOBJ *gobj);
 
-// SpecialLw
-void SpecialLw_AnimationCallback(GOBJ *gobj);
-void SpecialLw_IASACallback(GOBJ *gobj);
-void SpecialLw_PhysicCallback(GOBJ *gobj);
-void SpecialLw_CollisionCallback(GOBJ *gobj);
+// // SpecialLw
+// void SpecialLw_AnimationCallback(GOBJ *gobj);
+// void SpecialLw_IASACallback(GOBJ *gobj);
+// void SpecialLw_PhysicCallback(GOBJ *gobj);
+// void SpecialLw_CollisionCallback(GOBJ *gobj);
 
-void SpecialAirLw_AnimationCallback(GOBJ *gobj);
-void SpecialAirLw_IASACallback(GOBJ *gobj);
-void SpecialAirLw_PhysicCallback(GOBJ *gobj);
-void SpecialAirLw_CollisionCallback(GOBJ *gobj);
+// void SpecialAirLw_AnimationCallback(GOBJ *gobj);
+// void SpecialAirLw_IASACallback(GOBJ *gobj);
+// void SpecialAirLw_PhysicCallback(GOBJ *gobj);
+// void SpecialAirLw_CollisionCallback(GOBJ *gobj);
+*/
