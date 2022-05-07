@@ -30,8 +30,6 @@
 //  Special States   //
 ///////////////////////
 
-#define STATE_KNEEBEND 24
-
 #define STATE_SPECIALN 343
 #define STATE_SPECIALNAIR 344
 #define STATE_SPECIALS 345
@@ -40,6 +38,9 @@
 #define STATE_SPECIALHIAIR 348
 #define STATE_SPECIALLW 349
 #define STATE_SPECIALLWAIR 350
+
+// Inserted to modify up-b to point to jumpsquat (kneebend) state
+#define STATE_KNEEBEND 24
 
 ///////////////////////
 //    Item States    //

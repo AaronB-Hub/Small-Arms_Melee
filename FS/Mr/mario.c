@@ -78,7 +78,7 @@ __attribute__((used)) static struct FtState move_logic[] = {
 		0x0, // CollisionCallback
 		0x0, // CameraCallback
 	},
-	// State: 343 - SpecialN - Modifying to jump instead (can leave all these the same, will only edit the 'ActionStateChange' in the "void SpecialN(GOBJ *gobj){...}"" function)
+	// State: 343 - SpecialN
 	{
 		295,						// AnimationID
 		0x340111,					// StateFlags
@@ -126,7 +126,7 @@ __attribute__((used)) static struct FtState move_logic[] = {
 		SpecialAirS_CollisionCallback, // CollisionCallback
 		Fighter_UpdateCameraBox,	   // CameraCallback
 	},
-	// State: 347 - SpecialHi
+	// State: 347 - SpecialHi - Modifying to jump instead (can leave all these the same, will only edit the 'ActionStateChange' in the "void SpecialN(GOBJ *gobj){...}"" function)
 	{
 		299,						 // AnimationID
 		0x340213,					 // StateFlags

@@ -7,6 +7,7 @@
 ///
 void SpecialHi(GOBJ *gobj)
 {
+	/*
 	FighterData *fighter_data = gobj->userdata;
 	SpecialHiFtCmd *script_flags = &fighter_data->ftcmd_var;
 
@@ -18,6 +19,12 @@ void SpecialHi(GOBJ *gobj)
 	ActionStateChange(0, 1, 0, gobj, STATE_SPECIALHI, 0, 0);
 	Fighter_AdvanceScript(gobj);
 
+	return;
+	*/
+
+	// Inserted code to change state to jumpsquat upon grounded up-b (for some reason only short-hops UNLESS mario just did an aerial up-b, then gives a full-hop)
+	FighterData *fighter_data = gobj->userdata;
+	ActionStateChange(0, 1, 0, gobj, STATE_KNEEBEND, 0, 0);
 	return;
 }
 ///

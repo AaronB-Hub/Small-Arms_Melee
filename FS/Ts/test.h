@@ -4,8 +4,9 @@
 //      m-ex IDs     //
 ///////////////////////
 
-#define MEX_ITEM_FXLASER 1
-//#define MEX_ITEM_FXSHADOW 2
+#define MEX_ITEM_FXLASER 0
+#define MEX_ITEM_FXBLASTER 2
+#define MEX_ITEM_FXSHADOW 4
 
 	#define MEX_EFFECT_FXLASER 5000
 	#define MEX_EFFECT_FXLASER_FLAME 5001
@@ -18,12 +19,12 @@
 ///////////////////////
 
 // Item ID (Column F in https://docs.google.com/spreadsheets/d/1MIcQkeoKeXdZEoaz9EWIP1FNXSDjT3_DtHNbH3WkQMs/edit#gid=20)
-//#define VANILLA_ITEM_FXLASER 0x36
-#define VANILLA_ITEM_FXLASER 0x30
-//#define VANILLA_ITEM_FXSHADOW 0x38
+#define VANILLA_ITEM_FXLASER 0x36
+#define VANILLA_ITEM_FXSHADOW 0x4A
+#define VANILLA_ITEM_FXSHADOW 0x38
 
-	#define VANILLA_EFFECT_FXLASER 0x47A
-	#define VANILLA_EFFECT_FXLASER_FLAME 0x47B
+	#define VANILLA_EFFECT_FXLASER 0x47A  // item spawn effect
+	#define VANILLA_EFFECT_FXLASER_FLAME 0x47B  // item collision/destroy effect
 	#define VANILLA_EFFECT_DSPECIAL 0x47C
 
 	#define VANILLA_SOUND_FXLASER_DESTROY 180025
@@ -66,7 +67,7 @@
 #define STATE_SPECIALAIRLWEND 368
 #define STATE_SPECIALAIRLWLOOP 369  // This extra state likely comes from turning while in shine
 
-// Added in states for modifying mario fireball code
+// Added in states for adapting mario fireball code
 #define STATE_SPECIALN 341
 #define STATE_SPECIALNAIR 342
 

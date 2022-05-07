@@ -7,7 +7,6 @@
 ///
 void SpecialN(GOBJ *gobj)
 {
-	/*
 	FighterData *fighter_data = gobj->userdata;
 	SpecialNFtCmd *script_flags = &fighter_data->ftcmd_var;
 
@@ -19,15 +18,9 @@ void SpecialN(GOBJ *gobj)
 	ActionStateChange(0, 1, 0, gobj, STATE_SPECIALN, 0, 0);
 	Fighter_AdvanceScript(gobj);
 
-	
 	// set the accessory callback for mario's fireball
 	// this function will spawn the fireball when the flag0 is set
 	fighter_data->cb.Accessory4 = FireBallThink;
-	*/
-
-	FighterData *fighter_data = gobj->userdata;
-	ActionStateChange(0, 1, 0, gobj, STATE_KNEEBEND, 0, 0);
-	Fighter_AdvanceScript(gobj);
 	return;
 }
 /// SpecialNAir
@@ -35,7 +28,6 @@ void SpecialN(GOBJ *gobj)
 ///
 void SpecialAirN(GOBJ *gobj)
 {
-	/*
 	FighterData *fighter_data = gobj->userdata;
 	SpecialNFtCmd *script_flags = &fighter_data->ftcmd_var;
 
@@ -51,7 +43,6 @@ void SpecialAirN(GOBJ *gobj)
 	// this function will actually spawn the fireball
 	fighter_data->cb.Accessory4 = FireBallThink;
 	return;
-	*/
 }
 ///////////////////////
 // Grounded SpecialN //
