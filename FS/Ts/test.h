@@ -9,7 +9,7 @@
 #define MEX_ITEM_FXBLASTER 1
 #define MEX_ITEM_FXSHADOW 2
 //#define MEX_ITEM_GAMECRASHBLANK 3
-//#define MEX_ITEM_LIGHTEFFECT 4
+//#define MEX_ITEM_FLSHEFFECT 4  // Appears to spawn the FLSH_XXX_MED effects? (Except green appears to be added to)
 
 	#define MEX_EFFECT_FXLASER 5000
 	#define MEX_EFFECT_FXLASER_FLAME 5001
