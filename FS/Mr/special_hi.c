@@ -22,7 +22,7 @@ void SpecialHi(GOBJ *gobj)
 	return;
 	*/
 
-	// Inserted code to change state to jumpsquat upon grounded up-b (for some reason only short-hops UNLESS mario just did an aerial up-b, then gives a full-hop)
+	// Inserted code to change state to jumpsquat upon grounded up-b (for some reason only short-hops UNLESS mario just did an aerial up-b or side-b and the up is held and doesn't result in a jump, then gives a full-hop)
 	FighterData *fighter_data = gobj->userdata;
 	ActionStateChange(0, 1, 0, gobj, STATE_KNEEBEND, 0, 0);
 	return;

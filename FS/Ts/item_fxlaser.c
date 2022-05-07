@@ -339,4 +339,11 @@ __attribute__((used)) static struct ItemState item_state_table[] =
             Fxlaser_AnimCallback,  // anim callback
             Fxlaser_PhysCallback,  // phys callback
             Fxlaser_CollCallback,  // coll callback
-        }};
+        },
+		{
+            1,                 // anim ID
+            0, //Fxlaser_AnimCallback, // anim callback
+            0,                 // phys callback
+            0,                 // coll callback
+        },
+};

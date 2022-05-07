@@ -1,0 +1,14 @@
+Mario with normal article folder and corresponding MEX items
+-> normal
+
+Swapping MEX_ITEM_FIREBALL and MEX_ITEM_CAPE values
+-> b tries to shoot cape, side-b spawns fireball in hand that never goes away
+
+Swapping the order of the MEX items
+-> does nothing (are these just placeholders?)
+
+Setting MEX_ITEM_FIREBALL to 1 or 3 (empty placeholder AND empty item in glitchy article folder)
+-> Crashes game on b (JUST like side-b on an mex-cloned spacie)
+
+
+So, MEX_ITEM_XXX points to character files' item index within glitchy article folder
