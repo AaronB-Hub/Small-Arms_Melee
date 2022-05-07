@@ -4,9 +4,12 @@
 //      m-ex IDs     //
 ///////////////////////
 
+// Index of item within character's Articles folder (MEX items are only dummy placeholders, but still necessary)
 #define MEX_ITEM_FXLASER 0
-#define MEX_ITEM_FXBLASTER 2
-#define MEX_ITEM_FXSHADOW 4
+#define MEX_ITEM_FXBLASTER 1
+#define MEX_ITEM_FXSHADOW 2
+//#define MEX_ITEM_GAMECRASHBLANK 3
+//#define MEX_ITEM_LIGHTEFFECT 4
 
 	#define MEX_EFFECT_FXLASER 5000
 	#define MEX_EFFECT_FXLASER_FLAME 5001
@@ -20,8 +23,8 @@
 
 // Item ID (Column F in https://docs.google.com/spreadsheets/d/1MIcQkeoKeXdZEoaz9EWIP1FNXSDjT3_DtHNbH3WkQMs/edit#gid=20)
 #define VANILLA_ITEM_FXLASER 0x36
-#define VANILLA_ITEM_FXSHADOW 0x4A
 #define VANILLA_ITEM_FXSHADOW 0x38
+#define VANILLA_ITEM_FXBLASTER 0x4A
 
 	#define VANILLA_EFFECT_FXLASER 0x47A  // item spawn effect
 	#define VANILLA_EFFECT_FXLASER_FLAME 0x47B  // item collision/destroy effect

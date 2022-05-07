@@ -12,3 +12,13 @@ Setting MEX_ITEM_FIREBALL to 1 or 3 (empty placeholder AND empty item in glitchy
 
 
 So, MEX_ITEM_XXX points to character files' item index within glitchy article folder
+
+
+
+Making MEX_ITEM_FXLASER different values:
+0 - laser
+1 - blaster
+2 - shadow
+3 - item spawn game crash
+4 - Light effect with weird spawn locations
+5+ - Nothing spawns if there are (dummy) MEX items on the character to reach the index. If not enough items, causes "does not contain item X for fighter y" crash
