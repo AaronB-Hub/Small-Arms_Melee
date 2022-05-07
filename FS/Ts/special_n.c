@@ -295,7 +295,7 @@ void CreateFxlaser(float facing_direction, GOBJ *gobj, Vec3 *position, int it_ki
 	return;
 }
 ///
-/// 0x800e0ee0 (Only ported Mario's specific code; not Dr. Mario)
+///
 ///
 void FxlaserThink(GOBJ *gobj)
 {
@@ -313,6 +313,7 @@ void FxlaserThink(GOBJ *gobj)
 		fighter_data->flags.throw_1 = 0;
 
 		// grab bone index
+		//int bone_index = Fighter_BoneLookup(fighter_data, L1stNa);
 		int bone_index = Fighter_BoneLookup(fighter_data, 0x1B);
 
 		// get position of bone in world

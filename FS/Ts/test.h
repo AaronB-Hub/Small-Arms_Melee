@@ -81,7 +81,7 @@
 ///////////////////////
 
 #define STATE_FXLASER1 0
-// #define STATE_FXLASER2 1
+#define STATE_FXLASER2 1
 
 ///////////////////////
 //      Structs      //
