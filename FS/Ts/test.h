@@ -4,7 +4,7 @@
 //      m-ex IDs     //
 ///////////////////////
 
-#define MEX_ITEM_FXLASER 0
+#define MEX_ITEM_FXLASER 1
 //#define MEX_ITEM_FXSHADOW 2
 
 	#define MEX_EFFECT_FXLASER 5000
@@ -18,7 +18,8 @@
 ///////////////////////
 
 // Item ID (Column F in https://docs.google.com/spreadsheets/d/1MIcQkeoKeXdZEoaz9EWIP1FNXSDjT3_DtHNbH3WkQMs/edit#gid=20)
-#define VANILLA_ITEM_FXLASER 0x36
+//#define VANILLA_ITEM_FXLASER 0x36
+#define VANILLA_ITEM_FXLASER 0x30
 //#define VANILLA_ITEM_FXSHADOW 0x38
 
 	#define VANILLA_EFFECT_FXLASER 0x47A
