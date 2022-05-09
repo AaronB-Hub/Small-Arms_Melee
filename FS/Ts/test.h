@@ -72,9 +72,11 @@
 #define STATE_SPECIALAIRLWEND 368
 #define STATE_SPECIALAIRLWLOOP 369  // This extra state likely comes from turning while in shine
 
-// Added in states for adapting mario fireball code
+// Added in states for adapting mario fireball code for projectile item (laser)
 #define STATE_SPECIALN 341
 #define STATE_SPECIALNAIR 342
+#define STATE_SPECIALS 343
+#define STATE_SPECIALSAIR 344
 
 ///////////////////////
 //    Item States    //
@@ -98,31 +100,11 @@ typedef struct FxlaserAttr
 
 typedef struct TestAttr
 {
-    float specialS_horizontal_momentum;       //x00
-    float specialS_horizontal_velocity;       //x04
-    float specialS_vertical_momentum;         //x08
-    float specialS_gravity;                   //x0C
-    float specialS_gravity_limit;             //x10
-    int cape_item_kind;                       //x14;
-    float specialHi_fall_air_mobility;        //x18;
-    float specialHi_landing_lag;              //x1C;
-    float specialHi_stick_reverse_threshold;  //x20;
-    float specialHi_stick_threshold;          //x24;
-    float specialHi_stick_control;            //x28;
-    float specialHi_initial_x_momemtum;       //x2C;
-    float specialHi_initial_gravity;          //x30
-    float specialHi_initial_y_momemtum;       //x34
-    float specialLw_grounded_rise_resistance; //x38;
-    float specialLw_base_air_speed;           //x3C;
-    float specialLw_x_vel_clamp;              //x40;
-    float specialLw_x_accel;                  //x44 (?)
-    float specialLw_x_drift;                  //x48
-    float speicalLw_air_speed_decel;          //x4C
-    int specialLw_state_Var2;                 //x50;
-    float specialLw_rising_tap_power;         //x54
-    float specialLw_terminal_velocity;        //x58
-    int specialLw_freefall_toggle;            //x5C
-    ReflectDesc reflect_data;                 //0x60
+	float x0;                                 // x00
+    float x4;                                 // x04
+    float x8;                                 // x08
+    float xC;                                 // x0C
+	u8 data_filler_10[0xD1 - 0x10];           // 0x10 (thru 0xD4)
 } TestAttr;
 
 
@@ -130,6 +112,11 @@ typedef struct SpecialNFtCmd
 {
 	int interruptable;
 } SpecialNFtCmd;
+
+typedef struct SpecialSFtCmd
+{
+	int interruptable;
+} SpecialSFtCmd;
 
 /*
 typedef struct SpecialSFtCmd
@@ -172,6 +159,7 @@ typedef struct SpecialLwVar
 ///////////////////////
 
 // Think
+void FxlaserThink1(GOBJ *);
 void FxlaserThink(GOBJ *);
 // void MarioCapeThink(GOBJ *);
 
@@ -186,6 +174,17 @@ void SpecialAirN_AnimationCallback(GOBJ *gobj);
 void SpecialAirN_IASACallback(GOBJ *gobj);
 void SpecialAirN_PhysicCallback(GOBJ *gobj);
 void SpecialAirN_CollisionCallback(GOBJ *gobj);
+
+// SpecialS
+void SpecialS_AnimationCallback(GOBJ *gobj);
+void SpecialS_IASACallback(GOBJ *gobj);
+void SpecialS_PhysicCallback(GOBJ *gobj);
+void SpecialS_CollisionCallback(GOBJ *gobj);
+
+void SpecialAirS_AnimationCallback(GOBJ *gobj);
+void SpecialAirS_IASACallback(GOBJ *gobj);
+void SpecialAirS_PhysicCallback(GOBJ *gobj);
+void SpecialAirS_CollisionCallback(GOBJ *gobj);
 
 /*
 // // SpecialS

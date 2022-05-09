@@ -35,7 +35,7 @@ SET "TKPATH=%CD%"
 :: ----- Test Character -----
 :: compile main code
 ::"MexTK.exe" -ff -i "%TsPATH%\test.c" "%TsPATH%\special_n.c" "%TsPATH%\special_s.c" "%TsPATH%\special_lw.c" "%TsPATH%\special_hi.c" -s ftFunction -t "%TKPATH%\ftFunction.txt" -l "%TKPATH%\melee.link" -dat "%FilesPATH%\PlTs.dat" -ow
-"MexTK.exe" -ff -i "%TsPATH%\test.c" "%TsPATH%\special_n.c" -s ftFunction -t "%TKPATH%\ftFunction.txt" -l "%TKPATH%\melee.link" -dat "%FilesPATH%\PlTs.dat" -ow
+"MexTK.exe" -ff -i "%TsPATH%\test.c" "%TsPATH%\special_n.c" "%TsPATH%\special_s.c" -s ftFunction -t "%TKPATH%\ftFunction.txt" -l "%TKPATH%\melee.link" -dat "%FilesPATH%\PlTs.dat" -ow
 
 :: compile item code
 "MexTK.exe" -ff -item 0 "%TsPATH%\item_fxlaser.c" -s itFunction -t "%TKPATH%\itFunction.txt" -l "%TKPATH%\melee.link" -dat "%FilesPATH%\PlTs.dat" -ow

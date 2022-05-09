@@ -183,7 +183,7 @@ void SpecialHi_CollisionCallback(GOBJ *gobj)
 	{
 		if ((script_flags->can_control == 0) || (0 <= fighter_data->phys.self_vel.Y))
 		{
-			//Fighter_CollAir(gobj);
+			Fighter_CollAir_IgnoreGround(gobj);
 		}
 		else
 		{
@@ -324,7 +324,7 @@ void SpecialAirHi_CollisionCallback(GOBJ *gobj)
 	{
 		if ((script_flags->can_control == 0) || (0 <= fighter_data->phys.self_vel.Y))
 		{
-			//Fighter_CollAir(gobj);
+			Fighter_CollAir_IgnoreGround(gobj);
 		}
 		else
 		{

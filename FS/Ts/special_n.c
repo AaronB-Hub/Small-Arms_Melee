@@ -118,7 +118,7 @@ void SpecialN_IASACallback(GOBJ *gobj)
 	// flag0 is set by ftCmd and determines when you can interupt
 	if (script_flags->interruptable != 0)
 	{
-		//Fighter_Interrupt_AllGrounded(gobj);
+		Fighter_IASACheck_AllGrounded(gobj);
 	}
 	return;
 }
@@ -188,7 +188,7 @@ void SpecialAirN_IASACallback(GOBJ *gobj)
 	// ftcmd_var.flag0 is set by ftCmd and determines when you can interupt
 	if (script_flags->interruptable != 0)
 	{
-		//Fighter_Interrupt_AllAerial(gobj);
+		Fighter_IASACheck_AllAerial(gobj);
 	}
 
 	return;
@@ -297,7 +297,7 @@ void CreateFxlaser(float facing_direction, GOBJ *gobj, Vec3 *position, int it_ki
 ///
 ///
 ///
-void FxlaserThink(GOBJ *gobj)
+void FxlaserThink1(GOBJ *gobj)
 {
 	// get fighter data
 	FighterData *fighter_data = (FighterData *)gobj->userdata;
@@ -313,8 +313,7 @@ void FxlaserThink(GOBJ *gobj)
 		fighter_data->flags.throw_1 = 0;
 
 		// grab bone index
-		//int bone_index = Fighter_BoneLookup(fighter_data, L1stNa);
-		int bone_index = Fighter_BoneLookup(fighter_data, 0x1B);
+		int bone_index = Fighter_BoneLookup(fighter_data, L1stNa);  // left 1st finger A?
 
 		// get position of bone in world
 		Vec3 bone_position;
