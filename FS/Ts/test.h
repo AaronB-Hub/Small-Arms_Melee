@@ -91,12 +91,22 @@
 
 typedef struct FxlaserAttr
 {
-    float speed;
-    float angle;
-    float life;
-    float unk1;
-    float max_speed;
-} FxlaserAttr;
+    float x00;  // life?                      // x00
+    float x04;  // position?                  // x04
+    float x08;                                // x08
+    float x0C;                                // x0C
+    float x10;                                // x10
+    float x14;                                // x14
+    float x18;                                // x18
+    float x1C;                                // x1C
+    float x20;                                // x20
+	float x24;  // speed?                     // x24
+    float x28;  // angle?                     // x28
+    float x2C;                                // x2C
+    float x30;                                // x30
+	float x34;                                // x34
+    float x38;                                // x38
+} FxlaserAttr;                                // size: 0x3C
 
 typedef struct TestAttr
 {
@@ -104,8 +114,8 @@ typedef struct TestAttr
     float x4;                                 // x04
     float x8;                                 // x08
     float xC;                                 // x0C
-	u8 data_filler_10[0xD1 - 0x10];           // 0x10 (thru 0xD4)
-} TestAttr;
+	u8 data_filler_10[0xD1 - 0x10];           // x10 (array of u8's with last one starting at 0xD1(?))
+} TestAttr;                                   // size: 0xD4
 
 
 typedef struct SpecialNFtCmd
@@ -159,7 +169,6 @@ typedef struct SpecialLwVar
 ///////////////////////
 
 // Think
-void FxlaserThink1(GOBJ *);
 void FxlaserThink(GOBJ *);
 // void MarioCapeThink(GOBJ *);
 

@@ -54,12 +54,12 @@
 
 typedef struct FireballAttr
 {
-    float speed;
-    float angle;
-    float life;
-    float unk1;
-    float max_speed;
-} FireballAttr;
+    float speed;                              // x00
+    float angle;                              // x04
+    float life;                               // x08
+    float unk1;                               // x0C
+    float max_speed;                          // 0x10 (thru 0xD4)
+} FireballAttr;                               // size: 0x14
 
 typedef struct MarioAttr
 {

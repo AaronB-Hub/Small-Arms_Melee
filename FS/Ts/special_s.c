@@ -10,12 +10,12 @@ void SpecialS(GOBJ *gobj)
 	FighterData *fighter_data = gobj->userdata;
 	SpecialSFtCmd *script_flags = &fighter_data->ftcmd_var;
 
+	// clear subaction flags used by this special
+	script_flags->interruptable = 0;
+
 	// change to special n state and update subaction
 	ActionStateChange(0, 1, 0, gobj, STATE_SPECIALS, 0, 0);
 	Fighter_AdvanceScript(gobj);
-
-	// clear subaction flags used by this special
-	script_flags->interruptable = 0;
 
 	// set the accessory callback for Fxlaser
 	// this function will spawn the Fxlaser when the flag0 is set
@@ -30,12 +30,12 @@ void SpecialAirS(GOBJ *gobj)
 	FighterData *fighter_data = gobj->userdata;
 	SpecialSFtCmd *script_flags = &fighter_data->ftcmd_var;
 
+	// clear subaction flags used by this special
+	script_flags->interruptable = 0;
+
 	// change to special n state and update subaction
 	ActionStateChange(0, 1, 0, gobj, STATE_SPECIALSAIR, 0, 0);
 	Fighter_AdvanceScript(gobj);
-
-	// clear subaction flags used by this function
-	script_flags->interruptable = 0;
 
 	// set the accessory callback for Fxlaser
 	// this function will actually spawn the Fxlaser
@@ -83,7 +83,7 @@ void SpecialS_PhysicCallback(GOBJ *gobj)
 	return;
 }
 ///
-///
+/// changes the Fxlaser state to the aerial version
 ///
 void SpecialS_EnterAerial(GOBJ *gobj)
 {
@@ -113,7 +113,7 @@ void SpecialS_CollisionCallback(GOBJ *gobj)
 
 
 ///////////////////////
-//  Aerial SpecialN  //
+//  Aerial SpecialS  //
 ///////////////////////
 ///
 ///
@@ -136,7 +136,7 @@ void SpecialAirS_IASACallback(GOBJ *gobj)
 	FighterData *fighter_data = gobj->userdata;
 	SpecialSFtCmd *script_flags = &fighter_data->ftcmd_var;
 
-	// ftcmd_var.flag0 is set by ftCmd and determines when you can interupt
+	// ftcmd_var.flag0 is set by ftCmd and determines when you can interrupt
 	if (script_flags->interruptable != 0)
 	{
 		Fighter_IASACheck_AllAerial(gobj);
@@ -153,7 +153,7 @@ void SpecialAirS_PhysicCallback(GOBJ *gobj)
 	return;
 }
 ///
-///
+/// changes the Fxlaser state to the grounded version
 ///
 void SpecialAirS_EnterGrounded(GOBJ *gobj)
 {
@@ -190,8 +190,10 @@ void IS_FxlaserSpawn(GOBJ *gobj)
 	// get the Fxlaser custom attributes
 	FxlaserAttr *attributes = item_data->itData->param_ext;
 
-	float speed = attributes->speed;
-	float angle = attributes->angle;
+	//float speed = attributes->speed;
+	float speed = attributes->x24;
+	//float angle = attributes->angle;
+	float angle = attributes->x28;
 
 	// set velocity of Fxlaser according to params
 	item_data->self_vel.X = item_data->facing_direction * speed * cos(angle);
@@ -199,10 +201,12 @@ void IS_FxlaserSpawn(GOBJ *gobj)
 	item_data->self_vel.Z = 0;
 
 	// set the Fxlaser lifetime
-	Item_SetLifeTimer(gobj, attributes->life);
+	//Item_SetLifeTimer(gobj, attributes->life);
+	Item_SetLifeTimer(gobj, attributes->x00);
 
 	// change the item's state (state1 does 224% and the same collision effect as the normal fox laser; state2 does 16, is electric and has a blue collision effect)
-	ItemStateChange(gobj, STATE_FXLASER2, 2);
+	ItemStateChange(gobj, STATE_FXLASER1, 2);
+	//ItemStateChange(gobj, STATE_FXLASER2, 2);
 
 	return;
 }

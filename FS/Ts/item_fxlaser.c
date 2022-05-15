@@ -3,14 +3,14 @@
 //      Fox Laser     //
 ////////////////////////
 ///
-/// 0x8029BA38
+///
 ///
 int OnGiveDamage(GOBJ *gobj)
 {
     return 1;
 }
 ///
-/// 0x8029BA78
+///
 ///
 int OnHitShieldBounce(GOBJ *gobj)
 {
@@ -53,14 +53,14 @@ int OnHitShieldBounce(GOBJ *gobj)
     return 0;
 }
 ///
-/// 0x8029BA68
+///
 ///
 int OnHitShieldDetermineDestroy(GOBJ *gobj)
 {
     return 1;
 }
 ///
-/// 0x8029BA40
+///
 ///
 int OnReflect(GOBJ *gobj)
 {
@@ -68,24 +68,24 @@ int OnReflect(GOBJ *gobj)
     return 0;
 }
 ///
-/// 0x8029BA60
+///
 ///
 int OnUnknown1(GOBJ *gobj)
 {
     return 1;
 }
 ///
-/// 0x8029BA70
+///
 ///
 int OnUnknown2(GOBJ *gobj)
 {
     return 1;
 }
 
-// TODO: OnUnknown3 0x8029BA98
+// TODO: OnUnknown3
 
 ///
-/// 0x8029b8a0
+///
 ///
 int Fxlaser_AnimCallback(GOBJ *gobj)
 {
@@ -101,7 +101,7 @@ int Fxlaser_AnimCallback(GOBJ *gobj)
     return 0;
 }
 ///
-/// 0x8029b8a0
+///
 ///
 int Fxlaser_PhysCallback(GOBJ *gobj)
 {
@@ -118,7 +118,7 @@ int Fxlaser_PhysCallback(GOBJ *gobj)
     return;
 }
 ///
-/// 0x8027781c
+///
 ///
 int Fxlaser_HitStageUpdate(GOBJ *gobj)
 {
@@ -281,7 +281,7 @@ int Fxlaser_HitStageUpdate(GOBJ *gobj)
         return 0;
 }
 ///
-/// 0x8029B8EC
+///
 ///
 int Fxlaser_CollCallback(GOBJ *gobj)
 {
@@ -308,25 +308,16 @@ int Fxlaser_CollCallback(GOBJ *gobj)
             magnitude = magnitude * 0.5 * speed * -(magnitude * speed * speed - 3);
         }
 
-        FxlaserAttr *attr = item_data->itData->param_ext;
-        if (magnitude < attr->max_speed)
-        {
-            return 1;
-        }
+        // FxlaserAttr *attr = item_data->itData->param_ext;
+        // if (magnitude < attr->max_speed)
+        // {
+        //     return 1;
+        // }
 
         Item_PlayOnDestroySFXAgain(item_data, VANILLA_SOUND_FXLASER_DESTROY, 0x7f, 0x40);
 
         Effect_SpawnAsync(gobj, &item_data->xbc0, 1, VANILLA_EFFECT_FXLASER_FLAME, jobj);
 
-        /*if (item_data->kind == 0x30) {
-            // this for Fxlaser
-            Item_PlayOnDestroySFXAgain(item_data,0x2bf39,0x7f,0x40);
-            Effect_SpawnAsync(gobj,(int)gobj->userdata + 0xbc0,1,0x47b,jobj);
-        }
-        else {
-            // this is for dr. Mario pill
-            Effect_SpawnAsync(gobj,(int)gobj->userdata + 0xbc0,1,0x4a0,jobj);
-        }*/
     }
     return 0;
 }
