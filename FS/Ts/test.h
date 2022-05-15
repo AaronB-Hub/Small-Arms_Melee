@@ -11,7 +11,7 @@
 
 // Removed Fox items
 //#define MEX_ITEM_GAMECRASHBLANK 3
-//#define MEX_ITEM_FLSHEFFECT 4  // Appears to spawn the FLSH_XXX_MED effects? (Except green appears to be added to)
+//#define MEX_ITEM_FLSHEFFECT 4  // Appears to spawn the FLSH_XXX_MED effects? (THIS IS THE EFFECT THAT SPAWNS WHEN A CHARACTER IS NORMALLY HIT BY FOX LASER!)
 
 	#define MEX_EFFECT_FXLASER 5000
 	#define MEX_EFFECT_FXLASER_FLAME 5001

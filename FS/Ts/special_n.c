@@ -21,7 +21,7 @@ void SpecialN(GOBJ *gobj)
 
 	// set the accessory callback for Fxlaser
 	// this function will spawn the Fxlaser when the flag0 is set
-	fighter_data->cb.Accessory4 = FxlaserThink;
+	fighter_data->cb.Accessory4 = FxlaserThink1;
 	return;
 }
 /// SpecialNAir
@@ -42,7 +42,7 @@ void SpecialAirN(GOBJ *gobj)
 
 	// set the accessory callback for Fxlaser
 	// this function will actually spawn the Fxlaser
-	fighter_data->cb.Accessory4 = FxlaserThink;
+	fighter_data->cb.Accessory4 = FxlaserThink1;
 	return;
 }
 
@@ -142,7 +142,7 @@ void SpecialN_EnterAerial(GOBJ *gobj)
 
 	ActionStateChange(fighter_data->state.frame, 1, 0, gobj, STATE_SPECIALNAIR, 0x5000, 0);
 
-	fighter_data->cb.Accessory4 = FxlaserThink;
+	fighter_data->cb.Accessory4 = FxlaserThink1;
 	return;
 }
 ///
@@ -212,7 +212,7 @@ void SpecialAirN_EnterGrounded(GOBJ *gobj)
 
 	ActionStateChange(fighter_data->state.frame, 1, 0, gobj, STATE_SPECIALN, 0x5000, 0);
 
-	fighter_data->cb.Accessory4 = FxlaserThink;
+	fighter_data->cb.Accessory4 = FxlaserThink1;
 
 	return;
 }
@@ -232,7 +232,7 @@ void SpecialAirN_CollisionCallback(GOBJ *gobj)
 ///
 /// 0x8029b7c0
 ///
-void IS_FxlaserSpawn(GOBJ *gobj)
+void IS_FxlaserSpawn1(GOBJ *gobj)
 {
 	ItemData *item_data = gobj->userdata;
 
@@ -258,7 +258,7 @@ void IS_FxlaserSpawn(GOBJ *gobj)
 ///
 /// 0x8029b6f8
 ///
-void CreateFxlaser(float facing_direction, GOBJ *gobj, Vec3 *position, int it_kind)
+void CreateFxlaser1(float facing_direction, GOBJ *gobj, Vec3 *position, int it_kind)
 {
 	Vec3 ecb_center_pos;
 	Fighter_GetECBPosition(gobj, &ecb_center_pos);
@@ -284,7 +284,7 @@ void CreateFxlaser(float facing_direction, GOBJ *gobj, Vec3 *position, int it_ki
 	GOBJ *item = Item_CreateItem1(&spawnItem);
 
 	// initialize the Fxlaser behavior
-	IS_FxlaserSpawn(item);
+	IS_FxlaserSpawn1(item);
 
 	// develop mode stuff
 	Item_CopyDevelopState(item, gobj);
@@ -321,7 +321,7 @@ void FxlaserThink1(GOBJ *gobj)
 
 		// create Fxlaser item
 		int Fxlaser_id = MEX_GetFtItemID(gobj, MEX_ITEM_FXLASER);
-		CreateFxlaser(fighter_data->facing_direction, gobj, &bone_position, Fxlaser_id); //VANILLA_ITEM_FXLASER);
+		CreateFxlaser1(fighter_data->facing_direction, gobj, &bone_position, Fxlaser_id); //VANILLA_ITEM_FXLASER);
 
 		// create Fxlaser effect
 		Effect_SpawnSync(VANILLA_EFFECT_FXLASER, gobj, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
