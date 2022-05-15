@@ -101,7 +101,7 @@ typedef struct FxlaserAttr
     float x1C;                                // x1C
     float x20;                                // x20
 	float x24;  // speed?                     // x24
-    float x28;  // angle?                     // x28
+    float x28;  // angle? (Just picked the 0 after speed)            // x28
     float x2C;                                // x2C
     float x30;                                // x30
 	float x34;                                // x34
@@ -170,7 +170,6 @@ typedef struct SpecialLwVar
 
 // Think
 void FxlaserThink(GOBJ *);
-// void MarioCapeThink(GOBJ *);
 
 
 // SpecialN
