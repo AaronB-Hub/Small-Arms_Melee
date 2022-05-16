@@ -82,7 +82,7 @@ typedef struct MarioAttr
     float specialLw_x_vel_clamp;              //x40;
     float specialLw_x_accel;                  //x44 (?)
     float specialLw_x_drift;                  //x48
-    float speicalLw_air_speed_decel;          //x4C
+    float specialLw_air_speed_decel;          //x4C
     int specialLw_state_Var2;                 //x50;
     float specialLw_rising_tap_power;         //x54
     float specialLw_terminal_velocity;        //x58

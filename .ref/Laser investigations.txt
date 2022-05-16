@@ -1,0 +1,35 @@
+Fx/Fc item 0 ParameterExt comparison (plus RG from ItCo.dat)
+Fx laser: 42 0C 00 00 | 40 40 00 00 | ... | 3F 80 00 00 | ... |
+Fc laser: 42 C8 00 00 | 40 40 00 00 | ... | 3F 80 00 00 |
+RG laser: 40 A0 00 00 | 42 A0 00 00 | 40 40 00 00 |
+
+
+ |
+ v
+
+FLOAT:
+Fx :   35 |  3 | 1
+Fc :  100 |  3 | 1
+RG :    5 | 80 | 3
+
+
+Key: life | ? | ?
+
+
+
+Fireball speed is 1.5
+
+Fx/Fc Special attribute comparison pairs (where they differ)
+6/7, 7/5, 30/22, 6/4, 20/40, 3.8/4.2, 0.1/0.17
+(.86, 1.4, 1.36, 1.5, 0.5,      0.9,  0.59)  - their ratios
+
+
+Fox laser ~1.4 times faster than falco laser
+Falco laser same speed as ray gun laser
+
+
+
+
+fox laser ~0.6 seconds life
+falco laser ~1.7 seconds life
+ray gun laser ~1.3 seconds life

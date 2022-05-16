@@ -161,7 +161,7 @@ void SpecialLw_PhysicCallback(GOBJ *gobj)
 
 	if (script_flags->decay_air_speed != 0)
 	{
-		float new_air_speed = state_var->air_speed - mrAttr->speicalLw_air_speed_decel;
+		float new_air_speed = state_var->air_speed - mrAttr->specialLw_air_speed_decel;
 
 		state_var->air_speed = new_air_speed;
 
@@ -350,7 +350,7 @@ void SpecialAirLw_PhysicCallback(GOBJ *gobj)
 
 	if (script_flags->decay_air_speed != 0)
 	{
-		float new_air_speed = state_var->air_speed - mrAttr->speicalLw_air_speed_decel;
+		float new_air_speed = state_var->air_speed - mrAttr->specialLw_air_speed_decel;
 
 		state_var->air_speed = new_air_speed;
 

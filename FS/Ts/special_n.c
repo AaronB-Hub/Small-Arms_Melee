@@ -12,6 +12,7 @@ void SpecialN(GOBJ *gobj)
 
 	// clear subaction flags used by this special
 	script_flags->interruptable = 0;
+	script_flags->fired = 0;
 
 	// change to special n state and update subaction
 	ActionStateChange(0, 1, 0, gobj, STATE_SPECIALN, 0, 0);
@@ -32,6 +33,7 @@ void SpecialAirN(GOBJ *gobj)
 
 	// clear subaction flags used by this special
 	script_flags->interruptable = 0;
+	script_flags->fired = 0;
 
 	// change to special n state and update subaction
 	ActionStateChange(0, 1, 0, gobj, STATE_SPECIALNAIR, 0, 0);
@@ -191,9 +193,9 @@ void IS_FxlaserSpawn(GOBJ *gobj)
 	FxlaserAttr *attributes = item_data->itData->param_ext;
 
 	//float speed = attributes->speed;
-	float speed = attributes->x24;
+	float speed = 7;
 	//float angle = attributes->angle;
-	float angle = attributes->x28;
+	float angle = attributes->x08;   // This variable is just 0 to start, but we can use it to store future angles
 
 	// set velocity of Fxlaser according to params
 	item_data->self_vel.X = item_data->facing_direction * speed * cos(angle);
@@ -201,8 +203,7 @@ void IS_FxlaserSpawn(GOBJ *gobj)
 	item_data->self_vel.Z = 0;
 
 	// set the Fxlaser lifetime
-	//Item_SetLifeTimer(gobj, attributes->life);
-	Item_SetLifeTimer(gobj, attributes->x00);
+	Item_SetLifeTimer(gobj, attributes->life);
 
 	// change the item's state (state1 does 224% and the same collision effect as the normal fox laser; state2 does 16, is electric and has a blue collision effect)
 	ItemStateChange(gobj, STATE_FXLASER1, 2);
@@ -256,20 +257,30 @@ void FxlaserThink(GOBJ *gobj)
 {
 	// get fighter data
 	FighterData *fighter_data = (FighterData *)gobj->userdata;
+	SpecialNFtCmd *script_flags = &fighter_data->ftcmd_var;
 
-	// grab bone index
-	int bone_index = Fighter_BoneLookup(fighter_data, L1stNa);  // left 1st finger A?
+	// check for bitflag set by ftCmd subaction
+	if (script_flags->fired != 1) {
 
-	// get position of bone in world
-	Vec3 bone_position;
-	JOBJ_GetWorldPosition(fighter_data->bones[bone_index].joint, 0, &bone_position);
+		// set bit flag
+		script_flags->fired = 1;
 
-	// create Fxlaser item
-	int Fxlaser_id = MEX_GetFtItemID(gobj, MEX_ITEM_FXLASER);
-	CreateFxlaser(fighter_data->facing_direction, gobj, &bone_position, Fxlaser_id); //VANILLA_ITEM_FXLASER);
+		// grab bone index
+		int bone_index = Fighter_BoneLookup(fighter_data, L1stNa);  // left 1st finger A?
 
-	// create Fxlaser effect
-	//Effect_SpawnSync(VANILLA_EFFECT_FXLASER, gobj, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
+		// get position of bone in world
+		Vec3 bone_position;
+		JOBJ_GetWorldPosition(fighter_data->bones[bone_index].joint, 0, &bone_position);
+
+		// create Fxlaser item
+		int Fxlaser_id = MEX_GetFtItemID(gobj, MEX_ITEM_FXLASER);
+		CreateFxlaser(fighter_data->facing_direction, gobj, &bone_position, Fxlaser_id); //VANILLA_ITEM_FXLASER);
+
+		// create Fxlaser effect
+		Effect_SpawnSync(VANILLA_EFFECT_FXLASER, gobj, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
+		//Effect_SpawnSync(VANILLA_EFFECT_FXLASER, gobj, gobj->hsd_object);
+
+	}
 	
 	return;
 }

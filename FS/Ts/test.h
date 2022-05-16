@@ -4,7 +4,7 @@
 //      m-ex IDs     //
 ///////////////////////
 
-// Index of item within character's Articles folder (MEX items are only dummy placeholders, but still necessary)
+// Index of item within character's PlXx.dat Articles folder (MEX items are only dummy placeholders, but still necessary)
 #define MEX_ITEM_FXLASER 0
 #define MEX_ITEM_FXBLASTER 1
 #define MEX_ITEM_FXSHADOW 2
@@ -12,6 +12,7 @@
 // Removed Fox items
 //#define MEX_ITEM_GAMECRASHBLANK 3
 //#define MEX_ITEM_FLSHEFFECT 4  // Appears to spawn the FLSH_XXX_MED effects? (THIS IS THE EFFECT THAT SPAWNS WHEN A CHARACTER IS NORMALLY HIT BY FOX LASER!)
+// ^This appears to be Common GFX 0x3E8 (and 0x3E9 looks to be the collision effect for the laser when in state 2)
 
 	#define MEX_EFFECT_FXLASER 5000
 	#define MEX_EFFECT_FXLASER_FLAME 5001
@@ -28,9 +29,28 @@
 #define VANILLA_ITEM_FXSHADOW 0x38
 #define VANILLA_ITEM_FXBLASTER 0x4A
 
-	#define VANILLA_EFFECT_FXLASER 0x47A  // item spawn effect
-	#define VANILLA_EFFECT_FXLASER_FLAME 0x47B  // item collision/destroy effect
+	// GFX ID (https://docs.google.com/spreadsheets/d/1JTIOKFTx0uQE8TrWpXB4Gf9UeQbVVxfo3MbJnm4sl_s/ - Effect #272 (288) is Common GFX 0x110)
+	// 1013 (aka Common GFX 0x3F5) is the clouds shooting backwards from his feet) spawn effect when he throws a fireball while grounded (1014 / 0x3F6 is the aerial cloud effect)
+	// ^Fox lasers' use 1015 for their cloud effect (both grounded and aerial)
+
+	// EfMrData.dat Models_0 is the ring effect that spawns around mario's hand when he throws a fireball
+	// The mario down-b effect is EfMrData.dat Models_1
+	// EfCoData.Dat Models_1(or 2) is the below-the-feet concentric circles effect for mario's cape when grounded or when he lands some aerials
+	// ^This model is used in Common GFX 0x423 (aka #1059) - called 0x47D in the item_cape.c file's GFX call
+
+	// Random notes, which may prove helpful:
+	// EfCoData.dat ParticleImages_20[0] = Common GFX 0x422
+	// EfCoData.dat ParticleImages_12[4] = EfMrData.dat ParticleImages_3[0]
+	// (Common GFX 1a0 uses EfCoData.dat ParticleImages_34[0])
+	// Ray gun firing causes 3 green circles effect from EfCoData.Dat Models_33
+
+	//#define VANILLA_EFFECT_FIREBALL 0x47A  // EfMrData.dat Models_0 ring effect
+	//#define VANILLA_EFFECT_FIREBALL_FLAME 0x47B  // item collision effect (yellow, orange, and red block-ish particles spawn, likely to do with EfMrData.dat ParticleImages_3[0])
+	//#define VANILLA_EFFECT_DSPECIAL 0x47C  // EfMrData.dat Models_1 effect
+	#define VANILLA_EFFECT_FXLASER 0x047A
+	#define VANILLA_EFFECT_FXLASER_FLAME 0x47B
 	#define VANILLA_EFFECT_DSPECIAL 0x47C
+	
 
 	#define VANILLA_SOUND_FXLASER_DESTROY 180025
 
@@ -91,17 +111,17 @@
 
 typedef struct FxlaserAttr
 {
-    float x00;  // life?                      // x00
-    float x04;  // position?                  // x04
-    float x08;                                // x08
+    float life;  // [42 0c 00 00 = 35 frames] // x00
+    float x04;   // [40 40 00 00 = 3?]        // x04
+    float x08;   // using for angle           // x08
     float x0C;                                // x0C
     float x10;                                // x10
     float x14;                                // x14
     float x18;                                // x18
     float x1C;                                // x1C
     float x20;                                // x20
-	float x24;  // speed?                     // x24
-    float x28;  // angle? (Just picked the 0 after speed)            // x28
+	float x24;   // [3F 80 00 00 = 1?]        // x24
+    float x28;                                // x28
     float x2C;                                // x2C
     float x30;                                // x30
 	float x34;                                // x34
@@ -115,12 +135,14 @@ typedef struct TestAttr
     float x8;                                 // x08
     float xC;                                 // x0C
 	u8 data_filler_10[0xD1 - 0x10];           // x10 (array of u8's with last one starting at 0xD1(?))
+	// 0x14 thru 0x17 holds a float for the speed of the laser projectile (in this case 7 from fox)
 } TestAttr;                                   // size: 0xD4
 
 
 typedef struct SpecialNFtCmd
 {
 	int interruptable;
+	int fired;
 } SpecialNFtCmd;
 
 typedef struct SpecialSFtCmd
