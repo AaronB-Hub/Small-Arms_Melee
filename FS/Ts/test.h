@@ -47,10 +47,22 @@
 	//#define VANILLA_EFFECT_FIREBALL 0x47A  // EfMrData.dat Models_0 ring effect
 	//#define VANILLA_EFFECT_FIREBALL_FLAME 0x47B  // item collision effect (yellow, orange, and red block-ish particles spawn, likely to do with EfMrData.dat ParticleImages_3[0])
 	//#define VANILLA_EFFECT_DSPECIAL 0x47C  // EfMrData.dat Models_1 effect
-	#define VANILLA_EFFECT_FXLASER 0x047A
+
+	#define VANILLA_EFFECT_FXLASER 0x48E
+	// 0x482, 0x486 thru 0x48C cause load errors
+	// 0x489 gives same value error as Fox shine_1 load error
+	// 0x488 gives same value error as Fox shine_2 load error
+	// 0x488 gives same value of 2c (presumably for Fox shine_3 load error)
+	// 0x48B gives same value error as Fox up-b_1 load error
+	// 0x48C gives same value error as Fox up-b_2 load error
+	// 0x48D does NOT give an error, but appears to be a streak effect that trails behind Fox during side b (but below where it should be on collision and behind fox for spawn laser effects)
+	// 0x48E gives same value error as Fox laser load error, but appears to be the laser spawn effect that comes out from Fox's blaster when it shoots (but only in the middle of the stage)
+	// 0x490 thru 0x494 do nothing
+
+	// Fox laser's don't have a collision effect with walls, but tested this anyways
 	#define VANILLA_EFFECT_FXLASER_FLAME 0x47B
-	#define VANILLA_EFFECT_DSPECIAL 0x47C
-	
+	// 0X488 thru 0x48C crashes game with real Fox loaded when used as collision effect
+
 
 	#define VANILLA_SOUND_FXLASER_DESTROY 180025
 
