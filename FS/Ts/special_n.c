@@ -205,9 +205,8 @@ void IS_FxlaserSpawn(GOBJ *gobj)
 	// set the Fxlaser lifetime
 	Item_SetLifeTimer(gobj, attributes->life);
 
-	// change the item's state (state1 does 224% and the same collision effect as the normal fox laser; state2 does 16, is electric and has a blue collision effect)
-	ItemStateChange(gobj, STATE_FXLASER1, 2);
-	//ItemStateChange(gobj, STATE_FXLASER2, 2);
+	// change the item's state
+	ItemStateChange(gobj, STATE_FXLASER0, 2);
 
 	return;
 }
@@ -277,8 +276,10 @@ void FxlaserThink(GOBJ *gobj)
 		CreateFxlaser(fighter_data->facing_direction, gobj, &bone_position, Fxlaser_id); //VANILLA_ITEM_FXLASER);
 
 		// create Fxlaser effect
-		Effect_SpawnSync(VANILLA_EFFECT_FXLASER, gobj, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
+		//Effect_SpawnSync(VANILLA_EFFECT_FXLASER, gobj, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
 		//Effect_SpawnSync(VANILLA_EFFECT_FXLASER, gobj, gobj->hsd_object);
+		Effect_SpawnSync(MEX_EFFECT_FXLASER, gobj, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
+		
 
 	}
 	

@@ -8,17 +8,15 @@
 #define MEX_ITEM_FXLASER 0
 #define MEX_ITEM_FXBLASTER 1
 #define MEX_ITEM_FXSHADOW 2
-
 // Removed Fox items
 //#define MEX_ITEM_GAMECRASHBLANK 3
-//#define MEX_ITEM_FLSHEFFECT 4  // Appears to spawn the FLSH_XXX_MED effects? (THIS IS THE EFFECT THAT SPAWNS WHEN A CHARACTER IS NORMALLY HIT BY FOX LASER!)
-// ^This appears to be Common GFX 0x3E8 (and 0x3E9 looks to be the collision effect for the laser when in state 2)
+//#define MEX_ITEM_FLSHEFFECT 4
 
-	#define MEX_EFFECT_FXLASER 5000
-	#define MEX_EFFECT_FXLASER_FLAME 5001
-	#define MEX_EFFECT_DSPECIAL 5002
+// M-ex fighter effects are indexed but they are abstracted for the sake of portability. Use 5XXX and 6XXX to spawn a fighter model effect and fighter particle generator respectively
+#define MEX_EFFECT_FXLASER 5005
+#define MEX_EFFECT_FXLASER_FLAME 6011  // This doesn't normally have an effect, one is added in here by choice
 
-	#define MEX_SOUND_FXLASER_DESTROY 5025
+#define MEX_SOUND_FXLASER_DESTROY 5000  // Not sure what the correct value for this is
 
 ///////////////////////
 //    Vanilla IDs    //
@@ -29,6 +27,7 @@
 #define VANILLA_ITEM_FXSHADOW 0x38
 #define VANILLA_ITEM_FXBLASTER 0x4A
 
+#define VANILLA_EFFECT_FXLASER 0x48E
 	// GFX ID (https://docs.google.com/spreadsheets/d/1JTIOKFTx0uQE8TrWpXB4Gf9UeQbVVxfo3MbJnm4sl_s/ - Effect #272 (288) is Common GFX 0x110)
 	// 1013 (aka Common GFX 0x3F5) is the clouds shooting backwards from his feet) spawn effect when he throws a fireball while grounded (1014 / 0x3F6 is the aerial cloud effect)
 	// ^Fox lasers' use 1015 for their cloud effect (both grounded and aerial)
@@ -48,23 +47,23 @@
 	//#define VANILLA_EFFECT_FIREBALL_FLAME 0x47B  // item collision effect (yellow, orange, and red block-ish particles spawn, likely to do with EfMrData.dat ParticleImages_3[0])
 	//#define VANILLA_EFFECT_DSPECIAL 0x47C  // EfMrData.dat Models_1 effect
 
-	#define VANILLA_EFFECT_FXLASER 0x48E
+	
+	//#define VANILLA_EFFECT_FXLASER 0x514
 	// 0x482, 0x486 thru 0x48C cause load errors
 	// 0x489 gives same value error as Fox shine_1 load error
 	// 0x488 gives same value error as Fox shine_2 load error
-	// 0x488 gives same value of 2c (presumably for Fox shine_3 load error)
+	// 0x488? gives same value of 2c (presumably for Fox shine_3 load error)
 	// 0x48B gives same value error as Fox up-b_1 load error
 	// 0x48C gives same value error as Fox up-b_2 load error
 	// 0x48D does NOT give an error, but appears to be a streak effect that trails behind Fox during side b (but below where it should be on collision and behind fox for spawn laser effects)
 	// 0x48E gives same value error as Fox laser load error, but appears to be the laser spawn effect that comes out from Fox's blaster when it shoots (but only in the middle of the stage)
 	// 0x490 thru 0x494 do nothing
 
-	// Fox laser's don't have a collision effect with walls, but tested this anyways
-	#define VANILLA_EFFECT_FXLASER_FLAME 0x47B
-	// 0X488 thru 0x48C crashes game with real Fox loaded when used as collision effect
+	//1432 - my approx. estimate of total GFX ID's
 
+	// Fox laser's don't have a collision effect with walls, but tested this anyways --> 0X488 thru 0x48C crashes game when used with real Fox loaded when used as collision effect
 
-	#define VANILLA_SOUND_FXLASER_DESTROY 180025
+#define VANILLA_SOUND_FXLASER_DESTROY 180025  // This value is incorrect, but not sure what correct value is
 
 ///////////////////////
 //  Special States   //
@@ -114,8 +113,9 @@
 //    Item States    //
 ///////////////////////
 
-#define STATE_FXLASER1 0
-#define STATE_FXLASER2 1
+#define STATE_FXLASER0 0
+#define STATE_FXLASER1 1
+// state 1 is from normal shooting: does more damage and normal collision effect; state 2 if from fox throws: does less damage, is electric and has a blue collision effect
 
 ///////////////////////
 //      Structs      //

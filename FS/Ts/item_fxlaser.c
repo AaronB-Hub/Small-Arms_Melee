@@ -314,9 +314,12 @@ int Fxlaser_CollCallback(GOBJ *gobj)
         //     return 1;
         // }
 
-        Item_PlayOnDestroySFXAgain(item_data, VANILLA_SOUND_FXLASER_DESTROY, 0x7f, 0x40);
+        //Item_PlayOnDestroySFXAgain(item_data, VANILLA_SOUND_FXLASER_DESTROY, 0x7f, 0x40);
+        Item_PlayOnDestroySFXAgain(item_data, MEX_SOUND_FXLASER_DESTROY, 0x7f, 0x40);
 
-        Effect_SpawnAsync(gobj, &item_data->xbc0, 1, VANILLA_EFFECT_FXLASER_FLAME, jobj);
+
+        //Effect_SpawnAsync(gobj, &item_data->xbc0, 1, VANILLA_EFFECT_FXLASER_FLAME, jobj);
+		Effect_SpawnAsync(gobj, &item_data->xbc0, 1, MEX_EFFECT_FXLASER_FLAME, jobj);
 
     }
     return 0;
@@ -333,7 +336,7 @@ __attribute__((used)) static struct ItemState item_state_table[] =
         },
 		{
             1,                 // anim ID
-            0, //Fxlaser_AnimCallback, // anim callback
+            0,                 // anim callback
             0,                 // phys callback
             0,                 // coll callback
         },
