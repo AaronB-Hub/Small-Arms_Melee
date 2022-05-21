@@ -319,7 +319,7 @@ int Fxlaser_CollCallback(GOBJ *gobj)
 
 
         //Effect_SpawnAsync(gobj, &item_data->xbc0, 1, VANILLA_EFFECT_FXLASER_FLAME, jobj);
-		Effect_SpawnAsync(gobj, &item_data->xbc0, 1, MEX_EFFECT_FXLASER_FLAME, jobj);
+		// Effect_SpawnAsync(gobj, &item_data->xbc0, 1, MEX_EFFECT_FXLASER_FLAME, jobj);
 
     }
     return 0;

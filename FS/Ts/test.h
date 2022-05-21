@@ -14,7 +14,7 @@
 
 // M-ex fighter effects are indexed but they are abstracted for the sake of portability. Use 5XXX and 6XXX to spawn a fighter model effect and fighter particle generator respectively
 #define MEX_EFFECT_FXLASER 5005
-#define MEX_EFFECT_FXLASER_FLAME 6011  // This doesn't normally have an effect, one is added in here by choice
+// #define MEX_EFFECT_FXLASER_FLAME 6000  // This doesn't normally have an effect
 
 #define MEX_SOUND_FXLASER_DESTROY 5000  // Not sure what the correct value for this is
 
