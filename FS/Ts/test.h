@@ -28,40 +28,39 @@
 #define VANILLA_ITEM_FXBLASTER 0x4A
 
 #define VANILLA_EFFECT_FXLASER 0x48E
-	// GFX ID (https://docs.google.com/spreadsheets/d/1JTIOKFTx0uQE8TrWpXB4Gf9UeQbVVxfo3MbJnm4sl_s/ - Effect #272 (288) is Common GFX 0x110)
-	// 1013 (aka Common GFX 0x3F5) is the clouds shooting backwards from his feet) spawn effect when he throws a fireball while grounded (1014 / 0x3F6 is the aerial cloud effect)
-	// ^Fox lasers' use 1015 for their cloud effect (both grounded and aerial)
+	/*
+	GFX ID (https://docs.google.com/spreadsheets/d/1JTIOKFTx0uQE8TrWpXB4Gf9UeQbVVxfo3MbJnm4sl_s/ - Effect #272 (288) is Common GFX 0x110)
+	1013 (aka Common GFX 0x3F5) is the clouds shooting backwards from his feet) spawn effect when he throws a fireball while grounded (1014 / 0x3F6 is the aerial cloud effect)
+	^Fox lasers' use 1015 for their cloud effect (both grounded and aerial)
 
-	// EfMrData.dat Models_0 is the ring effect that spawns around mario's hand when he throws a fireball
-	// The mario down-b effect is EfMrData.dat Models_1
-	// EfCoData.Dat Models_1(or 2) is the below-the-feet concentric circles effect for mario's cape when grounded or when he lands some aerials
-	// ^This model is used in Common GFX 0x423 (aka #1059) - called 0x47D in the item_cape.c file's GFX call
+	EfMrData.dat Models_0 is the ring effect that spawns around mario's hand when he throws a fireball
+	The mario down-b effect is EfMrData.dat Models_1
+	EfCoData.Dat Models_1(or 2) is the below-the-feet concentric circles effect for mario's cape when grounded or when he lands some aerials
+	^This model is used in Common GFX 0x423 (aka #1059) - called 0x47D in the item_cape.c file's GFX call
 
-	// Random notes, which may prove helpful:
-	// EfCoData.dat ParticleImages_20[0] = Common GFX 0x422
-	// EfCoData.dat ParticleImages_12[4] = EfMrData.dat ParticleImages_3[0]
-	// (Common GFX 1a0 uses EfCoData.dat ParticleImages_34[0])
-	// Ray gun firing causes 3 green circles effect from EfCoData.Dat Models_33
+	Random notes, which may prove helpful:
+	EfCoData.dat ParticleImages_20[0] = Common GFX 0x422
+	EfCoData.dat ParticleImages_12[4] = EfMrData.dat ParticleImages_3[0]
+	(Common GFX 1a0 uses EfCoData.dat ParticleImages_34[0])
+	Ray gun firing causes 3 green circles effect from EfCoData.Dat Models_33
+	1432 - my approx. estimate of total GFX ID's
 
-	//#define VANILLA_EFFECT_FIREBALL 0x47A  // EfMrData.dat Models_0 ring effect
-	//#define VANILLA_EFFECT_FIREBALL_FLAME 0x47B  // item collision effect (yellow, orange, and red block-ish particles spawn, likely to do with EfMrData.dat ParticleImages_3[0])
-	//#define VANILLA_EFFECT_DSPECIAL 0x47C  // EfMrData.dat Models_1 effect
-
+	#define VANILLA_EFFECT_FIREBALL 0x47A  // EfMrData.dat Models_0 ring effect
+	#define VANILLA_EFFECT_FIREBALL_FLAME 0x47B  // item collision effect (yellow, orange, and red block-ish particles spawn, likely to do with EfMrData.dat ParticleImages_3[0])
+	#define VANILLA_EFFECT_DSPECIAL 0x47C  // EfMrData.dat Models_1 effect
 	
-	//#define VANILLA_EFFECT_FXLASER 0x514
-	// 0x482, 0x486 thru 0x48C cause load errors
-	// 0x489 gives same value error as Fox shine_1 load error
-	// 0x488 gives same value error as Fox shine_2 load error
-	// 0x488? gives same value of 2c (presumably for Fox shine_3 load error)
-	// 0x48B gives same value error as Fox up-b_1 load error
-	// 0x48C gives same value error as Fox up-b_2 load error
-	// 0x48D does NOT give an error, but appears to be a streak effect that trails behind Fox during side b (but below where it should be on collision and behind fox for spawn laser effects)
-	// 0x48E gives same value error as Fox laser load error, but appears to be the laser spawn effect that comes out from Fox's blaster when it shoots (but only in the middle of the stage)
-	// 0x490 thru 0x494 do nothing
-
-	//1432 - my approx. estimate of total GFX ID's
-
-	// Fox laser's don't have a collision effect with walls, but tested this anyways --> 0X488 thru 0x48C crashes game when used with real Fox loaded when used as collision effect
+	#define VANILLA_EFFECT_FXLASER 0x514
+	0x482, 0x486 thru 0x48C cause load errors
+	0x489 gives same value error as Fox shine_1 load error
+	0x488 gives same value error as Fox shine_2 load error
+	0x488? gives same value of 2c (presumably for Fox shine_3 load error)
+	0x48B gives same value error as Fox up-b_1 load error
+	0x48C gives same value error as Fox up-b_2 load error
+	0x48D does NOT give an error, but appears to be a streak effect that trails behind Fox during side b (but below where it should be on collision and behind fox for spawn laser effects)
+	0x48E gives same value error as Fox laser load error, but appears to be the laser spawn effect that comes out from Fox's blaster when it shoots (but only in the middle of the stage)
+	0x490 thru 0x494 do nothing
+	Fox laser's don't have a collision effect with walls, but tested this anyways --> 0X488 thru 0x48C crashes game when used with real Fox loaded when used as collision effect
+	*/
 
 #define VANILLA_SOUND_FXLASER_DESTROY 180025  // This value is incorrect, but not sure what correct value is
 
