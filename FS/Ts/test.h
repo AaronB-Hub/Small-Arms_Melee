@@ -69,40 +69,8 @@
 ///////////////////////
 
 // (Known ID's unique to characters from https://smashboards.com/threads/internal-action-state-hack.440318/)
-#define STATE_SPECIALNSTART 341
-#define STATE_SPECIALNLOOP 342
-#define STATE_SPECIALNEND 343
-#define STATE_SPECIALAIRNSTART 344
-#define STATE_SPECIALAIRNLOOP 345
-#define STATE_SPECIALAIRNEND 346
 
-#define STATE_SPECIALSSTART 347
-#define STATE_SPECIALS 348
-#define STATE_SPECIALSEND 349
-#define STATE_SPECIALAIRSSTART 350
-#define STATE_SPECIALAIRS 351
-#define STATE_SPECIALAIRSEND 352
-
-#define STATE_SPECIALHIHOLD 353
-#define STATE_SPECIALHIHOLDAIR 354
-#define STATE_SPECIALHI 355
-#define STATE_SPECIALHI 356  // This extra state likely comes from a subroutine referenced by this action
-#define STATE_SPECIALHILANDING 357
-#define STATE_SPECIALHIFALL 358
-#define STATE_SPECIALHIBOUND 359
-
-#define STATE_SPECIALLWSTART 360
-#define STATE_SPECIALLWLOOP 361
-#define STATE_SPECIALLWHIT 362
-#define STATE_SPECIALLWEND 363
-#define STATE_SPECIALLWLOOP 364  // This extra state likely comes from turning while in shine
-#define STATE_SPECIALAIRLWSTART 365
-#define STATE_SPECIALAIRLWLOOP 366
-#define STATE_SPECIALAIRLWHIT 367
-#define STATE_SPECIALAIRLWEND 368
-#define STATE_SPECIALAIRLWLOOP 369  // This extra state likely comes from turning while in shine
-
-// Added in states for adapting mario fireball code for projectile item (laser)
+// Custom states
 #define STATE_SPECIALN 341
 #define STATE_SPECIALNAIR 342
 #define STATE_SPECIALS 343
@@ -114,7 +82,7 @@
 
 #define STATE_FXLASER0 0
 #define STATE_FXLASER1 1
-// state 1 is from normal shooting: does more damage and normal collision effect; state 2 if from fox throws: does less damage, is electric and has a blue collision effect
+// state 1 is from normal shooting: does more damage and normal collision effect; state 2 is from fox throws: does less damage, is electric and has a blue collision effect
 
 ///////////////////////
 //      Structs      //
@@ -161,49 +129,12 @@ typedef struct SpecialSFtCmd
 	int interruptable;
 } SpecialSFtCmd;
 
-/*
-typedef struct SpecialSFtCmd
-{
-	int create_wind;
-	int enable_reflect;
-	int spawn_cape;
-} SpecialSFtCmd;
-
-typedef struct SpecialSVar
-{
-	int reflect_enabled;
-} SpecialSVar;
-
-
-typedef struct SpecialHiFtCmd
-{
-	int can_control;
-} SpecialHiFtCmd;
-
-
-typedef struct SpecialLwFtCmd
-{
-	int decay_air_speed;
-	int disable_rise; 		//?
-} SpecialLwFtCmd;
-
-typedef struct SpecialLwVar
-{
-	float air_speed;	// x00
-	int x04;			// x04
-	int x08;			// x08
-	float on_ground;	// x0C
-} SpecialLwVar;
-
-*/
-
 ///////////////////////
 //     Functions     //
 ///////////////////////
 
 // Think
 void FxlaserThink(GOBJ *);
-
 
 // SpecialN
 void SpecialN_AnimationCallback(GOBJ *gobj);
@@ -226,38 +157,3 @@ void SpecialAirS_AnimationCallback(GOBJ *gobj);
 void SpecialAirS_IASACallback(GOBJ *gobj);
 void SpecialAirS_PhysicCallback(GOBJ *gobj);
 void SpecialAirS_CollisionCallback(GOBJ *gobj);
-
-/*
-// // SpecialS
-// void SpecialS_AnimationCallback(GOBJ *gobj);
-// void SpecialS_IASACallback(GOBJ *gobj);
-// void SpecialS_PhysicCallback(GOBJ *gobj);
-// void SpecialS_CollisionCallback(GOBJ *gobj);
-
-// void SpecialAirS_AnimationCallback(GOBJ *gobj);
-// void SpecialAirS_IASACallback(GOBJ *gobj);
-// void SpecialAirS_PhysicCallback(GOBJ *gobj);
-// void SpecialAirS_CollisionCallback(GOBJ *gobj);
-
-// // SpecialHi
-// void SpecialHi_AnimationCallback(GOBJ *gobj);
-// void SpecialHi_IASACallback(GOBJ *gobj);
-// void SpecialHi_PhysicCallback(GOBJ *gobj);
-// void SpecialHi_CollisionCallback(GOBJ *gobj);
-
-// void SpecialAirHi_AnimationCallback(GOBJ *gobj);
-// void SpecialAirHi_IASACallback(GOBJ *gobj);
-// void SpecialAirHi_PhysicCallback(GOBJ *gobj);
-// void SpecialAirHi_CollisionCallback(GOBJ *gobj);
-
-// // SpecialLw
-// void SpecialLw_AnimationCallback(GOBJ *gobj);
-// void SpecialLw_IASACallback(GOBJ *gobj);
-// void SpecialLw_PhysicCallback(GOBJ *gobj);
-// void SpecialLw_CollisionCallback(GOBJ *gobj);
-
-// void SpecialAirLw_AnimationCallback(GOBJ *gobj);
-// void SpecialAirLw_IASACallback(GOBJ *gobj);
-// void SpecialAirLw_PhysicCallback(GOBJ *gobj);
-// void SpecialAirLw_CollisionCallback(GOBJ *gobj);
-*/

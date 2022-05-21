@@ -185,7 +185,7 @@ void SpecialAirN_CollisionCallback(GOBJ *gobj)
 ///
 ///
 ///
-void IS_FxlaserSpawn(GOBJ *gobj)
+void IS_FxlaserSpawn(GOBJ *gobj, float angle)
 {
 	ItemData *item_data = gobj->userdata;
 
@@ -195,10 +195,10 @@ void IS_FxlaserSpawn(GOBJ *gobj)
 	//float speed = attributes->speed;
 	float speed = 7;
 	//float angle = attributes->angle;
-	float angle = attributes->x08;   // This variable is just 0 to start, but we can use it to store future angles
+	//float angle = attributes->x08;   // This variable is just 0 to start, but we can use it to store future angles
 
 	// set velocity of Fxlaser according to params
-	item_data->self_vel.X = item_data->facing_direction * speed * cos(angle);
+	item_data->self_vel.X = speed * cos(angle);
 	item_data->self_vel.Y = speed * sin(angle);
 	item_data->self_vel.Z = 0;
 
@@ -217,6 +217,20 @@ void CreateFxlaser(float facing_direction, GOBJ *gobj, Vec3 *position, int it_ki
 {
 	Vec3 ecb_center_pos;
 	Fighter_GetECBPosition(gobj, &ecb_center_pos);
+
+	// get angle of gun
+	FighterData *fighter_data = gobj->userdata;
+	Vec2 cstick_angle = fighter_data->input.cstick;
+	float angle;
+	if ( sqrtf( (cstick_angle.X * cstick_angle.X) + (cstick_angle.Y * cstick_angle.Y) ) == 0) {  // if the c-stick is in neutral position
+		if (fighter_data->facing_direction == 1) {
+			angle = 0;
+		} else {
+			angle = M_PI;
+		}
+	} else {
+		angle = atan2(cstick_angle.Y, cstick_angle.X);
+	}
 
 	// setup item creation struct
 	SpawnItem spawnItem;
@@ -239,7 +253,7 @@ void CreateFxlaser(float facing_direction, GOBJ *gobj, Vec3 *position, int it_ki
 	GOBJ *item = Item_CreateItem1(&spawnItem);
 
 	// initialize the Fxlaser behavior
-	IS_FxlaserSpawn(item);
+	IS_FxlaserSpawn(item, angle);
 
 	// develop mode stuff
 	Item_CopyDevelopState(item, gobj);
