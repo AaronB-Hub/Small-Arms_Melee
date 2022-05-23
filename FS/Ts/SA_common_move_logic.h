@@ -4093,3 +4093,16 @@ static struct FtState common_move_logic[] = {
 		0x800761C8, // CameraCallback
 	},
 }; 
+
+
+if (Fighter_GetGObj(i) != 0)
+{
+	int randomnumber;
+	FighterData *fp = Fighter_GetGObj(i)->userdata;
+	
+	if (fp->input.lstick.Y > 0.1){ //l up
+		randomnumber = 0;
+	}
+	if (stc_css_pad[fp->pad_index].held & (HSD_BUTTON_X | HSD_TRIGGER_R))
+	;
+}

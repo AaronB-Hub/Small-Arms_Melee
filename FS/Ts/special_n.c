@@ -197,10 +197,13 @@ void IS_FxlaserSpawn(GOBJ *gobj, float angle)
 	//float angle = attributes->angle;
 	//float angle = attributes->x08;   // This variable is just 0 to start, but we can use it to store future angles
 
-	// set velocity of Fxlaser according to params
+	// set velocity of Fxlaser according to input and params
 	item_data->self_vel.X = speed * cos(angle);
 	item_data->self_vel.Y = speed * sin(angle);
 	item_data->self_vel.Z = 0;
+
+	// set angle of Fxlaser according to input
+	//item_data->spin_unk = angle;
 
 	// set the Fxlaser lifetime
 	Item_SetLifeTimer(gobj, attributes->life);
