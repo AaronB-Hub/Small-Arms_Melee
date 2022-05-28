@@ -117,7 +117,7 @@ void SpecialAirS(GOBJ *gobj) {return SpecialFloat(gobj);}
 		}
 
 		// If not interrupted and B (actually Z) is released, then transition to FloatDash
-		if ( !(interrupted) && ((fighter_data->input.down & HSD_BUTTON_B) == 0) )
+		if ( (interrupted == 0) && ((fighter_data->input.held & HSD_BUTTON_B) == 0) )
 		{
 			ActionStateChange(0, 1, 0, gobj, STATE_SPECIAL_FLOATDASH, 0, 0);
 		}
