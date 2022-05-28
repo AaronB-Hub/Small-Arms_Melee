@@ -1,6 +1,6 @@
 #include "test.h"
 ///////////////////////
-//  Initial SpecialN  //
+//  Initial SpecialN //
 ///////////////////////
 /// SpecialN
 ///
@@ -69,7 +69,7 @@ void SpecialN_IASACallback(GOBJ *gobj)
 	FighterData *fighter_data = gobj->userdata;
 	SpecialNFtCmd *script_flags = &fighter_data->ftcmd_var;
 
-	// flag0 is set by ftCmd and determines when you can interupt
+	// flag0 is set by ftCmd and determines when you can interrupt
 	if (script_flags->interruptable != 0)
 	{
 		Fighter_IASACheck_AllGrounded(gobj);

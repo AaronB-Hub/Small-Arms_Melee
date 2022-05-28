@@ -1,5 +1,7 @@
+#include "SA_char.h"
+
 __attribute__((used))
-static struct FtState common_move_logic[] = {
+static struct FtState MODIFIED_common_move_logic[] = {
 	// State: 0 - Animation: FFFFFFFF
 	{
 		-1,         // AnimationID
@@ -4095,14 +4097,17 @@ static struct FtState common_move_logic[] = {
 }; 
 
 
-if (Fighter_GetGObj(i) != 0)
-{
-	int randomnumber;
-	FighterData *fp = Fighter_GetGObj(i)->userdata;
+// if (Fighter_GetGObj(i) != 0)
+// {
+// 	int randomnumber;
+// 	FighterData *fp = Fighter_GetGObj(i)->userdata;
 	
-	if (fp->input.lstick.Y > 0.1){ //l up
-		randomnumber = 0;
-	}
-	if (stc_css_pad[fp->pad_index].held & (HSD_BUTTON_X | HSD_TRIGGER_R))
-	;
-}
+// 	if (fp->input.lstick.Y > 0.1){ //l up
+// 		randomnumber = 0;
+// 	}
+// 	if (stc_css_pad[fp->pad_index].held & (HSD_BUTTON_X | HSD_TRIGGER_R))
+// 	;
+// }
+
+
+// 

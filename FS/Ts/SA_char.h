@@ -1,12 +1,14 @@
+#include "../../m-ex/MexTK/mex.h"
 #include "SA_common_move_logic.h"
-//#include "SA_special_move_logic.h"
-//#include "SA_items.h"
+#include "SA_special_move_logic.h"
+#include "SA_items.h"
 
 ///////////////////////
 //   Common States   //
 ///////////////////////
 
 #define STATE_COMMON_KNEEBEND 9999
+#define STATE_COMMON_AIRDODGE 236
 
 ///////////////////////
 //  Special States   //
@@ -14,7 +16,7 @@
 
 // Custom states (Known ID's unique to characters from https://smashboards.com/threads/internal-action-state-hack.440318/)
 #define STATE_SPECIAL_FLOAT 341
-#define STATE_SPECIAL_FLOATAIR 342
+#define STATE_SPECIAL_FLOATDASH 342
 
 ///////////////////////
 //    Item States    //
@@ -82,7 +84,7 @@ void SpecialFloat_IASACallback(GOBJ *gobj);
 void SpecialFloat_PhysicCallback(GOBJ *gobj);
 void SpecialFloat_CollisionCallback(GOBJ *gobj);
 
-void SpecialAirFloat_AnimationCallback(GOBJ *gobj);
-void SpecialAirFloat_IASACallback(GOBJ *gobj);
-void SpecialAirFloat_PhysicCallback(GOBJ *gobj);
-void SpecialAirFloat_CollisionCallback(GOBJ *gobj);
+void SpecialFloatDash_AnimationCallback(GOBJ *gobj);
+void SpecialFloatDash_IASACallback(GOBJ *gobj);
+void SpecialFloatDash_PhysicCallback(GOBJ *gobj);
+void SpecialFloatDash_CollisionCallback(GOBJ *gobj);
