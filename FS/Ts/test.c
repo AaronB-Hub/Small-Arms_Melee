@@ -16,23 +16,24 @@ void OnLoad(GOBJ *gobj)
 	//fighter_data->ftstates_common = &MODIFIED_common_move_logic;
 
 	// copy attributes
-	memcpy(fighter_data->special_attributes2, fighter_data->ftData->ext_attr, sizeof(TestAttr));
+	//memcpy(fighter_data->special_attributes2, fighter_data->ftData->ext_attr, sizeof(TestAttr));
+	memcpy(fighter_data->special_attributes2, fighter_data->ftData->ext_attr, sizeof(CharAttr));
 
 	// copy pointer to attributes
 	fighter_data->special_attributes = fighter_data->special_attributes2;
 
-	// get fighter item pointer
-	int *fighter_items = fighter_data->ftData->items;
+	// // get fighter item pointer
+	// int *fighter_items = fighter_data->ftData->items;
 
-	// init Fxlaser
-	//Item_StoreItemDataToCharItemTable(fighter_items[0], VANILLA_ITEM_FXLASER);
-	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXLASER], MEX_ITEM_FXLASER);
+	// // init Fxlaser
+	// //Item_StoreItemDataToCharItemTable(fighter_items[0], VANILLA_ITEM_FXLASER);
+	// MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXLASER], MEX_ITEM_FXLASER);
 
-	// init Fxblaster
-	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXBLASTER], MEX_ITEM_FXBLASTER);
+	// // init Fxblaster
+	// MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXBLASTER], MEX_ITEM_FXBLASTER);
 
-	// init Fxshadow
-	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXSHADOW], MEX_ITEM_FXSHADOW);
+	// // init Fxshadow
+	// MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXSHADOW], MEX_ITEM_FXSHADOW);
 
 	// // This block runs fox's pre-existing onload
     // void (*cb_OnLoad)(GOBJ *gobj) = (void *) 0x800E57AC; // <- char specific onload function (can get from MexTool)
