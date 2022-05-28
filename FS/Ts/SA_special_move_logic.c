@@ -111,7 +111,10 @@ void SpecialAirS(GOBJ *gobj) {return SpecialFloat(gobj);}
 			// Air dodge
 			} else if ( ((fighter_data->input.down & HSD_TRIGGER_L) != 0) || ((fighter_data->input.down & HSD_TRIGGER_R) != 0) )
 			{
-				ActionStateChange(0, 1, 0, gobj, STATE_COMMON_AIRDODGE, 0, 0);
+				// STATE_COMMON_AIRDODGE = 236
+				//ActionStateChange(0, 1, 0, gobj, STATE_COMMON_AIRDODGE, 0, 0);
+				void (*cb_OnAirDodge)() = (void *) 0x80099A9C;
+				cb_OnAirDodge(gobj, 3);
 				interrupted = 1;
 			}
 		}
@@ -161,10 +164,24 @@ void SpecialAirS(GOBJ *gobj) {return SpecialFloat(gobj);}
 
 	void SpecialFloatDash_AnimationCallback(GOBJ *gobj)
 	{
+		// Transition to Fall
+		if (FrameTimerCheck(gobj) == 0)
+		{
+			Fighter_EnterFall(gobj);
+		}
 		return;
 	}
 	void SpecialFloatDash_IASACallback(GOBJ *gobj)
 	{
+		FighterData *fighter_data = gobj->userdata;
+		SpecialFloatFtCmd *script_flags = &fighter_data->ftcmd_var;
+
+		// ftcmd_var.flag0 is set by ftCmd and determines when you can interrupt
+		if (script_flags->interruptable != 0)
+		{
+			Fighter_IASACheck_AllAerial(gobj);
+		}
+
 		return;
 	}
 	void SpecialFloatDash_PhysicCallback(GOBJ *gobj)
@@ -173,6 +190,15 @@ void SpecialAirS(GOBJ *gobj) {return SpecialFloat(gobj);}
 	}
 	void SpecialFloatDash_CollisionCallback(GOBJ *gobj)
 	{
+		FighterData *fighter_data = (FighterData *)gobj->userdata;
+
+		// when colliding with the ground change to the grounded state
+		if (Fighter_CollAir_IgnoreLedge_NoCB(gobj) != 0)
+		{
+			Fighter_SetGrounded2(fighter_data);
+			Fighter_EnterWait(gobj);
+		}
+
 		return;
 	}
 

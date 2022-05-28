@@ -2144,7 +2144,8 @@ static struct FtState MODIFIED_common_move_logic[] = {
 		0x100000,   // StateFlags
 		0x1,        // AttackID
 		0xC0,       // BitFlags
-		0x800926DC, // AnimationCallback
+		// 0x800926DC, // AnimationCallback
+		CommonGuardOn_AnimationCallback, // AnimationCallback
 		0x80092758, // IASACallback
 		0x80092870, // PhysicsCallback
 		0x800928AC, // CollisionCallback
@@ -4109,5 +4110,32 @@ static struct FtState MODIFIED_common_move_logic[] = {
 // 	;
 // }
 
+// 	0x800926DC, // AnimationCallback
+void CommonGuardOn_AnimationCallback(GOBJ *gobj)
+{
+	FighterData *fighter_data = gobj->userdata;
 
-// 
+	// Check if initiated by R or L
+	if ( ((fighter_data->input.held & HSD_TRIGGER_R) != 0) || ((fighter_data->input.down & HSD_TRIGGER_R) != 0)
+	{
+		
+	}
+
+	void (*cb_OnGuardOn)() = (void *) 0x800926DC;
+    return cb_OnGuardOn;
+}
+// // 	0x80092758, // IASACallback
+// void CommonGuardOn_IASACallback(GOBJ *gobj)
+// {
+// 	return;
+// }
+// // 	0x80092870, // PhysicsCallback
+// void CommonGuardOn_PhysicCallback(GOBJ *gobj)
+// {
+// 	return;
+// }
+// // 	0x800928AC, // CollisionCallback
+// void CommonGuardOn_CollisionCallback(GOBJ *gobj)
+// {
+// 	return;
+// }
