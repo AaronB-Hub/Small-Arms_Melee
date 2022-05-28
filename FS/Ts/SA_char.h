@@ -1,7 +1,6 @@
 #include "../../m-ex/MexTK/mex.h"
-#include "SA_common_move_logic.h"
-#include "SA_special_move_logic.h"
-#include "SA_items.h"
+// #include "SA_common_move_logic.h"
+// #include "SA_items.h"
 
 ///////////////////////
 //   Common States   //

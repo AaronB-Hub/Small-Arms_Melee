@@ -89,7 +89,7 @@ void SpecialAirS(GOBJ *gobj) {return SpecialFloat(gobj);}
 		CharAttr *charAttr = fighter_data->special_attributes;
 		SpecialFloatFtCmd *script_flags = &fighter_data->ftcmd_var;
 
-		bool interrupted = false;
+		int interrupted = 0;
 
 		// Allow for interrupt after first frame
 		if (fighter_data->state.frame > 0)
@@ -106,13 +106,13 @@ void SpecialAirS(GOBJ *gobj) {return SpecialFloat(gobj);}
 				//	Fighter_EnterJumpAerial(gobj);
 			if (Fighter_IASACheck_JumpAerial(gobj))
 			{
-				interrupted = true;
+				interrupted = 1;
 			
 			// Air dodge
 			} else if ( ((fighter_data->input.down & HSD_TRIGGER_L) != 0) || ((fighter_data->input.down & HSD_TRIGGER_R) != 0) )
 			{
 				ActionStateChange(0, 1, 0, gobj, STATE_COMMON_AIRDODGE, 0, 0);
-				interrupted = true;
+				interrupted = 1;
 			}
 		}
 
@@ -139,6 +139,8 @@ void SpecialAirS(GOBJ *gobj) {return SpecialFloat(gobj);}
 	///
 	void SpecialFloat_CollisionCallback(GOBJ *gobj)
 	{
+		FighterData *fighter_data = gobj->userdata;
+
 		// If grounded or colliding with ground, then make airborne
 		if ( (fighter_data->phys.air_state == 0) || (Fighter_CollAir_IgnoreLedge_NoCB(gobj) != 0) )
 		{
