@@ -129,8 +129,7 @@ void SpecialAirS(GOBJ *gobj) {return SpecialFloat(gobj);}
 	///
 	void SpecialFloat_PhysicCallback(GOBJ *gobj)
 	{
-		// If I don't do anything to velocity, will it just stay constant like I want?
-
+		// If I don't do anything to velocity, will it just stay constant like I want? YES!
 		return;
 	}
 
@@ -141,15 +140,18 @@ void SpecialAirS(GOBJ *gobj) {return SpecialFloat(gobj);}
 	{
 		FighterData *fighter_data = gobj->userdata;
 
-		// If grounded or colliding with ground, then make airborne
-		if ( (fighter_data->phys.air_state == 0) || (Fighter_CollAir_IgnoreLedge_NoCB(gobj) != 0) )
+		// If grounded, then make airborne
+		if ( fighter_data->phys.air_state == 0)
 		{
-			// Move up - will this happen on it's own???
-
-
-
 			Fighter_SetAirborne(fighter_data);
 		}
+
+		// If colliding with ground, then stop all Y velocity
+		if (Fighter_CollAir_IgnoreLedge_NoCB(gobj) != 0)
+		{
+			fighter_data->phys.self_vel.Y = 0;
+		}
+					
 		// // Lock float speeds
 		// Fighter_ClampFallSpeed(fighter_data, fighter_data->phys.self_vel.Y);
 		// Fighter_ClampHorizontalVelocity(fighter_data, fighter_data->phys.self_vel.X);
