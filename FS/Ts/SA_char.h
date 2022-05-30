@@ -15,6 +15,7 @@
 // Custom states (Known ID's unique to characters from https://smashboards.com/threads/internal-action-state-hack.440318/)
 #define STATE_SPECIAL_FLOAT 341
 #define STATE_SPECIAL_FLOATDASH 342
+#define STATE_SPECIAL_PRIMARYFIRE 343
 
 ///////////////////////
 //    Item States    //
@@ -76,6 +77,9 @@ typedef struct SpecialItemFtCmd
 // Think
 void SpecialItemThink(GOBJ *);
 
+// Common Moves
+void CommonGuardOn_AnimationCallback(GOBJ *gobj);
+
 // SpecialFloat
 void SpecialFloat_AnimationCallback(GOBJ *gobj);
 void SpecialFloat_IASACallback(GOBJ *gobj);
@@ -86,3 +90,9 @@ void SpecialFloatDash_AnimationCallback(GOBJ *gobj);
 void SpecialFloatDash_IASACallback(GOBJ *gobj);
 void SpecialFloatDash_PhysicCallback(GOBJ *gobj);
 void SpecialFloatDash_CollisionCallback(GOBJ *gobj);
+
+// SpecialPrimaryFire
+void SpecialPrimaryFire_AnimationCallback(GOBJ *gobj);
+void SpecialPrimaryFire_IASACallback(GOBJ *gobj);
+void SpecialPrimaryFire_PhysicCallback(GOBJ *gobj);
+void SpecialPrimaryFire_CollisionCallback(GOBJ *gobj);

@@ -1,5 +1,6 @@
 //#include "test.h"
 #include "SA_char.h"
+#include "SA_common_move_logic.h"
 
 ///////////////////////
 //    Test Basic    //
@@ -13,7 +14,7 @@ void OnLoad(GOBJ *gobj)
 	FighterData *fighter_data = gobj->userdata;
 
 	// Modify common ft state struct
-	//fighter_data->ftstates_common = &MODIFIED_common_move_logic;
+	fighter_data->ftstates_common = &MODIFIED_common_move_logic;
 
 	// copy attributes
 	//memcpy(fighter_data->special_attributes2, fighter_data->ftData->ext_attr, sizeof(TestAttr));

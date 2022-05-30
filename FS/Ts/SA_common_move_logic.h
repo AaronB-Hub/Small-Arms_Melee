@@ -1,4 +1,4 @@
-#include "SA_char.h"
+//#include "SA_char.h"
 
 __attribute__((used))
 static struct FtState MODIFIED_common_move_logic[] = {
@@ -4095,47 +4095,4 @@ static struct FtState MODIFIED_common_move_logic[] = {
 		0x800C9260, // CollisionCallback
 		0x800761C8, // CameraCallback
 	},
-}; 
-
-
-// if (Fighter_GetGObj(i) != 0)
-// {
-// 	int randomnumber;
-// 	FighterData *fp = Fighter_GetGObj(i)->userdata;
-	
-// 	if (fp->input.lstick.Y > 0.1){ //l up
-// 		randomnumber = 0;
-// 	}
-// 	if (stc_css_pad[fp->pad_index].held & (HSD_BUTTON_X | HSD_TRIGGER_R))
-// 	;
-// }
-
-// 	0x800926DC, // AnimationCallback
-void CommonGuardOn_AnimationCallback(GOBJ *gobj)
-{
-	FighterData *fighter_data = gobj->userdata;
-
-	// Check if initiated by R or L
-	if ( ((fighter_data->input.held & HSD_TRIGGER_R) != 0) || ((fighter_data->input.down & HSD_TRIGGER_R) != 0)
-	{
-		
-	}
-
-	void (*cb_OnGuardOn)() = (void *) 0x800926DC;
-    return cb_OnGuardOn;
-}
-// // 	0x80092758, // IASACallback
-// void CommonGuardOn_IASACallback(GOBJ *gobj)
-// {
-// 	return;
-// }
-// // 	0x80092870, // PhysicsCallback
-// void CommonGuardOn_PhysicCallback(GOBJ *gobj)
-// {
-// 	return;
-// }
-// // 	0x800928AC, // CollisionCallback
-// void CommonGuardOn_CollisionCallback(GOBJ *gobj)
-// {
-// 	return;
-// }
+};

@@ -25,7 +25,52 @@ __attribute__((used)) static struct FtState move_logic[] = {
 		SpecialFloatDash_CollisionCallback,           // CollisionCallback
 		Fighter_UpdateCameraBox,	                  // CameraCallback
 	},
+	// State: 343 - SpecialPrimaryFire
+	{
+		38,					    	                  // AnimationID
+		0x0,					                      // StateFlags
+		0x0,						                  // AttackID
+		0x0,						                  // BitFlags
+		SpecialPrimaryFire_AnimationCallback,         // AnimationCallback
+		SpecialPrimaryFire_IASACallback,	          // IASACallback
+		SpecialPrimaryFire_PhysicCallback,            // PhysicsCallback
+		SpecialPrimaryFire_CollisionCallback,         // CollisionCallback
+		Fighter_UpdateCameraBox,	                  // CameraCallback
+	},
 };
+
+// Common Move Logic
+// if (Fighter_GetGObj(i) != 0)
+// {
+// 	int randomnumber;
+// 	FighterData *fp = Fighter_GetGObj(i)->userdata;
+	
+// 	if (fp->input.lstick.Y > 0.1){ //l up
+// 		randomnumber = 0;
+// 	}
+// 	if (stc_css_pad[fp->pad_index].held & (HSD_BUTTON_X | HSD_TRIGGER_R))
+// 	;
+// }
+
+// 0x800924c0
+
+// 0x800926DC
+void CommonGuardOn_AnimationCallback(GOBJ *gobj)
+{
+	FighterData *fighter_data = gobj->userdata;
+
+	// Check if initiated by R or L
+	if ( ((fighter_data->input.held & HSD_TRIGGER_R) != 0) || ((fighter_data->input.down & HSD_TRIGGER_R) != 0) )
+	{
+		ActionStateChange(0, 1, 0, gobj, STATE_SPECIAL_PRIMARYFIRE, 0, 0);
+        return;
+	} else
+    {
+        void (*cb_OnGuardOn)(GOBJ *gobj) = (void *) 0x800926DC;
+        return cb_OnGuardOn(gobj);
+    }	
+}
+
 
 // Special Move Logic
 void SpecialHi(GOBJ *gobj) {return SpecialFloat(gobj);}
@@ -39,7 +84,7 @@ void SpecialAirS(GOBJ *gobj) {return SpecialFloat(gobj);}
 
 
 
-// ___ FLOAT ___
+#pragma region FLOAT
 	///////////////////////
 	//   Initial Float   //
 	///////////////////////
@@ -111,9 +156,9 @@ void SpecialAirS(GOBJ *gobj) {return SpecialFloat(gobj);}
 			// Air dodge
 			} else if ( ((fighter_data->input.down & HSD_TRIGGER_L) != 0) || ((fighter_data->input.down & HSD_TRIGGER_R) != 0) )
 			{
-				// STATE_COMMON_AIRDODGE = 236
+				// Using ASC() here does not give the proper air dodge functionality
 				//ActionStateChange(0, 1, 0, gobj, STATE_COMMON_AIRDODGE, 0, 0);
-				void (*cb_OnAirDodge)() = (void *) 0x80099A9C;
+				void (*cb_OnAirDodge)(GOBJ *gobj, int framenum) = (void *) 0x80099A9C;  // inputs to this function are the fighter gobject and the number of frames you have to input a z drop at the start of an airdodge (3) 
 				cb_OnAirDodge(gobj, 3);
 				interrupted = 1;
 			}
@@ -201,5 +246,26 @@ void SpecialAirS(GOBJ *gobj) {return SpecialFloat(gobj);}
 
 		return;
 	}
+#pragma endregion
 
-/* ___ New section ___ */
+#pragma region ItemFire
+	/// SpecialPrimaryFire
+	///
+	///
+    void SpecialPrimaryFire_AnimationCallback(GOBJ *gobj)
+    {
+        return;
+    }
+    void SpecialPrimaryFire_IASACallback(GOBJ *gobj)
+    {
+        return;
+    }
+    void SpecialPrimaryFire_PhysicCallback(GOBJ *gobj)
+    {
+        return;
+    }
+    void SpecialPrimaryFire_CollisionCallback(GOBJ *gobj)
+    {
+        return;
+    }
+#pragma endregion
