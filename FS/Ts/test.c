@@ -37,7 +37,7 @@ void OnLoad(GOBJ *gobj)
 	// MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXSHADOW], MEX_ITEM_FXSHADOW);
 
 	// // This block runs fox's pre-existing onload
-    // void (*cb_OnLoad)(GOBJ *gobj) = (void *) 0x800E57AC; // <- char specific onload function (can get from MexTool)
+    // void (*cb_OnLoad)(GOBJ *gobj) = (void *) 0x800E57AC;  // <- char specific onload function (can get from MexTool)
     // cb_OnLoad(gobj);
 
 }
