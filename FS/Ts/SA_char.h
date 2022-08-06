@@ -74,8 +74,17 @@ typedef struct SpecialItemFtCmd
 //     Functions     //
 ///////////////////////
 
+// Add custom proc to customize controls 
+void SA_Intercept_IASACallback(GOBJ *gobj);
+void Custom_Controls_SA(GOBJ *gobj)
+{
+    // Added at IASA update priority to be performed just after inputs are received
+    GObj_AddProc(gobj, SA_Intercept_IASACallback, 3);
+    return;
+}
+
 // Think
-void SpecialItemThink(GOBJ *);
+void SpecialItemThink(GOBJ *gobj);
 
 // Common Moves
 void CommonGuardOn_AnimationCallback(GOBJ *gobj);

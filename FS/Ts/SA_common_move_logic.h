@@ -2144,8 +2144,8 @@ static struct FtState MODIFIED_common_move_logic[] = {
 		0x100000,   // StateFlags
 		0x1,        // AttackID
 		0xC0,       // BitFlags
-		// 0x800926DC, // AnimationCallback
-		CommonGuardOn_AnimationCallback, // AnimationCallback
+		0x800926DC, // AnimationCallback
+		//CommonGuardOn_AnimationCallback, // AnimationCallback
 		0x80092758, // IASACallback
 		0x80092870, // PhysicsCallback
 		0x800928AC, // CollisionCallback

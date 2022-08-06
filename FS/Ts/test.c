@@ -23,6 +23,9 @@ void OnLoad(GOBJ *gobj)
 	// copy pointer to attributes
 	fighter_data->special_attributes = fighter_data->special_attributes2;
 
+    // Add custom SA controls
+    Custom_Controls_SA(gobj);
+
 	// // get fighter item pointer
 	// int *fighter_items = fighter_data->ftData->items;
 
