@@ -49,10 +49,34 @@ void SA_Intercept_IASACallback(GOBJ *gobj)
 
     // Test if proc works
     // Check if in first frame of shield state, then vary the animation depending on if initiated by R or L press
-    if ( (fighter_data->state_id == 178) && (fighter_data->state.frame == 1) )
+    // if ( (fighter_data->state_id == 178) && (fighter_data->state.frame == 1) )
+    if (fighter_data->state_id == 179)
     {
         CommonGuardOn_AnimationCallback(gobj);
     }
+
+    /* L - Item Fire
+    - Air Dodge
+    - Shield
+    - L-Cancel
+    */
+
+    /* C-stick - Aim
+    - Smash attacks
+    */
+
+    /* X - Float
+    - Kneebend/jump
+    - Double-jump
+    */
+
+    /* D-pad - Aiming Style
+    - Taunts
+    */
+
+
+
+
     return;
 }
 #pragma endregion
