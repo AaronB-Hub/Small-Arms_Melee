@@ -13,8 +13,8 @@
 ///////////////////////
 
 // Custom states (Known ID's unique to characters from https://smashboards.com/threads/internal-action-state-hack.440318/)
-#define STATE_SPECIAL_FLOAT 341
-#define STATE_SPECIAL_FLOATDASH 342
+#define STATE_SA_FLOAT 341
+#define STATE_SA_FLOATDASH 342
 #define STATE_SPECIAL_PRIMARYFIRE 343
 
 ///////////////////////
@@ -39,7 +39,7 @@ typedef struct CharAttr
 	// 0x14 thru 0x17 holds a float for the speed of the laser projectile (in this case 7 from fox)
 } CharAttr;                                   // size: 0xD4
 
-typedef struct SpecialItemAttr
+typedef struct ItemAttr
 {
     float life;  // [42 0c 00 00 = 35 frames] // x00
     float x04;   // [40 40 00 00 = 3?]        // x04
@@ -56,19 +56,20 @@ typedef struct SpecialItemAttr
     float x30;                                // x30
 	float x34;                                // x34
     float x38;                                // x38
-} SpecialItemAttr;                                // size: 0x3C
+} ItemAttr;                                // size: 0x3C
 
-typedef struct SpecialFloatFtCmd
+typedef struct FloatFtCmd
 {
 	int interruptable;
 	int used_float;
-} SpecialFloatFtCmd;
+    int type;
+} FloatFtCmd;
 
-typedef struct SpecialItemFtCmd
+typedef struct ItemFtCmd
 {
 	int interruptable;
 	int fired;
-} SpecialItemFtCmd;
+} ItemFtCmd;
 
 ///////////////////////
 //     Functions     //
@@ -84,23 +85,23 @@ void Custom_Controls_SA(GOBJ *gobj)
 }
 
 // Think
-void SpecialItemThink(GOBJ *gobj);
+void SAItemThink(GOBJ *gobj);
 
-// Common Moves
+// Common Moves (Vanilla)
 void CommonGuardOn_AnimationCallback(GOBJ *gobj);
 
-// SpecialFloat
-void SpecialFloat_AnimationCallback(GOBJ *gobj);
-void SpecialFloat_IASACallback(GOBJ *gobj);
-void SpecialFloat_PhysicCallback(GOBJ *gobj);
-void SpecialFloat_CollisionCallback(GOBJ *gobj);
+// SA Moves (Shared by all SA characters)
+void SAFloat_AnimationCallback(GOBJ *gobj);
+void SAFloat_IASACallback(GOBJ *gobj);
+void SAFloat_PhysicCallback(GOBJ *gobj);
+void SAFloat_CollisionCallback(GOBJ *gobj);
 
-void SpecialFloatDash_AnimationCallback(GOBJ *gobj);
-void SpecialFloatDash_IASACallback(GOBJ *gobj);
-void SpecialFloatDash_PhysicCallback(GOBJ *gobj);
-void SpecialFloatDash_CollisionCallback(GOBJ *gobj);
+void SAFloatDash_AnimationCallback(GOBJ *gobj);
+void SAFloatDash_IASACallback(GOBJ *gobj);
+void SAFloatDash_PhysicCallback(GOBJ *gobj);
+void SAFloatDash_CollisionCallback(GOBJ *gobj);
 
-// SpecialPrimaryFire
+// Special Moves (Character-specific)
 void SpecialPrimaryFire_AnimationCallback(GOBJ *gobj);
 void SpecialPrimaryFire_IASACallback(GOBJ *gobj);
 void SpecialPrimaryFire_PhysicCallback(GOBJ *gobj);
