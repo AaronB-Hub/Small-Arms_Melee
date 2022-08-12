@@ -16,6 +16,7 @@ void SAFloat(GOBJ *gobj)
 
     // If Grounded - Still(0), Rising(1), or Sliding(2) depending on if coming from jumpsquat, leapsquat, or other
     // If Airborne - Still(0), Rising(1), or Moving(3) depending on inputs held and if coming from doublejump or not
+    
     script_flags->type = 0;
 
     // change to Float state and update subaction
