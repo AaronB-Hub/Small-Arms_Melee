@@ -116,12 +116,12 @@ void CommonGuardOn_AnimationCallback(GOBJ *gobj)
 	if ( ((fighter_data->input.held & HSD_TRIGGER_L) != 0) || ((fighter_data->input.down & HSD_TRIGGER_L) != 0) )
 	{
 		ActionStateChange(0, 1, 0, gobj, STATE_SPECIAL_PRIMARYFIRE, 0, 0);
-        return;
+    return;
 	} else
-    {
-        void (*cb_OnGuardOn)(GOBJ *gobj) = (void *) 0x800926DC;
-        return cb_OnGuardOn(gobj);
-    }	
+  {
+    void (*cb_OnGuardOn)(GOBJ *gobj) = (void *) 0x800926DC;
+    return cb_OnGuardOn(gobj);
+  }	
 }
 
 

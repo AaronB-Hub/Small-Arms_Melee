@@ -79,9 +79,9 @@ typedef struct ItemFtCmd
 void SA_Intercept_IASACallback(GOBJ *gobj);
 void Custom_Controls_SA(GOBJ *gobj)
 {
-    // Added at IASA update priority to be performed just after inputs are received
-    GObj_AddProc(gobj, SA_Intercept_IASACallback, 3);
-    return;
+  // Added at IASA update priority to be performed just after inputs are received
+  GObj_AddProc(gobj, SA_Intercept_IASACallback, 3);
+  return;
 }
 
 // Think

@@ -1,4 +1,3 @@
-//#include "test.h"
 #include "SA_char.h"
 #include "SA_common_move_logic.h"
 
@@ -64,58 +63,3 @@ void OnSpawn(GOBJ *gobj)
 
 	return;
 }
-///
-///
-///
-// __attribute__((used)) static struct FtState move_logic[] = {
-// // Copy this using the 'Copy Move Logic struct' functionality in the mexTool
-
-// 	// State: 341 - SpecialN
-// 	{
-// 		296,						// AnimationID
-// 		0x340111,					// StateFlags
-// 		0x12,						// AttackID
-// 		0x0,						// BitFlags
-// 		SpecialN_AnimationCallback, // AnimationCallback
-// 		SpecialN_IASACallback,		// IASACallback
-// 		SpecialN_PhysicCallback,	// PhysicsCallback
-// 		SpecialN_CollisionCallback, // CollisionCallback
-// 		Fighter_UpdateCameraBox,	// CameraCallback
-// 	},
-// 	// State: 342 - SpecialAirN
-// 	{
-// 		299,						   // AnimationID
-// 		0x340511,					   // StateFlags
-// 		0x12,						   // AttackID
-// 		0x0,						   // BitFlags
-// 		SpecialAirN_AnimationCallback, // AnimationCallback
-// 		SpecialAirN_IASACallback,	   // IASACallback
-// 		SpecialAirN_PhysicCallback,	   // PhysicsCallback
-// 		SpecialAirN_CollisionCallback, // CollisionCallback
-// 		Fighter_UpdateCameraBox,	   // CameraCallback
-// 	},
-// 	// State: 343 - SpecialS
-// 	{
-// 		296,						// AnimationID
-// 		0x340111,					// StateFlags
-// 		0x12,						// AttackID
-// 		0x0,						// BitFlags
-// 		SpecialS_AnimationCallback, // AnimationCallback
-// 		SpecialS_IASACallback,		// IASACallback
-// 		SpecialS_PhysicCallback,	// PhysicsCallback
-// 		SpecialS_CollisionCallback, // CollisionCallback
-// 		Fighter_UpdateCameraBox,	// CameraCallback
-// 	},
-// 	// State: 344 - SpecialAirS
-// 	{
-// 		299,						   // AnimationID
-// 		0x340511,					   // StateFlags
-// 		0x12,						   // AttackID
-// 		0x0,						   // BitFlags
-// 		SpecialAirS_AnimationCallback, // AnimationCallback
-// 		SpecialAirS_IASACallback,	   // IASACallback
-// 		SpecialAirS_PhysicCallback,	   // PhysicsCallback
-// 		SpecialAirS_CollisionCallback, // CollisionCallback
-// 		Fighter_UpdateCameraBox,	   // CameraCallback
-// 	},
-// };
