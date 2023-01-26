@@ -5,7 +5,11 @@
 //   Common States   //
 ///////////////////////
 
-#define STATE_COMMON_KNEEBEND 9999
+#define STATE_COMMON_DASH 20
+#define STATE_COMMON_RUN 21
+#define STATE_COMMON_KNEEBEND 24  // Landing/Kneebend (42 or 43 are also landing actions, but not kneebend https://smashboards.com/threads/melee-hacks-and-you-new-hackers-start-here-in-the-op.247119/page-98#post-14773022)
+#define STATE_COMMON_JUMPF 25
+#define STATE_COMMON_JUMPB 26
 #define STATE_COMMON_AIRDODGE 236
 
 ///////////////////////
@@ -16,6 +20,10 @@
 #define STATE_SA_FLOAT 341
 #define STATE_SA_FLOATDASH 342
 #define STATE_SPECIAL_PRIMARYFIRE 343
+#define STATE_SPECIAL_SECONDARYFIRE 344
+#define STATE_SA_LEAPKNEEBEND 345
+#define STATE_SA_LEAPF 346
+#define STATE_SA_LEAPB 347
 
 ///////////////////////
 //    Item States    //
@@ -101,8 +109,23 @@ void SAFloatDash_IASACallback(GOBJ *gobj);
 void SAFloatDash_PhysicCallback(GOBJ *gobj);
 void SAFloatDash_CollisionCallback(GOBJ *gobj);
 
+void SALeapKneeBend_AnimationCallback(GOBJ *gobj);
+void SALeapKneeBend_IASACallback(GOBJ *gobj);
+void SALeapKneeBend_PhysicCallback(GOBJ *gobj);
+void SALeapKneeBend_CollisionCallback(GOBJ *gobj);
+
+void SALeap_AnimationCallback(GOBJ *gobj);
+void SALeap_IASACallback(GOBJ *gobj);
+void SALeap_PhysicCallback(GOBJ *gobj);
+void SALeap_CollisionCallback(GOBJ *gobj);
+
 // Special Moves (Character-specific)
 void SpecialPrimaryFire_AnimationCallback(GOBJ *gobj);
 void SpecialPrimaryFire_IASACallback(GOBJ *gobj);
 void SpecialPrimaryFire_PhysicCallback(GOBJ *gobj);
 void SpecialPrimaryFire_CollisionCallback(GOBJ *gobj);
+
+void SpecialSecondaryFire_AnimationCallback(GOBJ *gobj);
+void SpecialSecondaryFire_IASACallback(GOBJ *gobj);
+void SpecialSecondaryFire_PhysicCallback(GOBJ *gobj);
+void SpecialSecondaryFire_CollisionCallback(GOBJ *gobj);

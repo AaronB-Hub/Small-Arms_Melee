@@ -39,7 +39,81 @@ __attribute__((used)) static struct FtState move_logic[] = {
 		SpecialPrimaryFire_CollisionCallback,         // CollisionCallback
 		Fighter_UpdateCameraBox,	                  // CameraCallback
 	},
+  // State: 344 - SpecialSecondaryFire
+	{
+		38,					    	                  // AnimationID
+		0x0,					                      // StateFlags
+		0x0,						                  // AttackID
+		0x0,						                  // BitFlags
+		SpecialSecondaryFire_AnimationCallback,         // AnimationCallback
+		SpecialSecondaryFire_IASACallback,	          // IASACallback
+		SpecialSecondaryFire_PhysicCallback,            // PhysicsCallback
+		SpecialSecondaryFire_CollisionCallback,         // CollisionCallback
+		Fighter_UpdateCameraBox,	                  // CameraCallback
+	},
+  // State: 345 - SALeapKneeBend
+	{
+		15,					    	                  // AnimationID
+		0x0,					                      // StateFlags
+		0x1,        // State: 24 - Landing AttackID
+		0xC0,       // State: 24 - Landing BitFlags
+        SALeapKneeBend_AnimationCallback,                // AnimationCallback
+		SALeapKneeBend_IASACallback,	                  // IASACallback
+		SALeapKneeBend_PhysicCallback,                   // PhysicsCallback
+		SALeapKneeBend_CollisionCallback,                // CollisionCallback
+		Fighter_UpdateCameraBox,	                  // CameraCallback
+	},
+  // State: 346 - SALeapF
+	{
+		16,					    	                  // AnimationID
+		0x8069,     // State: 25 - JumpF StateFlags
+		0x1,        // State: 25 - JumpF AttackID
+		0x80,       // State: 25 - JumpF BitFlags
+		SALeap_AnimationCallback,                // AnimationCallback
+		SALeap_IASACallback,	                  // IASACallback
+		SALeap_PhysicCallback,                   // PhysicsCallback
+		SALeap_CollisionCallback,                // CollisionCallback
+		Fighter_UpdateCameraBox,	                  // CameraCallback
+	},
+	// State: 347 - SALeapB
+	{
+		17,					    	                  // AnimationID
+		0x8069,     // State: 26 - JumpB StateFlags
+		0x1,        // State: 26 - JumpB AttackID
+		0x80,       // State: 26 - JumpB BitFlags
+		SALeap_AnimationCallback,                // AnimationCallback
+		SALeap_IASACallback,	                  // IASACallback
+		SALeap_PhysicCallback,                   // PhysicsCallback
+		SALeap_CollisionCallback,                // CollisionCallback
+		Fighter_UpdateCameraBox,	                  // CameraCallback
+	},
 };
+
+
+#pragma region SASpecials
+/// Grounded Hi/N/S Specials (Leap)
+///
+///
+void SpecialHi(GOBJ *gobj) {return SALeapKneeBend(gobj);}
+void SpecialN(GOBJ *gobj) {return SALeapKneeBend(gobj);}
+void SpecialS(GOBJ *gobj) {return SALeapKneeBend(gobj);}
+
+/// Grounded Lw Specials (Kicks)
+///
+///
+// void SpecialLw(GOBJ *gobj) {return SAKick(gobj);}
+
+/// Aerial N/S/Hi Specials (Kicks & Slides)
+///
+///
+// void SpecialAirHi(GOBJ *gobj) {return SAKick(gobj);}
+// void SpecialAirN(GOBJ *gobj) {return SAKick(gobj);}
+// void SpecialAirS(GOBJ *gobj) {return SAKick(gobj);}
+
+/// Aerial Lw Specials (Kicks)
+///
+///
+// void SpecialAirLw(GOBJ *gobj) {return SAKick(gobj);}
 #pragma endregion
 
 #pragma region ControlLogic
@@ -126,10 +200,10 @@ void CommonGuardOn_AnimationCallback(GOBJ *gobj)
 
 
 // Special Move Logic
-void SpecialHi(GOBJ *gobj) {return SAFloat(gobj);}
+//void SpecialHi(GOBJ *gobj) {return SAFloat(gobj);}
 void SpecialLw(GOBJ *gobj) {return SAFloat(gobj);}
-void SpecialN(GOBJ *gobj) {return SAFloat(gobj);}
-void SpecialS(GOBJ *gobj) {return SAFloat(gobj);}
+//void SpecialN(GOBJ *gobj) {return SAFloat(gobj);}
+//void SpecialS(GOBJ *gobj) {return SAFloat(gobj);}
 void SpecialAirHi(GOBJ *gobj) {return SAFloat(gobj);}
 void SpecialAirLw(GOBJ *gobj) {return SAFloat(gobj);}
 void SpecialAirN(GOBJ *gobj) {return SAFloat(gobj);}
@@ -154,6 +228,26 @@ void SpecialPrimaryFire_PhysicCallback(GOBJ *gobj)
     return;
 }
 void SpecialPrimaryFire_CollisionCallback(GOBJ *gobj)
+{
+    return;
+}
+
+/// SpecialSecondaryFire
+///
+///
+void SpecialSecondaryFire_AnimationCallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialSecondaryFire_IASACallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialSecondaryFire_PhysicCallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialSecondaryFire_CollisionCallback(GOBJ *gobj)
 {
     return;
 }

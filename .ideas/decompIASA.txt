@@ -1,0 +1,5 @@
+analysis of the current IASA subroutines for the common moves to see:
+- How similar are these across characters?
+- Are internal functions re-used across IASA subroutines for different moves?
+- Is it worth trying to modify these IASA subroutines themselves (through code injection) rather than undo-ing/modifying a subaction state change right after them?
+- etc.
