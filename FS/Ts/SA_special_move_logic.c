@@ -53,7 +53,7 @@ __attribute__((used)) static struct FtState move_logic[] = {
 	},
   // State: 345 - SALeapKneeBend
 	{
-		15,					    	                  // AnimationID
+		15,	        // State: 24 - Landing AnimationID
 		0x0,					                      // StateFlags
 		0x1,        // State: 24 - Landing AttackID
 		0xC0,       // State: 24 - Landing BitFlags
@@ -65,7 +65,7 @@ __attribute__((used)) static struct FtState move_logic[] = {
 	},
   // State: 346 - SALeapF
 	{
-		16,					    	                  // AnimationID
+		16,	        // State: 25 - JumpF AnimationID
 		0x8069,     // State: 25 - JumpF StateFlags
 		0x1,        // State: 25 - JumpF AttackID
 		0x80,       // State: 25 - JumpF BitFlags
@@ -77,7 +77,7 @@ __attribute__((used)) static struct FtState move_logic[] = {
 	},
 	// State: 347 - SALeapB
 	{
-		17,					    	                  // AnimationID
+		17,	        // State: 26 - JumpB AnimationID
 		0x8069,     // State: 26 - JumpB StateFlags
 		0x1,        // State: 26 - JumpB AttackID
 		0x80,       // State: 26 - JumpB BitFlags
@@ -87,33 +87,61 @@ __attribute__((used)) static struct FtState move_logic[] = {
 		SALeap_CollisionCallback,                // CollisionCallback
 		Fighter_UpdateCameraBox,	                  // CameraCallback
 	},
+    // State: 348 - SASlideKick
+	{
+		52,         // State: 50 - AttackDash AnimationID
+		0x240205,   // State: 50 - AttackDash StateFlags
+		0x6,        // State: 50 - AttackDash AttackID
+		0x80,       // State: 50 - AttackDash BitFlags
+		SASlideKick_AnimationCallback,                // AnimationCallback
+		SASlideKick_IASACallback,	                  // IASACallback
+		SASlideKick_PhysicCallback,                   // PhysicsCallback
+		SASlideKick_CollisionCallback,                // CollisionCallback
+		Fighter_UpdateCameraBox,	                  // CameraCallback
+	},
+    // State: 349 - SAFlyingKick
+	{
+		68,         // State: 65 - AttackAirN AnimationID
+		0x24060C,   // State: 65 - AttackAirN StateFlags
+		0xD,        // State: 65 - AttackAirN AttackID
+		0x80,       // State: 65 - AttackAirN BitFlags
+		SAFlyingKick_AnimationCallback,                // AnimationCallback
+		SAFlyingKick_IASACallback,	                  // IASACallback
+		SAFlyingKick_PhysicCallback,                   // PhysicsCallback
+		SAFlyingKick_CollisionCallback,                // CollisionCallback
+		Fighter_UpdateCameraBox,	                  // CameraCallback
+	},
+    // State: 350 - SADiveKick
+	{
+		72,         // State: 69 - AttackAirLw AnimationID
+		0x240610,   // State: 69 - AttackAirLw StateFlags
+		0x11,       // State: 69 - AttackAirLw AttackID
+		0x80,       // State: 69 - AttackAirLw BitFlags
+		SADiveKick_AnimationCallback,                // AnimationCallback
+		SADiveKick_IASACallback,	                  // IASACallback
+		SADiveKick_PhysicCallback,                   // PhysicsCallback
+		SADiveKick_CollisionCallback,                // CollisionCallback
+		Fighter_UpdateCameraBox,	                  // CameraCallback
+	},
 };
 
 
 #pragma region SASpecials
 /// Grounded Hi/N/S Specials (Leap)
-///
-///
 void SpecialHi(GOBJ *gobj) {return SALeapKneeBend(gobj);}
 void SpecialN(GOBJ *gobj) {return SALeapKneeBend(gobj);}
 void SpecialS(GOBJ *gobj) {return SALeapKneeBend(gobj);}
 
 /// Grounded Lw Specials (Kicks)
-///
-///
-// void SpecialLw(GOBJ *gobj) {return SAKick(gobj);}
+void SpecialLw(GOBJ *gobj) {return SASlideKick(gobj);}
 
 /// Aerial N/S/Hi Specials (Kicks & Slides)
-///
-///
-// void SpecialAirHi(GOBJ *gobj) {return SAKick(gobj);}
-// void SpecialAirN(GOBJ *gobj) {return SAKick(gobj);}
-// void SpecialAirS(GOBJ *gobj) {return SAKick(gobj);}
+void SpecialAirHi(GOBJ *gobj) {return SAFlyingKick(gobj);}
+void SpecialAirN(GOBJ *gobj) {return SAFlyingKick(gobj);}
+void SpecialAirS(GOBJ *gobj) {return SAFlyingKick(gobj);}
 
 /// Aerial Lw Specials (Kicks)
-///
-///
-// void SpecialAirLw(GOBJ *gobj) {return SAKick(gobj);}
+void SpecialAirLw(GOBJ *gobj) {return SADiveKick(gobj);}
 #pragma endregion
 
 #pragma region ControlLogic
@@ -197,18 +225,6 @@ void CommonGuardOn_AnimationCallback(GOBJ *gobj)
     return cb_OnGuardOn(gobj);
   }	
 }
-
-
-// Special Move Logic
-//void SpecialHi(GOBJ *gobj) {return SAFloat(gobj);}
-void SpecialLw(GOBJ *gobj) {return SAFloat(gobj);}
-//void SpecialN(GOBJ *gobj) {return SAFloat(gobj);}
-//void SpecialS(GOBJ *gobj) {return SAFloat(gobj);}
-void SpecialAirHi(GOBJ *gobj) {return SAFloat(gobj);}
-void SpecialAirLw(GOBJ *gobj) {return SAFloat(gobj);}
-void SpecialAirN(GOBJ *gobj) {return SAFloat(gobj);}
-void SpecialAirS(GOBJ *gobj) {return SAFloat(gobj);}
-
 #pragma endregion
 
 #pragma region ItemFire

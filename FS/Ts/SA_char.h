@@ -10,6 +10,9 @@
 #define STATE_COMMON_KNEEBEND 24  // Landing/Kneebend (42 or 43 are also landing actions, but not kneebend https://smashboards.com/threads/melee-hacks-and-you-new-hackers-start-here-in-the-op.247119/page-98#post-14773022)
 #define STATE_COMMON_JUMPF 25
 #define STATE_COMMON_JUMPB 26
+#define STATE_COMMON_ATTACKDASH 50
+#define STATE_COMMON_ATTACKAIRN 65
+#define STATE_COMMON_ATTACKAIRLW 69
 #define STATE_COMMON_AIRDODGE 236
 
 ///////////////////////
@@ -24,6 +27,9 @@
 #define STATE_SA_LEAPKNEEBEND 345
 #define STATE_SA_LEAPF 346
 #define STATE_SA_LEAPB 347
+#define STATE_SA_SLIDEKICK 348
+#define STATE_SA_FLYINGKICK 349
+#define STATE_SA_DIVEKICK 350
 
 ///////////////////////
 //    Item States    //
@@ -118,6 +124,21 @@ void SALeap_AnimationCallback(GOBJ *gobj);
 void SALeap_IASACallback(GOBJ *gobj);
 void SALeap_PhysicCallback(GOBJ *gobj);
 void SALeap_CollisionCallback(GOBJ *gobj);
+
+void SASlideKick_AnimationCallback(GOBJ *gobj);
+void SASlideKick_IASACallback(GOBJ *gobj);
+void SASlideKick_PhysicCallback(GOBJ *gobj);
+void SASlideKick_CollisionCallback(GOBJ *gobj);
+
+void SAFlyingKick_AnimationCallback(GOBJ *gobj);
+void SAFlyingKick_IASACallback(GOBJ *gobj);
+void SAFlyingKick_PhysicCallback(GOBJ *gobj);
+void SAFlyingKick_CollisionCallback(GOBJ *gobj);
+
+void SADiveKick_AnimationCallback(GOBJ *gobj);
+void SADiveKick_IASACallback(GOBJ *gobj);
+void SADiveKick_PhysicCallback(GOBJ *gobj);
+void SADiveKick_CollisionCallback(GOBJ *gobj);
 
 // Special Moves (Character-specific)
 void SpecialPrimaryFire_AnimationCallback(GOBJ *gobj);

@@ -39,7 +39,6 @@ void SALeapKneeBend(GOBJ *gobj)
 ///
 void SALeapKneeBend_AnimationCallback(GOBJ *gobj)
 {
-
     // // This block runs the pre-existing associated kneebend function
     // void (*KneeBend_AnimationCallback)(GOBJ *gobj) = (void *) 0x800CB528; // State: 24 - Landing AnimationCallback
     // return KneeBend_AnimationCallback(gobj);
@@ -58,14 +57,15 @@ void SALeapKneeBend_AnimationCallback(GOBJ *gobj)
         func_8007D5D4(fighter_data);
 
         //if ((fighter_data->input.lstick.X * fighter_data->facing_direction) > ft_common->0x78) {
-        if ( (fighter_data->input.lstick.X * fighter_data->facing_direction) > *((f32 *) ((u8 *) ft_common + 0x78)) ) {
+        //if ( (fighter_data->input.lstick.X * fighter_data->facing_direction) > *((f32 *) ((u8 *) ft_common + 0x78)) ) {
+        if ( (fighter_data->input.lstick.X * fighter_data->facing_direction) >= 0 ) {
             
             // Passed flag to preserve velocity
             ActionStateChange(0, 1, 0, gobj, STATE_SA_LEAPF, 0x20, 0);
         } else {
             // Passed flag to preserve velocity
-            ActionStateChange(0, 1, 0, gobj, STATE_SA_LEAPB, 0x20, 0);
-            //ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOAT, 0x20, 0);  // Was using to test under what conditions this gets called
+            //ActionStateChange(0, 1, 0, gobj, STATE_SA_LEAPB, 0x20, 0);
+            ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOAT, 0x20, 0);  // Was using to test under what conditions this gets called
         }
 
         void (*func_800CB110)(GOBJ *gobj, s32 x, f32 y) = (void *) 0x800CB110;
