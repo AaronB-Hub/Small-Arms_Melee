@@ -114,7 +114,7 @@ void ftChar_FtGetHoldJoint(GOBJ *gobj, Vec3* pos)
     sp14.y = 1.2325000762939453f;
     sp14.z = 4.263599872589111f;
 
-    //func_8000B1CC(fp->x5E8_fighterBones[func_8007500C(fp, 0x31)].x0_jobj, &sp14, pos);
+    //func_8000B1CC(fighter_data->x5E8_fighterBones[func_8007500C(fighter_data, 0x31)].x0_jobj, &sp14, pos);
     func_8000B1CC(fighter_data->bones[func_8007500C(fighter_data, 0x31)].x0_jobj, &sp14, pos);
 }
 
@@ -337,7 +337,7 @@ bool ftChar_CheckBlasterAction(GOBJ *gobj)
         case ASID_THROWHI:
         case ASID_THROWLW:
 
-            if (fighter_data->x2071_b6 != false) {
+            if (fighter_data->x2070.x2071_b6 != false) {
                 return true;
             }
             return false;
@@ -733,36 +733,391 @@ inline void ftChar_SpecialN_SetCall(GOBJ *gobj)
 void ftChar_SpecialN_StartAction(GOBJ *gobj)
 {
     FighterData *fighter_data = gobj->userdata;
-    ftCharAttributes* foxAttrs = fighter_data->x2D4_specialAttributes;
+    ftCharAttributes* foxAttrs = fighter_data->special_attributes;
     GOBJ *blasterGObj;
 
-    func_8007D7FC(fighter_data);
+    //func_8007D7FC(fighter_data);
+        float fmp;
+        //if (fighter_data->xE0_ground_or_air == GA_Air) {
+        if (fighter_data->phys.air_state == GA_Air) {
+            // if (func_803224DC(fighter_data->x8_spawnNum, fighter_data->xB0_pos.x, fighter_data->dmg.x18A4_knockbackMagnitude))
+            if (func_803224DC(fighter_data->spawn_num, fighter_data->pos.x, fighter_data->dmg.kb_mag))  // if dead?
+                        // float temp_f2;
+                        // int var_r0;
 
-    Fighter_ActionStateChange_800693AC(gobj, AS_FOX_SPECIALN_START, 0,
-                                       NULL, 0.0f, 1.0f, 0.0f);
+                        // if (fighter_data->dmg.kb_mag >= lbl_804D6500->unk8) {
 
-    fighter_data->x220C_ftcmd_var3 = 0;
-    fighter_data->x2208_ftcmd_var2 = 0;
-    fighter_data->x2204_ftcmd_var1 = 0;
-    fighter_data->x2200_ftcmd_var0 = 0;
+                        // } else if (fighter_data->dmg.kb_mag >= lbl_804D6500->unk4) {
 
-    func_8006EBA4(gobj);
+                        // } else if (fighter_data->dmg.kb_mag >= lbl_804D6500->unk0) {
 
-    fighter_data->xEC_ground_vel = 0.0f;
-    fighter_data->x80_self_vel.z = 0.0f;
-    fighter_data->x80_self_vel.y = 0.0f;
-    fighter_data->x80_self_vel.x = 0.0f;
+                        // }
+                        // temp_f2 = lbl_804D6500->unk2C;
+                        // if ((fighter_data->pos.x < (temp_f2 + lbl_80458868.unk18)) || (fighter_data->pos.x > (lbl_80458868.unk1C - temp_f2))) {
+                        //     var_r0 = 1;
+                        // } else {
+                        //     var_r0 = 0;
+                        // }
+                        // if (var_r0 != 0) {
+                        //     return func_8032201C();
+                        // }
+                        // return 0;
+            {
+                // fighter_data->dmg.x18A4_knockbackMagnitude = 0;
+                fighter_data->dmg.kb_mag = 0;
+            }
+            // if (fighter_data->x2227_flag.bits.b0 && fighter_data->x1968_jumpsUsed <= 1) {
+            if (fighter_data->flags.flags_2227.bits.b0 && fighter_data->jump.jumps_used <= 1) {
+                // func_8003FC44(fighter_data->xC_playerID, fighter_data->x221F_flag.bits.b4);
+                //func_8003FC44(fighter_data->ply, fighter_data->flags.ms);  //?
+                    int* temp_r3;
+                    temp_r3 = Player_GetStaleMoveTableIndexPtr2(fighter_data->ply);
+                    if (fighter_data->flags.ms == 0) {  // correct flag?
+                        (u8) (temp_r3 + 0xDD0) = (u8) (temp_r3 + 0xDD0 | 0x80);
+                    }
+            }
+        }
+        // if (fighter_data->x594_animCurrFlags1.bits.b0) {
+        if (fighter_data->action_flags.transn_phys_update) {
+            // fighter_data->x80_self_vel.x = fighter_data->x6A4_transNOffset.z * fighter_data->facing_dir;
+            fighter_data->phys.self_vel.x = fighter_data->transN_offset.z * fighter_data->facing_dir;
+        }
 
-    fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
+        fmp = fighter_data->attr.grounded_max_horizontal_velocity;
+        // if (fighter_data->xEC_ground_vel < -fmp) {
+        //     fighter_data->xEC_ground_vel = -fmp;
+        // } else if (fighter_data->xEC_ground_vel > fmp) {
+        //     fighter_data->xEC_ground_vel = fmp;
+        // }
+        if (fighter_data->self_vel_ground < -fmp) {
+            fighter_data->self_vel_ground = -fmp;
+        } else if (fighter_data->self_vel_ground > fmp) {
+            fighter_data->self_vel_ground = fmp;
+        }
 
-    blasterGObj = func_802AE8A8(fighter_data->facing_dir, gobj, &fighter_data->xB0_pos,
+        // fighter_data->xE0_ground_or_air = GA_Ground;
+        // fighter_data->xEC_ground_vel = fighter_data->x80_self_vel.x;
+        // fighter_data->x1968_jumpsUsed = 0;
+        // fighter_data->x1969_walljumpUsed = 0;
+        // fighter_data->x2227_flag.bits.b0 = 0;
+        // fighter_data->x6F0_collData.x19C = 0;
+        // fighter_data->x6F0_collData.x130_flags &= 0xFFFFFFEF;
+        fighter_data->phys.air_state = GA_Ground;
+        fighter_data->self_vel_ground = fighter_data->phys.self_vel.x;
+        fighter_data->jump.jumps_used = 0;
+        fighter_data->jump.walljumps_used = 0;
+        fighter_data->flags_2227.bits.b0 = 0;
+        fighter_data->coll_data.ecb_lock = 0;
+        fighter_data->coll_data.flags &= 0xFFFFFFEF;
+
+        // if (!func_80084A18(fighter_data->x0_fighter)) {
+        if (!func_80084A18(fighter_data->fighter)) {
+            // OSReport("fighter ground no under Id! %d %d\n", fighter_data->xC_playerID, fighter_data->action_id);
+            OSReport("fighter ground no under Id! %d %d\n", fighter_data->ply, fighter_data->action_id);
+            HSD_ASSERT(0x2AE, 0);
+        }
+
+    // Fighter_ActionStateChange_800693AC(gobj, AS_FOX_SPECIALN_START, 0, NULL, 0.0f, 1.0f, 0.0f);
+    ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRESTART, 0, 0);
+
+    // fighter_data->x220C_ftcmd_var3 = 0;
+    // fighter_data->x2208_ftcmd_var2 = 0;
+    // fighter_data->x2204_ftcmd_var1 = 0;
+    // fighter_data->x2200_ftcmd_var0 = 0;
+    FloatFtCmd *script_flags = &fighter_data->ftcmd_var
+    script_flags->flag0 = 0;
+    script_flags->flag1 = 0;
+    script_flags->flag2 = 0;
+    script_flags->flag3 = 0;
+
+    
+
+    //func_8006EBA4(gobj);
+        //func_8006E9B4(gobj);
+            HSD_JObj* temp_r27_2;
+            f32 temp_f0;
+            f32 temp_f1;
+            f32 temp_f1_2;
+            f32 temp_f2;
+            f32 temp_f2_2;
+            f32 var_f30;
+            f32 var_f31;
+            s32 temp_r29;
+            s32 temp_r29_2;
+            s32 temp_r30;
+            s32 temp_r30_2;
+            //void* temp_r27;
+
+            if (fighter_data->action_id != -1) {
+                //temp_r27 = gobj->hsd_object;
+                if (lbl_804D829C == fighter_data->state.blend) {
+                    HSD_JObjClearFlagsAll((HSD_JObj* ) gobj->hsd_object, 0x20000U);
+                    // if (((u8) fighter_data->unk594 >> 7U) & 1) {
+                    if (((u8) fighter_data->action_flags.disable_blend_bone_index) & 1) {
+                        //temp_r29 = fighter_data->bones;
+                        temp_r30 = func_8007500C((Fighter* ) fighter_data, 0x35) * 0x10;
+                        func_8006E054(fighter_data, gobj->hsd_object, *(fighter_data->bones + (func_8007500C((Fighter* ) fighter_data, 1) * 0x10)), *(fighter_data->bones + temp_r30));
+                    } else {
+                        func_8006E7B8(fighter_data, 0);
+                    }
+                } else {
+                    //temp_r27_2 = fighter_data->anim_skeleton;
+                    temp_f1 = func_8000BD28(fighter_data->anim_skeleton);
+                    fighter_data->state.x8A8 = (f32) (fighter_data->state.x8A8 + temp_f1);
+                    temp_f0 = fighter_data->state.blend;
+                    temp_f2 = fighter_data->state.x8A8;
+                    if (temp_f0 <= temp_f2) {
+                        fighter_data->state.x8A8 = temp_f0;
+                        var_f30 = lbl_804D8298;
+                        var_f31 = lbl_804D829C;
+                    } else {
+                        temp_f1_2 = temp_f1 / (temp_f1 + (temp_f0 - temp_f2));
+                        var_f30 = temp_f1_2;
+                        var_f31 = lbl_804D8298 - temp_f1_2;
+                    }
+                    func_8006E7B8(fighter_data, 0);
+                    // if (((u8) fighter_data->unk594 >> 7U) & 1) {
+                    if (((u8) fighter_data->action_flags.disable_blend_bone_index) & 1) {
+                        //temp_r30_2 = fighter_data->bones;
+                        temp_r29_2 = func_8007500C((Fighter* ) fighter_data, 0x35) * 0x10;
+                        func_8006E054(fighter_data, fighter_data->anim_skeleton, (fighter_data->bones + (func_8007500C((Fighter* ) fighter_data, 1) * 0x10))->unk4, *(fighter_data->bones + temp_r29_2));
+                    } else {
+                        HSD_JObjAnimAll(fighter_data->anim_skeleton);
+                    }
+                    if (var_f31 != lbl_804D829C) {
+                        func_8006FE9C(fighter_data, 1, var_f30, var_f31);
+                    } else {
+                        func_8006FF74(fighter_data, 1);
+                    }
+                }
+                // if (((u8) fighter_data->unk594 >> 5U) & 1) {
+                if (((u8) fighter_data->action_flags.x01c00000) & 1) {
+                    temp_f2_2 = fighter_data->state.frame;
+                    if (func_8006F3DC(gobj) < temp_f2_2) {
+                        fighter_data->state.x898 = (f32) (fighter_data->state.x898 + (temp_f2_2 + fighter_data->state.rate));
+                    }
+                }
+                fighter_data->state.frame = func_8006F3DC(gobj);
+            }
+
+        
+        //func_80073240(gobj);
+            CommandInfo* temp_r29;
+            f32 temp_f0;
+            f32 temp_f1;
+            f32 temp_f1_2;
+            f32 temp_f30;
+            f32 temp_f31;
+            u32 temp_r28;
+            void* temp_r30;
+
+            temp_r30 = fighter_data;
+            temp_r29 = fighter_data->script;
+            fighter_data->script.script_frame_timer = (f32) (fighter_data->state.frame + fighter_data->state.x898);
+            if ((u32) fighter_data->script.script_current != 0U) {
+                //temp_f1 = fighter_data->script->timer;
+                temp_f1 = fighter_data->script.script_event_timer;
+                if (lbl_804D82C4 != temp_f1) {
+                    // fighter_data->script->timer = temp_f1 - fighter_data->unk89C;
+                    fighter_data->script.script_event_timer = temp_f1 - fighter_data->state.rate;
+                }
+                temp_f30 = lbl_804D82C4;
+                temp_f31 = lbl_804D82B8;
+            loop_4:
+                // if ((u8* ) fighter_data->script->u.data_position != NULL) {
+                if ((u8* ) fighter_data->script.script_current != NULL) {
+                    // temp_f0 = fighter_data->script->timer;
+                    temp_f0 = fighter_data->script.script_event_timer;
+                    if (temp_f30 == temp_f0) {
+                        temp_f1_2 = fighter_data->script->frame_count;
+                        if (!(temp_f1_2 >= fighter_data->state.rate)) {
+                            // fighter_data->script->timer = -temp_f1_2;
+                            fighter_data->script.script_event_timer = -temp_f1_2;
+                            goto block_9;
+                        }
+                    } else if (!(temp_f0 > temp_f31)) {
+            block_9:
+                        // temp_r28 = ((u8) *fighter_data->script->u.data_position >> 2U) & 0x3F;
+                        temp_r28 = ((u8) *fighter_data->script.script_current >> 2U) & 0x3F;
+                        if (Command_Execute(fighter_data->script, temp_r28) == 0) {
+                            *(&lbl_803C06E8 + ((temp_r28 - 0xA) * 4))(arg0, fighter_data->script);
+                        }
+                        // if (temp_f30 != fighter_data->script->timer) {
+                        if (temp_f30 != fighter_data->script.script_event_timer) {
+                            goto loop_4;
+                        }
+                    }
+                }
+            }
+
+
+        //func_800707B0(gobj);
+            HSD_JObj* temp_r4_3;
+            f32 temp_f0;
+            f32 temp_f0_2;
+            f32 temp_f1;
+            f32 temp_f1_2;
+            f32 temp_f30;
+            f32 temp_f31;
+            f32 var_f28;
+            f32 var_f29;
+            s32 temp_r3;
+            s32 temp_r4_2;
+            s32 var_r25;
+            s32 var_r27;
+            s32 var_r30;
+            u8* var_r29;
+            void* temp_r26;
+            void* temp_r31;
+            void* temp_r3_2;
+            void* temp_r4;
+            void* temp_r4_4;
+            void* var_r28;
+
+            var_r30 = 0;
+            var_r27 = 0;
+            temp_r31 = fighter_data;
+            temp_f31 = lbl_804D829C;
+            temp_f30 = lbl_804D8298;
+            var_r28 = temp_r31;  // fighter_data or *fighter?
+            do {
+                temp_r4 = var_r28 + 0x8B0;
+                if ((s8) var_r28->unk8C1 != -1) {
+                    temp_r26 = *(fighter_data->ftData->x1C + var_r27);
+                    temp_r4->unk8 = (f32) (temp_r4->unk8 + temp_r4->xC);
+                    temp_f0 = temp_r4->unk4;
+                    temp_f1 = temp_r4->unk8;
+                    if (temp_f0 <= temp_f1) {
+                        temp_r4->unk8 = temp_f0;
+                        var_f28 = lbl_804D8298;
+                        var_f29 = lbl_804D829C;
+                    } else {
+                        temp_f1_2 = temp_r4->xC;
+                        temp_f0_2 = temp_f1_2 / (temp_f1_2 + (temp_f0 - temp_f1));
+                        var_f28 = temp_f0_2;
+                        var_f29 = temp_f30 - temp_f0_2;
+                    }
+                    var_r29 = temp_r26->unk4;
+                    var_r25 = 0;
+        loop_11:
+                    if (var_r25 < (s32) temp_r26->unk2) {
+                        //temp_r4_2 = fighter_data->bones;
+                        temp_r3 = *var_r29 * 0x10;
+                        if (((u8) *(fighter_data->bones + (temp_r3 + 8)) >> 2U) & 1) {
+                            if (var_f29 != temp_f31) {
+                                temp_r3_2 = fighter_data->bones + temp_r3;
+                                temp_r4_3 = temp_r3_2->unk0;
+                                func_8000C490(temp_r3_2->unk4, temp_r4_3, temp_r4_3, var_f28, var_f29);
+                            } else {
+                                temp_r4_4 = fighter_data->bones + temp_r3;
+                                func_8000C7BC(temp_r4_4->unk4, temp_r4_4->unk0);
+                            }
+                        }
+                        var_r25 += 1;
+                        var_r29 += 1;
+                        goto loop_11;
+                    }
+                }
+                var_r30 += 1;
+                var_r28 += 0x14;
+                var_r27 += 4;
+            } while (var_r30 < 5);
+
+
+        //func_800DB500(gobj);
+            //Fighter* temp_r3;
+            HSD_JObj* temp_r31;
+            //temp_r3 = fighter_data;
+            if ((((u8) fighter_data->x2226_flag.u8 >> 5U) & 1) && (func_8006F368(fighter_data, func_8007500C(fighter_data, 2)) != 0)) {
+                temp_r31 = fighter_data->bones[func_8007500C(fighter_data, 2)].x0_jobj;
+                if (temp_r31 == NULL) {
+                    __assert(&lbl_804D3D28, 0x3D3U, &lbl_804D3D30);
+                }
+                if (fighter_data->thrown_origin.x == NULL) {
+                    __assert(&lbl_804D3D28, 0x3D4U, &lbl_803C70A0);
+                }
+                fighter_data->thrown_origin.x = (f32) temp_r31->translate.x;
+                fighter_data->thrown_origin.y = (f32) temp_r31->translate.y;
+                fighter_data->thrown_origin.z = (f32) temp_r31->translate.z;
+            }
+            if (((u8) fighter_data->x2226_flag.u8 >> 5U) & 1) {
+                func_8006DF0C(fighter_data);
+            }
+
+    // fighter_data->xEC_ground_vel = 0.0f;
+    // fighter_data->x80_self_vel.z = 0.0f;
+    // fighter_data->x80_self_vel.y = 0.0f;
+    // fighter_data->x80_self_vel.x = 0.0f;
+    fighter_data->self_vel_ground = 0.0f;
+    fighter_data->phys.self_vel.z = 0.0f;
+    fighter_data->phys.self_vel.y = 0.0f;
+    fighter_data->phys.self_vel.x = 0.0f;
+
+    // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
+    fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
+
+    blasterGObj = func_802AE8A8(fighter_data->facing_dir, gobj, &fighter_data->pos,
                                 func_8007500C(fighter_data, 0x31),
                                 foxAttrs->x20_FOX_BLASTER_GUN_ITKIND);
-    fighter_data->sa.fox.x222C_blasterGObj = blasterGObj;
+    // fighter_data->sa.fox.x222C_blasterGObj = blasterGObj;
+    fighter_data->fighter_var.ft_var1 = blasterGObj;
 
     if (blasterGObj != NULL) {
-        func_8026BAE8(fighter_data->sa.fox.x222C_blasterGObj, 0.8500000238418579f);
-        ftChar_SpecialN_SetCall(gobj);
+        // func_8026BAE8(fighter_data->sa.fox.x222C_blasterGObj, 0.8500000238418579f);
+        //func_8026BAE8(fighter_data->fighter_var.ft_var1, 0.8500000238418579f);
+            float scale_mul = 0.8500000238418579f;
+            float scale;
+            Item* item_data;
+            HSD_JObj* item_jobj;
+
+            GOBJ *item_gobj = fighter_data->fighter_var.ft_var1
+            ItemData* item_data; = item_gobj->user_data;
+            HSD_JObj* item_jobj; = item_gobj->hsd_object;
+            // scale = scale_mul * item_data->common_attr->x60_scale;
+            scale = scale_mul * item_data->common_attr->x60;
+            item_data->scale = scale;
+            //func_80272F7C(item_jobj, scale);
+                // f32 sp18;
+                // f32 sp14;
+                // f32 sp10;
+                s32 temp_cr0_eq;
+                s32 var_r3;
+                u32 temp_r4;
+
+                // sp18 = scale;
+                // sp14 = scale;
+                // sp10 = scale;
+                if (item_jobj == NULL) {
+                    __assert(&lbl_804D5188, 0x2F8U, &lbl_804D5190);
+                }
+                item_jobj->scale.x = scale;
+                item_jobj->scale.y = scale;
+                item_jobj->scale.z = scale;
+                if (!(item_jobj->flags & 0x02000000)) {
+                    temp_cr0_eq = item_jobj == NULL;
+                    if (temp_cr0_eq == 0) {
+                        if (temp_cr0_eq != 0) {
+                            __assert(&lbl_804D5188, 0x234U, &lbl_804D5190);
+                        }
+                        temp_r4 = item_jobj->flags;
+                        var_r3 = 0;
+                        if (!(temp_r4 & 0x800000) && (temp_r4 & 0x40)) {
+                            var_r3 = 1;
+                        }
+                        if (var_r3 == 0) {
+                            HSD_JObjSetMtxDirtySub(item_jobj);
+                        }
+                    }
+                }
+
+        
+        //ftChar_SpecialN_SetCall(gobj);
+            // FighterData *fighter_data = gobj->userdata;
+            // fighter_data->cb.OnTakeDamage = func_800E5588;
+            // fighter_data->cb.OnDeath_State = func_800E5588;
+            fighter_data->cb.OnTakeDamage = ftFox_RemoveBlaster(gobj);
+            fighter_data->cb.OnDeath_State = ftFox_RemoveBlaster(gobj);
+        
         return;
     }
 
@@ -779,21 +1134,79 @@ void ftChar_SpecialAirN_StartAction(GOBJ *gobj)
     ftCharAttributes* foxAttrs = fighter_data->x2D4_specialAttributes;
     GOBJ *blasterGObj;
 
-    Fighter_ActionStateChange_800693AC(gobj, AS_FOX_SPECIALAIRN_START,
-                                       0, NULL, 0.0f, 1.0f, 0.0f);
+    //Fighter_ActionStateChange_800693AC(gobj, AS_FOX_SPECIALAIRN_START, 0, NULL, 0.0f, 1.0f, 0.0f);
+    ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREAIRSTART, 0, 0);
 
-    fighter_data->x220C_ftcmd_var3 = 0;
-    fighter_data->x2208_ftcmd_var2 = 0;
-    fighter_data->x2204_ftcmd_var1 = 0;
-    fighter_data->x2200_ftcmd_var0 = 0;
+    // fighter_data->x220C_ftcmd_var3 = 0;
+    // fighter_data->x2208_ftcmd_var2 = 0;
+    // fighter_data->x2204_ftcmd_var1 = 0;
+    // fighter_data->x2200_ftcmd_var0 = 0;
+    FloatFtCmd *script_flags = &fighter_data->ftcmd_var
+    script_flags->flag0 = 0;
+    script_flags->flag1 = 0;
+    script_flags->flag2 = 0;
+    script_flags->flag3 = 0;
 
     func_8006EBA4(gobj);
 
     fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
-    blasterGObj = func_802AE8A8(fighter_data->facing_dir, gobj, &fighter_data->xB0_pos,
+    blasterGObj = func_802AE8A8(fighter_data->facing_dir, gobj, &fighter_data->pos,
                                 func_8007500C(fighter_data, 0x31),
                                 foxAttrs->x20_FOX_BLASTER_GUN_ITKIND);
-    fighter_data->sa.fox.x222C_blasterGObj = blasterGObj;
+                u8 sp68;
+                s32 sp64;
+                s16 sp60;
+                f32 sp5C;
+                f32 sp58;
+                f32 sp54;
+                f32 sp50;
+                f32 sp4C;
+                f32 sp48;
+                f32 sp44;
+                f32 sp40;
+                f32 sp3C;
+                f32 sp38;
+                s32 sp2C;
+                HSD_GObj* sp28;
+                HSD_GObj* sp24;
+                f32 temp_r0;
+                s32 var_r31;
+                void* temp_r4;
+
+                if (gobj != NULL) {
+                    sp2C = foxAttrs->x20_FOX_BLASTER_GUN_ITKIND;
+                    temp_r0 = fighter_data->pos.y;
+                    sp44 = fighter_data->pos.x;
+                    sp48 = fighter_data->pos.y;
+                    sp4C = fighter_data->pos.z;
+                    sp4C = lbl_804DCF38;
+                    sp38 = fighter_data->pos.x;
+                    sp3C = fighter_data->pos.y;
+                    sp40 = fighter_data->pos.z;
+                    sp5C = fighter_data->facing_dir;
+                    sp60 = 0;
+                    sp58 = lbl_804DCF38;
+                    sp54 = lbl_804DCF38;
+                    sp50 = lbl_804DCF38;
+                    sp24 = gobj;
+                    sp28 = sp24;
+                    sp68 &= ~0x80;
+                    sp64 = (s32) 0;
+                    func_80268B18((SpawnItem* ) &sp24);
+                    var_r31 = M2C_ERROR(Read from unset register $r3) | M2C_ERROR(Read from unset register $r3);
+                    if (var_r31 != 0) {
+                        temp_r4 = var_r31->unk2C;
+                        temp_r4->unkE7C = gobj;
+                        func_802AE7B8(var_r31, temp_r4);
+                        func_8026AB54((HSD_GObj* ) var_r31, gobj, (u8) arg3);
+                    }
+                } else {
+                    var_r31 = 0;
+                }
+                return (HSD_GObj* ) var_r31;
+
+    //fighter_data->sa.fox.x222C_blasterGObj = blasterGObj;
+    fighter_data->fighter_var.ft_var1 = blasterGObj;
 
     if (blasterGObj != NULL) {
         func_8026BAE8(fighter_data->sa.fox.x222C_blasterGObj, 0.8500000238418579f);
@@ -813,20 +1226,85 @@ void ftChar_SpecialNStart_Anim(GOBJ *gobj)
     FighterData *fighter_data = gobj->userdata;
     GOBJ *blasterGObj;
 
-    func_802ADDD0(fighter_data->sa.fox.x222C_blasterGObj, 1);
-    if ((fighter_data->x220C_ftcmd_var3 == 1U) && (fighter_data->sa.fox.x222C_blasterGObj != NULL))
+    //func_802ADDD0(fighter_data->sa.fox.x222C_blasterGObj, 1);
+    //func_802ADDD0(fighter_data->fighter_var.ft_var1, 1);
+        HSD_JObj* var_r3;
+        s32 temp_r0_2;
+        s32 temp_r0_3;
+        void* temp_r0;
+        void* temp_r3;
+
+        if ((fighter_data->fighter_var.ft_var1 != NULL) && (temp_r0 = fighter_data->fighter_var.ft_var1->user_data, ((temp_r0 == NULL) == 0))) {
+            temp_r3 = fighter_data->fighter_var.ft_var1->hsd_object;
+            if (temp_r3 == NULL) {
+                var_r3 = NULL;
+            } else {
+                var_r3 = temp_r3->unk10;
+            }
+            if ((s32) temp_r0->unkE78 != arg1) {
+                temp_r0->unkE78 = arg1;
+                if (arg1 == 2) {
+                    temp_r0_2 = temp_r0->unk10;
+                    switch (temp_r0_2) {                /* irregular */
+                    case 0x8A:
+                    case 0x4A:
+                        func_8026AE84((Item* ) temp_r0, 0x1AE14, 0x7FU, 0x40U);
+                        break;
+                    case 0x8B:
+                    case 0x4B:
+                        func_8026AE84((Item* ) temp_r0, 0x18700, 0x7FU, 0x40U);
+                        break;
+                    }
+                }
+            }
+            temp_r0_3 = temp_r0->unkE78;
+            switch (temp_r0_3) {                        /* switch 1; irregular */
+            case 2:                                     /* switch 1 */
+                HSD_JObjSetFlagsAll(var_r3, 0x10U);
+                return;
+            case 1:                                     /* switch 1 */
+                HSD_JObjClearFlagsAll(var_r3, 0x10U);
+                break;
+            }
+        }
+
+
+    // if ((fighter_data->x220C_ftcmd_var3 == 1U) && (fighter_data->sa.fox.x222C_blasterGObj != NULL))
+    if ((fighter_data->ftcmd_var.flag3 == 1U) && (fighter_data->fighter_var.ft_var1 != NULL))
     {
-        fighter_data->x220C_ftcmd_var3 = 0U;
-        func_802AE538(fighter_data->sa.fox.x222C_blasterGObj);
+        // fighter_data->x220C_ftcmd_var3 = 0U;
+        fighter_data->ftcmd_var.flag3 = 0U;
+        // func_802AE538(fighter_data->sa.fox.x222C_blasterGObj);
+        //func_802AE538(fighter_data->fighter_var.ft_var1);
+            void* itemdata = fighter_data->fighter_var.ft_var1->user_data;
+            // if (((s32) itemdata->unkDD8 != 4) && (fighter_data->fighter_var.ft_var1 != NULL) && (itemdata != NULL)) {
+            if (((s32) itemdata->item_var.var2 != 4) && (fighter_data->fighter_var.ft_var1 != NULL) && (itemdata != NULL)) {
+                itemdata->item_var.var2 = 1;
+                itemdata->item_var.var3 = 1;
+                if ((s32) itemdata->item_var.var4 == 0) {
+                    switch (itemdata->kind) {                      /* irregular */
+                    case 0x8A:
+                    case 0x4A:
+                        func_8026AE84((Item* ) itemdata, 0x1AE05, 0x7FU, 0x40U);
+                        break;
+                    case 0x8B:
+                    case 0x4B:
+                        func_8026AE84((Item* ) itemdata, 0x186F1, 0x7FU, 0x40U);
+                        break;
+                    }
+                    itemdata->item_var.var4 = 1;
+                }
+            }
+
     }
     if (!ftAnim_IsFramesRemaining(gobj)) {
-        Fighter_ActionStateChange_800693AC(
-            gobj, AS_FOX_SPECIALN_LOOP,
-            (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), NULL, 0.0f, 1.0f,
-            0.0f);
+        //Fighter_ActionStateChange_800693AC(gobj, AS_FOX_SPECIALN_LOOP, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), NULL, 0.0f, 1.0f, 0.0f);
+        ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+
         ftChar_SpecialN_SetCall(gobj);
-        fighter_data->cb.x21BC_callback_Accessory4 = ftChar_CreateBlasterShot;
-        func_802ADDD0(fighter_data->sa.fox.x222C_blasterGObj, 1);
+        fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
+        // func_802ADDD0(fighter_data->sa.fox.x222C_blasterGObj, 1);
+        func_802ADDD0(fighter_data->fighter_var.ft_var1, 1);
     }
 }
 
@@ -1369,7 +1847,7 @@ void ftChar_Throw_Anim(GOBJ *gobj)
 }
 #pragma endregion
 
-#pragma region New
+#pragma region Condensed
 
 // All old functions
 void ftChar_FtGetHoldJoint(GOBJ *gobj, Vec3* pos);
@@ -1448,5 +1926,232 @@ void ftChar_Throw_Anim(GOBJ *gobj);
     // Calls "ftChar_FtGetHoldJoint(gobj, &sp50);"
     // Calls "ftChar_ItGetHoldJoint(gobj, &sp44);"
 
+
+#pragma endregion
+
+#pragma region New
+///////////////////////
+//    Initial Fire   //
+///////////////////////
+///
+///
+///
+void SAItemPrimaryFireStart(GOBJ *gobj)
+{
+    FighterData *fighter_data = gobj->userdata;
+    ftCharAttributes* foxAttrs = fighter_data->special_attributes;
+    GOBJ *blasterGObj;
+
+    //func_8007D7FC(fighter_data);
+        if (fighter_data->action_flags.transn_phys_update) {
+            // fighter_data->x80_self_vel.x = fighter_data->x6A4_transNOffset.z * fighter_data->facing_dir;
+            fighter_data->phys.self_vel.x = fighter_data->transN_offset.z * fighter_data->facing_dir;
+        }
+
+        fighter_data->phys.air_state = GA_Ground;
+        fighter_data->self_vel_ground = fighter_data->phys.self_vel.x;
+        fighter_data->jump.jumps_used = 0;
+        fighter_data->jump.walljumps_used = 0;
+        fighter_data->flags_2227.bits.b0 = 0;
+        fighter_data->coll_data.ecb_lock = 0;
+        fighter_data->coll_data.flags &= 0xFFFFFFEF;
+
+    ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRESTART, 0, 0);
+
+    FloatFtCmd *script_flags = &fighter_data->ftcmd_var
+    script_flags->flag0 = 0;
+    script_flags->flag1 = 0;
+    script_flags->flag2 = 0;
+    script_flags->flag3 = 0;
+
+    //func_8006EBA4(gobj);
+
+    // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
+    fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
+
+    // fighter_data->sa.fox.x222C_blasterGObj = blasterGObj;
+    fighter_data->fighter_var.ft_var1 = blasterGObj;
+
+    if (blasterGObj != NULL); // Spawn item and set appropriate fighter callbacks
+
+    return;
+
+}
+///
+///
+///
+void SAItemPrimaryFireAirStart(GOBJ *gobj)
+{
+    FighterData *fighter_data = gobj->userdata;
+    ftCharAttributes* foxAttrs = fighter_data->special_attributes;
+    GOBJ *blasterGObj;
+
+    ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREAIRSTART, 0, 0);
+
+    FloatFtCmd *script_flags = &fighter_data->ftcmd_var
+    script_flags->flag0 = 0;
+    script_flags->flag1 = 0;
+    script_flags->flag2 = 0;
+    script_flags->flag3 = 0;
+
+    //func_8006EBA4(gobj);
+
+    // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
+    fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
+
+    //fighter_data->sa.fox.x222C_blasterGObj = blasterGObj;
+    fighter_data->fighter_var.ft_var1 = blasterGObj;
+
+    if (blasterGObj != NULL); // Spawn item and set appropriate fighter callbacks
+
+}
+
+//////////////////////////
+//   PrimaryFireStart   //
+//////////////////////////
+///
+///
+///
+void SpecialPrimaryFireStart_AnimationCallback(GOBJ *gobj)
+{
+    FighterData *fighter_data = gobj->userdata;
+    GOBJ *blasterGObj;
+
+    if (!ftAnim_IsFramesRemaining(gobj)) {
+        ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+        fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
+    }
+    return;
+}
+void SpecialPrimaryFireStart_IASACallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireStart_PhysicCallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireStart_CollisionCallback(GOBJ *gobj)
+{
+    return;
+}
+//////////////////////////
+//    PrimaryFireLoop   //
+//////////////////////////
+///
+///
+///
+void SpecialPrimaryFireLoop_AnimationCallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireLoop_IASACallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireLoop_PhysicCallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireLoop_CollisionCallback(GOBJ *gobj)
+{
+    return;
+}
+//////////////////////////
+//    PrimaryFireEnd    //
+//////////////////////////
+///
+///
+///
+void SpecialPrimaryFireEnd_AnimationCallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireEnd_IASACallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireEnd_PhysicCallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireEnd_CollisionCallback(GOBJ *gobj)
+{
+    return;
+}
+
+///////////////////////////
+//  PrimaryFireAirStart  //
+///////////////////////////
+///
+///
+///
+void SpecialPrimaryFireAirStart_AnimationCallback(GOBJ *gobj)
+{
+    FighterData *fighter_data = gobj->userdata;
+    GOBJ *blasterGObj;
+
+    if (!ftAnim_IsFramesRemaining(gobj)) {
+        ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREAIRLOOP, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+        fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
+    }
+    return;
+}
+void SpecialPrimaryFireAirStart_IASACallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireAirStart_PhysicCallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireAirStart_CollisionCallback(GOBJ *gobj)
+{
+    return;
+}
+///////////////////////////
+//   PrimaryFireAirLoop  //
+///////////////////////////
+///
+///
+///
+void SpecialPrimaryFireAirLoop_AnimationCallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireAirLoop_IASACallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireAirLoop_PhysicCallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireAirLoop_CollisionCallback(GOBJ *gobj)
+{
+    return;
+}
+///////////////////////////
+//   PrimaryFireAirEnd   //
+///////////////////////////
+///
+///
+///
+void SpecialPrimaryFireAirEnd_AnimationCallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireAirEnd_IASACallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireAirEnd_PhysicCallback(GOBJ *gobj)
+{
+    return;
+}
+void SpecialPrimaryFireAirEnd_CollisionCallback(GOBJ *gobj)
+{
+    return;
+}
 
 #pragma endregion
