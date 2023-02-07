@@ -1149,7 +1149,9 @@ void ftChar_SpecialAirN_StartAction(GOBJ *gobj)
 
     func_8006EBA4(gobj);
 
-    fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
+    // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
+    fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
+
     blasterGObj = func_802AE8A8(fighter_data->facing_dir, gobj, &fighter_data->pos,
                                 func_8007500C(fighter_data, 0x31),
                                 foxAttrs->x20_FOX_BLASTER_GUN_ITKIND);
@@ -1295,7 +1297,6 @@ void ftChar_SpecialNStart_Anim(GOBJ *gobj)
                     itemdata->item_var.var4 = 1;
                 }
             }
-
     }
     if (!ftAnim_IsFramesRemaining(gobj)) {
         //Fighter_ActionStateChange_800693AC(gobj, AS_FOX_SPECIALN_LOOP, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), NULL, 0.0f, 1.0f, 0.0f);
@@ -1316,31 +1317,53 @@ void ftChar_SpecialNLoop_Anim(GOBJ *gobj)
     FighterData *fighter_data = gobj->user_data;
 
     func_802ADDD0(fighter_data->sa.fox.x222C_blasterGObj, 1);
-    if (((u32) fighter_data->x220C_ftcmd_var3 == 1U) &&
-        (fighter_data->sa.fox.x222C_blasterGObj != NULL))
+
+    // if ((fighter_data->x220C_ftcmd_var3 == 1U) && (fighter_data->sa.fox.x222C_blasterGObj != NULL))
+    if ((fighter_data->ftcmd_var.flag3 == 1U) && (fighter_data->fighter_var.ft_var1 != NULL))
     {
-        fighter_data->x220C_ftcmd_var3 = 0U;
-        func_802AE538(fighter_data->sa.fox.x222C_blasterGObj);
+        // fighter_data->x220C_ftcmd_var3 = 0U;
+        fighter_data->ftcmd_var.flag3 = 0U;
+        // func_802AE538(fighter_data->sa.fox.x222C_blasterGObj);
+        //func_802AE538(fighter_data->fighter_var.ft_var1);
+            void* itemdata = fighter_data->fighter_var.ft_var1->user_data;
+            // if (((s32) itemdata->unkDD8 != 4) && (fighter_data->fighter_var.ft_var1 != NULL) && (itemdata != NULL)) {
+            if (((s32) itemdata->item_var.var2 != 4) && (fighter_data->fighter_var.ft_var1 != NULL) && (itemdata != NULL)) {
+                itemdata->item_var.var2 = 1;
+                itemdata->item_var.var3 = 1;
+                if ((s32) itemdata->item_var.var4 == 0) {
+                    switch (itemdata->kind) {                      /* irregular */
+                    case 0x8A:
+                    case 0x4A:
+                        func_8026AE84((Item* ) itemdata, 0x1AE05, 0x7FU, 0x40U);
+                        break;
+                    case 0x8B:
+                    case 0x4B:
+                        func_8026AE84((Item* ) itemdata, 0x186F1, 0x7FU, 0x40U);
+                        break;
+                    }
+                    itemdata->item_var.var4 = 1;
+                }
+            }
     }
+
     if (!ftAnim_IsFramesRemaining(gobj)) {
-        if ((int) fighter_data->foxVars[0].SpecialN.isBlasterLoop == true) {
-            fighter_data->cb.x21EC_callback = ftChar_SpecialN_OnChangeAction;
-            Fighter_ActionStateChange_800693AC(
-                gobj, AS_FOX_SPECIALN_LOOP,
-                (FIGHTER_ATTACKCOUNT_NOUPDATE | FIGHTER_MODEL_NOUPDATE |
-                 FIGHTER_GFX_PRESERVE),
-                NULL, 0.0f, 1.0f, 0.0f);
-            fighter_data->cb.x21BC_callback_Accessory4 = ftChar_CreateBlasterShot;
-            fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
+        // if ((int) fighter_data->foxVars[0].SpecialN.isBlasterLoop == true) {
+        if ((int) fighter_data->state_var.state_var1 == true) {
+            fighter_data->cb.OnStateChange = ftChar_SpecialN_OnChangeAction;
+            // Fighter_ActionStateChange_800693AC(gobj, AS_FOX_SPECIALN_LOOP, (FIGHTER_ATTACKCOUNT_NOUPDATE | FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), NULL, 0.0f, 1.0f, 0.0f);
+            ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (FIGHTER_ATTACKCOUNT_NOUPDATE | FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+
+            fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
+            // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
+            fighter_data->state_var.state_var1 = false;
             func_802ADDD0(fighter_data->sa.fox.x222C_blasterGObj, 1);
         } else {
             GOBJ *temp;
-            Fighter_ActionStateChange_800693AC(
-                gobj, AS_FOX_SPECIALN_END,
-                (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), NULL, 0.0f,
-                1.0f, 0.0f);
+            // Fighter_ActionStateChange_800693AC(gobj, AS_FOX_SPECIALN_END, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), NULL, 0.0f, 1.0f, 0.0f);
+            ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREEND, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
             temp = fighter_data->sa.fox.x222C_blasterGObj;
-            fighter_data->x2204_ftcmd_var1 = 1;
+            // fighter_data->x2204_ftcmd_var1 = 1;
+            fighter_data->ftcmd_var.flag1 = 1;
             func_802ADDD0(temp, 1);
         }
         ftChar_SpecialN_SetCall(gobj);
@@ -1362,8 +1385,9 @@ void ftChar_SpecialNLoop_Anim(GOBJ *gobj)
         foxAttrs = getFtSpecialAttrs(fighter_data);
         unused = gobj->userdata;
 
-        if ((u32) fighter_data->x2208_ftcmd_var2 != 0U) {
-            fighter_data->x2208_ftcmd_var2 = 0U;
+        // if ((u32) fighter_data->x2208_ftcmd_var2 != 0U) {
+        if ((u32) fighter_data->ftcmd_var.flag2 != 0U) {
+            fighter_data->ftcmd_var.flag2 = 0U;
             ftChar_FtGetHoldJoint(gobj, &sp2C);
             sp2C.z = 0.0f;
 
@@ -1373,11 +1397,169 @@ void ftChar_SpecialNLoop_Anim(GOBJ *gobj)
                 launchAngle = M_PI - foxAttrs->x10_FOX_BLASTER_ANGLE;
             }
 
-            func_8029C6A4(launchAngle, foxAttrs->x14_FOX_BLASTER_VEL,
-                          gobj, &sp2C,
-                          foxAttrs->x1C_FOX_BLASTER_SHOT_ITKIND);
-            func_802AE1D0(fighter_data->sa.fox.x222C_blasterGObj);
-            ftKind = func_800872A4(gobj);
+            // https://decomp.me/scratch/SKGiv
+            // func_8029C6A4(launchAngle, foxAttrs->x14_FOX_BLASTER_VEL, gobj, &sp2C, foxAttrs->x1C_FOX_BLASTER_SHOT_ITKIND);
+                // https://decomp.me/scratch/zvZzM (not reliable)
+                //func_8029C504(gobj, &sp2C, 0, foxAttrs->x1C_FOX_BLASTER_SHOT_ITKIND, launchAngle, foxAttrs->x14_FOX_BLASTER_VEL);
+                    u8 sp68;
+                    s32 sp64;
+                    s16 sp60;
+                    f32 sp5C;
+                    f32 sp58;
+                    f32 sp54;
+                    f32 sp50;
+                    f32 sp4C;
+                    s32 sp48;
+                    s32 sp44;
+                    Vec3 sp38;
+                    HSD_GObj* sp28;
+                    HSD_GObj* sp24;
+                    f32 var_f0;
+                    f32* temp_r29;
+                    HSD_GObj* temp_r31;
+                    s32 var_r0;
+                    Item* temp_r30;
+                    Fighter* fp;
+
+                loop_2:
+                    if (launchAngle < lbl_804DCCF0) {
+                        launchAngle = (f32) ((f64) launchAngle + lbl_804DCCF8);
+                        goto loop_2;
+                    }
+                loop_5:
+                    if (launchAngle > (f32) lbl_804DCCF0) {
+                        launchAngle = (f32) ((f64) launchAngle - lbl_804DCCF0);
+                        goto loop_5;
+                    }
+                    //sp2C = foxAttrs->x1C_FOX_BLASTER_SHOT_ITKIND;
+                    sp44 = sp2C.x;
+                    sp48 = sp2C.y;
+                    sp4C = sp2C.z;
+                    sp4C = lbl_804DCCF8;
+                    //func_8026BB68(arg0, &sp38);
+                        //func_80086990(gobj, &sp2C);  // Adjust item's position to fp bone
+                            float tmp = 0.5f * (fighter_data->coll_data.ecbCurrCorrect_top.y + fighter_data->coll_data.ecbCurrCorrect_bot.y);
+                            vector_add(&sp2C, &fighter_data->pos, 0.0f, tmp, 0.0f);
+
+                    var_r0 = 1;
+                    if (!(launchAngle < (f32) lbl_804DCD00) && !(launchAngle > (f32) lbl_804DCD08)) {
+                        var_r0 = 0;
+                    }
+                    if (var_r0 != 0) {
+                        var_f0 = lbl_804DCD10;
+                    } else {
+                        var_f0 = lbl_804DCD14;
+                    }
+                    sp5C = var_f0;
+                    sp60 = 0;
+                    sp58 = lbl_804DCCF8;
+                    sp54 = lbl_804DCCF8;
+                    sp50 = lbl_804DCCF8;
+                    sp24 = gobj;
+                    sp28 = sp24;
+                    sp68 |= 0x80;
+                    sp64 = (s32) 0;
+                    //func_80268B18((SpawnItem* ) gobj);
+                        gobj->x48_ground_or_air = GA_Air;
+                        gobj->x10 = 0;
+                        //func_802674AC(&sp24);
+                            ItemKind kind = spawnItem->kind;
+
+                            if (kind == It_Kind_Foods) {
+                                spawnItem->hold_kind = 2;
+                                return;
+                            }
+
+                            if (kind == Pokemon_Random) {
+                                spawnItem->hold_kind = 3;
+                                return;
+                            }
+
+                            if (kind < It_Kind_L_Gun_Ray) {
+                                spawnItem->hold_kind = 0;
+                                return;
+                            }
+
+                            if (kind < It_Kind_Kuriboh) {
+                                spawnItem->hold_kind = 1;
+                                return;
+                            }
+
+                            if (kind < It_Kind_Octarock_Stone) {
+                                spawnItem->hold_kind = 6;
+                                return;
+                            }
+
+                            if (kind < It_Kind_Mario_Fire) {
+                                spawnItem->hold_kind = 7;
+                                return;
+                            }
+
+                            if (kind < It_Kind_Unk4) {
+                                spawnItem->hold_kind = 8;
+                                return;
+                            }
+
+                            if (kind == It_Kind_Unk4) {
+                                spawnItem->hold_kind = 12;
+                                return;
+                            }
+
+                            if (kind < Pokemon_Random) {
+                                spawnItem->hold_kind = 11;
+                                return;
+                            }
+
+                            if (kind < Pokemon_Chicorita_Leaf) {
+                                spawnItem->hold_kind = 9;
+                                return;
+                            }
+
+                            if (kind < It_Kind_Old_Kuri) {
+                                spawnItem->hold_kind = 10;
+                                return;
+                            }
+
+                            if (kind < It_Kind_Arwing_Laser) {
+                                spawnItem->hold_kind = 4;
+                                return;
+                            }
+
+                            spawnItem->hold_kind = 5;
+
+                        func_8026862C(&sp24);
+
+                    // temp_r31 = M2C_ERROR(Read from unset register $r3) | M2C_ERROR(Read from unset register $r3
+                    fp = (void*) GET_FIGHTER(arg0);
+                    temp_r31 = fp->sa.fox.x222C_blasterGObj;  // Item GObj that was created by the function right above
+                    if (temp_r31 != 0) {
+                        temp_r30 = ((void *) ((u8 *) temp_r31 + 0x2c));  // Item->ItemData
+                        temp_r29 = temp_r30->xC4_article_data->x4_specialAttributes;  // ItemData->*itdata->0x4
+                        func_80268E5C((HSD_GObj* ) temp_r31, arg2, ITEM_ANIM_UPDATE);
+                        func_80275158((HSD_GObj* ) temp_r31, *temp_r29);
+                        temp_r30->xDD4_itemVar.BobOmb.xDEC = (f32) lbl_804DCCF8;  // Should be temp_r30->xDD4_itemVar->var1 = lbl_804DCCF8;
+                        temp_r30->xDD4_itemVar.BobOmb.xDEC = var_f30;  // Should be temp_r30->xDD4_itemVar->var2 = var_f30;
+                        temp_r30->xDD4_itemVar.BobOmb.xDEC = arg9;  // Should be temp_r30->xDD4_itemVar->var3 = arg9;
+                        temp_r30->xDD4_itemVar.BobOmb.xDEC = sp38.x;  // Should be temp_r30->xDD4_itemVar->var4 = sp38.x;
+                        temp_r30->xDD4_itemVar.BobOmb.xDEC = sp38.y;  // Should be temp_r30->xDD4_itemVar->var5 = sp38.y;
+                        temp_r30->xDD4_itemVar.BobOmb.xDEC = sp38.z;  // Should be temp_r30->xDD4_itemVar->var6 = sp38.z;
+                        func_80225DD8((HSD_GObj* ) temp_r31, arg0);
+                    }
+
+
+            //func_802AE1D0(fighter_data->sa.fox.x222C_blasterGObj);
+                void* temp_r5;
+
+                temp_r5 = fighter_data->sa.fox.x222C_blasterGObj->user_data;
+                if ((fighter_data->sa.fox.x222C_blasterGObj != NULL) && (temp_r5 != NULL)) {
+                    temp_r5->item_var.var1 = 1;
+                    temp_r5->cb.accessory = &lbl_802ADEF0;
+                    temp_r5->item_var.xe74 = 1;
+                }
+
+            //ftKind = func_800872A4(gobj);
+            ftKind = fighter_data->kind;
+
             switch (ftKind) {
             case FTKIND_FOX:
                 func_80088148(fighter_data, foxSFX[-1.0f == fighter_data->facing_dir],
@@ -1414,17 +1596,142 @@ void ftChar_SpecialNEnd_Anim(GOBJ *gobj)
     func_802ADDD0(fighter_data->sa.fox.x222C_blasterGObj, fighter_data->x2204_ftcmd_var1);
 
     if ((u32) fighter_data->x2204_ftcmd_var1 == 2U)
-        func_80094818(gobj, 0);
+        //func_80094818(gobj, 0);
+            ? (*temp_r12)();
+            void* temp_r31;
+
+            temp_r31 = fighter_gobj->user_data;
+            if ((u32) temp_r31->unk1978 != 0U) {
+                //func_8003E17C();
+                    HSD_GObj* temp_r28;
+                    s32 temp_r3;
+                    s32 var_r30;
+                    s32* temp_r31;
+                    s32* temp_r4;
+                    s32* temp_r4_2;
+                    u8 var_r29;
+
+                    temp_r28 = M2C_ERROR(Read from unset register $r5);
+                    temp_r31 = Player_GetStaleMoveTableIndexPtr2(M2C_ERROR(Read from unset register $r3));
+                    temp_r3 = itGetKind(temp_r28);
+                    if ((temp_r3 >= 0) && (temp_r3 < 0x23)) {
+                        var_r30 = temp_r3;
+                    } else {
+                        switch (temp_r3) {                          /* irregular */
+                        case 0xCD:
+                            var_r30 = 0x23;
+                            break;
+                        case 0xE1:
+                            var_r30 = 0x24;
+                            break;
+                        case 0xE2:
+                            var_r30 = 0x25;
+                            break;
+                        case 0x28:
+                            var_r30 = 0x26;
+                            break;
+                        default:
+                            var_r30 = -1;
+                            break;
+                        }
+                    }
+                    switch (var_r30) {                              /* switch 1; irregular */
+                    case -1:                                        /* switch 1 */
+                        break;
+                    default:                                        /* switch 1 */
+                        if (func_8026B7E8(temp_r28) == 1) {
+                        case 35:                                    /* switch 1 */
+                        case 3:                                     /* switch 1 */
+                        case 38:                                    /* switch 1 */
+                            if (func_8026B774(temp_r28, (u8) M2C_ERROR(Read from unset register $r3)) == 0) {
+                                temp_r4 = &temp_r31[var_r30];
+                                temp_r4->unk674 = (s32) (temp_r4->unk674 + 1);
+                            }
+                            var_r29 = 0;
+                loop_24:
+                            if (func_8026B774(temp_r28, var_r29) == 0) {
+                                var_r29 += 1;
+                                if ((s32) var_r29 >= 6) {
+                                    temp_r4_2 = &temp_r31[var_r30];
+                                    temp_r4_2->unk710 = (s32) (temp_r4_2->unk710 + 1);
+                                } else {
+                                    goto loop_24;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                return;
+            }
+            if ((u32) temp_r31->unk1974 != 0U) {
+                temp_r12 = *(&ft_OnItemPickupExt + (temp_r31->unk4 * 4));
+                if (temp_r12 != NULL) {
+                    temp_r12();
+                }
+                func_8003E17C();
+            }
 
     if (((u32) fighter_data->x220C_ftcmd_var3 == 2U) &&
         (fighter_data->sa.fox.x222C_blasterGObj != NULL))
     {
         fighter_data->x220C_ftcmd_var3 = 0U;
-        func_802AE608(fighter_data->sa.fox.x222C_blasterGObj);
+        //func_802AE608(fighter_data->sa.fox.x222C_blasterGObj);
+            void* temp_r4;
+
+            temp_r4 = arg0->user_data;
+            if (((s32) temp_r4->unkDD8 != 0) && (arg0 != NULL) && (temp_r4 != NULL)) {
+                temp_r4->unkDD8 = 3;
+                temp_r4->unkDDC = -1;
+            }
     }
     if (!ftAnim_IsFramesRemaining(gobj)) {
         ftChar_SpecialN_RemoveBlasterNULL(gobj);
-        func_8008A2BC(gobj);
+        //func_8008A2BC(gobj);
+            if (func_800872A4(arg0) == FTKIND_MASTERH) {
+                func_80151018(arg0);
+                return;
+            }
+            if (func_800872A4(arg0) == FTKIND_CREZYH) {
+                func_8015BC88(arg0);
+                return;
+            }
+            //func_8008A348(arg0, lbl_804D8438);
+                Fighter* temp_r3;
+                HSD_GObj* temp_r3_2;
+                enum FighterKind temp_r0;
+
+                temp_r3 = arg0->user_data;
+                if (((u8) temp_r3->x2224_flag.u8 >> 5U) & 1) {
+                    func_800C8B74(arg0);
+                    return;
+                }
+                if (func_800C5240(arg0) != 0) {
+                    func_800C4ED8(arg0);
+                    return;
+                }
+                if ((s32) temp_r3->xE0_ground_or_air == GA_Air) {
+                    func_8007D7FC(temp_r3);
+                }
+                if ((enum FighterKind) temp_r3->x4_fighterKind == FTKIND_PEACH) {
+                    temp_r3_2 = temp_r3->x1974_heldItem;
+                    if ((temp_r3_2 != NULL) && (itGetKind(temp_r3_2) == 0x67)) {
+                        func_802BDB94(temp_r3->x1974_heldItem);
+                    }
+                }
+                Fighter_ActionStateChange_800693AC(arg0, 0xE, 0, NULL, lbl_804D8438, lbl_804D8440, arg8);
+                if ((func_8008A698(temp_r3) != 0) && ((u32) func_80085FD4(temp_r3, 6)->unk8 != 0U)) {
+                    func_8008A6D8(arg0, 6);
+                }
+                func_8007EFC0(temp_r3, p_ftCommonData->x5F0);
+                temp_r0 = temp_r3->x4_fighterKind;
+                switch (temp_r0) {                              /* irregular */
+                case FTKIND_LINK:
+                    func_800EB3BC(arg0);
+                    return;
+                case FTKIND_CLINK:
+                    func_8014919C(arg0);
+                    return;
+                }
     }
 }
 
@@ -2043,7 +2350,61 @@ void SpecialPrimaryFireStart_CollisionCallback(GOBJ *gobj)
 ///
 void SpecialPrimaryFireLoop_AnimationCallback(GOBJ *gobj)
 {
-    return;
+    FighterData *fighter_data = gobj->user_data;
+
+    if (!ftAnim_IsFramesRemaining(gobj)) {
+        // if ((int) fighter_data->foxVars[0].SpecialN.isBlasterLoop == true) {
+        if ((int) fighter_data->state_var.state_var1 == true) {
+            ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (FIGHTER_ATTACKCOUNT_NOUPDATE | FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+            fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
+
+            // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
+            fighter_data->state_var.state_var1 = false;
+
+        } else {
+            ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREEND, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+            temp = fighter_data->sa.fox.x222C_blasterGObj;
+            // fighter_data->x2204_ftcmd_var1 = 1;
+            fighter_data->ftcmd_var.flag1 = 1;
+        }
+    }
+
+    Vec3 sp2C;
+    ftCharAttributes* foxAttrs;
+    FighterData *fighter_data;
+    f64 launchAngle;
+    FighterKind ftKind;
+
+    foxAttrs = getFtSpecialAttrs(fighter_data);
+
+    // if ((u32) fighter_data->x2208_ftcmd_var2 != 0U) {
+    if ((u32) fighter_data->ftcmd_var.flag2 != 0U) {
+        fighter_data->ftcmd_var.flag2 = 0U;
+        ftChar_FtGetHoldJoint(gobj, &sp2C);
+        sp2C.z = 0.0f;
+
+        if (1.0f == fighter_data->facing_dir) {
+            launchAngle = foxAttrs->x10_FOX_BLASTER_ANGLE;
+        } else {
+            launchAngle = M_PI - foxAttrs->x10_FOX_BLASTER_ANGLE;
+        }
+
+        //ftKind = func_800872A4(gobj);
+        ftKind = fighter_data->kind;
+
+        switch (ftKind) {
+        case FTKIND_FOX:
+            func_80088148(fighter_data, foxSFX[-1.0f == fighter_data->facing_dir],
+                            SFX_VOLUME_MAX, SFX_PAN_MID);
+            return;
+
+        case FTKIND_FALCO:
+            func_80088148(fighter_data, falcoSFX[-1.0f == fighter_data->facing_dir],
+                            SFX_VOLUME_MAX, SFX_PAN_MID);
+            return;
+        }
+    
+    }
 }
 void SpecialPrimaryFireLoop_IASACallback(GOBJ *gobj)
 {
@@ -2065,7 +2426,13 @@ void SpecialPrimaryFireLoop_CollisionCallback(GOBJ *gobj)
 ///
 void SpecialPrimaryFireEnd_AnimationCallback(GOBJ *gobj)
 {
-    return;
+    FighterData *fighter_data = getFighter(gobj);
+    GOBJ *blasterGObj;
+
+    if (!ftAnim_IsFramesRemaining(gobj)) {
+        ActionStateChange(0, 1, 0, gobj, STATE_COMMON_WAIT1, 0, 0);
+    }
+
 }
 void SpecialPrimaryFireEnd_IASACallback(GOBJ *gobj)
 {
