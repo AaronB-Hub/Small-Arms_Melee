@@ -28,7 +28,7 @@ void OnLoad(GOBJ *gobj)
 	// int *fighter_items = fighter_data->ftData->items;
 
 	// // init Fxlaser
-	// //Item_StoreItemDataToCharItemTable(fighter_items[0], VANILLA_ITEM_FXLASER);
+	// //Item_StoreItemDataToCharItemTable(fighter_items[0], VANILLA_ITEM_FXLASER);  // Is this func_8026B3F8() ?
 	// MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXLASER], MEX_ITEM_FXLASER);
 
 	// // init Fxblaster

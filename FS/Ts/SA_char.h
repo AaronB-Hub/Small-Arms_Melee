@@ -5,6 +5,7 @@
 //   Common States   //
 ///////////////////////
 
+#define STATE_COMMON_WAIT1 14
 #define STATE_COMMON_DASH 20
 #define STATE_COMMON_RUN 21
 #define STATE_COMMON_KNEEBEND 24  // Landing/Kneebend (42 or 43 are also landing actions, but not kneebend https://smashboards.com/threads/melee-hacks-and-you-new-hackers-start-here-in-the-op.247119/page-98#post-14773022)
@@ -57,7 +58,7 @@
 
 typedef struct CharAttr
 {
-	// NEUTRAL SPECIAL - BLASTER //
+	  // NEUTRAL SPECIAL - BLASTER //
     float x0_FOX_BLASTER_UNK1;
     float x4_FOX_BLASTER_UNK2;
     float x8_FOX_BLASTER_UNK3;

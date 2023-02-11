@@ -1,6 +1,8 @@
 #include "SA_char.h"
 
 #pragma region Old
+/*
+
 ///////////////////////
 //    Initial Fire   //
 ///////////////////////
@@ -89,9 +91,13 @@ void SpecialSecondaryFire_CollisionCallback(GOBJ *gobj)
 {
     return;
 }
+
+*/
 #pragma endregion
 
 #pragma region Adapted from https://github.com/doldecomp/melee/blob/master/src/melee/ft/chara/ftFox/ftfox_SpecialN.c
+/*
+
 // #include <dolphin/os/os.h>
 // #include <melee/ft/chara/ftFox/ftfox.h>
 // #include <melee/ft/code_80081B38.h>
@@ -421,7 +427,7 @@ void ftChar_RemoveBlaster(GOBJ *gobj)
 
                                 hitbox = item_data->hitbox[var_r31_2];
                                 tangiblity = hitbox->tangiblity;
-                                switch (tangiblity) {                              /* irregular */
+                                switch (tangiblity) {                              // irregular //
                                 case 1:
                                     func_8000B1CC(hitbox->x48, hitbox + 0x10, hitbox + 0x4C);
                                     hitbox->x58 = (int) hitbox->x4C;
@@ -433,14 +439,14 @@ void ftChar_RemoveBlaster(GOBJ *gobj)
                                     return;
                                 case 2:
                                     hitbox->tangiblity = 3;
-                                    /* fallthrough */
+                                    // fallthrough //
                                 case 3:
                                     hitbox->x58 = (int) hitbox->x4C;
                                     hitbox->x5C = (int) hitbox->x50;
                                     hitbox->x60 = (int) hitbox->x54;
                                     func_8000B1CC(hitbox->unk48, hitbox + 0x10, hitbox + 0x4C);
                                     func_8000B1CC(hitbox->unk48, item_data->hitbox[var_r31_2].x10_hurt2_offset, item_data->pos);
-                                    /* fallthrough */
+                                    // fallthrough //
                                 case 4:
                                 case 0:
                                     return;
@@ -671,9 +677,7 @@ u32 falcoSFX[2] = { 0x18703, 0x18706 };
 // https://decomp.me/scratch/iPgDc // Create Blaster Shot Item
 void ftChar_CreateBlasterShot(GOBJ *gobj)
 {
-    /** @todo Shared @c inline with #ftChar_SpecialNLoop_Anim and
-     * #ftChar_SpecialAirNLoop_Anim.
-     */
+    // @todo Shared @c inline with #ftChar_SpecialNLoop_Anim and #ftChar_SpecialAirNLoop_Anim.
     Vec3 sp2C;
     int unused;
     ftCharAttributes* foxAttrs;
@@ -1247,7 +1251,7 @@ void ftChar_SpecialNStart_Anim(GOBJ *gobj)
                 temp_r0->unkE78 = arg1;
                 if (arg1 == 2) {
                     temp_r0_2 = temp_r0->unk10;
-                    switch (temp_r0_2) {                /* irregular */
+                    switch (temp_r0_2) {                // irregular //
                     case 0x8A:
                     case 0x4A:
                         func_8026AE84((Item* ) temp_r0, 0x1AE14, 0x7FU, 0x40U);
@@ -1260,11 +1264,11 @@ void ftChar_SpecialNStart_Anim(GOBJ *gobj)
                 }
             }
             temp_r0_3 = temp_r0->unkE78;
-            switch (temp_r0_3) {                        /* switch 1; irregular */
-            case 2:                                     /* switch 1 */
+            switch (temp_r0_3) {                        // switch 1; irregular //
+            case 2:                                     // switch 1 //
                 HSD_JObjSetFlagsAll(var_r3, 0x10U);
                 return;
-            case 1:                                     /* switch 1 */
+            case 1:                                     // switch 1 //
                 HSD_JObjClearFlagsAll(var_r3, 0x10U);
                 break;
             }
@@ -1284,7 +1288,7 @@ void ftChar_SpecialNStart_Anim(GOBJ *gobj)
                 itemdata->item_var.var2 = 1;
                 itemdata->item_var.var3 = 1;
                 if ((s32) itemdata->item_var.var4 == 0) {
-                    switch (itemdata->kind) {                      /* irregular */
+                    switch (itemdata->kind) {                      // irregular //
                     case 0x8A:
                     case 0x4A:
                         func_8026AE84((Item* ) itemdata, 0x1AE05, 0x7FU, 0x40U);
@@ -1331,7 +1335,7 @@ void ftChar_SpecialNLoop_Anim(GOBJ *gobj)
                 itemdata->item_var.var2 = 1;
                 itemdata->item_var.var3 = 1;
                 if ((s32) itemdata->item_var.var4 == 0) {
-                    switch (itemdata->kind) {                      /* irregular */
+                    switch (itemdata->kind) {                      // irregular //
                     case 0x8A:
                     case 0x4A:
                         func_8026AE84((Item* ) itemdata, 0x1AE05, 0x7FU, 0x40U);
@@ -1617,7 +1621,7 @@ void ftChar_SpecialNEnd_Anim(GOBJ *gobj)
                     if ((temp_r3 >= 0) && (temp_r3 < 0x23)) {
                         var_r30 = temp_r3;
                     } else {
-                        switch (temp_r3) {                          /* irregular */
+                        switch (temp_r3) {                          // irregular //
                         case 0xCD:
                             var_r30 = 0x23;
                             break;
@@ -1635,14 +1639,14 @@ void ftChar_SpecialNEnd_Anim(GOBJ *gobj)
                             break;
                         }
                     }
-                    switch (var_r30) {                              /* switch 1; irregular */
-                    case -1:                                        /* switch 1 */
+                    switch (var_r30) {                              // switch 1; irregular //
+                    case -1:                                        // switch 1 //
                         break;
-                    default:                                        /* switch 1 */
+                    default:                                        // switch 1 //
                         if (func_8026B7E8(temp_r28) == 1) {
-                        case 35:                                    /* switch 1 */
-                        case 3:                                     /* switch 1 */
-                        case 38:                                    /* switch 1 */
+                        case 35:                                    // switch 1 //
+                        case 3:                                     // switch 1 //
+                        case 38:                                    // switch 1 //
                             if (func_8026B774(temp_r28, (u8) M2C_ERROR(Read from unset register $r3)) == 0) {
                                 temp_r4 = &temp_r31[var_r30];
                                 temp_r4->unk674 = (s32) (temp_r4->unk674 + 1);
@@ -1724,7 +1728,7 @@ void ftChar_SpecialNEnd_Anim(GOBJ *gobj)
                 }
                 func_8007EFC0(temp_r3, p_ftCommonData->x5F0);
                 temp_r0 = temp_r3->x4_fighterKind;
-                switch (temp_r0) {                              /* irregular */
+                switch (temp_r0) {                              // irregular //
                 case FTKIND_LINK:
                     func_800EB3BC(arg0);
                     return;
@@ -2152,9 +2156,12 @@ void ftChar_Throw_Anim(GOBJ *gobj)
         }
     }
 }
+
+*/
 #pragma endregion
 
 #pragma region Condensed
+/*
 
 // All old functions
 void ftChar_FtGetHoldJoint(GOBJ *gobj, Vec3* pos);
@@ -2234,6 +2241,7 @@ void ftChar_Throw_Anim(GOBJ *gobj);
     // Calls "ftChar_ItGetHoldJoint(gobj, &sp44);"
 
 
+*/
 #pragma endregion
 
 #pragma region New
@@ -2246,24 +2254,26 @@ void ftChar_Throw_Anim(GOBJ *gobj);
 void SAItemPrimaryFireStart(GOBJ *gobj)
 {
     FighterData *fighter_data = gobj->userdata;
-    ftCharAttributes* foxAttrs = fighter_data->special_attributes;
-    GOBJ *blasterGObj;
+    //ftFoxAttributes* foxAttrs = fighter_data->special_attributes;
+    CharAttr* charAttrs = fighter_data->ftData->ext_attr;
 
-    //func_8007D7FC(fighter_data);
-        if (fighter_data->action_flags.transn_phys_update) {
-            // fighter_data->x80_self_vel.x = fighter_data->x6A4_transNOffset.z * fighter_data->facing_dir;
-            fighter_data->phys.self_vel.x = fighter_data->transN_offset.z * fighter_data->facing_dir;
-        }
+    
+    // if (fighter_data->action_flags.transn_phys_update) {
+    //     fighter_data->phys.self_vel.x = fighter_data->transN_offset.z * fighter_data->facing_dir;
+    // }
 
-        fighter_data->phys.air_state = GA_Ground;
-        fighter_data->self_vel_ground = fighter_data->phys.self_vel.x;
-        fighter_data->jump.jumps_used = 0;
-        fighter_data->jump.walljumps_used = 0;
-        fighter_data->flags_2227.bits.b0 = 0;
-        fighter_data->coll_data.ecb_lock = 0;
-        fighter_data->coll_data.flags &= 0xFFFFFFEF;
+    // fighter_data->phys.air_state = GA_Ground;
+    // fighter_data->self_vel_ground = fighter_data->phys.self_vel.x;
+    // fighter_data->jump.jumps_used = 0;
+    // fighter_data->jump.walljumps_used = 0;
+    // fighter_data->flags_2227.bits.b0 = 0;
+    // fighter_data->coll_data.ecb_lock = 0;
+    // fighter_data->coll_data.flags &= 0xFFFFFFEF;
 
     ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRESTART, 0, 0);
+
+    // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
+    fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
 
     FloatFtCmd *script_flags = &fighter_data->ftcmd_var
     script_flags->flag0 = 0;
@@ -2271,15 +2281,10 @@ void SAItemPrimaryFireStart(GOBJ *gobj)
     script_flags->flag2 = 0;
     script_flags->flag3 = 0;
 
-    //func_8006EBA4(gobj);
-
-    // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
-    fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
-
-    // fighter_data->sa.fox.x222C_blasterGObj = blasterGObj;
-    fighter_data->fighter_var.ft_var1 = blasterGObj;
-
-    if (blasterGObj != NULL); // Spawn item and set appropriate fighter callbacks
+    // void** items = fighter_data->ftData->items;
+    // GOBJ *blasterGObj;
+    // fighter_data->fighter_var.ft_var1 = blasterGObj;
+    // if (blasterGObj != NULL); // Spawn item and set appropriate fighter callbacks
 
     return;
 
@@ -2289,27 +2294,30 @@ void SAItemPrimaryFireStart(GOBJ *gobj)
 ///
 void SAItemPrimaryFireAirStart(GOBJ *gobj)
 {
-    FighterData *fighter_data = gobj->userdata;
-    ftCharAttributes* foxAttrs = fighter_data->special_attributes;
-    GOBJ *blasterGObj;
+    // FighterData *fighter_data = gobj->userdata;
+    // //ftCharAttributes* foxAttrs = fighter_data->special_attributes;
+    // CharAttr* charAttrs = fighter_data->ftData->ext_attr;
+    // GOBJ *blasterGObj;
 
-    ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREAIRSTART, 0, 0);
+    // ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREAIRSTART, 0, 0);
 
-    FloatFtCmd *script_flags = &fighter_data->ftcmd_var
-    script_flags->flag0 = 0;
-    script_flags->flag1 = 0;
-    script_flags->flag2 = 0;
-    script_flags->flag3 = 0;
+    // FloatFtCmd *script_flags = &fighter_data->ftcmd_var
+    // script_flags->flag0 = 0;
+    // script_flags->flag1 = 0;
+    // script_flags->flag2 = 0;
+    // script_flags->flag3 = 0;
 
-    //func_8006EBA4(gobj);
+    // //func_8006EBA4(gobj);
 
-    // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
-    fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
+    // // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
+    // fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
 
-    //fighter_data->sa.fox.x222C_blasterGObj = blasterGObj;
-    fighter_data->fighter_var.ft_var1 = blasterGObj;
+    // //fighter_data->sa.fox.x222C_blasterGObj = blasterGObj;
+    // fighter_data->fighter_var.ft_var1 = blasterGObj;
 
-    if (blasterGObj != NULL); // Spawn item and set appropriate fighter callbacks
+    // if (blasterGObj != NULL); // Spawn item and set appropriate fighter callbacks
+
+    // return;
 
 }
 
@@ -2351,6 +2359,10 @@ void SpecialPrimaryFireStart_CollisionCallback(GOBJ *gobj)
 void SpecialPrimaryFireLoop_AnimationCallback(GOBJ *gobj)
 {
     FighterData *fighter_data = gobj->user_data;
+    // ftFoxAttributes* foxAttrs;
+    // foxAttrs = getFtSpecialAttrs(fighter_data);
+    CharAttr* charAttrs = fighter_data->ftData->ext_attr;
+    FighterKind ftKind = fighter_data->kind;
 
     if (!ftAnim_IsFramesRemaining(gobj)) {
         // if ((int) fighter_data->foxVars[0].SpecialN.isBlasterLoop == true) {
@@ -2363,44 +2375,33 @@ void SpecialPrimaryFireLoop_AnimationCallback(GOBJ *gobj)
 
         } else {
             ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREEND, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
-            temp = fighter_data->sa.fox.x222C_blasterGObj;
-            // fighter_data->x2204_ftcmd_var1 = 1;
+            //temp = fighter_data->sa.fox.x222C_blasterGObj;
+            temp = fighter_data->fighter_var.ft_var1;
             fighter_data->ftcmd_var.flag1 = 1;
         }
     }
 
     Vec3 sp2C;
-    ftCharAttributes* foxAttrs;
-    FighterData *fighter_data;
     f64 launchAngle;
-    FighterKind ftKind;
 
-    foxAttrs = getFtSpecialAttrs(fighter_data);
-
-    // if ((u32) fighter_data->x2208_ftcmd_var2 != 0U) {
     if ((u32) fighter_data->ftcmd_var.flag2 != 0U) {
         fighter_data->ftcmd_var.flag2 = 0U;
         ftChar_FtGetHoldJoint(gobj, &sp2C);
         sp2C.z = 0.0f;
 
         if (1.0f == fighter_data->facing_dir) {
-            launchAngle = foxAttrs->x10_FOX_BLASTER_ANGLE;
+            launchAngle = charAttrs->x10_FOX_BLASTER_ANGLE;
         } else {
-            launchAngle = M_PI - foxAttrs->x10_FOX_BLASTER_ANGLE;
+            launchAngle = M_PI - charAttrs->x10_FOX_BLASTER_ANGLE;
         }
-
-        //ftKind = func_800872A4(gobj);
-        ftKind = fighter_data->kind;
 
         switch (ftKind) {
         case FTKIND_FOX:
-            func_80088148(fighter_data, foxSFX[-1.0f == fighter_data->facing_dir],
-                            SFX_VOLUME_MAX, SFX_PAN_MID);
+            //func_80088148(fighter_data, foxSFX[-1.0f == fighter_data->facing_dir], SFX_VOLUME_MAX, SFX_PAN_MID);
             return;
 
         case FTKIND_FALCO:
-            func_80088148(fighter_data, falcoSFX[-1.0f == fighter_data->facing_dir],
-                            SFX_VOLUME_MAX, SFX_PAN_MID);
+            //func_80088148(fighter_data, falcoSFX[-1.0f == fighter_data->facing_dir], SFX_VOLUME_MAX, SFX_PAN_MID);
             return;
         }
     
@@ -2455,13 +2456,13 @@ void SpecialPrimaryFireEnd_CollisionCallback(GOBJ *gobj)
 ///
 void SpecialPrimaryFireAirStart_AnimationCallback(GOBJ *gobj)
 {
-    FighterData *fighter_data = gobj->userdata;
-    GOBJ *blasterGObj;
+    // FighterData *fighter_data = gobj->userdata;
+    // GOBJ *blasterGObj;
 
-    if (!ftAnim_IsFramesRemaining(gobj)) {
-        ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREAIRLOOP, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
-        fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
-    }
+    // if (!ftAnim_IsFramesRemaining(gobj)) {
+    //     ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREAIRLOOP, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+    //     fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
+    // }
     return;
 }
 void SpecialPrimaryFireAirStart_IASACallback(GOBJ *gobj)
@@ -2517,6 +2518,17 @@ void SpecialPrimaryFireAirEnd_PhysicCallback(GOBJ *gobj)
     return;
 }
 void SpecialPrimaryFireAirEnd_CollisionCallback(GOBJ *gobj)
+{
+    return;
+}
+
+///////////////////////
+//   Char Functions  //
+///////////////////////
+///
+///
+///
+void ftChar_CreateBlasterShot(GOBJ *gobj)
 {
     return;
 }

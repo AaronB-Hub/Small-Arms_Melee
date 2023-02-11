@@ -128,11 +128,15 @@ __attribute__((used)) static struct FtState move_logic[] = {
 		0x340111,   // StateFlags
 		0x12,       // AttackID
 		0x0,        // BitFlags
-		0x800E62A4, // AnimationCallback
-		0x800E6AB4, // IASACallback
-		0x800E6B5C, // PhysicsCallback
-		0x800E6C1C, // CollisionCallback
-		0x800761C8, // CameraCallback
+		// 0x800E62A4, // AnimationCallback
+		// 0x800E6AB4, // IASACallback
+		// 0x800E6B5C, // PhysicsCallback
+		// 0x800E6C1C, // CollisionCallback
+    SpecialPrimaryFireStart_AnimationCallback,                // AnimationCallback
+		SpecialPrimaryFireStart_IASACallback,	                  // IASACallback
+		SpecialPrimaryFireStart_PhysicCallback,                   // PhysicsCallback
+		SpecialPrimaryFireStart_CollisionCallback,                // CollisionCallback
+		Fighter_UpdateCameraBox,	                  // CameraCallback
 	},
 	// State: 352 - SAItemPrimaryFireLoop
 	{
@@ -140,11 +144,15 @@ __attribute__((used)) static struct FtState move_logic[] = {
 		0x3C0111,   // StateFlags
 		0x12,       // AttackID
 		0x0,        // BitFlags
-		0x800E6368, // AnimationCallback
-		0x800E6ADC, // IASACallback
-		0x800E6B7C, // PhysicsCallback
-		0x800E6C3C, // CollisionCallback
-		0x800761C8, // CameraCallback
+		// 0x800E6368, // AnimationCallback
+		// 0x800E6ADC, // IASACallback
+		// 0x800E6B7C, // PhysicsCallback
+		// 0x800E6C3C, // CollisionCallback
+        SpecialPrimaryFireLoop_AnimationCallback,                // AnimationCallback
+		SpecialPrimaryFireLoop_IASACallback,	                  // IASACallback
+		SpecialPrimaryFireLoop_PhysicCallback,                   // PhysicsCallback
+		SpecialPrimaryFireLoop_CollisionCallback,                // CollisionCallback
+		Fighter_UpdateCameraBox,	                  // CameraCallback
 	},
 	// State: 353 - SAItemPrimaryFireEnd
 	{
@@ -152,11 +160,15 @@ __attribute__((used)) static struct FtState move_logic[] = {
 		0x340111,   // StateFlags
 		0x12,       // AttackID
 		0x0,        // BitFlags
-		0x800E65BC, // AnimationCallback
-		0x800E6B04, // IASACallback
-		0x800E6B9C, // PhysicsCallback
-		0x800E6C5C, // CollisionCallback
-		0x800761C8, // CameraCallback
+		// 0x800E65BC, // AnimationCallback
+		// 0x800E6B04, // IASACallback
+		// 0x800E6B9C, // PhysicsCallback
+		// 0x800E6C5C, // CollisionCallback
+		SpecialPrimaryFireEnd_AnimationCallback,                // AnimationCallback
+		SpecialPrimaryFireEnd_IASACallback,	                  // IASACallback
+		SpecialPrimaryFireEnd_PhysicCallback,                   // PhysicsCallback
+		SpecialPrimaryFireEnd_CollisionCallback,                // CollisionCallback
+		Fighter_UpdateCameraBox,	                  // CameraCallback
 	},
 	// State: 354 - SAItemPrimaryFireAirStart
 	{
