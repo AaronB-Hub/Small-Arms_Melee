@@ -24,22 +24,14 @@ void OnLoad(GOBJ *gobj)
     // Add custom SA controls
     Custom_Controls_SA(gobj);
 
-	// // get fighter item pointer
-	// int *fighter_items = fighter_data->ftData->items;
-
-	// // init Fxlaser
-	// //Item_StoreItemDataToCharItemTable(fighter_items[0], VANILLA_ITEM_FXLASER);  // Is this func_8026B3F8() ?
-	// MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXLASER], MEX_ITEM_FXLASER);
-
-	// // init Fxblaster
-	// MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXBLASTER], MEX_ITEM_FXBLASTER);
-
-	// // init Fxshadow
-	// MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_FXSHADOW], MEX_ITEM_FXSHADOW);
+    // Add custom SA items
+    Custom_Items_SA(gobj);
 
 	// // This block runs fox's pre-existing onload (NOT NEEDED FOR THIS AS ALL OF FOX'S ONLOAD CONTENTS HAVE BEEN TRANSFERRED HERE)
     // void (*cb_OnLoad)(GOBJ *gobj) = (void *) 0x800E57AC;  // <- char specific onload function (can get from MexTool)
     // cb_OnLoad(gobj);
+
+    return;
 
 }
 ///
@@ -59,6 +51,8 @@ void OnSpawn(GOBJ *gobj)
 	fighter_data->fighter_var.ft_var4 = 0;
 	fighter_data->fighter_var.ft_var5 = 0;
 	fighter_data->fighter_var.ft_var6 = 0;
+
+  SAItem_OnSpawn(gobj);
 
 	return;
 }

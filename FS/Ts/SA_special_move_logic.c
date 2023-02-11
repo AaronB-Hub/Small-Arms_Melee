@@ -132,7 +132,7 @@ __attribute__((used)) static struct FtState move_logic[] = {
 		// 0x800E6AB4, // IASACallback
 		// 0x800E6B5C, // PhysicsCallback
 		// 0x800E6C1C, // CollisionCallback
-    SpecialPrimaryFireStart_AnimationCallback,                // AnimationCallback
+        SpecialPrimaryFireStart_AnimationCallback,                // AnimationCallback
 		SpecialPrimaryFireStart_IASACallback,	                  // IASACallback
 		SpecialPrimaryFireStart_PhysicCallback,                   // PhysicsCallback
 		SpecialPrimaryFireStart_CollisionCallback,                // CollisionCallback
@@ -350,12 +350,12 @@ void CommonGuardOn_AnimationCallback(GOBJ *gobj)
 	// Check if initiated by R or L
 	if ( ((fighter_data->input.held & HSD_TRIGGER_L) != 0) || ((fighter_data->input.down & HSD_TRIGGER_L) != 0) )
 	{
-		ActionStateChange(0, 1, 0, gobj, STATE_SPECIAL_PRIMARYFIRE, 0, 0);
-    return;
+		ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRESTART, 0, 0);
+        return;
 	} else
-  {
-    void (*cb_OnGuardOn)(GOBJ *gobj) = (void *) 0x800926DC;
-    return cb_OnGuardOn(gobj);
-  }	
+    {
+        void (*cb_OnGuardOn)(GOBJ *gobj) = (void *) 0x800926DC;
+        return cb_OnGuardOn(gobj);
+    }	
 }
 #pragma endregion

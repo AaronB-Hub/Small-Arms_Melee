@@ -1,5 +1,5 @@
 #include "../../m-ex/MexTK/mex.h"
-// #include "SA_items.h"
+#include "SA_item.h"
 
 ///////////////////////
 //   Common States   //
@@ -45,20 +45,12 @@
 #define STATE_SA_ITEMSECONDARYFIREAIREND 362
 
 ///////////////////////
-//    Item States    //
-///////////////////////
-
-#define STATE_ITEM0 0
-#define STATE_ITEM1 1
-// state 1 is from normal shooting: does more damage and normal collision effect; state 2 is from fox throws: does less damage, is electric and has a blue collision effect
-
-///////////////////////
 //      Structs      //
 ///////////////////////
 
 typedef struct CharAttr
 {
-	  // NEUTRAL SPECIAL - BLASTER //
+	// NEUTRAL SPECIAL - BLASTER //
     float x0_FOX_BLASTER_UNK1;
     float x4_FOX_BLASTER_UNK2;
     float x8_FOX_BLASTER_UNK3;
@@ -118,39 +110,12 @@ typedef struct CharAttr
     // u8 data_filler_10[0xD1 - 0x10];           // x10 (array of u8's with last one starting at 0xD1(?))
 } CharAttr;                                   // size: 0xD4
 
-typedef struct ItemAttr
-{
-    float life;  // [42 0c 00 00 = 35 frames] // x00
-    float x04;   // [40 40 00 00 = 3?]        // x04
-    float x08;   // using for angle           // x08
-    float x0C;                                // x0C
-    float x10;                                // x10
-    float x14;                                // x14
-    float x18;                                // x18
-    float x1C;                                // x1C
-    float x20;                                // x20
-	float x24;   // [3F 80 00 00 = 1?]        // x24
-    float x28;                                // x28
-    float x2C;                                // x2C
-    float x30;                                // x30
-	float x34;                                // x34
-    float x38;                                // x38
-} ItemAttr;                                // size: 0x3C
-
 typedef struct FloatFtCmd
 {
 	int interruptable;
 	int used_float;
     int type;
 } FloatFtCmd;
-
-typedef struct ItemFtCmd
-{
-	int interruptable;
-	int fired;
-  int unk2;
-  int unk3;
-} ItemFtCmd;
 
 ///////////////////////
 //     Functions     //
@@ -160,13 +125,15 @@ typedef struct ItemFtCmd
 void SA_Intercept_IASACallback(GOBJ *gobj);
 void Custom_Controls_SA(GOBJ *gobj)
 {
-  // Added at IASA update priority to be performed just after inputs are received
-  GObj_AddProc(gobj, SA_Intercept_IASACallback, 3);
-  return;
+    // Added at IASA update priority to be performed just after inputs are received
+    GObj_AddProc(gobj, SA_Intercept_IASACallback, 3);
+    return;
 }
-
-// Think
-void SAItemThink(GOBJ *gobj);
+void Custom_Items_SA(GOBJ *gobj)
+{
+    SAItem_OnLoad(gobj);
+    return;
+}
 
 // Common Moves (Vanilla)
 void CommonGuardOn_AnimationCallback(GOBJ *gobj);

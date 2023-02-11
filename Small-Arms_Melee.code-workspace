@@ -6,13 +6,15 @@
 	],
 	"settings": {
 		"files.associations": {
-			"mario.h": "c",
-			"preload.h": "c",
-			"mex.h": "c",
-			"test.h": "c",
-			"sa_common_move_logic.h": "c",
-			"sa_items.h": "c",
-			"sa_special_move_logic.h": "c"
-		}
+      "mario.h": "c",
+      "preload.h": "c",
+      "mex.h": "c",
+      "test.h": "c",
+      "sa_common_move_logic.h": "c",
+      "sa_items.h": "c",
+      "sa_special_move_logic.h": "c",
+      "sa_char.h": "c",
+      "sa_item.h": "c"
+    }
 	}
 }
