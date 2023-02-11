@@ -32,10 +32,10 @@ __attribute__((used)) static struct FtState move_logic[] = {
 		0x0,					                      // StateFlags
 		0x0,						                  // AttackID
 		0x0,						                  // BitFlags
-		SAPrimaryFire_AnimationCallback,         // AnimationCallback
-		SAPrimaryFire_IASACallback,	          // IASACallback
-		SAPrimaryFire_PhysicCallback,            // PhysicsCallback
-		SAPrimaryFire_CollisionCallback,         // CollisionCallback
+		0x8008A494, // AnimationCallback
+		0x8008A4D4, // IASACallback
+		0x8008A644, // PhysicsCallback
+		0x8008A678, // CollisionCallback
 		Fighter_UpdateCameraBox,	                  // CameraCallback
 	},
   // State: 344 - ?????
@@ -44,10 +44,10 @@ __attribute__((used)) static struct FtState move_logic[] = {
 		0x0,					                      // StateFlags
 		0x0,						                  // AttackID
 		0x0,						                  // BitFlags
-		SpecialSecondaryFire_AnimationCallback,         // AnimationCallback
-		SpecialSecondaryFire_IASACallback,	          // IASACallback
-		SpecialSecondaryFire_PhysicCallback,            // PhysicsCallback
-		SpecialSecondaryFire_CollisionCallback,         // CollisionCallback
+		0x8008A494, // AnimationCallback
+		0x8008A4D4, // IASACallback
+		0x8008A644, // PhysicsCallback
+		0x8008A678, // CollisionCallback
 		Fighter_UpdateCameraBox,	                  // CameraCallback
 	},
   // State: 345 - SALeapKneeBend

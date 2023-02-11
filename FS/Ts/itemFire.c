@@ -2275,11 +2275,11 @@ void SAItemPrimaryFireStart(GOBJ *gobj)
     // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
     fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
 
-    FloatFtCmd *script_flags = &fighter_data->ftcmd_var
-    script_flags->flag0 = 0;
-    script_flags->flag1 = 0;
-    script_flags->flag2 = 0;
-    script_flags->flag3 = 0;
+    ItemFtCmd *script_flags = &fighter_data->ftcmd_var;
+    script_flags->interruptable = 0;
+    script_flags->fired = 0;
+    script_flags->unk2 = 0;
+    script_flags->unk3 = 0;
 
     // void** items = fighter_data->ftData->items;
     // GOBJ *blasterGObj;
@@ -2301,11 +2301,11 @@ void SAItemPrimaryFireAirStart(GOBJ *gobj)
 
     // ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREAIRSTART, 0, 0);
 
-    // FloatFtCmd *script_flags = &fighter_data->ftcmd_var
-    // script_flags->flag0 = 0;
-    // script_flags->flag1 = 0;
-    // script_flags->flag2 = 0;
-    // script_flags->flag3 = 0;
+    // ItemFtCmd *script_flags = &fighter_data->ftcmd_var;
+    // script_flags->interruptable = 0;
+    // script_flags->fired = 0;
+    // script_flags->unk2 = 0;
+    // script_flags->unk3 = 0;
 
     // //func_8006EBA4(gobj);
 
@@ -2332,8 +2332,10 @@ void SpecialPrimaryFireStart_AnimationCallback(GOBJ *gobj)
     FighterData *fighter_data = gobj->userdata;
     GOBJ *blasterGObj;
 
-    if (!ftAnim_IsFramesRemaining(gobj)) {
-        ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+    // if (!ftAnim_IsFramesRemaining(gobj)) {
+    if (FrameTimerCheck(gobj) == 0) {
+        // ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+        ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (0x10 | 0x2), 0);
         fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
     }
     return;
@@ -2358,25 +2360,28 @@ void SpecialPrimaryFireStart_CollisionCallback(GOBJ *gobj)
 ///
 void SpecialPrimaryFireLoop_AnimationCallback(GOBJ *gobj)
 {
-    FighterData *fighter_data = gobj->user_data;
+    FighterData *fighter_data = gobj->userdata;
     // ftFoxAttributes* foxAttrs;
     // foxAttrs = getFtSpecialAttrs(fighter_data);
     CharAttr* charAttrs = fighter_data->ftData->ext_attr;
     FighterKind ftKind = fighter_data->kind;
 
-    if (!ftAnim_IsFramesRemaining(gobj)) {
+    // if (!ftAnim_IsFramesRemaining(gobj)) {
+    if (FrameTimerCheck(gobj) == 0) {
         // if ((int) fighter_data->foxVars[0].SpecialN.isBlasterLoop == true) {
         if ((int) fighter_data->state_var.state_var1 == true) {
-            ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (FIGHTER_ATTACKCOUNT_NOUPDATE | FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+            // ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (FIGHTER_ATTACKCOUNT_NOUPDATE | FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+            ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (0x2000000 | 0x10 | 0x2), 0);
             fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
 
             // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
             fighter_data->state_var.state_var1 = false;
 
         } else {
-            ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREEND, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+            // ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREEND, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
+            ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREEND, (0x10 | 0x2), 0);
             //temp = fighter_data->sa.fox.x222C_blasterGObj;
-            temp = fighter_data->fighter_var.ft_var1;
+            int temp = fighter_data->fighter_var.ft_var1;
             fighter_data->ftcmd_var.flag1 = 1;
         }
     }
@@ -2386,10 +2391,13 @@ void SpecialPrimaryFireLoop_AnimationCallback(GOBJ *gobj)
 
     if ((u32) fighter_data->ftcmd_var.flag2 != 0U) {
         fighter_data->ftcmd_var.flag2 = 0U;
-        ftChar_FtGetHoldJoint(gobj, &sp2C);
-        sp2C.z = 0.0f;
+        //ftChar_FtGetHoldJoint(gobj, &sp2C);
+                // grab bone index, then get position of bone in world
+		        int bone_index = Fighter_BoneLookup(fighter_data, L1stNa);
+		        JOBJ_GetWorldPosition(fighter_data->bones[bone_index].joint, 0, &sp2C);
+        sp2C.Z = 0.0f;
 
-        if (1.0f == fighter_data->facing_dir) {
+        if (1.0f == fighter_data->facing_direction) {
             launchAngle = charAttrs->x10_FOX_BLASTER_ANGLE;
         } else {
             launchAngle = M_PI - charAttrs->x10_FOX_BLASTER_ANGLE;
@@ -2397,11 +2405,11 @@ void SpecialPrimaryFireLoop_AnimationCallback(GOBJ *gobj)
 
         switch (ftKind) {
         case FTKIND_FOX:
-            //func_80088148(fighter_data, foxSFX[-1.0f == fighter_data->facing_dir], SFX_VOLUME_MAX, SFX_PAN_MID);
+            //func_80088148(fighter_data, foxSFX[-1.0f == fighter_data->facing_direction], SFX_VOLUME_MAX, SFX_PAN_MID);
             return;
 
         case FTKIND_FALCO:
-            //func_80088148(fighter_data, falcoSFX[-1.0f == fighter_data->facing_dir], SFX_VOLUME_MAX, SFX_PAN_MID);
+            //func_80088148(fighter_data, falcoSFX[-1.0f == fighter_data->facing_direction], SFX_VOLUME_MAX, SFX_PAN_MID);
             return;
         }
     
@@ -2427,10 +2435,11 @@ void SpecialPrimaryFireLoop_CollisionCallback(GOBJ *gobj)
 ///
 void SpecialPrimaryFireEnd_AnimationCallback(GOBJ *gobj)
 {
-    FighterData *fighter_data = getFighter(gobj);
+    FighterData *fighter_data = gobj->userdata;
     GOBJ *blasterGObj;
 
-    if (!ftAnim_IsFramesRemaining(gobj)) {
+    // if (!ftAnim_IsFramesRemaining(gobj)) {
+    if (FrameTimerCheck(gobj) == 0) {
         ActionStateChange(0, 1, 0, gobj, STATE_COMMON_WAIT1, 0, 0);
     }
 
