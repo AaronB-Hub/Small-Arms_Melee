@@ -52,7 +52,7 @@ void OnSpawn(GOBJ *gobj)
 	fighter_data->fighter_var.ft_var5 = 0;
 	fighter_data->fighter_var.ft_var6 = 0;
 
-  SAItem_OnSpawn(gobj);
+    SAItem_OnSpawn(gobj);
 
 	return;
 }

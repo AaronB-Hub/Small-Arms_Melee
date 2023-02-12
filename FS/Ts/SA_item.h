@@ -9,6 +9,12 @@
 #define MEX_ITEM_PRIMARYFIRE 0
 #define MEX_ITEM_SECONDARYFIRE 2
 
+// M-ex fighter effects are indexed but they are abstracted for the sake of portability. Use 5XXX and 6XXX to spawn a fighter model effect and fighter particle generator respectively
+#define MEX_EFFECT_FXLASER 5005
+// #define MEX_EFFECT_FXLASER_FLAME 6000  // This doesn't normally have an effect
+
+#define MEX_SOUND_FXLASER_DESTROY 5000  // Not sure what the correct value for this is
+
 
 ///////////////////////
 //    Item States    //
@@ -20,6 +26,8 @@
 #define STATE_ITEM_FIRE2 3
 // state 1 is from normal shooting: does more damage and normal collision effect; state 2 is from fox throws: does less damage, is electric and has a blue collision effect
 
+#define STATE_FIRE1_SPAWN 0
+#define STATE_FIRE1_FIRE 0
 
 ///////////////////////
 //      Structs      //
@@ -46,46 +54,28 @@ typedef struct ItemAttr
 
 typedef struct ItemFtCmd
 {
-	int interruptable;
-	int fired;
-    int unk2;
-    int unk3;
+	int fire1;
+    int fire2;
+    int interruptable;
+    int needs_charge;
+    int is_charged;
 } ItemFtCmd;
 
-__attribute__((used)) static struct ItemState SA_item_state_table[] = {
-    // State: 0 - Idle
-    {
-        0,                 // anim ID
-        0,                 // anim callback
-        0,                 // phys callback
-        0,                 // coll callback
-        // Idle_AnimCallback,  // anim callback
-        // Idle_PhysCallback,  // phys callback
-        // Idle_CollCallback,  // coll callback
-    },
-    // State: 1 - Charge
-    {
-        1,                 // anim ID
-        0,                 // anim callback
-        0,                 // phys callback
-        0,                 // coll callback
-    },
-    // State: 2 - PrimaryFire
-    {
-        2,                 // anim ID
-        0,                 // anim callback
-        0,                 // phys callback
-        0,                 // coll callback
-    },
-    // State: 3 - SecondaryFire
-    {
-        2,                 // anim ID
-        0,                 // anim callback
-        0,                 // phys callback
-        0,                 // coll callback
-    },
-};
-
+typedef struct ItemVar
+{
+	int var1;                                       // 0xdd4
+    int var2;                                       // 0xdd8
+    int var3;                                       // 0xddc
+    int var4;                                       // 0xde0
+    int var5;                                       // 0xde4
+    int var6;                                       // 0xde8
+    int var7;                                       // 0xdec
+    int var8;                                       // 0xdf0
+    int var9;                                       // 0xdf4
+    int var10;                                      // 0xdf8
+    int var11;                                      // 0xdfc
+    int var12;                                      // 0xe00
+} ItemVar;
 
 ///////////////////////
 //     Functions     //
@@ -93,4 +83,34 @@ __attribute__((used)) static struct ItemState SA_item_state_table[] = {
 
 void SAItem_OnLoad(GOBJ *gobj);
 void SAItem_OnSpawn(GOBJ *gobj);
+GOBJ* SAItem_Spawn(GOBJ *gobj, int SAitem_type);
 void SAItemThink(GOBJ *gobj);
+void SAItem_InputCheck(GOBJ *fighter_gobj, GOBJ *item_gobj);
+//void SAItem_InputCheck(GOBJ *gobj);
+
+// SA Item State functions (Shared by all SA items)
+void Idle_AnimCallback(GOBJ *gobj);
+void Idle_PhysCallback(GOBJ *gobj);
+void Idle_CollCallback(GOBJ *gobj);
+
+void Charge_AnimCallback(GOBJ *gobj);
+void Charge_PhysCallback(GOBJ *gobj);
+void Charge_CollCallback(GOBJ *gobj);
+
+void PrimaryFire_AnimCallback(GOBJ *gobj);
+void PrimaryFire_PhysCallback(GOBJ *gobj);
+void PrimaryFire_CollCallback(GOBJ *gobj);
+
+void SecondaryFire_AnimCallback(GOBJ *gobj);
+void SecondaryFire_PhysCallback(GOBJ *gobj);
+void SecondaryFire_CollCallback(GOBJ *gobj);
+
+int PrimaryFire_HitStageUpdate(GOBJ *gobj);
+
+void Spawn_AnimCallback(GOBJ *gobj);
+void Spawn_PhysCallback(GOBJ *gobj);
+void Spawn_CollCallback(GOBJ *gobj);
+
+void Fire_AnimCallback(GOBJ *gobj);
+void Fire_PhysCallback(GOBJ *gobj);
+void Fire_CollCallback(GOBJ *gobj);

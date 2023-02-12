@@ -175,27 +175,27 @@ void SADiveKick_PhysicCallback(GOBJ *gobj);
 void SADiveKick_CollisionCallback(GOBJ *gobj);
 
 // Special Moves (Character-specific)
-void SpecialPrimaryFireStart_AnimationCallback(GOBJ *gobj);
-void SpecialPrimaryFireStart_IASACallback(GOBJ *gobj);
-void SpecialPrimaryFireStart_PhysicCallback(GOBJ *gobj);
-void SpecialPrimaryFireStart_CollisionCallback(GOBJ *gobj);
+// void SpecialPrimaryFireStart_AnimationCallback(GOBJ *gobj);
+// void SpecialPrimaryFireStart_IASACallback(GOBJ *gobj);
+// void SpecialPrimaryFireStart_PhysicCallback(GOBJ *gobj);
+// void SpecialPrimaryFireStart_CollisionCallback(GOBJ *gobj);
 
-void SpecialPrimaryFireLoop_AnimationCallback(GOBJ *gobj);
-void SpecialPrimaryFireLoop_IASACallback(GOBJ *gobj);
-void SpecialPrimaryFireLoop_PhysicCallback(GOBJ *gobj);
-void SpecialPrimaryFireLoop_CollisionCallback(GOBJ *gobj);
+// void SpecialPrimaryFireLoop_AnimationCallback(GOBJ *gobj);
+// void SpecialPrimaryFireLoop_IASACallback(GOBJ *gobj);
+// void SpecialPrimaryFireLoop_PhysicCallback(GOBJ *gobj);
+// void SpecialPrimaryFireLoop_CollisionCallback(GOBJ *gobj);
 
-void SpecialPrimaryFireEnd_AnimationCallback(GOBJ *gobj);
-void SpecialPrimaryFireEnd_IASACallback(GOBJ *gobj);
-void SpecialPrimaryFireEnd_PhysicCallback(GOBJ *gobj);
-void SpecialPrimaryFireEnd_CollisionCallback(GOBJ *gobj);
+// void SpecialPrimaryFireEnd_AnimationCallback(GOBJ *gobj);
+// void SpecialPrimaryFireEnd_IASACallback(GOBJ *gobj);
+// void SpecialPrimaryFireEnd_PhysicCallback(GOBJ *gobj);
+// void SpecialPrimaryFireEnd_CollisionCallback(GOBJ *gobj);
 
-void ftChar_CreateBlasterShot(GOBJ *gobj);
-
-
+// void ftChar_CreateBlasterShot(GOBJ *gobj);
 
 
-void SpecialSecondaryFire_AnimationCallback(GOBJ *gobj);
-void SpecialSecondaryFire_IASACallback(GOBJ *gobj);
-void SpecialSecondaryFire_PhysicCallback(GOBJ *gobj);
-void SpecialSecondaryFire_CollisionCallback(GOBJ *gobj);
+
+
+// void SpecialSecondaryFire_AnimationCallback(GOBJ *gobj);
+// void SpecialSecondaryFire_IASACallback(GOBJ *gobj);
+// void SpecialSecondaryFire_PhysicCallback(GOBJ *gobj);
+// void SpecialSecondaryFire_CollisionCallback(GOBJ *gobj);
