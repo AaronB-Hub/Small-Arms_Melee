@@ -114,8 +114,20 @@ int OnUnknown2(GOBJ *gobj)
 ///
 void Idle_AnimCallback(GOBJ *gobj)
 {
-    // // Get SA item data
-    // ItemData *item_data = gobj->userdata;
+    ItemData *item_data;
+    // Get SA item data
+    if (gobj)
+    {
+        item_data = gobj->userdata;
+    }
+
+    // Get fighter data
+    if ( (item_data) && (item_data->fighter_gobj) )
+    {
+        GOBJ *fighter_gobj = item_data->fighter_gobj;
+	    FighterData *fighter_data = fighter_gobj->userdata;
+        GOBJ *fire1_item = SAItem_Spawn(fighter_gobj, MEX_ITEM_PRIMARYFIRE);
+    }
 
     // // Check inputs
     // SAItem_InputCheck(gobj);
@@ -123,7 +135,8 @@ void Idle_AnimCallback(GOBJ *gobj)
     // if (item_data->ftcmd_var.flag1 == 1)
     // {
         // Spawn SA item
-        GOBJ *fire1_item = SAItem_Spawn(gobj, MEX_ITEM_PRIMARYFIRE);
+        // GOBJ *fire1_item = SAItem_Spawn(gobj, MEX_ITEM_PRIMARYFIRE);
+        //GOBJ *fire1_item = SAItem_Spawn(fighter_gobj, MEX_ITEM_PRIMARYFIRE);
     //     //Item_SetLifeTimer(fire1_item, attributes->life);
     //     ItemStateChange(fire1_item, STATE_FIRE1_SPAWN, 2);
     // }

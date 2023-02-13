@@ -304,15 +304,165 @@ void SA_Intercept_IASACallback(GOBJ *gobj)
 {
     FighterData *fighter_data = gobj->userdata;
 
+    /* List of states that are entered via L:
+    [shield]
+    State: 178 - GuardOn
+        37,         // AnimationID
+    State: 179 - Guard
+        38,         // AnimationID
+    State: 180 - GuardOff
+        39,         // AnimationID
+    State: 181 - GuardDamage
+        40,         // AnimationID
+    State: 182 - GuardOn
+        37,         // AnimationID
+    
+    [get-up]
+    State: 186 - DownStandU
+        186,        // AnimationID
+    State: 194 - DownStandD
+        194,        // AnimationID
+
+    [tech]
+    State: 199 - Passive
+        199,        // AnimationID
+    State: 200 - PassiveStandF
+        200,        // AnimationID
+    State: 201 - PassiveStandB
+        201,        // AnimationID
+    State: 202 - PassiveWall
+        202,        // AnimationID
+    State: 203 - PassiveWallJump
+        203,        // AnimationID
+    State: 204 - PassiveCeil
+        204,        // AnimationID
+
+    [grab]
+    State: 212 - Catch
+        242,        // AnimationID
+    State: 213 - Catch
+        242,        // AnimationID
+    State: 214 - CatchDash
+        243,        // AnimationID
+    State: 215 - CatchDash
+        243,        // AnimationID
+
+    [mash-out (grounded)]
+    State: 229 - CaptureCut
+        257,        // AnimationID
+
+    [roll]
+    State: 233 - EscapeF
+        42,         // AnimationID
+    State: 234 - EscapeB
+        43,         // AnimationID
+    State: 235 - EscapeN
+        41,         // AnimationID
+    State: 236 - EscapeAir
+        44,         // AnimationID
+
+    [ledge get-up]
+    State: 258 - CliffEscapeSlow
+        223,        // AnimationID
+    State: 259 - CliffEscapeQuick
+        224,        // AnimationID
+
+    [unknown]
+    State: 238 - Rebound?????
+        45,         // AnimationID
+    State: 244 - Pass?????
+        209,        // AnimationID
+    */
+
+    /* List of states that are entered via X:
+    [jump]
+    State: 24 - Landing [kneebend]
+        15,         // AnimationID
+    State: 25 - JumpF
+        16,         // AnimationID
+    State: 26 - JumpB
+        17,         // AnimationID
+    State: 27 - JumpAerialF
+        18,         // AnimationID
+    State: 28 - JumpAerialB
+        19,         // AnimationID
+    State: 296 - JumpF
+        16,         // AnimationID
+
+    [screw-jump]
+    State: 154 - ItemScrew
+        144,        // AnimationID
+    State: 155 - ItemScrewAir
+        145,        // AnimationID
+    State: 156 - ItemScrewDamage
+        146,        // AnimationID
+    State: 157 - ItemScrewDamage
+        147,        // AnimationID
+
+    [get-up]
+    State: 186 - DownStandU
+        186,        // AnimationID
+    State: 194 - DownStandD
+        194,        // AnimationID
+
+    [mash-out (aerial)]
+    State: 230 - CaptureJump
+        258,        // AnimationID
+
+    [ledge jump]
+    State: 260 - CliffJumpSlow1
+        225,        // AnimationID
+    State: 261 - CliffJumpSlow2
+        226,        // AnimationID
+    State: 262 - CliffJumpQuick1
+        227,        // AnimationID
+    State: 263 - CliffJumpQuick2
+        228,        // AnimationID
+    */
+
     // Super awesome reference: https://smashboards.com/threads/melee-hacks-and-you-new-hackers-start-here-in-the-op.247119/page-101#post-15161516
 
-    // Test if proc works
-    // Check if in first frame of shield state, then vary the animation depending on if initiated by R or L press
-    // if ( (fighter_data->state_id == 178) && (fighter_data->state.frame == 1) )
-    if (fighter_data->state_id == 179)
+    /*  INTERCEPTS  */
+    // Check if in first frame of state, as this would be due to an input on this frame, where we want ot intercept
+    if (fighter_data->state.frame == 1)
     {
-        CommonGuardOn_AnimationCallback(gobj);
+        // Float (X) intercepts
+        // Check that X was JUST pressed, which initiated the state change
+        if ( ((fighter_data->input.held & HSD_BUTTON_X) != 0) && ((fighter_data->input.held_prev & HSD_BUTTON_X) == 0) )
+        {
+            // State: 24 - Landing
+            if (fighter_data->state_id == 24)
+            {
+                ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOAT, 0, 0);
+            }
+            // State: 27 - JumpAerialF
+            // State: 28 - JumpAerialB
+            if ( (fighter_data->state_id == 27) || (fighter_data->state_id == 28) )
+            {
+                ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOAT, 0, 0);
+            }
+            // State: 154 - ItemScrew
+            // State: 155 - ItemScrewAir
+            if ( (fighter_data->state_id == 154) || (fighter_data->state_id == 155) )
+            {
+                ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOAT, 0, 0);
+            }
+        }
+
+        // SA Item (L) intercepts
+        // Check that L is pressed and initiated the state change
+        // Keep in mind that this can be buffered, unlike jump inputs
+        // if ( ((fighter_data->input.held & HSD_TRIGGER_L) != 0) && ((fighter_data->input.held_prev & HSD_TRIGGER_L) == 0) )
+        
+        // Not initiated by new R press (which SHOULD proceed normally)
+        if ( !( ((fighter_data->input.held & HSD_TRIGGER_R) != 0) && ((fighter_data->input.held_prev & HSD_TRIGGER_R) == 0) ) )
+        {
+        }
     }
+
+    /*  NEW INPUT CHECKS  */
+    // Float during kneebend
+    // Float after double jump
 
     return;
 }

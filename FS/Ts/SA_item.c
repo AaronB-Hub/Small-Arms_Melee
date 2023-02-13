@@ -44,6 +44,8 @@ void SAItem_OnSpawn(GOBJ *gobj)
     fighter_data->item_held_spec = item;
     //fighter_data->item_held = item;
 
+    fighter_data->flags.item_visible = 1;
+
     // if the item successully spawned, set the accessory callbacks
     if (fighter_data->fighter_var.ft_var5 != 0)
     {
@@ -69,9 +71,6 @@ GOBJ* SAItem_Spawn(GOBJ *gobj, int SAitem_type)
 {
     // Get fighter data
 	FighterData *fighter_data = gobj->userdata;
-
-    // Get fighter item pointer
-	int *fighter_items = fighter_data->ftData->items;
 
     // Get item data
     int SAitem_id = MEX_GetFtItemID(gobj, SAitem_type);

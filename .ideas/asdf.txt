@@ -4,11 +4,3 @@ neural networks:
 2. Inputs (var), current state (var), current position (var), and character movement attributes (ref) -> future position
 
 3. Current position (var), NN1 (var), and char. movement attr. -> future position (and state?)
-
-
-
-
-
-Any ideas why I always get an error for accessing the 'item_data->ftcmd_var' struct through 'fighter_data->item_held' of the fighter GOBJ?
-
-It doesn't complain if you access it directly via the item GOBJ in its callbacks, but I don't have that. All I have is the fighter GOBJ to locate the item
