@@ -156,6 +156,7 @@ void Idle_CollCallback(GOBJ *gobj)
 ///
 void Charge_AnimCallback(GOBJ *gobj)
 {
+  // For looping: https://discord.com/channels/768588005615075329/806988096343113770/811034180258365460
     return;
 }
 void Charge_PhysCallback(GOBJ *gobj)

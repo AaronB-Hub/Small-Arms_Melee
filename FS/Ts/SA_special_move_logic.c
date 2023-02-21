@@ -425,6 +425,7 @@ void SA_Intercept_IASACallback(GOBJ *gobj)
     /*  INTERCEPTS  */
     // Check if in first frame of state, as this would be due to an input on this frame, where we want ot intercept
     if (fighter_data->state.frame == 1)
+    // Use (input.timer_a == 1) instead??
     {
         // Float (X) intercepts
         // Check that X was JUST pressed, which initiated the state change
@@ -463,6 +464,11 @@ void SA_Intercept_IASACallback(GOBJ *gobj)
     /*  NEW INPUT CHECKS  */
     // Float during kneebend
     // Float after double jump
+
+    // Use FtStateKind?!?!?!
+
+    Vec2 null_stick;
+    fighter_data->input.cstick = null_stick;
 
     return;
 }

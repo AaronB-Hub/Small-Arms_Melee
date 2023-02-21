@@ -127,6 +127,9 @@ void Custom_Controls_SA(GOBJ *gobj)
 {
     // Added at IASA update priority to be performed just after inputs are received
     GObj_AddProc(gobj, SA_Intercept_IASACallback, 3);
+
+    // Disable normal C-stick functionality
+    //GObj_AddProc(gobj, SA_Disable_CStick, 3);
     return;
 }
 void Custom_Items_SA(GOBJ *gobj)
