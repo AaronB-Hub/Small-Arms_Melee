@@ -113,20 +113,29 @@ GOBJ* SAItem_Spawn(GOBJ *gobj, int SAitem_type)
             speed = 7;  // Eventually grab this from *attributes!!!
         }
         
-        float angle;
-        Vec2 cstick_angle = fighter_data->input.cstick;
-        if ( sqrtf( (cstick_angle.X * cstick_angle.X) + (cstick_angle.Y * cstick_angle.Y) ) == 0) {  // if the c-stick is in neutral position
+        float it_angle;
+        Vec2 cstick_angle = fighter_data->input.cstick;  // This will be 0 with current implementation of c-stick disable
+
+        HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER(untouched by current implementation of c-stick disable)
+        cstick_angle.X = pad->fsubstickX;
+        cstick_angle.Y = pad->fsubstickY;
+        
+        
+        // Use the facing direction as the direction to shoot if the c-stick is in neutral position
+        // Vanilla sets a deadzone of 0.28 in the X and Y axis, stored at 'stc_ftcommon->x0' and 'stc_ftcommon->x4' respectively
+        // Keeping this deadzone (for now), but allowing for all angles
+        if ( sqrtf( (cstick_angle.X * cstick_angle.X) + (cstick_angle.Y * cstick_angle.Y) ) < 0.1568) {  // (0.28)^2 + (0.28)^2 = 0.1568
             if (fighter_data->facing_direction == 1) {
-                angle = 0;
+                it_angle = 0;
             } else {
-                angle = M_PI;
+                it_angle = M_PI;
             }
         } else {
-            angle = atan2(cstick_angle.Y, cstick_angle.X);
+            it_angle = atan2(cstick_angle.Y, cstick_angle.X);
         }
 
-        vel.X = speed * cos(angle);
-        vel.Y = speed * sin(angle);
+        vel.X = speed * cos(it_angle);
+        vel.Y = speed * sin(it_angle);
         vel.Z = 0;
     }
     
@@ -254,7 +263,7 @@ void SAItemThink(GOBJ *gobj)
             //ItemStateChange(&item, STATE_ITEM_FIRE1, ITEMSTATE_UPDATEANIM);
 
             // Spawn SA item
-            //GOBJ *fire1_item = SAItem_Spawn(gobj, MEX_ITEM_PRIMARYFIRE);
+            GOBJ *fire1_item = SAItem_Spawn(gobj, MEX_ITEM_PRIMARYFIRE);
             //Item_SetLifeTimer(fire1_item, attributes->life);
             //ItemStateChange(fire1_item, STATE_FIRE1_SPAWN, ITEMSTATE_UPDATEANIM);
         //}
@@ -277,7 +286,7 @@ void SAItem_InputCheck(GOBJ *fighter_gobj, GOBJ *item_gobj)
     // ItemVar *item_vars = &item_data->item_var;
     // ItemAttr *attributes = &item_data->itData->param_ext;
 
-    if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
+    if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_DOWN) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_DOWN) != 0) )
     {
         //item_flags->fire1 = 1;
         //item_data->ftcmd_var.flag1 = 1;

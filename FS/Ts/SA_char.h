@@ -123,13 +123,15 @@ typedef struct FloatFtCmd
 
 // Add custom proc to customize controls 
 void SA_Intercept_IASACallback(GOBJ *gobj);
+void SA_Disable_CStick(GOBJ *gobj);
 void Custom_Controls_SA(GOBJ *gobj)
 {
-    // Added at IASA update priority to be performed just after inputs are received
+    // Disable normal C-stick functionality
+    GObj_AddProc(gobj, SA_Disable_CStick, 2);
+
+    // Added at IASA update priority (3) to be performed just after inputs are received
     GObj_AddProc(gobj, SA_Intercept_IASACallback, 3);
 
-    // Disable normal C-stick functionality
-    //GObj_AddProc(gobj, SA_Disable_CStick, 3);
     return;
 }
 void Custom_Items_SA(GOBJ *gobj)

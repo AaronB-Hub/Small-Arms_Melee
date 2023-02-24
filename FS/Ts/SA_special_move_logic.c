@@ -300,6 +300,32 @@ void SpecialAirLw(GOBJ *gobj) {return SADiveKick(gobj);}
 #pragma endregion
 
 #pragma region ControlLogic
+void SA_Disable_CStick(GOBJ *gobj)
+{
+    // Get fighter data
+	FighterData *fighter_data = gobj->userdata;
+    CharAttr* charAttrs = fighter_data->ftData->ext_attr;
+
+    // Toggle c-stick as aiming or normal functionality
+    if ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0)
+    {
+        charAttrs->xA4_FOX_REFLECTOR_GRAVITY_DELAY = 0;
+    } else if ((fighter_data->input.down & HSD_BUTTON_DPAD_RIGHT) != 0)
+    {
+        charAttrs->xA4_FOX_REFLECTOR_GRAVITY_DELAY = 1;
+    }
+    
+    if (charAttrs->xA4_FOX_REFLECTOR_GRAVITY_DELAY)
+    {
+        //HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER
+        HSD_Pad *pad = PadGet(fighter_data->pad_index, 1);  // PADGET_ENGINE
+        pad->fsubstickX = 0.0f;
+        pad->fsubstickY = 0.0f;
+    }
+    
+    return;
+}
+
 void SA_Intercept_IASACallback(GOBJ *gobj)
 {
     FighterData *fighter_data = gobj->userdata;
@@ -467,11 +493,9 @@ void SA_Intercept_IASACallback(GOBJ *gobj)
 
     // Use FtStateKind?!?!?!
 
-    Vec2 null_stick;
-    fighter_data->input.cstick = null_stick;
-
     return;
 }
+
 #pragma endregion
 
 
