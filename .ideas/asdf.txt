@@ -4,3 +4,31 @@ neural networks:
 2. Inputs (var), current state (var), current position (var), and character movement attributes (ref) -> future position
 
 3. Current position (var), NN1 (var), and char. movement attr. -> future position (and state?)
+
+
+
+- Find all possible strings of inputs that accomplish a goal, this builds list of 'behaviors'
+-- For each situation with a goal, you know the behaviors to accomplish that goal
+--- Build a tensor of situations, goals, and behaviors OR situations are inputs and then decide from list of goals, then decide from list of behaviors
+---- Behavior decision should take the goals AND the situations as inputs
+
+- Need to evaluate behaviors somehow (can be objective score, or when to use score)
+- Should behaviors be super unique or general and execution can be varied?
+
+
+
+If transformers are good for NLP and response, then if just thinking of list of enemy's inputs as the prompt 'words', then players inputs are just response 'words'
+- Could 'master' a certain playstyle that responds similarly to situations every time, but not adaptable? Or is that not true and it can adapt?
+
+Could train model on inputs and predict state of system
+- Use slippi files
+
+
+If transformers can't do "real-time" control, could have a set of them running on different latency or size buffers of state inputs, each giving suggested outputs, and then a second layer model that sits on top accepts those as inputs and decides what to actually do
+
+
+"Senses" networks - take in some vague inputs (like player character and model midpoint) and predict position of whole character model. These can be trained and modular
+
+Modularity - overall model just takes in input of where a player's character model is located, and how it got that info doesn't matter
+- Training each network can be separate
+- "Program" with networks as functions

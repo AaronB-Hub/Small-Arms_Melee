@@ -121,16 +121,28 @@ typedef struct FloatFtCmd
 //     Functions     //
 ///////////////////////
 
-// Add custom proc to customize controls 
+// Add custom procs to customize controls 
 void SA_Intercept_IASACallback(GOBJ *gobj);
 void SA_Disable_CStick(GOBJ *gobj);
+void SA_Disable_LTrigger(GOBJ *gobj);
+void SA_Disable_XButton(GOBJ *gobj);
+void SA_Swap_XAndZButtons(GOBJ *gobj);
 void Custom_Controls_SA(GOBJ *gobj)
 {
     // Disable normal C-stick functionality
     GObj_AddProc(gobj, SA_Disable_CStick, 2);
 
-    // Added at IASA update priority (3) to be performed just after inputs are received
-    GObj_AddProc(gobj, SA_Intercept_IASACallback, 3);
+    // Disable normal L trigger functionality
+    GObj_AddProc(gobj, SA_Disable_LTrigger, 2);
+
+    // Disable normal X Button functionality
+    GObj_AddProc(gobj, SA_Disable_XButton, 2);
+
+    // Swap X and Z button values; done as soon as possible every frame (update priority 0)
+    GObj_AddProc(gobj, SA_Swap_XAndZButtons, 0);
+
+    // // Added at IASA update priority (3) to be performed just after inputs are received
+    // GObj_AddProc(gobj, SA_Intercept_IASACallback, 3);
 
     return;
 }

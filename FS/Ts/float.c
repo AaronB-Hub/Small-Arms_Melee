@@ -56,8 +56,9 @@ void SAFloat_AnimationCallback(GOBJ *gobj)
 {
     FighterData *fighter_data = (FighterData *)gobj->userdata;
 
-    // Transition to FloatDash once Float is over
-    if (FrameTimerCheck(gobj) == 0)
+    // Transition to FloatDash once Z is released or Float is over
+    //if (FrameTimerCheck(gobj) == 0)
+    if ((fighter_data->input.held & HSD_TRIGGER_Z) != 0)
     {
         ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOATDASH, 0, 0);
     }

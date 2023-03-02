@@ -252,9 +252,6 @@ void SAItemThink(GOBJ *gobj)
     //if (fighter_data->item_held->userdata->ftcmd_var.flag1 == 1)
     if (charAttrs->x6C_FOX_FIREFOX_BOUNCE_VAR == 1)
     {
-
-        charAttrs->x6C_FOX_FIREFOX_BOUNCE_VAR = 0;
-
         void* anim = item_data->item_states[item_data->state].animCallback;
         anim;
 
@@ -286,12 +283,27 @@ void SAItem_InputCheck(GOBJ *fighter_gobj, GOBJ *item_gobj)
     // ItemVar *item_vars = &item_data->item_var;
     // ItemAttr *attributes = &item_data->itData->param_ext;
 
-    if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_DOWN) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_DOWN) != 0) )
+    // Get input data
+    HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER (untouched by current implementation of L button disable)
+
+    // Reset flag
+    charAttrs->x6C_FOX_FIREFOX_BOUNCE_VAR = 0;
+
+    // Primary Fire
+    // Vanilla sets a deadzone of 0.30 for the triggers, stored at 'stc_ftcommon->x10'
+    // Keeping this deadzone (for now)
+    if (pad->ftriggerLeft > 0.30)  //
     {
         //item_flags->fire1 = 1;
         //item_data->ftcmd_var.flag1 = 1;
         //fighter_data->item_held->userdata->ftcmd_var.flag1 = 1;
         charAttrs->x6C_FOX_FIREFOX_BOUNCE_VAR = 1;
+    }
+
+    // Secondary Fire
+    if ( ((pad->held & HSD_TRIGGER_L) != 0) || ((pad->down & HSD_TRIGGER_L) != 0) )
+    {
+        charAttrs->x6C_FOX_FIREFOX_BOUNCE_VAR = 2;
     }
 
     return;

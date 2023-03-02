@@ -319,10 +319,76 @@ void SA_Disable_CStick(GOBJ *gobj)
     {
         //HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER
         HSD_Pad *pad = PadGet(fighter_data->pad_index, 1);  // PADGET_ENGINE
+        pad->substickX = 0.0f;
+        pad->substickY = 0.0f;
         pad->fsubstickX = 0.0f;
         pad->fsubstickY = 0.0f;
     }
     
+    return;
+}
+
+void SA_Disable_LTrigger(GOBJ *gobj)
+{
+    // Get fighter data
+	FighterData *fighter_data = gobj->userdata;
+
+    //HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER
+    HSD_Pad *pad = PadGet(fighter_data->pad_index, 1);  // PADGET_ENGINE
+    pad->triggerLeft = 0;
+    pad->ftriggerLeft = 0.0f;
+    if (pad->held & HSD_TRIGGER_L) {pad->held = pad->held - HSD_TRIGGER_L;}
+    if (pad->heldPrev & HSD_TRIGGER_L) {pad->heldPrev = pad->heldPrev - HSD_TRIGGER_L;}  // Should never enter this?
+    if (pad->down & HSD_TRIGGER_L) {pad->down = pad->down - HSD_TRIGGER_L;}
+    if (pad->up & HSD_TRIGGER_L) {pad->up = pad->up - HSD_TRIGGER_L;}  // Should never enter this?
+
+    return;
+}
+
+void SA_Disable_XButton(GOBJ *gobj)
+{
+    // Get fighter data
+	FighterData *fighter_data = gobj->userdata;
+    //HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER
+    HSD_Pad *pad = PadGet(fighter_data->pad_index, 1);  // PADGET_ENGINE
+    
+    if (pad->held & HSD_BUTTON_X) {pad->held = pad->held - HSD_BUTTON_X;}
+    if (pad->heldPrev & HSD_BUTTON_X) {pad->heldPrev = pad->heldPrev - HSD_BUTTON_X;}
+    if (pad->down & HSD_BUTTON_X) {pad->down = pad->down - HSD_BUTTON_X;}
+    if (pad->up & HSD_BUTTON_X) {pad->up = pad->up - HSD_BUTTON_X;}
+
+    return;
+}
+
+void SA_Swap_XAndZButtons(GOBJ *gobj)
+{
+    // Get fighter data
+	FighterData *fighter_data = gobj->userdata;
+    HSD_Pad *pad_Master = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER
+    HSD_Pad *pad_Engine = PadGet(fighter_data->pad_index, 1);  // PADGET_ENGINE
+
+    // Clear current X and Z inputs
+    if (pad_Engine->held & HSD_BUTTON_X) {pad_Engine->held = pad_Engine->held - HSD_BUTTON_X;}
+    if (pad_Engine->heldPrev & HSD_BUTTON_X) {pad_Engine->heldPrev = pad_Engine->heldPrev - HSD_BUTTON_X;}
+    if (pad_Engine->down & HSD_BUTTON_X) {pad_Engine->down = pad_Engine->down - HSD_BUTTON_X;}
+    if (pad_Engine->up & HSD_BUTTON_X) {pad_Engine->up = pad_Engine->up - HSD_BUTTON_X;}
+
+    if (pad_Engine->held & HSD_TRIGGER_Z) {pad_Engine->held = pad_Engine->held - HSD_TRIGGER_Z;}
+    if (pad_Engine->heldPrev & HSD_TRIGGER_Z) {pad_Engine->heldPrev = pad_Engine->heldPrev - HSD_TRIGGER_Z;}
+    if (pad_Engine->down & HSD_TRIGGER_Z) {pad_Engine->down = pad_Engine->down - HSD_TRIGGER_Z;}
+    if (pad_Engine->up & HSD_TRIGGER_Z) {pad_Engine->up = pad_Engine->up - HSD_TRIGGER_Z;}
+
+    // Add back in swapped inputs
+    if (pad_Master->held & HSD_BUTTON_X) {pad_Engine->held = pad_Engine->held + HSD_TRIGGER_Z;}
+    if (pad_Master->heldPrev & HSD_BUTTON_X) {pad_Engine->heldPrev = pad_Engine->heldPrev + HSD_TRIGGER_Z;}
+    if (pad_Master->down & HSD_BUTTON_X) {pad_Engine->down = pad_Engine->down + HSD_TRIGGER_Z;}
+    if (pad_Master->up & HSD_BUTTON_X) {pad_Engine->up = pad_Engine->up + HSD_TRIGGER_Z;}
+
+    if (pad_Master->held & HSD_TRIGGER_Z) {pad_Engine->held = pad_Engine->held + HSD_BUTTON_X;}
+    if (pad_Master->heldPrev & HSD_TRIGGER_Z) {pad_Engine->heldPrev = pad_Engine->heldPrev + HSD_BUTTON_X;}
+    if (pad_Master->down & HSD_TRIGGER_Z) {pad_Engine->down = pad_Engine->down + HSD_BUTTON_X;}
+    if (pad_Master->up & HSD_TRIGGER_Z) {pad_Engine->up = pad_Engine->up + HSD_BUTTON_X;}
+
     return;
 }
 
@@ -449,15 +515,16 @@ void SA_Intercept_IASACallback(GOBJ *gobj)
     // Super awesome reference: https://smashboards.com/threads/melee-hacks-and-you-new-hackers-start-here-in-the-op.247119/page-101#post-15161516
 
     /*  INTERCEPTS  */
-    // Check if in first frame of state, as this would be due to an input on this frame, where we want ot intercept
-    if (fighter_data->state.frame == 1)
+    // Check if in first frame of state, as this would be due to an input on this frame, where we want to intercept
+    if (fighter_data->state.frame == 1)  // THIS IS TOO LATE!!!!!!!
     // Use (input.timer_a == 1) instead??
     {
         // Float (X) intercepts
         // Check that X was JUST pressed, which initiated the state change
-        if ( ((fighter_data->input.held & HSD_BUTTON_X) != 0) && ((fighter_data->input.held_prev & HSD_BUTTON_X) == 0) )
+        //if ( ((fighter_data->input.held & HSD_BUTTON_X) != 0) && ((fighter_data->input.held_prev & HSD_BUTTON_X) == 0) )
+        if ((fighter_data->input.down & HSD_BUTTON_X) != 0)
         {
-            // State: 24 - Landing
+            // State: 24 - Landing (aka Kneebend/jump squat)
             if (fighter_data->state_id == 24)
             {
                 ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOAT, 0, 0);
@@ -476,15 +543,15 @@ void SA_Intercept_IASACallback(GOBJ *gobj)
             }
         }
 
-        // SA Item (L) intercepts
-        // Check that L is pressed and initiated the state change
-        // Keep in mind that this can be buffered, unlike jump inputs
-        // if ( ((fighter_data->input.held & HSD_TRIGGER_L) != 0) && ((fighter_data->input.held_prev & HSD_TRIGGER_L) == 0) )
+        // // SA Item (L) intercepts
+        // // Check that L is pressed and initiated the state change
+        // // Keep in mind that this can be buffered, unlike jump inputs
+        // // if ( ((fighter_data->input.held & HSD_TRIGGER_L) != 0) && ((fighter_data->input.held_prev & HSD_TRIGGER_L) == 0) )
         
-        // Not initiated by new R press (which SHOULD proceed normally)
-        if ( !( ((fighter_data->input.held & HSD_TRIGGER_R) != 0) && ((fighter_data->input.held_prev & HSD_TRIGGER_R) == 0) ) )
-        {
-        }
+        // // Not initiated by new R press (which SHOULD proceed normally)
+        // if ( !( ((fighter_data->input.held & HSD_TRIGGER_R) != 0) && ((fighter_data->input.held_prev & HSD_TRIGGER_R) == 0) ) )
+        // {
+        // }
     }
 
     /*  NEW INPUT CHECKS  */

@@ -45,7 +45,7 @@ void SALeapKneeBend_AnimationCallback(GOBJ *gobj)
 
 
     FighterData *fighter_data = gobj->userdata;
-    ftCommonData *ft_common = *stc_ftcommon;
+    //ftCommonData *ft_common = *stc_ftcommon;
 
     if ((fighter_data->state.frame >= fighter_data->attr.jump_startup_time) || (FrameTimerCheck(gobj) == 0))
     {
@@ -68,9 +68,9 @@ void SALeapKneeBend_AnimationCallback(GOBJ *gobj)
             ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOAT, 0x20, 0);  // Was using to test under what conditions this gets called
         }
 
+        // ???
         void (*func_800CB110)(GOBJ *gobj, s32 x, f32 y) = (void *) 0x800CB110;
         func_800CB110(gobj, 1, 1.0f);
-        
         fighter_data->flags.flags_2227 |= 0x80;
         
     }
