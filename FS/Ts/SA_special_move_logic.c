@@ -351,13 +351,97 @@ void SA_Disable_XButton(GOBJ *gobj)
 	FighterData *fighter_data = gobj->userdata;
     //HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER
     HSD_Pad *pad = PadGet(fighter_data->pad_index, 1);  // PADGET_ENGINE
-    
+
     if (pad->held & HSD_BUTTON_X) {pad->held = pad->held - HSD_BUTTON_X;}
     if (pad->heldPrev & HSD_BUTTON_X) {pad->heldPrev = pad->heldPrev - HSD_BUTTON_X;}
     if (pad->down & HSD_BUTTON_X) {pad->down = pad->down - HSD_BUTTON_X;}
     if (pad->up & HSD_BUTTON_X) {pad->up = pad->up - HSD_BUTTON_X;}
 
     return;
+}
+
+void SA_FloatButtonCheck(GOBJ *gobj)
+{
+    // Get fighter data
+	FighterData *fighter_data = gobj->userdata;
+    HSD_Pad *pad_Master = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER
+
+    // Set float input
+    //int HSD_BUTTON_FLOAT = HSD_BUTTON_X;
+    int HSD_BUTTON_FLOAT = HSD_BUTTON_Z;
+
+    // Check for X button presses
+    int f_held, f_heldPrev f_down, f_up = 0;
+    if (pad_Master->held & HSD_BUTTON_FLOAT) {f_held = 1;}
+    if (pad_Master->heldPrev & HSD_BUTTON_FLOAT) {f_heldPrev = 1;}
+    if (pad_Master->down & HSD_BUTTON_FLOAT) {f_down = 1;}
+    if (pad_Master->up & HSD_BUTTON_FLOAT) {f_up = 1;}
+
+    enum grounded_FloatInterruptableStates
+    {
+        ASID_REBIRTH,
+        ASID_REBIRTHWAIT,
+        ASID_WAIT,
+        ASID_WALKSLOW,
+        ASID_WALKMIDDLE,
+        ASID_WALKFAST,
+        ASID_TURN,
+        ASID_TURNRUN,
+        ASID_DASH,
+        ASID_RUN,
+        ASID_RUNDIRECT,  // ?
+        ASID_RUNBRAKE,  // ?
+        ASID_KNEEBEND,
+        ASID_SQUAT,
+        ASID_SQUATWAIT,
+        ASID_SQUATRV,
+    };
+
+    enum grounded_FloatInterruptableStates
+    {
+        ASID_JUMPF,
+        ASID_JUMPB,
+        ASID_JUMPAERIALF,
+        ASID_JUMPAERIALB,
+        ASID_FALL,
+        ASID_FALLF,
+        ASID_FALLB,
+        ASID_FALLAERIAL,
+        ASID_FALLAERIALF,
+        ASID_FALLAERIALB,
+        ASID_ITEMSCREW,
+        ASID_ITEMSCREWAIR,
+    };
+
+    // int atk_kind;                         // 0x2068, non attacks have id 1
+    // int x206c;                            // 0x206c
+    // u8 x2070;                             // 0x2070
+    // u8 state_kind : 4;                    // 0x2071, 0xf0
+    // u8 x2071_x0f : 4;                     // 0x2071, 0x0f
+
+    // struct flags                          // 0x2210
+    // {
+    //     ...
+    //     char can_input_multijump;                 // 0x2220
+    //     char flags_2221;                          // 0x2221
+    //     unsigned char x2222_1 : 1;                // 0x80 - 0x2222
+    //     unsigned char is_multijump : 1;           // 0x40 - 0x2222
+    // }
+
+    // void Fighter_InitInputs(GOBJ *fighter);
+    // int Fighter_CheckJumpInput(GOBJ *f);
+
+    // int Fighter_IASACheck_CliffCatch(GOBJ *fighter);
+    // int Fighter_IASACheck_WallJump(GOBJ *fighter);
+    // int Fighter_IASACheck_JumpAerial(GOBJ *fighter);
+    // int Fighter_IASACheck_JumpF(GOBJ *fighter);
+    // int Fighter_IASACheck_PassConditions(GOBJ *fighter);
+    // int Fighter_IASACheck_Turn(GOBJ *fighter);
+    // int Fighter_IASACheck_AllGrounded(GOBJ *fighter);
+    // int Fighter_IASACheck_AllAerial(GOBJ *fighter);
+
+    // void Fighter_SetFacingToStickDirection(FighterData *fighter_data);
+    // void Fighter_EnterFallOrWait(GOBJ *fighter_gobj);
 }
 
 void SA_Swap_XAndZButtons(GOBJ *gobj)
@@ -462,7 +546,7 @@ void SA_Intercept_IASACallback(GOBJ *gobj)
     [unknown]
     State: 238 - Rebound?????
         45,         // AnimationID
-    State: 244 - Pass?????
+    State: 244 - Pass (Drop through platform)
         209,        // AnimationID
     */
 
