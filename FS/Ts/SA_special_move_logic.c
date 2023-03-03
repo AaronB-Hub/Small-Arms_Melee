@@ -469,6 +469,9 @@ void SA_FloatButtonCheck(GOBJ *gobj)
 
     // int Fighter_CheckJumpInput(GOBJ *f);
     // void Fighter_InitInputs(gobj);
+
+    //     Fighter* fp = gobj->user_data;
+    // void** item_list = fp->x10C_ftData->x48_items
 }
 
 void SA_Swap_XAndZButtons(GOBJ *gobj)
