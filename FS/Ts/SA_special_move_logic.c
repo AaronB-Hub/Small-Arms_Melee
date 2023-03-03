@@ -366,11 +366,20 @@ void SA_FloatButtonCheck(GOBJ *gobj)
 	FighterData *fighter_data = gobj->userdata;
     HSD_Pad *pad_Master = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER
 
-    // Set float input
-    //int HSD_BUTTON_FLOAT = HSD_BUTTON_X;
-    int HSD_BUTTON_FLOAT = HSD_BUTTON_Z;
+    // int Fighter_CheckJumpInput(GOBJ *f);
+    Fighter_InitInputs(gobj);
+    //if (Fighter_CheckJumpInput(gobj))
+    if ( ((fighter_data->input.held & HSD_BUTTON_X) != 0) || ((fighter_data->input.down & HSD_BUTTON_X) != 0) )
+	{
+        ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOAT, 0, 0);
+        return;
+	} else
+    {
+        void (*cb_OnGuardOn)(GOBJ *gobj) = (void *) 0x800926DC;
+        return cb_OnGuardOn(gobj);
+    }
 
-    // Check for X button presses
+    // Check for float input presses
     int f_held, f_heldPrev f_down, f_up = 0;
     if (pad_Master->held & HSD_BUTTON_FLOAT) {f_held = 1;}
     if (pad_Master->heldPrev & HSD_BUTTON_FLOAT) {f_heldPrev = 1;}
@@ -413,23 +422,38 @@ void SA_FloatButtonCheck(GOBJ *gobj)
         ASID_ITEMSCREWAIR,
     };
 
-    // int atk_kind;                         // 0x2068, non attacks have id 1
-    // int x206c;                            // 0x206c
-    // u8 x2070;                             // 0x2070
-    // u8 state_kind : 4;                    // 0x2071, 0xf0
-    // u8 x2071_x0f : 4;                     // 0x2071, 0x0f
 
-    // struct flags                          // 0x2210
-    // {
-    //     ...
-    //     char can_input_multijump;                 // 0x2220
-    //     char flags_2221;                          // 0x2221
-    //     unsigned char x2222_1 : 1;                // 0x80 - 0x2222
-    //     unsigned char is_multijump : 1;           // 0x40 - 0x2222
-    // }
+    // enum FtStateNames - animation/action ID names
+    // enum Ft_AttackKind - atk_kind
+    // typedef enum FtStateKind - state_kind???
 
-    // void Fighter_InitInputs(GOBJ *fighter);
-    // int Fighter_CheckJumpInput(GOBJ *f);
+    // #define ASID_ACTIONABLE 1000
+    // #define ASID_ACTIONABLEGROUND 1001
+    // #define ASID_ACTIONABLEAIR 1002
+    // #define ASID_DAMAGEAIR 1003
+    // #define ASID_JUMPS 1004
+    // #define ASID_FALLS 1005
+
+        // int state_id;                                              // 0x10  State
+        // int action_id;                                             // 0x14  Animation
+        // int common_state_num;                                      // 0x18  340
+
+        // int atk_kind;                         // 0x2068, non attacks have id 1
+        // int x206c;                            // 0x206c
+        // u8 x2070;                             // 0x2070
+        // u8 state_kind : 4;                    // 0x2071, 0xf0
+        // u8 x2071_x0f : 4;                     // 0x2071, 0x0f
+
+        // struct flags                          // 0x2210
+        // {
+        //     ...
+        //     char can_input_multijump;                 // 0x2220
+        //     char flags_2221;                          // 0x2221
+        //     unsigned char x2222_1 : 1;                // 0x80 - 0x2222
+        //     unsigned char is_multijump : 1;           // 0x40 - 0x2222
+        // }
+
+        // void (*OnStateChange)(GOBJ *fighter);        // 0x21ec
 
     // int Fighter_IASACheck_CliffCatch(GOBJ *fighter);
     // int Fighter_IASACheck_WallJump(GOBJ *fighter);
@@ -442,6 +466,9 @@ void SA_FloatButtonCheck(GOBJ *gobj)
 
     // void Fighter_SetFacingToStickDirection(FighterData *fighter_data);
     // void Fighter_EnterFallOrWait(GOBJ *fighter_gobj);
+
+    // int Fighter_CheckJumpInput(GOBJ *f);
+    // void Fighter_InitInputs(gobj);
 }
 
 void SA_Swap_XAndZButtons(GOBJ *gobj)
@@ -473,6 +500,8 @@ void SA_Swap_XAndZButtons(GOBJ *gobj)
     if (pad_Master->down & HSD_TRIGGER_Z) {pad_Engine->down = pad_Engine->down + HSD_BUTTON_X;}
     if (pad_Master->up & HSD_TRIGGER_Z) {pad_Engine->up = pad_Engine->up + HSD_BUTTON_X;}
 
+    // Set float input
+    HSD_BUTTON_FLOAT = HSD_BUTTON_Z;
     return;
 }
 
