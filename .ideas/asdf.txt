@@ -32,3 +32,24 @@ If transformers can't do "real-time" control, could have a set of them running o
 Modularity - overall model just takes in input of where a player's character model is located, and how it got that info doesn't matter
 - Training each network can be separate
 - "Program" with networks as functions
+
+
+String enumeration:
++ Generation (All possible inputs, NOT exploration to encounter strings by chance)
+-> Define analog zones (discretize ranges, but later allow for analog within those ranges)
+-> Permutation (decide max frame length of strings)
+-> State variance (position, character subaction, 
++ Pruning
+-> Shorten (remove inputs that have no effect)
+-> Redundant (actual pruning to reduce array size)
+-> Inefficient (effectual pruning via weighting? At a later stage can set a threshold and prune those below)
+- Classification (attacking vs movement vs recovery vs defense - does this need to be explicit or just tie to behavior/strategy via weighting?)
+
+
+Execution model evaluation:
+- Primary
+-- Missed L-cancels
+-- Frame data on shield
+-- Missed attacks (lag frames where you could potentially get hit)
+-Secondary
+-- Getting hit
