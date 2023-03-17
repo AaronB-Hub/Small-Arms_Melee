@@ -53,3 +53,8 @@ Execution model evaluation:
 -- Missed attacks (lag frames where you could potentially get hit)
 -Secondary
 -- Getting hit
+
+
+Maybe multiple clusters (defense, movement, action) feeding into input layers?
+
+Manually coded IASA input to let network know when another subaction can be taken
