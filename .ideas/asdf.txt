@@ -48,13 +48,18 @@ String enumeration:
 
 Execution model evaluation:
 - Primary
+-- Accomplished goal
 -- Missed L-cancels
 -- Frame data on shield
--- Missed attacks (lag frames where you could potentially get hit)
+-- Missed attacks (lag frames where you could potentially get hit) (maybe don't punish if then enemy also misses attack) (maybe only punish if whiffed attacks lead to getting hit?)
 -Secondary
--- Getting hit
+-- Getting hit (should this be eval for goals and movement network instead)
 
 
 Maybe multiple clusters (defense, movement, action) feeding into input layers?
 
 Manually coded IASA input to let network know when another subaction can be taken
+
+
+Output of first network is goals (subactions) and movement. Goals is input to execution network.
+Outputs to button combinations. Goals would need to stick around to give time to get to subaction state.
