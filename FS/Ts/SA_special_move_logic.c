@@ -362,22 +362,35 @@ void SA_Disable_XButton(GOBJ *gobj)
 
 void SA_FloatButtonCheck(GOBJ *gobj)
 {
+
+    // SA_Swap_XAndZButtons : Swap X and Z button inputs in Engine pad. Master pad left alone
+    // SA_Disable_XButton   : X inputs (aka Z controller button) removed from Engine pad
+    // ---------------------
+    // Combined effect      : Original X and Z controller button inputs untouched in Master pad; only controller X button presses present in Engine pad as Z inputs
+
+    /* _Outline_
+    
+    Get float inputs
+    - check Master pad for Z presses
+
+    Check if in a state where float is possible
+    - Enumerate all float-interruptible states
+    OR
+    - Check state kind to decide if interruptible
+
+    Apply float inputs to transition states
+    - Write manual state transitions
+    
+    
+    */
+
+
     // Get fighter data
-	FighterData *fighter_data = gobj->userdata;
+    FighterData *fighter_data = gobj->userdata;
     HSD_Pad *pad_Master = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER
 
-    // int Fighter_CheckJumpInput(GOBJ *f);
-    Fighter_InitInputs(gobj);
-    //if (Fighter_CheckJumpInput(gobj))
-    if ( ((fighter_data->input.held & HSD_BUTTON_X) != 0) || ((fighter_data->input.down & HSD_BUTTON_X) != 0) )
-	{
-        ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOAT, 0, 0);
-        return;
-	} else
-    {
-        void (*cb_OnGuardOn)(GOBJ *gobj) = (void *) 0x800926DC;
-        return cb_OnGuardOn(gobj);
-    }
+
+    Fighter_InitInputs(gobj);  // What is this doing???
 
     // Check for float input presses
     int f_held, f_heldPrev f_down, f_up = 0;
@@ -386,6 +399,20 @@ void SA_FloatButtonCheck(GOBJ *gobj)
     if (pad_Master->down & HSD_BUTTON_FLOAT) {f_down = 1;}
     if (pad_Master->up & HSD_BUTTON_FLOAT) {f_up = 1;}
 
+
+
+    //if (Fighter_CheckJumpInput(gobj))
+    // if ( ((fighter_data->input.held & HSD_BUTTON_X) != 0) || ((fighter_data->input.down & HSD_BUTTON_X) != 0) )
+	// {
+    //     ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOAT, 0, 0);
+    //     return;
+	// } else
+    // {
+    //     void (*cb_OnGuardOn)(GOBJ *gobj) = (void *) 0x800926DC;
+    //     return cb_OnGuardOn(gobj);
+    // }
+
+    
     enum grounded_FloatInterruptableStates
     {
         ASID_REBIRTH,
@@ -406,7 +433,7 @@ void SA_FloatButtonCheck(GOBJ *gobj)
         ASID_SQUATRV,
     };
 
-    enum grounded_FloatInterruptableStates
+    enum aerial_FloatInterruptableStates
     {
         ASID_JUMPF,
         ASID_JUMPB,
