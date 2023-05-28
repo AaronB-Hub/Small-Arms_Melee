@@ -128,26 +128,27 @@ void SA_Disable_LTrigger(GOBJ *gobj);
 void SA_Disable_XButton(GOBJ *gobj);
 void SA_FloatButtonCheck(GOBJ *gobj);
 void SA_Swap_XAndZButtons(GOBJ *gobj);
+int HSD_BUTTON_FLOAT;
 void Custom_Controls_SA(GOBJ *gobj)
 {
+    // Set the default float input
+    HSD_BUTTON_FLOAT = HSD_BUTTON_X;
+    // HSD_BUTTON_FLOAT = HSD_TRIGGER_Z;
+    
+    // Swap X and Z button values; done as soon as possible every frame (update priority 0)
+    GObj_AddProc(gobj, SA_Swap_XAndZButtons, 0);
+
     // Disable vanilla C-stick functionality
     GObj_AddProc(gobj, SA_Disable_CStick, 2);
 
     // Disable vanilla L trigger functionality
     GObj_AddProc(gobj, SA_Disable_LTrigger, 2);
 
-    // Set the default float input
-    int HSD_BUTTON_FLOAT = HSD_BUTTON_X;
-
     // Disable vanilla X Button functionality
     GObj_AddProc(gobj, SA_Disable_XButton, 2);
 
     // Add back in SA X Button functionality
     GObj_AddProc(gobj, SA_FloatButtonCheck, 3);
-
-    // Swap X and Z button values; done as soon as possible every frame (update priority 0)
-        
-    GObj_AddProc(gobj, SA_Swap_XAndZButtons, 0);
 
     // // Added at IASA update priority (3) to be performed just after inputs are received
     // GObj_AddProc(gobj, SA_Intercept_IASACallback, 3);

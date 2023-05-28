@@ -367,38 +367,50 @@ void SA_FloatButtonCheck(GOBJ *gobj)
     // SA_Disable_XButton   : X inputs (aka Z controller button) removed from Engine pad
     // ---------------------
     // Combined effect      : Original X and Z controller button inputs untouched in Master pad; only controller X button presses present in Engine pad as Z inputs
+    //
+    // SA_FloatButtonCheck  : Checks for float button (Z) inputs in Master pad and initiates state change if present
 
     /* _Outline_
     
-    Get float inputs
+    1. Get float inputs
     - check Master pad for Z presses
 
-    Check if in a state where float is possible
+    2. Check if in a state where float is possible
     - Enumerate all float-interruptible states
     OR
     - Check state kind to decide if interruptible
 
-    Apply float inputs to transition states
+    3. Apply float inputs to transition states
     - Write manual state transitions
-    
+    OR
+    - Call controlling float function and handle appropriate transition traits in there
     
     */
 
 
+    // 1.)
     // Get fighter data
     FighterData *fighter_data = gobj->userdata;
     HSD_Pad *pad_Master = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER
 
-
-    Fighter_InitInputs(gobj);  // What is this doing???
-
     // Check for float input presses
-    int f_held, f_heldPrev f_down, f_up = 0;
+    int f_held = 0, f_heldPrev = 0, f_down = 0, f_up = 0;
     if (pad_Master->held & HSD_BUTTON_FLOAT) {f_held = 1;}
     if (pad_Master->heldPrev & HSD_BUTTON_FLOAT) {f_heldPrev = 1;}
     if (pad_Master->down & HSD_BUTTON_FLOAT) {f_down = 1;}
     if (pad_Master->up & HSD_BUTTON_FLOAT) {f_up = 1;}
 
+
+    // 2.)
+    int can_float = Check_Interrrutable_State(gobj);
+
+
+    // 3.)
+    if ( (can_float == 1) && (f_down == 1) ) {
+        SAFloat(gobj);
+        // ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOAT, 0x20, 0);
+    }
+    return;
 
 
     //if (Fighter_CheckJumpInput(gobj))
@@ -413,6 +425,15 @@ void SA_FloatButtonCheck(GOBJ *gobj)
     // }
 
     
+    
+
+    //     Fighter* fp = gobj->user_data;
+    // void** item_list = fp->x10C_ftData->x48_items
+}
+
+int Check_Interrrutable_State(GOBJ *gobj) {
+    // Logic
+
     enum grounded_FloatInterruptableStates
     {
         ASID_REBIRTH,
@@ -497,8 +518,7 @@ void SA_FloatButtonCheck(GOBJ *gobj)
     // int Fighter_CheckJumpInput(GOBJ *f);
     // void Fighter_InitInputs(gobj);
 
-    //     Fighter* fp = gobj->user_data;
-    // void** item_list = fp->x10C_ftData->x48_items
+    return 1;
 }
 
 void SA_Swap_XAndZButtons(GOBJ *gobj)
@@ -531,7 +551,7 @@ void SA_Swap_XAndZButtons(GOBJ *gobj)
     if (pad_Master->up & HSD_TRIGGER_Z) {pad_Engine->up = pad_Engine->up + HSD_BUTTON_X;}
 
     // Set float input
-    HSD_BUTTON_FLOAT = HSD_BUTTON_Z;
+    HSD_BUTTON_FLOAT = HSD_TRIGGER_Z;
     return;
 }
 
