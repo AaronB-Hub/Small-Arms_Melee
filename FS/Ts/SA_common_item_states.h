@@ -37,7 +37,7 @@ __attribute__((used)) static struct ItemState SA_item_state_table[] = {
 ///
 ///
 ///
-__attribute__((used)) static struct ItemState SA_fire1_state_table[] = {
+__attribute__((used)) static struct ItemState SA_primaryfire_state_table[] = {
     // State: 0 - Spawn
     {
         0,                // anim ID
@@ -48,8 +48,8 @@ __attribute__((used)) static struct ItemState SA_fire1_state_table[] = {
     // State: 1 - Fire
     {
         1,                 // anim ID
-        Fire_AnimCallback,  // anim callback
-        Fire_PhysCallback,  // phys callback
-        Fire_CollCallback,  // coll callback
+        PrimaryFire_AnimCallback,  // anim callback
+        PrimaryFire_PhysCallback,  // phys callback
+        PrimaryFire_CollCallback,  // coll callback
     },
 };

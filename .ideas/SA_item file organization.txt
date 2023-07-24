@@ -1,0 +1,64 @@
+-- Current --
+
+SA_item.h - akin to fighter.h; defines variables, structs, and declares functions (to be defined later)
+SA_item.c - akin to fighter.c; defines main functions for all SA items (load, spawn, fire/think, inputs)
+SA_common_item_states.h - declares states and their functions for SA item, primary fire projectile, and secondary fire projectile
+
+itemFire_test.c - based off of special_n.c from Mario template; Ft action file that will control SA char action states
+item_test.c - test character's specific SA item; defines behavioral functions
+fire1_test.c - based off of item_fireball.c from Mario template; defines primary fire projectile functions
+
+- On Load
+(SA_special_move_logic.c : FtState move_logic[] somehow loaded, not sure where/how)
+(SA_common_item_states.h : SA_xxxx_state_table[]'s loaded via include in SA_item.c)
+-> test.c : OnLoad
+-> SA_item.c : SAItem_OnLoad
+-> fighter.h : GObj_AddProc(SAItemThink)
+
+- Controller input
+-> SA_item.c : SAItemThink
+--> SA_item.c : SAItem_InputCheck
+-> SA_item.c : SAItemThink
+-> itemFire_test.c : SAItemPrimaryFireStart
+-> SA_item.c : SAItemThink
+-> 
+
+
+
+-- Final --
+
+(SA_ftstates_common.h)
+(SA_ftstates_special.h)
+SA_item.h - akin to fighter.h; defines variables, structs, and declares functions (to be defined later)
+SA_item.c - akin to fighter.c; defines main functions for all SA items (load, spawn, fire/think, inputs)
+SA_itemstates.h - declares states and their functions for SA item, primary fire projectile, and secondary fire projectile
+
+item_testgun.c - (test character's specific SA item) defines SA item action functions, state logic flow, and (gun) behavior functions
+primaryfire_testgun.c - defines primary fire projectile behavior functions and attributes
+secondaryfire_testgun.c - defines secondary fire projectile behavior functions and attributes
+
+(itemFire_test.c - reference file based off of special_n.c from Fox)
+
+
+
+-- Action Trace --
+
+
+- On Load
+(SA_special_move_logic.c : FtState move_logic[] somehow loaded, not sure where/how)
+(SA_itemstates.h : SA_xxxx_state_table[]'s loaded via include in SA_item.c)
+-> test.c : OnLoad
+-> SA_item.c : SAItem_OnLoad
+-> fighter.h : GObj_AddProc(SAItem_InputCheck)
+
+
+- Controller input
+-> SA_item.c : SAItem_InputCheck (just checks for SA item inputs)
+-> item_testgun.c : SAItemFire (clears and sets flags and sets SAItemThink accessory callback)
+-> item_testgun.c : SAItemThink (updates item state based off current state and flags, then runs appropriate item state callbacks)
+
+ItemStateChange***
+[run callbacks directly or add to stack to run at appropriate time with char action state callbacks???]
+
+-> item_testgun.c : SAItemPrimaryFireStart_AnimCallback
+--> fire_primary_testgun.c : SAItemPrimaryFireSpawn (spawns projectile and sets its initial state)
