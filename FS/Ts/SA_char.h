@@ -155,11 +155,11 @@ void Custom_Controls_SA(GOBJ *gobj)
 
     return;
 }
-void Custom_Items_SA(GOBJ *gobj)
-{
-    SAItem_OnLoad(gobj);
-    return;
-}
+// void Custom_Items_SA(GOBJ *gobj)
+// {
+//     SAItem_OnLoad(gobj);
+//     return;
+// }
 
 // Common Moves (Vanilla)
 void CommonGuardOn_AnimationCallback(GOBJ *gobj);

@@ -1,4 +1,66 @@
 #include "SA_char.h"
+///////////////////////
+//  Initial Testgun  //
+///////////////////////
+/// SAItem_Think - Process any fire inputs and controls the logic/state flow of item
+///
+///
+void SAItem_Think(GOBJ *gobj, )
+{
+    // Get fighter data
+    //GOBJ *fighter_gobj = item_data->fighter_gobj;
+	// FighterData *fighter_data = fighter_gobj->userdata;
+    FighterData *fighter_data = gobj->userdata;
+    CharAttr* charAttrs = fighter_data->ftData->ext_attr;
+
+    // Get SA item data
+    //GOBJ *item = fighter_data->item_held;
+    //GOBJ *item = fighter_data->item_held_spec;
+    GOBJ *item = fighter_data->fighter_var.ft_var5;
+    //ItemData *item_data = gobj->userdata;
+    ItemData *item_data = item->userdata;
+	// ItemFtCmd *item_flags = &item_data->ftcmd_var;
+    // ItemVar *item_vars = &item_data->item_var;
+    // ItemAttr *attributes = &item_data->itData->param_ext;
+
+    
+
+    // INPUT CHECK
+    // Put all here or set flags in custom proc and then only eval flags here?
+    // SAItem_InputCheck(fighter_gobj, gobj);
+    SAItem_InputCheck(gobj, item);
+
+    // if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
+    // {
+    //     item_data->ftcmd_var.flag1 = 1;
+    // }
+
+    
+    //if (item_flags->flag1 == 1)
+    //if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
+    // if (item_data->ftcmd_var.flag1 == 1)
+    //if (item_flags->fire1 == 1)
+    //if (fighter_data->item_held->userdata->ftcmd_var.flag1 == 1)
+    if (charAttrs->x6C_FOX_FIREFOX_BOUNCE_VAR == 1)
+    {
+        void* anim = item_data->item_states[item_data->state].animCallback;
+        anim;
+
+        //if ( (item_flags->needs_charge != 1) || (item_flags->is_charged == 1)) {
+            // Change item state
+            //ItemStateChange(&item, STATE_ITEM_FIRE1, ITEMSTATE_UPDATEANIM);
+
+            // Spawn SA item
+            GOBJ *fire1_item = SAItem_Spawn(gobj, MEX_ITEM_PRIMARYFIRE);
+            //Item_SetLifeTimer(fire1_item, attributes->life);
+            //ItemStateChange(fire1_item, STATE_FIRE1_SPAWN, ITEMSTATE_UPDATEANIM);
+        //}
+        
+    }
+
+    return;
+}
+
 ////////////////////////
 //  Global Functions  //
 ////////////////////////

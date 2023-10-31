@@ -1,6 +1,7 @@
 #include "SA_char.h"
-#include "SA_common_item_states.h"
+#include "SA_itemstates.h"
 
+// Upon game load-in, set the fighter's item and add proc for use (called by OnLoad function in fighter's main .C file)
 void SAItem_OnLoad(GOBJ *gobj)
 {
     // Get fighter data
@@ -19,11 +20,12 @@ void SAItem_OnLoad(GOBJ *gobj)
 	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_SECONDARYFIRE], MEX_ITEM_SECONDARYFIRE);
 
     // Added a custom proc at Accessory update priority
-    GObj_AddProc(gobj, SAItemThink, 8);
+    GObj_AddProc(gobj, SAItem_InputCheck, 8);
 
     return;
 }
 
+// Upon fighter spawn, reset their item
 void SAItem_OnSpawn(GOBJ *gobj)
 {
 
@@ -49,9 +51,9 @@ void SAItem_OnSpawn(GOBJ *gobj)
     // if the item successully spawned, set the accessory callbacks
     if (fighter_data->fighter_var.ft_var5 != 0)
     {
-        // fighter_data->cb.Accessory_Persist = SAItemThink;
-        // fighter_data->cb.Accessory1 = SAItemThink;
-        // fighter_data->cb.Accessory4 = SAItemThink;
+        // fighter_data->cb.Accessory_Persist = SAItem_Think;
+        // fighter_data->cb.Accessory1 = SAItem_Think;
+        // fighter_data->cb.Accessory4 = SAItem_Think;
             // void (*Accessory1)(GOBJ *fighter);           // 0x21b0
             // void (*Accessory_Persist)(GOBJ *fighter);    // 0x21b4, persists across states while the fighter is alive, death clears this ptr, so re-init on Respawn cb. phys position is copied to tonp and fighter jobj matrices are updated after this cb runs
             // void (*Accessory_Freeze)(GOBJ *fighter);     // 0x21b8, only runs during hitlag
@@ -62,11 +64,12 @@ void SAItem_OnSpawn(GOBJ *gobj)
 
 
     // Added a custom proc at Accessory update priority
-    //GObj_AddProc(item, SAItemThink, 8);
+    //GObj_AddProc(item, SAItem_Think, 8);
 
     return;
 }
 
+// Spawn the item into the game
 GOBJ* SAItem_Spawn(GOBJ *gobj, int SAitem_type)
 {
     // Get fighter data
@@ -214,97 +217,39 @@ GOBJ* SAItem_Spawn(GOBJ *gobj, int SAitem_type)
     return item;
 }
 
-void SAItemThink(GOBJ *gobj)
-{
-    // Get fighter data
-    //GOBJ *fighter_gobj = item_data->fighter_gobj;
-	// FighterData *fighter_data = fighter_gobj->userdata;
-    FighterData *fighter_data = gobj->userdata;
-    CharAttr* charAttrs = fighter_data->ftData->ext_attr;
-
-    // Get SA item data
-    //GOBJ *item = fighter_data->item_held;
-    //GOBJ *item = fighter_data->item_held_spec;
-    GOBJ *item = fighter_data->fighter_var.ft_var5;
-    //ItemData *item_data = gobj->userdata;
-    ItemData *item_data = item->userdata;
-	// ItemFtCmd *item_flags = &item_data->ftcmd_var;
-    // ItemVar *item_vars = &item_data->item_var;
-    // ItemAttr *attributes = &item_data->itData->param_ext;
-
-    
-
-    // INPUT CHECK
-    // Put all here or set flags in custom proc and then only eval flags here?
-    // SAItem_InputCheck(fighter_gobj, gobj);
-    SAItem_InputCheck(gobj, item);
-
-    // if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
-    // {
-    //     item_data->ftcmd_var.flag1 = 1;
-    // }
-
-    
-    //if (item_flags->flag1 == 1)
-    //if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
-    // if (item_data->ftcmd_var.flag1 == 1)
-    //if (item_flags->fire1 == 1)
-    //if (fighter_data->item_held->userdata->ftcmd_var.flag1 == 1)
-    if (charAttrs->x6C_FOX_FIREFOX_BOUNCE_VAR == 1)
-    {
-        void* anim = item_data->item_states[item_data->state].animCallback;
-        anim;
-
-        //if ( (item_flags->needs_charge != 1) || (item_flags->is_charged == 1)) {
-            // Change item state
-            //ItemStateChange(&item, STATE_ITEM_FIRE1, ITEMSTATE_UPDATEANIM);
-
-            // Spawn SA item
-            GOBJ *fire1_item = SAItem_Spawn(gobj, MEX_ITEM_PRIMARYFIRE);
-            //Item_SetLifeTimer(fire1_item, attributes->life);
-            //ItemStateChange(fire1_item, STATE_FIRE1_SPAWN, ITEMSTATE_UPDATEANIM);
-        //}
-        
-    }
-
-    return;
-}
-
-
-void SAItem_InputCheck(GOBJ *fighter_gobj, GOBJ *item_gobj)
+// Check for item fire inputs
+void SAItem_InputCheck(GOBJ *fighter_gobj)
 {
     // Get fighter data
 	FighterData *fighter_data = fighter_gobj->userdata;
     CharAttr* charAttrs = fighter_data->ftData->ext_attr;
 
-    // Get SA item data
-    ItemData *item_data = item_gobj->userdata;
-	// ItemFtCmd *item_flags = &item_data->ftcmd_var;
-    // ItemVar *item_vars = &item_data->item_var;
-    // ItemAttr *attributes = &item_data->itData->param_ext;
-
     // Get input data
     HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER (untouched by current implementation of L button disable)
 
     // Reset flag
-    charAttrs->x6C_FOX_FIREFOX_BOUNCE_VAR = 0;
+    charAttrs->SA_ITEM_INPUT_FLAG = 0;
 
     // Primary Fire
     // Vanilla sets a deadzone of 0.30 for the triggers, stored at 'stc_ftcommon->x10'
     // Keeping this deadzone (for now)
-    if (pad->ftriggerLeft > 0.30)  //
+    if (pad->SA_ITEM_INPUT_PRIMARY > SA_ITEM_INPUT_PRIMARY_DEADZONE)  //
     {
-        //item_flags->fire1 = 1;
-        //item_data->ftcmd_var.flag1 = 1;
-        //fighter_data->item_held->userdata->ftcmd_var.flag1 = 1;
-        charAttrs->x6C_FOX_FIREFOX_BOUNCE_VAR = 1;
+        charAttrs->SA_ITEM_INPUT_FLAG += PRIMARY_FIRE_INPUT;
+        // Eventually add in normalized analog value of how far trigger is pressed
     }
 
     // Secondary Fire
-    if ( ((pad->held & HSD_TRIGGER_L) != 0) || ((pad->down & HSD_TRIGGER_L) != 0) )
+    // Digital check (on/off) rather than analog like the primary fire input
+    if ( ((pad->held & SA_ITEM_INPUT_SECONDARY) != 0) || ((pad->down & SA_ITEM_INPUT_SECONDARY) != 0) )
+    // if ( (pad->down & SA_ITEM_INPUT_SECONDARY) != 0 )  // Alternate check that only triggers a secondary fire input when the trigger is initially pressed, not when held
     {
-        charAttrs->x6C_FOX_FIREFOX_BOUNCE_VAR = 2;
+        charAttrs->SA_ITEM_INPUT_FLAG += SECONDARY_FIRE_INPUT;
     }
 
+    if (charAttrs->SA_ITEM_INPUT_FLAG != 0)
+    {
+        SAItem_Think(fighter_gobj, charAttrs->SA_ITEM_INPUT_FLAG);
+    }
     return;
 }

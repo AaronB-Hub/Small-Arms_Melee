@@ -30,6 +30,21 @@
 #define STATE_FIRE1_FIRE 0
 
 ///////////////////////
+//    Item Inputs    //
+///////////////////////
+
+// #define SA_ITEM_INPUT_FLAG CharAttr->x6C_FOX_FIREFOX_BOUNCE_VAR
+#define SA_ITEM_INPUT_FLAG x6C_FOX_FIREFOX_BOUNCE_VAR
+
+// #define SA_ITEM_INPUT_PRIMARY pad->ftriggerLeft
+#define SA_ITEM_INPUT_PRIMARY ftriggerLeft  // make this a pointer?
+#define SA_ITEM_INPUT_PRIMARY_DEADZONE 0.30
+#define SA_ITEM_INPUT_SECONDARY HSD_TRIGGER_L
+
+#define PRIMARY_FIRE_INPUT 0x1
+#define SECONDARY_FIRE_INPUT 0x2
+
+///////////////////////
 //      Structs      //
 ///////////////////////
 
@@ -81,12 +96,14 @@ typedef struct ItemVar
 //     Functions     //
 ///////////////////////
 
+// Item-independent functions (SA_item.c)
 void SAItem_OnLoad(GOBJ *gobj);
 void SAItem_OnSpawn(GOBJ *gobj);
 GOBJ* SAItem_Spawn(GOBJ *gobj, int SAitem_type);
-void SAItemThink(GOBJ *gobj);
-void SAItem_InputCheck(GOBJ *fighter_gobj, GOBJ *item_gobj);
-//void SAItem_InputCheck(GOBJ *gobj);
+void SAItem_InputCheck(GOBJ *gobj);
+
+// Item-dependent functions (item_<gun>.c)
+void SAItem_Think(GOBJ *gobj);
 
 // SA Item State functions (Shared by all SA items)
 void Idle_AnimCallback(GOBJ *gobj);

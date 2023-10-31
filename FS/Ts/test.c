@@ -1,5 +1,5 @@
 #include "SA_char.h"
-#include "SA_common_move_logic.h"
+#include "SA_ftstates_common.h"
 
 ///////////////////////
 //    Test Basic    //
@@ -24,8 +24,9 @@ void OnLoad(GOBJ *gobj)
     // Add custom SA controls
     Custom_Controls_SA(gobj);
 
-    // Add custom SA items
-    Custom_Items_SA(gobj);
+    // Add custom SA item
+    SAItem_OnLoad(gobj);
+    // Custom_Items_SA(gobj);
 
 	// // This block runs fox's pre-existing onload (NOT NEEDED FOR THIS AS ALL OF FOX'S ONLOAD CONTENTS HAVE BEEN TRANSFERRED HERE)
     // void (*cb_OnLoad)(GOBJ *gobj) = (void *) 0x800E57AC;  // <- char specific onload function (can get from MexTool)
