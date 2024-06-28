@@ -1,5 +1,13 @@
 #include "SA_char.h"
 #include "SA_ftstates_common.h"
+#include "SA_ftstates_special.c"
+#include "float.c"
+#include "leap.c"
+#include "kicks.c"
+#include "SA_item.c"
+#include "item_testgun.c"
+#include "fire1_test.c"
+
 
 ///////////////////////
 //    Test Basic    //

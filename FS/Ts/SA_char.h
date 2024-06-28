@@ -1,5 +1,9 @@
-#include "../../m-ex/MexTK/mex.h"
-#include "SA_item.h"
+#ifndef FT_TEST_H
+#define FT_TEST_H
+
+// #include "../../m-ex/MexTK/mex.h"
+#include "mex.h"
+// #include "SA_item.h"
 
 ///////////////////////
 //   Common States   //
@@ -225,3 +229,5 @@ void SADiveKick_CollisionCallback(GOBJ *gobj);
 // void SpecialSecondaryFire_IASACallback(GOBJ *gobj);
 // void SpecialSecondaryFire_PhysicCallback(GOBJ *gobj);
 // void SpecialSecondaryFire_CollisionCallback(GOBJ *gobj);
+
+#endif

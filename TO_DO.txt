@@ -1,0 +1,7 @@
+Changes to make:
+- item_data->ftcmd_var.flag1 = 0;    ->    item_data->itcmd_var.flag1 = 0;
+- https://github.com/akaneia/m-ex/commit/6fde233b6ce30c920b6545b2bd3a117a011d2d95
+- https://github.com/akaneia/m-ex/commit/19d134ff19767a49c94d8e0396e227a9618e2e32
+- Implement new/edited item functions?
+- use 'struct HSD_PollData', PADRead()/PADReset(), and/or 'struct PADStatus' for SA controls?
+- use GOBJ *GOBJ_EZCreator() for item creation?
