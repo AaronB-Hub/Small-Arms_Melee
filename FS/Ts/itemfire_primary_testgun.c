@@ -1,4 +1,4 @@
-#include "SA_char.h"
+#include "test.h"
 
 #pragma region Old
 /*
@@ -2255,7 +2255,7 @@ void SAItemPrimaryFireStart(GOBJ *gobj)
 {
     FighterData *fighter_data = gobj->userdata;
     //ftFoxAttributes* foxAttrs = fighter_data->special_attributes;
-    CharAttr* charAttrs = fighter_data->ftData->ext_attr;
+    TestAttr* tsAttr = fighter_data->ftData->ext_attr;
 
     
     // if (fighter_data->action_flags.transn_phys_update) {
@@ -2296,7 +2296,7 @@ void SAItemPrimaryFireAirStart(GOBJ *gobj)
 {
     // FighterData *fighter_data = gobj->userdata;
     // //ftCharAttributes* foxAttrs = fighter_data->special_attributes;
-    // CharAttr* charAttrs = fighter_data->ftData->ext_attr;
+    // TestAttr* tsAttr = fighter_data->ftData->ext_attr;
     // GOBJ *blasterGObj;
 
     // ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIREAIRSTART, 0, 0);
@@ -2363,7 +2363,7 @@ void SpecialPrimaryFireLoop_AnimationCallback(GOBJ *gobj)
     FighterData *fighter_data = gobj->userdata;
     // ftFoxAttributes* foxAttrs;
     // foxAttrs = getFtSpecialAttrs(fighter_data);
-    CharAttr* charAttrs = fighter_data->ftData->ext_attr;
+    TestAttr* tsAttr = fighter_data->ftData->ext_attr;
     FighterKind ftKind = fighter_data->kind;
 
     // if (!ftAnim_IsFramesRemaining(gobj)) {
@@ -2398,9 +2398,9 @@ void SpecialPrimaryFireLoop_AnimationCallback(GOBJ *gobj)
         sp2C.Z = 0.0f;
 
         if (1.0f == fighter_data->facing_direction) {
-            launchAngle = charAttrs->x10_FOX_BLASTER_ANGLE;
+            launchAngle = tsAttr->x10_FOX_BLASTER_ANGLE;
         } else {
-            launchAngle = M_PI - charAttrs->x10_FOX_BLASTER_ANGLE;
+            launchAngle = M_PI - tsAttr->x10_FOX_BLASTER_ANGLE;
         }
 
         switch (ftKind) {

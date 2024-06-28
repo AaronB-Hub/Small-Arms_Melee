@@ -1,4 +1,4 @@
-#include "SA_char.h"
+#include "test.h"
 #include "SA_ftstates_common.h"
 #include "SA_ftstates_special.c"
 #include "float.c"
@@ -24,7 +24,7 @@ void OnLoad(GOBJ *gobj)
 	//fighter_data->ftstates_common = &MODIFIED_common_move_logic;
 
 	// copy attributes
-	memcpy(fighter_data->special_attributes2, fighter_data->ftData->ext_attr, sizeof(CharAttr));
+	memcpy(fighter_data->special_attributes2, fighter_data->ftData->ext_attr, sizeof(TestAttr));
 
 	// copy pointer to attributes
 	fighter_data->special_attributes = fighter_data->special_attributes2;
@@ -49,17 +49,18 @@ void OnLoad(GOBJ *gobj)
 void OnSpawn(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
+    TestCharVar *charvar = &fighter_data->fighter_var;
 
 	// clear the fighter flags
 	Fighter_SetCharacterFlags(gobj, 0, 0);
 
-	// reset character variables 1-6
-	fighter_data->fighter_var.ft_var1 = 9;
-	fighter_data->fighter_var.ft_var2 = 9;
-	fighter_data->fighter_var.ft_var3 = 0;
-	fighter_data->fighter_var.ft_var4 = 0;
-	fighter_data->fighter_var.ft_var5 = 0;
-	fighter_data->fighter_var.ft_var6 = 0;
+	// // reset character variables 1-6
+	// charvar->var1 = 9;
+	// charvar->var2 = 9;
+	// charvar->var3 = 0;
+	// charvar->var4 = 0;
+	// charvar->var5 = 0;
+	// charvar->var6 = 0;
 
     SAItem_OnSpawn(gobj);
 

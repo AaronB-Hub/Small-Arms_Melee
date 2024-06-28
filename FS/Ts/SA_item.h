@@ -15,6 +15,9 @@
 
 #define MEX_SOUND_FXLASER_DESTROY 5000  // Not sure what the correct value for this is
 
+///////////////////////
+//    Vanilla IDs    //
+///////////////////////
 
 ///////////////////////
 //    Item States    //
@@ -33,7 +36,7 @@
 //    Item Inputs    //
 ///////////////////////
 
-// #define SA_ITEM_INPUT_FLAG CharAttr->x6C_FOX_FIREFOX_BOUNCE_VAR
+// #define SA_ITEM_INPUT_FLAG TestAttr->x6C_FOX_FIREFOX_BOUNCE_VAR
 #define SA_ITEM_INPUT_FLAG x6C_FOX_FIREFOX_BOUNCE_VAR
 
 // #define SA_ITEM_INPUT_PRIMARY pad->ftriggerLeft
@@ -66,6 +69,12 @@ typedef struct ItemAttr
 	float x34;                                // x34
     float x38;                                // x38
 } ItemAttr;                                // size: 0x3C
+
+typedef struct SAItCmdFlags
+{
+	int spawn_effect1;
+	int spawn_effect2;
+} SAItCmdFlags;
 
 typedef struct ItemFtCmd
 {

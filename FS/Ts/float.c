@@ -1,13 +1,13 @@
-#include "SA_char.h"
+#include "test.h"
 ///////////////////////
 //   Initial Float   //
 ///////////////////////
 ///
 ///
 ///
-void SAFloat(GOBJ *gobj)
+void SAFloat(GOBJ *fighter)
 {
-    FighterData *fighter_data = gobj->userdata;
+    FighterData *fighter_data = fighter->userdata;
     FloatFtCmd *script_flags = &fighter_data->ftcmd_var;
 
     // clear subaction flags used by this special move
@@ -21,17 +21,17 @@ void SAFloat(GOBJ *gobj)
 
     // change to Float state and update subaction
     // Passed flag to preserve velocity
-    ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOAT, 0x20, 0);
-    Fighter_AdvanceScript(gobj);
+    ActionStateChange(0, 1, 0, fighter, STATE_SA_FLOAT, 0x20, 0);
+    Fighter_AdvanceScript(fighter);
 
     return;
 }
 ///
 ///
 ///
-void SAFloatDash(GOBJ *gobj)
+void SAFloatDash(GOBJ *fighter)
 {
-    FighterData *fighter_data = gobj->userdata;
+    FighterData *fighter_data = fighter->userdata;
     FloatFtCmd *script_flags = &fighter_data->ftcmd_var;
 
     // clear subaction flags used by this special move
@@ -40,8 +40,8 @@ void SAFloatDash(GOBJ *gobj)
 
     // change to FloatDash state and update subaction
     // Passed flag to preserve velocity
-    ActionStateChange(0, 1, 0, gobj, STATE_SA_FLOATDASH, 0x20, 0);
-    Fighter_AdvanceScript(gobj);
+    ActionStateChange(0, 1, 0, fighter, STATE_SA_FLOATDASH, 0x20, 0);
+    Fighter_AdvanceScript(fighter);
 
     return;
 }
@@ -70,7 +70,7 @@ void SAFloat_AnimationCallback(GOBJ *gobj)
 void SAFloat_IASACallback(GOBJ *gobj)
 {
     FighterData *fighter_data = gobj->userdata;
-    CharAttr *charAttr = fighter_data->special_attributes;
+    TestAttr *tsAttr = fighter_data->special_attributes;
     FloatFtCmd *script_flags = &fighter_data->ftcmd_var;
 
     int interrupted = 0;

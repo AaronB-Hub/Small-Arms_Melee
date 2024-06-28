@@ -3,35 +3,38 @@
 ////////////////////////
 ///
 ///
-///
+/// @brief \
+This is the state struct that will get referenced when calling ItemStateChange\
+The added attribute tag is necessary to prevent this structure from getting\
+optimized away by certain compiler versions
 __attribute__((used)) static struct ItemState SA_item_state_table[] = {
     // State: 0 - Idle
     {
-        0,                 // anim ID
-        Idle_AnimCallback,  // anim callback
-        Idle_PhysCallback,  // phys callback
-        Idle_CollCallback,  // coll callback
+        .state = 0,
+        .animCallback = Idle_AnimCallback,
+        .physCallback = Idle_PhysCallback,
+        .collCallback = Idle_CollCallback,
     },
     // State: 1 - Charge
     {
-        1,                 // anim ID
-        Charge_AnimCallback,  // anim callback
-        Charge_PhysCallback,  // phys callback
-        Charge_CollCallback,  // coll callback
+        .state = 1,
+        .animCallback = Charge_AnimCallback,
+        .physCallback = Charge_PhysCallback,
+        .collCallback = Charge_CollCallback,
     },
     // State: 2 - PrimaryFire
     {
-        2,                 // anim ID
-        PrimaryFire_AnimCallback,  // anim callback
-        PrimaryFire_PhysCallback,  // phys callback
-        PrimaryFire_CollCallback,  // coll callback
+        .state = 2,
+        .animCallback = PrimaryFire_AnimCallback,
+        .physCallback = PrimaryFire_PhysCallback,
+        .collCallback = PrimaryFire_CollCallback,
     },
     // State: 3 - SecondaryFire
     {
-        3,                 // anim ID
-        SecondaryFire_AnimCallback,  // anim callback
-        SecondaryFire_PhysCallback,  // phys callback
-        SecondaryFire_CollCallback,  // coll callback
+        .state = 3,
+        .animCallback = SecondaryFire_AnimCallback,
+        .physCallback = SecondaryFire_PhysCallback,
+        .collCallback = SecondaryFire_CollCallback,
     },
 };
 ///
@@ -40,16 +43,16 @@ __attribute__((used)) static struct ItemState SA_item_state_table[] = {
 __attribute__((used)) static struct ItemState SA_primaryfire_state_table[] = {
     // State: 0 - Spawn
     {
-        0,                // anim ID
-        Spawn_AnimCallback,  // anim callback
-        Spawn_PhysCallback,  // phys callback
-        Spawn_CollCallback,  // coll callback
+        .state = 0,
+        .animCallback = Spawn_AnimCallback,
+        .physCallback = Spawn_PhysCallback,
+        .collCallback = Spawn_CollCallback,
     },
     // State: 1 - Fire
     {
-        1,                 // anim ID
-        PrimaryFire_AnimCallback,  // anim callback
-        PrimaryFire_PhysCallback,  // phys callback
-        PrimaryFire_CollCallback,  // coll callback
+        .state = 0,
+        .animCallback = PrimaryFire_AnimCallback,
+        .physCallback = PrimaryFire_PhysCallback,
+        .collCallback = PrimaryFire_CollCallback,
     },
 };

@@ -1,4 +1,4 @@
-#include "SA_char.h"
+#include "test.h"
 ///////////////////////
 //  Initial Testgun  //
 ///////////////////////
@@ -11,7 +11,7 @@ void SAItem_Think(GOBJ *gobj, )
     //GOBJ *fighter_gobj = item_data->fighter_gobj;
 	// FighterData *fighter_data = fighter_gobj->userdata;
     FighterData *fighter_data = gobj->userdata;
-    CharAttr* charAttrs = fighter_data->ftData->ext_attr;
+    TestAttr* tsAttr = fighter_data->ftData->ext_attr;
 
     // Get SA item data
     //GOBJ *item = fighter_data->item_held;
@@ -19,7 +19,7 @@ void SAItem_Think(GOBJ *gobj, )
     GOBJ *item = fighter_data->fighter_var.ft_var5;
     //ItemData *item_data = gobj->userdata;
     ItemData *item_data = item->userdata;
-	// ItemFtCmd *item_flags = &item_data->ftcmd_var;
+	// ItemFtCmd *item_flags = &item_data->itcmd_var;
     // ItemVar *item_vars = &item_data->item_var;
     // ItemAttr *attributes = &item_data->itData->param_ext;
 
@@ -32,16 +32,16 @@ void SAItem_Think(GOBJ *gobj, )
 
     // if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
     // {
-    //     item_data->ftcmd_var.flag1 = 1;
+    //     item_data->itcmd_var.flag1 = 1;
     // }
 
     
     //if (item_flags->flag1 == 1)
     //if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
-    // if (item_data->ftcmd_var.flag1 == 1)
+    // if (item_data->itcmd_var.flag1 == 1)
     //if (item_flags->fire1 == 1)
-    //if (fighter_data->item_held->userdata->ftcmd_var.flag1 == 1)
-    if (charAttrs->x6C_FOX_FIREFOX_BOUNCE_VAR == 1)
+    //if (fighter_data->item_held->userdata->itcmd_var.flag1 == 1)
+    if (tsAttr->x6C_FOX_FIREFOX_BOUNCE_VAR == 1)
     {
         void* anim = item_data->item_states[item_data->state].animCallback;
         anim;
@@ -150,7 +150,7 @@ int OnUnknown2(GOBJ *gobj)
 // {
 //     // Get SA item data
 //     ItemData *item_data = gobj->userdata;
-// 	// ItemFtCmd *item_flags = &item_data->ftcmd_var;
+// 	// ItemFtCmd *item_flags = &item_data->itcmd_var;
 //     // ItemVar *item_vars = &item_data->item_var;
 //     // ItemAttr *attributes = &item_data->itData->param_ext;
 
@@ -161,8 +161,8 @@ int OnUnknown2(GOBJ *gobj)
 //     if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
 //     {
 //         //item_flags->fire1 = 1;
-//         item_data->ftcmd_var.flag1 = 1;
-//         //fighter_data->item_held->userdata->ftcmd_var.flag1 = 1;
+//         item_data->itcmd_var.flag1 = 1;
+//         //fighter_data->item_held->userdata->itcmd_var.flag1 = 1;
 //     }
 
 //     return;
@@ -194,7 +194,7 @@ void Idle_AnimCallback(GOBJ *gobj)
     // // Check inputs
     // SAItem_InputCheck(gobj);
 
-    // if (item_data->ftcmd_var.flag1 == 1)
+    // if (item_data->itcmd_var.flag1 == 1)
     // {
         // Spawn SA item
         // GOBJ *fire1_item = SAItem_Spawn(gobj, MEX_ITEM_PRIMARYFIRE);

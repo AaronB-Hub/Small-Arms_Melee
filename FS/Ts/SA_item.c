@@ -1,4 +1,5 @@
 #include "SA_char.h"
+#include "SA_item.h"
 #include "SA_itemstates.h"
 
 // Upon game load-in, set the fighter's item and add proc for use (called by OnLoad function in fighter's main .C file)
@@ -8,7 +9,7 @@ void SAItem_OnLoad(GOBJ *gobj)
 	FighterData *fighter_data = gobj->userdata;
 
     // Get fighter item pointer
-	int *fighter_items = fighter_data->ftData->items;
+	ItemDesc **fighter_items = fighter_data->ftData->items;
 
 	// Init SA item (Fxblaster)
     MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_GUN], MEX_ITEM_GUN);
@@ -182,21 +183,21 @@ GOBJ* SAItem_Spawn(GOBJ *gobj, int SAitem_type)
 
     // Clear the item flags and reset item variables
     // iterate through all fighter_data->ftData->items (?)
-        // iterate through all item_gobj->userdata->ftcmd_var.flags1 thru 5
+        // iterate through all item_gobj->userdata->itcmd_var.flags1 thru 5
             // set flag to 0
         // iterate through all item_gobj->userdata->item_var.var1 thru xfc8
             // set var to 0
-    // ItemFtCmd *item_flags = &item_data->ftcmd_var;
+    // ItemFtCmd *item_flags = &item_data->itcmd_var;
     // item_flags->fire1 = 0;
     // item_flags->fire2 = 0;
     // item_flags->interruptable = 0;
     // item_flags->needs_charge = 0;
     // item_flags->is_charged = 0;
-    item_data->ftcmd_var.flag1 = 0;
-    item_data->ftcmd_var.flag2 = 0;
-    item_data->ftcmd_var.flag3 = 0;
-    item_data->ftcmd_var.flag4 = 0;
-    item_data->ftcmd_var.flag5 = 0;
+    item_data->itcmd_var.flag1 = 0;
+    item_data->itcmd_var.flag2 = 0;
+    item_data->itcmd_var.flag3 = 0;
+    item_data->itcmd_var.flag4 = 0;
+    item_data->itcmd_var.flag5 = 0;
         
     // if item successfully spawned
 	if (item != 0)
@@ -222,20 +223,20 @@ void SAItem_InputCheck(GOBJ *fighter_gobj)
 {
     // Get fighter data
 	FighterData *fighter_data = fighter_gobj->userdata;
-    CharAttr* charAttrs = fighter_data->ftData->ext_attr;
+    TestAttr* tsAttr = fighter_data->ftData->ext_attr;
 
     // Get input data
     HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER (untouched by current implementation of L button disable)
 
     // Reset flag
-    charAttrs->SA_ITEM_INPUT_FLAG = 0;
+    tsAttr->SA_ITEM_INPUT_FLAG = 0;
 
     // Primary Fire
     // Vanilla sets a deadzone of 0.30 for the triggers, stored at 'stc_ftcommon->x10'
     // Keeping this deadzone (for now)
     if (pad->SA_ITEM_INPUT_PRIMARY > SA_ITEM_INPUT_PRIMARY_DEADZONE)  //
     {
-        charAttrs->SA_ITEM_INPUT_FLAG += PRIMARY_FIRE_INPUT;
+        tsAttr->SA_ITEM_INPUT_FLAG += PRIMARY_FIRE_INPUT;
         // Eventually add in normalized analog value of how far trigger is pressed
     }
 
@@ -244,12 +245,12 @@ void SAItem_InputCheck(GOBJ *fighter_gobj)
     if ( ((pad->held & SA_ITEM_INPUT_SECONDARY) != 0) || ((pad->down & SA_ITEM_INPUT_SECONDARY) != 0) )
     // if ( (pad->down & SA_ITEM_INPUT_SECONDARY) != 0 )  // Alternate check that only triggers a secondary fire input when the trigger is initially pressed, not when held
     {
-        charAttrs->SA_ITEM_INPUT_FLAG += SECONDARY_FIRE_INPUT;
+        tsAttr->SA_ITEM_INPUT_FLAG += SECONDARY_FIRE_INPUT;
     }
 
-    if (charAttrs->SA_ITEM_INPUT_FLAG != 0)
+    if (tsAttr->SA_ITEM_INPUT_FLAG != 0)
     {
-        SAItem_Think(fighter_gobj, charAttrs->SA_ITEM_INPUT_FLAG);
+        SAItem_Think(fighter_gobj, tsAttr->SA_ITEM_INPUT_FLAG);
     }
     return;
 }

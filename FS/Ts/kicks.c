@@ -1,51 +1,51 @@
-#include "SA_char.h"
+#include "test.h"
 ///////////////////////
 //   Initial Kicks   //
 ///////////////////////
 ///
 ///
 ///
-void SASlideKick(GOBJ *gobj)
+void SASlideKick(GOBJ *fighter)
 {
-    FighterData *fighter_data = gobj->userdata;
+    FighterData *fighter_data = fighter->userdata;
     FloatFtCmd *script_flags = &fighter_data->ftcmd_var;
 
     // clear subaction flags used by this special move
     script_flags->interruptable = 0;
 
     // Passed flag to preserve velocity
-    ActionStateChange(0, 1, 0, gobj, STATE_SA_SLIDEKICK, 0x20, 0);
-    Fighter_AdvanceScript(gobj);
+    ActionStateChange(0, 1, 0, fighter, STATE_SA_SLIDEKICK, 0x20, 0);
+    Fighter_AdvanceScript(fighter);
 
     return;
 }
 
-void SAFlyingKick(GOBJ *gobj)
+void SAFlyingKick(GOBJ *fighter)
 {
-    FighterData *fighter_data = gobj->userdata;
+    FighterData *fighter_data = fighter->userdata;
     FloatFtCmd *script_flags = &fighter_data->ftcmd_var;
 
     // clear subaction flags used by this special move
     script_flags->interruptable = 0;
 
     // Passed flag to preserve velocity
-    ActionStateChange(0, 1, 0, gobj, STATE_SA_FLYINGKICK, 0x20, 0);
-    Fighter_AdvanceScript(gobj);
+    ActionStateChange(0, 1, 0, fighter, STATE_SA_FLYINGKICK, 0x20, 0);
+    Fighter_AdvanceScript(fighter);
 
     return;
 }
 
-void SADiveKick(GOBJ *gobj)
+void SADiveKick(GOBJ *fighter)
 {
-    FighterData *fighter_data = gobj->userdata;
+    FighterData *fighter_data = fighter->userdata;
     FloatFtCmd *script_flags = &fighter_data->ftcmd_var;
 
     // clear subaction flags used by this special move
     script_flags->interruptable = 0;
 
     // Passed flag to preserve velocity
-    ActionStateChange(0, 1, 0, gobj, STATE_SA_DIVEKICK, 0x20, 0);
-    Fighter_AdvanceScript(gobj);
+    ActionStateChange(0, 1, 0, fighter, STATE_SA_DIVEKICK, 0x20, 0);
+    Fighter_AdvanceScript(fighter);
 
     return;
 }

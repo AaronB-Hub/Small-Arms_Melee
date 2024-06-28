@@ -1,13 +1,13 @@
-#include "SA_char.h"
+#include "test.h"
 ////////////////////////////////////////
 //   Initial Leap KneeBend (Landing)  //
 ////////////////////////////////////////
 ///
 ///
-///
-void SALeapKneeBend(GOBJ *gobj)
+/// @param fighter
+void SALeapKneeBend(GOBJ *fighter)
 {
-    FighterData *fighter_data = gobj->userdata;
+    FighterData *fighter_data = fighter->userdata;
     FloatFtCmd *script_flags = &fighter_data->ftcmd_var;
 
     // clear subaction flags used by this special move
@@ -18,15 +18,15 @@ void SALeapKneeBend(GOBJ *gobj)
     {
         // Use master Landing function instead of ActionStateChange??? Not sure about what flags are needed for normal behavior
         // Passed flag to preserve velocity
-        ActionStateChange(0, 1, 0, gobj, STATE_COMMON_KNEEBEND, 0x20, 0);
+        ActionStateChange(0, 1, 0, fighter, STATE_COMMON_KNEEBEND, 0x20, 0);
         return;
 
     // If dashing or running: Leapsquat -> Leap
     } else {
         // Passed flag to preserve velocity
-        ActionStateChange(0, 1, 0, gobj, STATE_SA_LEAPKNEEBEND, 0x20, 0);
+        ActionStateChange(0, 1, 0, fighter, STATE_SA_LEAPKNEEBEND, 0x20, 0);
     }
-    Fighter_AdvanceScript(gobj);
+    Fighter_AdvanceScript(fighter);
 
     return;
 }
