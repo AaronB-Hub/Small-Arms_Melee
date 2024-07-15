@@ -68,7 +68,8 @@ typedef struct ItemAttr
     float x30;                                // x30
 	float x34;                                // x34
     float x38;                                // x38
-} ItemAttr;                                // size: 0x3C
+    int SA_ITEM_INPUT_FLAG;                   // ??
+} ItemAttr;                                // size: 0x3C + ??
 
 typedef struct SAItCmdFlags
 {
@@ -101,18 +102,404 @@ typedef struct ItemVar
     int var12;                                      // 0xe00
 } ItemVar;
 
-///////////////////////
-//     Functions     //
-///////////////////////
+__attribute__((used)) static struct ItemState SAItem_state_table[];
+__attribute__((used)) static struct ItemState SAPrimary_state_table[];
+__attribute__((used)) static struct ItemState SASecondary_state_table[];
 
-// Item-independent functions (SA_item.c)
-void SAItem_OnLoad(GOBJ *gobj);
-void SAItem_OnSpawn(GOBJ *gobj);
-GOBJ* SAItem_Spawn(GOBJ *gobj, int SAitem_type);
-void SAItem_InputCheck(GOBJ *gobj);
+////////////////////////
+//  Helper Functions  //
+////////////////////////
+
+// #define bool u8
+// #define true 1
+// #define false 0
+#include <stdbool.h>
+
+/// @brief checks item collision with any line and applies bounce physics if it touches any
+/// @param item
+/// @return TRUE if collision was made and FALSE otherwise
+bool (*Item_Coll_Bounce)(GOBJ *item) = (int *)0x8027781c;
+
+/// @brief removes all references to specified fighter from item
+/// @param item
+/// @param fighter
+/// @return TRUE if fighter reference was removed and FALSE otherwise
+bool (*Item_RemoveFighterReference)(GOBJ *item, GOBJ *fighter) = (int *)0x8026b894;
+
+/// @brief updates item flags related to hitlag TODO: better description
+/// @param item
+void (*Item_ClearHitlagFlag)(GOBJ *item) = (void *)0x8026b73c;
+
+/// @brief 
+/// @param item 
+/// @return 
+inline void *Item_GetItCmdFlags(GOBJ *item)
+{
+    return &((ItemData *)item->userdata)->itcmd_var;
+}
+
+/// @brief 
+/// @param item 
+/// @return 
+inline void *Item_GetItemVar(GOBJ *item)
+{
+    return &((ItemData *)item->userdata)->item_var;
+}
+
+/// @brief removes reference to SA item from fighter
+/// @param fighter 
+inline void SAItem_RemoveItem(GOBJ *fighter)
+{
+    FighterData *fd = (FighterData *)fighter->userdata;
+	SACharVar *charvar = (SACharVar *)&fd->fighter_var;
+
+    // clear hitlag flag
+    if (charvar->SAItem != 0)
+        Item_ClearHitlagFlag(charvar->SAItem);
+
+    // clear reference to SA item
+    charvar->SAItem = 0;
+
+    // clear callbacks
+    fd->cb.OnDeath_State = 0;
+    fd->cb.OnTakeDamage = 0;
+    return;
+}
+
+/// @brief Check for SA item fire inputs
+/// @param fighter
+void SAItem_InputCheck(GOBJ *fighter)
+{
+    // Get fighter data
+	FighterData *fighter_data = fighter->userdata;
+    ItemAttr* ItAttr = fighter_data->ftData->ext_attr;
+
+    // Get input data
+    HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER (untouched by current implementation of L button disable)
+
+    // Reset flag
+    ItAttr->SA_ITEM_INPUT_FLAG = 0;
+
+    // Primary Fire
+    // Vanilla sets a deadzone of 0.30 for the triggers, stored at 'stc_ftcommon->x10'
+    // Keeping this deadzone (for now)
+    if (pad->SA_ITEM_INPUT_PRIMARY > SA_ITEM_INPUT_PRIMARY_DEADZONE)  //
+    {
+        ItAttr->SA_ITEM_INPUT_FLAG += PRIMARY_FIRE_INPUT;
+        // Eventually add in normalized analog value of how far trigger is pressed
+    }
+
+    // Secondary Fire
+    // Digital check (on/off) rather than analog like the primary fire input
+    if ( ((pad->held & SA_ITEM_INPUT_SECONDARY) != 0) || ((pad->down & SA_ITEM_INPUT_SECONDARY) != 0) )
+    // if ( (pad->down & SA_ITEM_INPUT_SECONDARY) != 0 )  // Alternate check that only triggers a secondary fire input when the trigger is initially pressed, not when held
+    {
+        ItAttr->SA_ITEM_INPUT_FLAG += SECONDARY_FIRE_INPUT;
+    }
+
+    if (ItAttr->SA_ITEM_INPUT_FLAG != 0)
+    {
+        // SAItem_Think(fighter, ItAttr->SA_ITEM_INPUT_FLAG);
+        SAItem_Think(fighter);
+    }
+    return;
+}
+
+////////////////////////
+//   Item Functions   //
+////////////////////////
+// Item-independent functions
+// 
+
+/// @brief
+/// @param item 
+/// @return true if SA item should be destroyed and false otherwise
+bool SAItem_OnDestroy(GOBJ *item)
+{
+    ItemData *id = (ItemData *)item->userdata;
+    GOBJ *fighter = id->fighter_gobj;
+
+    // check if fighter is not null
+    if (fighter)
+    {   
+        // remove SA item from fighter
+        SAItem_RemoveItem(fighter);
+    }
+
+    return false;
+}
+
+/// @brief
+/// @param item 
+/// @return true if SA item should be destroyed and false otherwise
+bool SAItem_OnPickup(GOBJ *item)
+{
+    ItemData *id = item->userdata;
+    SAItCmdFlags *flags = Item_GetItCmdFlags(item);
+
+    // clear itcmd flags
+    // these flags are set via action scripts
+    // within the fighter's files
+    flags->spawn_effect1 = 0;
+    flags->spawn_effect2 = 0;
+
+    // check if SA item is held by fighter
+    if (id->fighter_gobj)
+    {
+        // check if SA item is grounded or airborne
+        if (Item_GetGroundAirState(item) == 1)
+        {   
+            // enter airborne animation state
+            ItemStateChange(item, 1, 2);
+        }
+        else
+        {   
+            // enter grounded animation state
+            ItemStateChange(item, 0, 2);
+        }
+
+        // apply first frame of animation and subaction immediately
+        Item_AnimateAndUpdateSubactions(item);
+
+        // scale SA item to fighter's size
+        Item_ScaleToPlayerSize(item);
+    }
+
+    return false;
+}
+
+/// @brief Original: 0x802B2870
+/// @param item 
+/// @param fighter 
+void SAItem_OnUnknown3(GOBJ *item, GOBJ *fighter)
+{
+    Item_RemoveFighterReference(item, fighter);
+    return;
+}
+
+void SAItem_Think(GOBJ *gobj);
+
+// Upon game load-in, set the fighter's item and add proc for use (called by OnLoad function in fighter's main .C file)
+void SAItem_OnLoad(GOBJ *gobj)
+{
+    // Get fighter data
+	FighterData *fighter_data = gobj->userdata;
+
+    // Get fighter item pointer
+	ItemDesc **fighter_items = fighter_data->ftData->items;
+
+	// Init SA item (Fxblaster)
+    MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_GUN], MEX_ITEM_GUN);
+
+	// Init Primary Fire (Fxlaser)
+	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_PRIMARYFIRE], MEX_ITEM_PRIMARYFIRE);
+
+	// Init Secondary Fire (Fxshadow)
+	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_SECONDARYFIRE], MEX_ITEM_SECONDARYFIRE);
+
+    // Added a custom proc at Accessory update priority
+    GObj_AddProc(gobj, SAItem_InputCheck, 8);
+
+    return;
+}
+
+// Upon fighter spawn, reset their item
+void SAItem_OnSpawn(GOBJ *gobj)
+{
+
+    // Get fighter data
+	FighterData *fighter_data = gobj->userdata;
+
+    // Spawn SA item
+    GOBJ *item = SAItem_Spawn(gobj, MEX_ITEM_GUN);
+
+    // Set the item's initial state
+    ItemStateChange(item, STATE_ITEM_IDLE, 0);
+
+    // Give the item to the fighter
+    //Fighter_GiveItem(gobj, item);
+
+    // store the item pointer to a ft_var5 and the special help item location
+    fighter_data->fighter_var.ft_var5 = item;
+    fighter_data->item_held_spec = item;
+    //fighter_data->item_held = item;
+
+    fighter_data->flags.item_visible = 1;
+
+    // if the item successully spawned, set the accessory callbacks
+    if (fighter_data->fighter_var.ft_var5 != 0)
+    {
+        // fighter_data->cb.Accessory_Persist = SAItem_Think;
+        // fighter_data->cb.Accessory1 = SAItem_Think;
+        // fighter_data->cb.Accessory4 = SAItem_Think;
+            // void (*Accessory1)(GOBJ *fighter);           // 0x21b0
+            // void (*Accessory_Persist)(GOBJ *fighter);    // 0x21b4, persists across states while the fighter is alive, death clears this ptr, so re-init on Respawn cb. phys position is copied to tonp and fighter jobj matrices are updated after this cb runs
+            // void (*Accessory_Freeze)(GOBJ *fighter);     // 0x21b8, only runs during hitlag
+            // void (*Accessory4)(GOBJ *fighter);           // 0x21bc
+    }
+
+	// Set the accessory callback for SA item. Spawns fire when the flag0 is set
+
+
+    // Added a custom proc at Accessory update priority
+    //GObj_AddProc(item, SAItem_Think, 8);
+
+    return;
+}
+
+// Spawn the item into the game
+GOBJ* SAItem_SpawnItem(GOBJ *gobj, int SAitem_type)
+{
+    // Get fighter data
+	FighterData *fighter_data = gobj->userdata;
+
+    // Get item data
+    int SAitem_id = MEX_GetFtItemID(gobj, SAitem_type);
+    //ItemAttr *attributes = fighter_items[MEX_ITEM_GUN]->unqiue_attributes;
+
+    // Determine spawn position
+    Vec3 bone_position;
+    int bone_index;
+    if (SAitem_type == MEX_ITEM_GUN)  // spawn position should be player's hand
+    {
+        // Grab bone index of left 1st finger A?
+        bone_index = Fighter_BoneLookup(fighter_data, L1stNa);
+
+        // Get position of bone in world
+        JOBJ_GetWorldPosition(fighter_data->bones[bone_index].joint, 0, &bone_position);
+    } else  // Spawn position should be end of gun
+    {
+        // Grab bone index of left 1st finger A?
+        bone_index = Fighter_BoneLookup(fighter_data, L1stNa);
+
+        // Get position of bone in world
+        JOBJ_GetWorldPosition(fighter_data->bones[bone_index].joint, 0, &bone_position);
+    }
+
+    // Determine spawn velocity
+    Vec3 vel;
+    if (SAitem_type == MEX_ITEM_GUN)  // spawn velocity should be 0
+    {
+        vel.X = 0;
+        vel.Y = 0;
+        vel.Z = 0;
+    } else
+    {
+        float speed;
+        if (SAitem_type == MEX_ITEM_PRIMARYFIRE)  // primary fire spawn velocity
+        {
+            speed = 7;  // Eventually grab this from *attributes!!!
+        } else if (SAitem_type == MEX_ITEM_SECONDARYFIRE)  // secondary fire spawn velocity
+        {
+            speed = 7;  // Eventually grab this from *attributes!!!
+        }
+        
+        float it_angle;
+        Vec2 cstick_angle = fighter_data->input.cstick;  // This will be 0 with current implementation of c-stick disable
+
+        HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER(untouched by current implementation of c-stick disable)
+        cstick_angle.X = pad->fsubstickX;
+        cstick_angle.Y = pad->fsubstickY;
+        
+        
+        // Use the facing direction as the direction to shoot if the c-stick is in neutral position
+        // Vanilla sets a deadzone of 0.28 in the X and Y axis, stored at 'stc_ftcommon->x0' and 'stc_ftcommon->x4' respectively
+        // Keeping this deadzone (for now), but allowing for all angles
+        if ( sqrtf( (cstick_angle.X * cstick_angle.X) + (cstick_angle.Y * cstick_angle.Y) ) < 0.1568) {  // (0.28)^2 + (0.28)^2 = 0.1568
+            if (fighter_data->facing_direction == 1) {
+                it_angle = 0;
+            } else {
+                it_angle = M_PI;
+            }
+        } else {
+            it_angle = atan2(cstick_angle.Y, cstick_angle.X);
+        }
+
+        vel.X = speed * cos(it_angle);
+        vel.Y = speed * sin(it_angle);
+        vel.Z = 0;
+    }
+    
+    SpawnItem spawnItem;
+    spawnItem.parent_gobj = gobj;
+    spawnItem.parent_gobj2 = gobj;
+    spawnItem.it_kind = SAitem_id;
+    spawnItem.hold_kind = ITHOLD_SWORD;
+    spawnItem.unk2 = 0;
+    spawnItem.pos = bone_position;
+    spawnItem.pos2 = bone_position;
+    spawnItem.vel.X = vel.X;
+    spawnItem.vel.Y = vel.Y;
+    spawnItem.vel.Z = vel.Z;
+    spawnItem.facing_direction = fighter_data->facing_direction;
+    spawnItem.damage = 0;
+    spawnItem.unk5 = 0;
+    spawnItem.unk6 = 0;
+    spawnItem.is_raycast_below = 1;
+    spawnItem.is_spin = 0;
+
+    // Create the new item
+    GOBJ *item = Item_CreateItem1(&spawnItem);
+
+    // Initialize item
+    ItemData *item_data = item->userdata;
+    //ItemAttr *attributes = item_data->itData->param_ext;
+    //memcpy(fighter_items[MEX_ITEM_FXBLASTER]->unqiue_attributes, ItemData->itData->param_ext, sizeof(ItemAttr))
+    
+    // Set item states
+    if (SAitem_type == MEX_ITEM_GUN)
+    {
+        item_data->item_states = &SA_item_state_table;
+    } else if (SAitem_type == MEX_ITEM_PRIMARYFIRE)
+    {
+        item_data->item_states = &SA_fire1_state_table;
+    } else if (SAitem_type == MEX_ITEM_SECONDARYFIRE)
+    {
+        //item_data->item_states = &SA_fire2_state_table;
+    }
+
+    // Clear the item flags and reset item variables
+    // iterate through all fighter_data->ftData->items (?)
+        // iterate through all item_gobj->userdata->itcmd_var.flags1 thru 5
+            // set flag to 0
+        // iterate through all item_gobj->userdata->item_var.var1 thru xfc8
+            // set var to 0
+    // ItemFtCmd *item_flags = &item_data->itcmd_var;
+    // item_flags->fire1 = 0;
+    // item_flags->fire2 = 0;
+    // item_flags->interruptable = 0;
+    // item_flags->needs_charge = 0;
+    // item_flags->is_charged = 0;
+    item_data->itcmd_var.flag1 = 0;
+    item_data->itcmd_var.flag2 = 0;
+    item_data->itcmd_var.flag3 = 0;
+    item_data->itcmd_var.flag4 = 0;
+    item_data->itcmd_var.flag5 = 0;
+        
+    // if item successfully spawned
+	if (item != 0)
+	{
+		if (SAitem_type == MEX_ITEM_GUN)
+        {
+            // have char hold the item
+		    Item_Hold(item, gobj, bone_index);
+        }
+
+		// copy develop mode stuff
+		Item_CopyDevelopState(item, gobj);
+
+        // update phys and collision for item
+        Item_UpdatePhysAndColl(item);
+	}
+
+    return item;
+}
+
+////////////////////////
+//  State Functions   //
+////////////////////////
 
 // Item-dependent functions (item_<gun>.c)
-void SAItem_Think(GOBJ *gobj);
 
 // SA Item State functions (Shared by all SA items)
 void Idle_AnimCallback(GOBJ *gobj);
@@ -140,3 +527,26 @@ void Spawn_CollCallback(GOBJ *gobj);
 void Fire_AnimCallback(GOBJ *gobj);
 void Fire_PhysCallback(GOBJ *gobj);
 void Fire_CollCallback(GOBJ *gobj);
+
+
+////////////////////////
+//Projectile Functions//
+////////////////////////
+
+// // Primary Fire
+// bool SAPrimary_OnGiveDamage(GOBJ *gobj);
+// bool SAPrimary_OnHitShieldBounce(GOBJ *item);
+// bool SAPrimary_OnHitShieldDetermineDestroy(GOBJ *item);
+// bool SAPrimary_OnReflect(GOBJ *item);
+// bool SAPrimary_OnUnknown1(GOBJ *item);
+// bool SAPrimary_OnUnknown2(GOBJ *gobj);
+// void SAPrimary_OnUnknown3(GOBJ *gobj, GOBJ *fighter);
+
+// // Secondary Fire
+// bool SASecondary_OnGiveDamage(GOBJ *gobj);
+// bool SASecondary_OnHitShieldBounce(GOBJ *item);
+// bool SASecondary_OnHitShieldDetermineDestroy(GOBJ *item);
+// bool SASecondary_OnReflect(GOBJ *item);
+// bool SASecondary_OnUnknown1(GOBJ *item);
+// bool SASecondary_OnUnknown2(GOBJ *gobj);
+// void SASecondary_OnUnknown3(GOBJ *gobj, GOBJ *fighter);

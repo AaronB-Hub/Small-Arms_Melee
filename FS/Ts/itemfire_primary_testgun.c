@@ -1,4 +1,6 @@
 #include "test.h"
+#include "SA_item.h"
+#include "SA_itemstates.h"
 
 #pragma region Old
 /*
@@ -2251,6 +2253,14 @@ void ftChar_Throw_Anim(GOBJ *gobj);
 ///
 ///
 ///
+
+/// @brief \
+This is the state struct that will get referenced when calling ItemStateChange\
+The added attribute tag is necessary to prevent this structure from getting\
+optimized away by certain compiler versions
+__attribute__((used)) 
+static struct ItemState item_state_table[] = SA_primaryfire_state_table;
+
 void SAItemPrimaryFireStart(GOBJ *gobj)
 {
     FighterData *fighter_data = gobj->userdata;

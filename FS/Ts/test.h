@@ -98,17 +98,6 @@ typedef struct TestAttr
     // u8 data_filler_10[0xD1 - 0x10];           // x10 (array of u8's with last one starting at 0xD1(?))
 } TestAttr;                                   // size: 0xD4
 
-typedef struct TestCharVar
-{
-    int var1;
-    int var2;
-    int var3;
-    int var4;
-    // GOBJ *item_cape;
-    int var5;
-    int var6;
-} TestCharVar;
-
 ///////////////////////
 //     Functions     //
 ///////////////////////

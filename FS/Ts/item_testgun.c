@@ -1,8 +1,22 @@
 #include "test.h"
+#include "SA_item.h"
+#include "SA_itemstates.h"
+
 ///////////////////////
 //  Initial Testgun  //
 ///////////////////////
-/// SAItem_Think - Process any fire inputs and controls the logic/state flow of item
+
+/// @brief \
+This is the state struct that will get referenced when calling ItemStateChange\
+The added attribute tag is necessary to prevent this structure from getting\
+optimized away by certain compiler versions
+__attribute__((used)) static struct ItemState SAItem_state_table[] = SA_item_state_table;
+
+////////////////////////
+//  State Functions   //
+////////////////////////
+
+/// @brief Process any fire inputs and controls the logic/state flow of item
 ///
 ///
 void SAItem_Think(GOBJ *gobj, )
