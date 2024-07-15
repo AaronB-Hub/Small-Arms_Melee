@@ -1,90 +1,94 @@
-C:\Users\Aaron\Game_Project\Small-Arms_Melee\FS\Mr\build\item_fireball.o: \
- C:\Users\Aaron\Game_Project\Small-Arms_Melee\FS\Mr\item_fireball.c \
- C:\Users\Aaron\Game_Project\Small-Arms_Melee\FS\Mr\mario.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\mex.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/structs.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/datatypes.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/structs.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/offsets.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/audio.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/datatypes.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/boneset.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/match.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/obj.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/gx.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/fighter.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/color.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/effects.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/match.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/collision.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/collision.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/color.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/css.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/scene.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/devtext.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/effects.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/fighter.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/hsd.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/inline.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/mex.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/hsd.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/math.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/useful.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/devtext.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/item.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/kirby.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/math.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/memcard.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/css.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/mex.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/obj.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/offsets.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/preload.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/scene.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/stage.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/text.h \
- c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/useful.h
-C:\Users\Aaron\Game_Project\Small-Arms_Melee\FS\Mr\mario.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\mex.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/structs.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/datatypes.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/structs.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/offsets.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/audio.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/datatypes.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/boneset.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/match.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/obj.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/gx.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/fighter.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/color.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/effects.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/match.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/collision.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/collision.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/color.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/css.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/scene.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/devtext.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/effects.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/fighter.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/hsd.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/inline.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/mex.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/hsd.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/math.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/useful.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/devtext.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/item.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/kirby.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/math.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/memcard.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/css.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/mex.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/obj.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/offsets.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/preload.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/scene.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/stage.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/text.h:
-c:\users\aaron\game_project\small-arms_melee\m-ex\mextk\include/useful.h:
+D:\projects\Small-Arms_Melee\FS\Mr\build\item_fireball.o: \
+ D:\projects\Small-Arms_Melee\FS\Mr\item_fireball.c \
+ D:\projects\Small-Arms_Melee\FS\Mr\mario.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/mex.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/structs.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/datatypes.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/structs.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/offsets.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/useful.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/datatypes.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/gx.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/useful.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/1p.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/audio.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/dynamics.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/obj.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/gx.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/match.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/fighter.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/color.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/effects.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/match.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/collision.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/dynamics.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/collision.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/color.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/css.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/scene.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/devtext.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/effects.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/fighter.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/hsd.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/inline.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/mex.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/hsd.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/math.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/item.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/kirby.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/math.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/memcard.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/css.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/mex.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/obj.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/offsets.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/preload.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/scene.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/stage.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/text.h
+D:\projects\Small-Arms_Melee\FS\Mr\mario.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/mex.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/structs.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/datatypes.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/structs.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/offsets.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/useful.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/datatypes.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/gx.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/useful.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/1p.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/audio.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/dynamics.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/obj.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/gx.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/match.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/fighter.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/color.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/effects.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/match.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/collision.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/dynamics.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/collision.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/color.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/css.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/scene.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/devtext.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/effects.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/fighter.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/hsd.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/inline.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/mex.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/hsd.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/math.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/item.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/kirby.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/math.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/memcard.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/css.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/mex.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/obj.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/offsets.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/preload.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/scene.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/stage.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/text.h:
