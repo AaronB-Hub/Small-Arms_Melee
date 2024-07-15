@@ -41,7 +41,8 @@
 
 // #define SA_ITEM_INPUT_PRIMARY pad->ftriggerLeft
 #define SA_ITEM_INPUT_PRIMARY ftriggerLeft  // make this a pointer?
-#define SA_ITEM_INPUT_PRIMARY_DEADZONE 0.30
+// #define SA_ITEM_INPUT_PRIMARY_DEADZONE 0.30
+#define SA_ITEM_INPUT_PRIMARY_DEADZONE 0.28
 #define SA_ITEM_INPUT_SECONDARY HSD_TRIGGER_L
 
 #define PRIMARY_FIRE_INPUT 0x1
@@ -168,7 +169,7 @@ inline void SAItem_RemoveItem(GOBJ *fighter)
 
 /// @brief Check for SA item fire inputs
 /// @param fighter
-void SAItem_InputCheck(GOBJ *fighter)
+inline void SAItem_InputCheck(GOBJ *fighter)
 {
     // Get fighter data
 	FighterData *fighter_data = fighter->userdata;
@@ -211,10 +212,12 @@ void SAItem_InputCheck(GOBJ *fighter)
 // Item-independent functions
 // 
 
+void SAItem_Think(GOBJ *gobj);
+
 /// @brief
 /// @param item 
 /// @return true if SA item should be destroyed and false otherwise
-bool SAItem_OnDestroy(GOBJ *item)
+inline bool SAItem_OnDestroy(GOBJ *item)
 {
     ItemData *id = (ItemData *)item->userdata;
     GOBJ *fighter = id->fighter_gobj;
@@ -232,7 +235,7 @@ bool SAItem_OnDestroy(GOBJ *item)
 /// @brief
 /// @param item 
 /// @return true if SA item should be destroyed and false otherwise
-bool SAItem_OnPickup(GOBJ *item)
+inline bool SAItem_OnPickup(GOBJ *item)
 {
     ItemData *id = item->userdata;
     SAItCmdFlags *flags = Item_GetItCmdFlags(item);
@@ -271,19 +274,17 @@ bool SAItem_OnPickup(GOBJ *item)
 /// @brief Original: 0x802B2870
 /// @param item 
 /// @param fighter 
-void SAItem_OnUnknown3(GOBJ *item, GOBJ *fighter)
+inline void SAItem_OnUnknown3(GOBJ *item, GOBJ *fighter)
 {
     Item_RemoveFighterReference(item, fighter);
     return;
 }
 
-void SAItem_Think(GOBJ *gobj);
-
 // Upon game load-in, set the fighter's item and add proc for use (called by OnLoad function in fighter's main .C file)
-void SAItem_OnLoad(GOBJ *gobj)
+inline void SAItem_OnLoad(GOBJ *fighter)
 {
     // Get fighter data
-	FighterData *fighter_data = gobj->userdata;
+	FighterData *fighter_data = fighter->userdata;
 
     // Get fighter item pointer
 	ItemDesc **fighter_items = fighter_data->ftData->items;
@@ -298,26 +299,27 @@ void SAItem_OnLoad(GOBJ *gobj)
 	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_SECONDARYFIRE], MEX_ITEM_SECONDARYFIRE);
 
     // Added a custom proc at Accessory update priority
-    GObj_AddProc(gobj, SAItem_InputCheck, 8);
+    GObj_AddProc(fighter, SAItem_InputCheck, 8);
 
     return;
 }
 
 // Upon fighter spawn, reset their item
-void SAItem_OnSpawn(GOBJ *gobj)
+inline void SAItem_OnSpawn(GOBJ *fighter)
 {
 
     // Get fighter data
-	FighterData *fighter_data = gobj->userdata;
+	FighterData *fighter_data = fighter->userdata;
 
     // Spawn SA item
-    GOBJ *item = SAItem_Spawn(gobj, MEX_ITEM_GUN);
+    GOBJ *item = SAItem_Spawn(fighter, MEX_ITEM_GUN);
+
+    // Give the item to the fighter
+    //Fighter_GiveItem(fighter, item);
 
     // Set the item's initial state
     ItemStateChange(item, STATE_ITEM_IDLE, 0);
 
-    // Give the item to the fighter
-    //Fighter_GiveItem(gobj, item);
 
     // store the item pointer to a ft_var5 and the special help item location
     fighter_data->fighter_var.ft_var5 = item;
@@ -338,23 +340,19 @@ void SAItem_OnSpawn(GOBJ *gobj)
             // void (*Accessory4)(GOBJ *fighter);           // 0x21bc
     }
 
-	// Set the accessory callback for SA item. Spawns fire when the flag0 is set
-
-
-    // Added a custom proc at Accessory update priority
-    //GObj_AddProc(item, SAItem_Think, 8);
-
-    return;
+	// Set the accessory callback for SA item. Triggers item action when the flag0 is set
+	fighter_data->cb.Accessory4 = SAItem_Think;
+	return;
 }
 
 // Spawn the item into the game
-GOBJ* SAItem_SpawnItem(GOBJ *gobj, int SAitem_type)
+inline GOBJ* SAItem_SpawnItem(GOBJ *fighter, int SAitem_type)
 {
     // Get fighter data
-	FighterData *fighter_data = gobj->userdata;
+	FighterData *fighter_data = fighter->userdata;
 
     // Get item data
-    int SAitem_id = MEX_GetFtItemID(gobj, SAitem_type);
+    int SAitem_id = MEX_GetFtItemID(fighter, SAitem_type);
     //ItemAttr *attributes = fighter_items[MEX_ITEM_GUN]->unqiue_attributes;
 
     // Determine spawn position
@@ -420,31 +418,39 @@ GOBJ* SAItem_SpawnItem(GOBJ *gobj, int SAitem_type)
         vel.Z = 0;
     }
     
-    SpawnItem spawnItem;
-    spawnItem.parent_gobj = gobj;
-    spawnItem.parent_gobj2 = gobj;
-    spawnItem.it_kind = SAitem_id;
-    spawnItem.hold_kind = ITHOLD_SWORD;
-    spawnItem.unk2 = 0;
-    spawnItem.pos = bone_position;
-    spawnItem.pos2 = bone_position;
-    spawnItem.vel.X = vel.X;
-    spawnItem.vel.Y = vel.Y;
-    spawnItem.vel.Z = vel.Z;
-    spawnItem.facing_direction = fighter_data->facing_direction;
-    spawnItem.damage = 0;
-    spawnItem.unk5 = 0;
-    spawnItem.unk6 = 0;
-    spawnItem.is_raycast_below = 1;
-    spawnItem.is_spin = 0;
+    // initialize spawn struct for cape
+    SpawnItem spawnItem =
+    {
+        .parent_gobj = fighter;
+        .parent_gobj2 = fighter;
+        .it_kind = SAitem_id;
+        .hold_kind = ITHOLD_SWORD;
+        .unk2 = 0;
+        .pos = bone_position;
+        .pos2 = bone_position;
+        .vel.X = vel.X;
+        .vel.Y = vel.Y;
+        .vel.Z = vel.Z;
+        .facing_direction = fighter_data->facing_direction;
+        .damage = 0;
+        .unk5 = 0;
+        .unk6 = 0;
+        .is_raycast_below = 1;
+        .is_spin = 0;
+    };
+    
 
-    // Create the new item
+    // Create the new SA item
     GOBJ *item = Item_CreateItem1(&spawnItem);
 
-    // Initialize item
+    // Initialize SA item behavior
     ItemData *item_data = item->userdata;
-    //ItemAttr *attributes = item_data->itData->param_ext;
+
+    // Set the SA item's custom attributes (do that here or somewhere else???)
     //memcpy(fighter_items[MEX_ITEM_FXBLASTER]->unqiue_attributes, ItemData->itData->param_ext, sizeof(ItemAttr))
+
+    // Get the SA item's custom attributes
+    ItemAttr *attributes = item_data->itData->param_ext;
     
     // Set item states
     if (SAitem_type == MEX_ITEM_GUN)
@@ -452,10 +458,10 @@ GOBJ* SAItem_SpawnItem(GOBJ *gobj, int SAitem_type)
         item_data->item_states = &SA_item_state_table;
     } else if (SAitem_type == MEX_ITEM_PRIMARYFIRE)
     {
-        item_data->item_states = &SA_fire1_state_table;
+        item_data->item_states = &SA_primaryfire_state_table;
     } else if (SAitem_type == MEX_ITEM_SECONDARYFIRE)
     {
-        //item_data->item_states = &SA_fire2_state_table;
+        item_data->item_states = &SA_secondaryfire_state_table;
     }
 
     // Clear the item flags and reset item variables
@@ -482,11 +488,11 @@ GOBJ* SAItem_SpawnItem(GOBJ *gobj, int SAitem_type)
 		if (SAitem_type == MEX_ITEM_GUN)
         {
             // have char hold the item
-		    Item_Hold(item, gobj, bone_index);
+		    Item_Hold(item, fighter, bone_index);
         }
 
 		// copy develop mode stuff
-		Item_CopyDevelopState(item, gobj);
+		Item_CopyDevelopState(item, fighter);
 
         // update phys and collision for item
         Item_UpdatePhysAndColl(item);

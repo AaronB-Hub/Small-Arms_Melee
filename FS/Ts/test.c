@@ -4,9 +4,8 @@
 #include "float.c"
 #include "leap.c"
 #include "kicks.c"
-#include "SA_item.c"
 #include "item_testgun.c"
-#include "fire1_test.c"
+#include "itemfire_primary_testgun.c"
 
 
 ///////////////////////

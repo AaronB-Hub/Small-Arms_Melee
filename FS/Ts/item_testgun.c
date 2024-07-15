@@ -1,6 +1,5 @@
-#include "test.h"
+// #include "test.h"
 #include "SA_item.h"
-#include "SA_itemstates.h"
 
 ///////////////////////
 //  Initial Testgun  //
@@ -19,13 +18,22 @@ __attribute__((used)) static struct ItemState SAItem_state_table[] = SA_item_sta
 /// @brief Process any fire inputs and controls the logic/state flow of item
 ///
 ///
-void SAItem_Think(GOBJ *gobj, )
+void SAItem_Think(GOBJ *gobj)
 {
     // Get fighter data
     //GOBJ *fighter_gobj = item_data->fighter_gobj;
 	// FighterData *fighter_data = fighter_gobj->userdata;
     FighterData *fighter_data = gobj->userdata;
     TestAttr* tsAttr = fighter_data->ftData->ext_attr;
+
+
+    // // clear flags that are going to be used by this action
+    // SpecialSFtCmd *script_var = Fighter_GetScriptVars(fighter);
+	// SpecialSVar *state_var = Fighter_GetStateVars(fighter);
+	// script_var->create_wind = 0;
+	// script_var->enable_reflect = 0;
+	// script_var->spawn_cape = 0;
+	// state_var->reflect_enabled = 0;
 
     // Get SA item data
     //GOBJ *item = fighter_data->item_held;
@@ -42,7 +50,7 @@ void SAItem_Think(GOBJ *gobj, )
     // INPUT CHECK
     // Put all here or set flags in custom proc and then only eval flags here?
     // SAItem_InputCheck(fighter_gobj, gobj);
-    SAItem_InputCheck(gobj, item);
+    // SAItem_InputCheck(gobj, item);
 
     // if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
     // {
@@ -273,3 +281,81 @@ void SecondaryFire_CollCallback(GOBJ *gobj)
 {
     return;
 }
+
+////////////////////////
+//    Item States     //
+////////////////////////
+///
+///
+/// @brief \
+This is the state struct that will get referenced when calling ItemStateChange\
+The added attribute tag is necessary to prevent this structure from getting\
+optimized away by certain compiler versions
+__attribute__((used)) static struct ItemState SA_item_state_table[] = {
+    // State: 0 - Idle
+    {
+        .state = 0,
+        .animCallback = Idle_AnimCallback,
+        .physCallback = Idle_PhysCallback,
+        .collCallback = Idle_CollCallback,
+    },
+    // State: 1 - Charge
+    {
+        .state = 1,
+        .animCallback = Charge_AnimCallback,
+        .physCallback = Charge_PhysCallback,
+        .collCallback = Charge_CollCallback,
+    },
+    // State: 2 - PrimaryFire
+    {
+        .state = 2,
+        .animCallback = PrimaryFire_AnimCallback,
+        .physCallback = PrimaryFire_PhysCallback,
+        .collCallback = PrimaryFire_CollCallback,
+    },
+    // State: 3 - SecondaryFire
+    {
+        .state = 3,
+        .animCallback = SecondaryFire_AnimCallback,
+        .physCallback = SecondaryFire_PhysCallback,
+        .collCallback = SecondaryFire_CollCallback,
+    },
+};
+///
+///
+///
+__attribute__((used)) static struct ItemState SA_primaryfire_state_table[] = {
+    // State: 0 - Spawn
+    {
+        .state = 0,
+        .animCallback = Spawn_AnimCallback,
+        .physCallback = Spawn_PhysCallback,
+        .collCallback = Spawn_CollCallback,
+    },
+    // State: 1 - Fire
+    {
+        .state = 0,
+        .animCallback = PrimaryFire_AnimCallback,
+        .physCallback = PrimaryFire_PhysCallback,
+        .collCallback = PrimaryFire_CollCallback,
+    },
+};
+///
+///
+///
+__attribute__((used)) static struct ItemState SA_secondaryfire_state_table[] = {
+    // State: 0 - Spawn
+    {
+        .state = 0,
+        .animCallback = Spawn_AnimCallback,
+        .physCallback = Spawn_PhysCallback,
+        .collCallback = Spawn_CollCallback,
+    },
+    // State: 1 - Fire
+    {
+        .state = 0,
+        .animCallback = PrimaryFire_AnimCallback,
+        .physCallback = PrimaryFire_PhysCallback,
+        .collCallback = PrimaryFire_CollCallback,
+    },
+};
