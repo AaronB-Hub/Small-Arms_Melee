@@ -1,6 +1,6 @@
-#include "test.h"
-#include "SA_item.h"
-#include "SA_itemstates.h"
+// #include "test.h"
+// #include "SA_item.h"
+// #include "SA_itemstates.h"
 
 #pragma region Old
 /*
@@ -2254,13 +2254,6 @@ void ftChar_Throw_Anim(GOBJ *gobj);
 ///
 ///
 
-/// @brief \
-This is the state struct that will get referenced when calling ItemStateChange\
-The added attribute tag is necessary to prevent this structure from getting\
-optimized away by certain compiler versions
-__attribute__((used)) 
-static struct ItemState item_state_table[] = SA_primaryfire_state_table;
-
 void SAItemPrimaryFireStart(GOBJ *gobj)
 {
     FighterData *fighter_data = gobj->userdata;
@@ -2286,10 +2279,11 @@ void SAItemPrimaryFireStart(GOBJ *gobj)
     fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
 
     ItemFtCmd *script_flags = &fighter_data->ftcmd_var;
+    script_flags->fire1 = 0;
+    script_flags->fire2 = 0;
     script_flags->interruptable = 0;
-    script_flags->fired = 0;
-    script_flags->unk2 = 0;
-    script_flags->unk3 = 0;
+    script_flags->needs_charge = 0;
+    script_flags->is_charged = 0;
 
     // void** items = fighter_data->ftData->items;
     // GOBJ *blasterGObj;
@@ -2346,7 +2340,7 @@ void SpecialPrimaryFireStart_AnimationCallback(GOBJ *gobj)
     if (FrameTimerCheck(gobj) == 0) {
         // ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
         ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (0x10 | 0x2), 0);
-        fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
+        // fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
     }
     return;
 }
@@ -2382,7 +2376,7 @@ void SpecialPrimaryFireLoop_AnimationCallback(GOBJ *gobj)
         if ((int) fighter_data->state_var.state_var1 == true) {
             // ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (FIGHTER_ATTACKCOUNT_NOUPDATE | FIGHTER_MODEL_NOUPDATE | FIGHTER_GFX_PRESERVE), 0);
             ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRELOOP, (0x2000000 | 0x10 | 0x2), 0);
-            fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
+            // fighter_data->cb.Accessory4 = ftChar_CreateBlasterShot;
 
             // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
             fighter_data->state_var.state_var1 = false;
@@ -2553,3 +2547,30 @@ void ftChar_CreateBlasterShot(GOBJ *gobj)
 }
 
 #pragma endregion
+
+
+////////////////////////
+//    Item States     //
+////////////////////////
+///
+///
+/// @brief \
+This is the state struct that will get referenced when calling ItemStateChange\
+The added attribute tag is necessary to prevent this structure from getting\
+optimized away by certain compiler versions
+__attribute__((used)) static struct ItemState SAPrimaryFire_state_table[] = {
+    // // State: 0 - Spawn
+    // {
+    //     .state = 0,
+    //     .animCallback = Spawn_AnimCallback,
+    //     .physCallback = Spawn_PhysCallback,
+    //     .collCallback = Spawn_CollCallback,
+    // },
+    // // State: 1 - Fire
+    // {
+    //     .state = 0,
+    //     .animCallback = PrimaryFire_AnimCallback,
+    //     .physCallback = PrimaryFire_PhysCallback,
+    //     .collCallback = PrimaryFire_CollCallback,
+    // },
+};

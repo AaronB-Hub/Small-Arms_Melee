@@ -1,3 +1,6 @@
+#ifndef FT_SAITEM_H
+#define FT_SAITEM_H
+
 // #include "SA_char.h"
 
 ///////////////////////
@@ -104,8 +107,8 @@ typedef struct ItemVar
 } ItemVar;
 
 __attribute__((used)) static struct ItemState SAItem_state_table[];
-__attribute__((used)) static struct ItemState SAPrimary_state_table[];
-__attribute__((used)) static struct ItemState SASecondary_state_table[];
+__attribute__((used)) static struct ItemState SAPrimaryFire_state_table[];
+__attribute__((used)) static struct ItemState SASecondaryFire_state_table[];
 
 ////////////////////////
 //  Helper Functions  //
@@ -125,11 +128,11 @@ bool (*Item_Coll_Bounce)(GOBJ *item) = (int *)0x8027781c;
 /// @param item
 /// @param fighter
 /// @return TRUE if fighter reference was removed and FALSE otherwise
-bool (*Item_RemoveFighterReference)(GOBJ *item, GOBJ *fighter) = (int *)0x8026b894;
+//bool (*Item_RemoveFighterReference)(GOBJ *item, GOBJ *fighter) = (int *)0x8026b894;
 
 /// @brief updates item flags related to hitlag TODO: better description
 /// @param item
-void (*Item_ClearHitlagFlag)(GOBJ *item) = (void *)0x8026b73c;
+//void (*Item_ClearHitlagFlag)(GOBJ *item) = (void *)0x8026b73c;
 
 /// @brief 
 /// @param item 
@@ -171,6 +174,18 @@ inline void SAItem_RemoveItem(GOBJ *fighter)
 /// @param fighter
 inline void SAItem_InputCheck(GOBJ *fighter)
 {
+    //     // Get fighter data
+    //     GOBJ *fighter_gobj = item_data->fighter_gobj;
+    // 	FighterData *fighter_data = fighter_gobj->userdata;
+
+    //     if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
+    //     {
+    //         //item_flags->fire1 = 1;
+    //         item_data->itcmd_var.flag1 = 1;
+    //         //fighter_data->item_held->userdata->itcmd_var.flag1 = 1;
+    //     }
+
+
     // Get fighter data
 	FighterData *fighter_data = fighter->userdata;
     ItemAttr* ItAttr = fighter_data->ftData->ext_attr;
@@ -304,49 +319,8 @@ inline void SAItem_OnLoad(GOBJ *fighter)
     return;
 }
 
-// Upon fighter spawn, reset their item
-inline void SAItem_OnSpawn(GOBJ *fighter)
-{
-
-    // Get fighter data
-	FighterData *fighter_data = fighter->userdata;
-
-    // Spawn SA item
-    GOBJ *item = SAItem_Spawn(fighter, MEX_ITEM_GUN);
-
-    // Give the item to the fighter
-    //Fighter_GiveItem(fighter, item);
-
-    // Set the item's initial state
-    ItemStateChange(item, STATE_ITEM_IDLE, 0);
-
-
-    // store the item pointer to a ft_var5 and the special help item location
-    fighter_data->fighter_var.ft_var5 = item;
-    fighter_data->item_held_spec = item;
-    //fighter_data->item_held = item;
-
-    fighter_data->flags.item_visible = 1;
-
-    // if the item successully spawned, set the accessory callbacks
-    if (fighter_data->fighter_var.ft_var5 != 0)
-    {
-        // fighter_data->cb.Accessory_Persist = SAItem_Think;
-        // fighter_data->cb.Accessory1 = SAItem_Think;
-        // fighter_data->cb.Accessory4 = SAItem_Think;
-            // void (*Accessory1)(GOBJ *fighter);           // 0x21b0
-            // void (*Accessory_Persist)(GOBJ *fighter);    // 0x21b4, persists across states while the fighter is alive, death clears this ptr, so re-init on Respawn cb. phys position is copied to tonp and fighter jobj matrices are updated after this cb runs
-            // void (*Accessory_Freeze)(GOBJ *fighter);     // 0x21b8, only runs during hitlag
-            // void (*Accessory4)(GOBJ *fighter);           // 0x21bc
-    }
-
-	// Set the accessory callback for SA item. Triggers item action when the flag0 is set
-	fighter_data->cb.Accessory4 = SAItem_Think;
-	return;
-}
-
 // Spawn the item into the game
-inline GOBJ* SAItem_SpawnItem(GOBJ *fighter, int SAitem_type)
+inline GOBJ *SAItem_SpawnItem(GOBJ *fighter, int SAitem_type)
 {
     // Get fighter data
 	FighterData *fighter_data = fighter->userdata;
@@ -418,25 +392,25 @@ inline GOBJ* SAItem_SpawnItem(GOBJ *fighter, int SAitem_type)
         vel.Z = 0;
     }
     
-    // initialize spawn struct for cape
+    // initialize spawn struct for SA item
     SpawnItem spawnItem =
     {
-        .parent_gobj = fighter;
-        .parent_gobj2 = fighter;
-        .it_kind = SAitem_id;
-        .hold_kind = ITHOLD_SWORD;
-        .unk2 = 0;
-        .pos = bone_position;
-        .pos2 = bone_position;
-        .vel.X = vel.X;
-        .vel.Y = vel.Y;
-        .vel.Z = vel.Z;
-        .facing_direction = fighter_data->facing_direction;
-        .damage = 0;
-        .unk5 = 0;
-        .unk6 = 0;
-        .is_raycast_below = 1;
-        .is_spin = 0;
+        .parent_gobj = fighter,
+        .parent_gobj2 = fighter,
+        .it_kind = SAitem_id,
+        .hold_kind = ITHOLD_SWORD,
+        .unk2 = 0,
+        .pos = bone_position,
+        .pos2 = bone_position,
+        .vel.X = vel.X,
+        .vel.Y = vel.Y,
+        .vel.Z = vel.Z,
+        .facing_direction = fighter_data->facing_direction,
+        .damage = 0,
+        .unk5 = 0,
+        .unk6 = 0,
+        .is_raycast_below = 1,
+        .is_spin = 0,
     };
     
 
@@ -455,13 +429,13 @@ inline GOBJ* SAItem_SpawnItem(GOBJ *fighter, int SAitem_type)
     // Set item states
     if (SAitem_type == MEX_ITEM_GUN)
     {
-        item_data->item_states = &SA_item_state_table;
+        item_data->item_states = &SAItem_state_table;
     } else if (SAitem_type == MEX_ITEM_PRIMARYFIRE)
     {
-        item_data->item_states = &SA_primaryfire_state_table;
+        item_data->item_states = &SAPrimaryFire_state_table;
     } else if (SAitem_type == MEX_ITEM_SECONDARYFIRE)
     {
-        item_data->item_states = &SA_secondaryfire_state_table;
+        item_data->item_states = &SASecondaryFire_state_table;
     }
 
     // Clear the item flags and reset item variables
@@ -499,6 +473,49 @@ inline GOBJ* SAItem_SpawnItem(GOBJ *fighter, int SAitem_type)
 	}
 
     return item;
+}
+
+// Upon fighter spawn, reset their item
+inline void SAItem_OnSpawn(GOBJ *fighter)
+{
+
+    // Get fighter data
+	FighterData *fighter_data = fighter->userdata;
+
+    // Spawn SA item
+    GOBJ *item = SAItem_SpawnItem(fighter, MEX_ITEM_GUN);
+
+    // Give the item to the fighter
+    //Fighter_GiveItem(fighter, item);
+
+    // Set the item's initial state
+    ItemStateChange(item, STATE_ITEM_IDLE, 0);
+
+
+    // store the item pointer to a ft_var5 and the special help item location
+    //fighter_data->fighter_var.ft_var5 = item;
+    //fighter_data->fighter_var.SAItem = item;
+
+    fighter_data->item_held_spec = item;
+    //fighter_data->item_held = item;
+
+    fighter_data->flags.item_visible = 1;
+
+    // if the item successully spawned, set the accessory callbacks
+    if (fighter_data->fighter_var.ft_var5 != 0)
+    {
+        // fighter_data->cb.Accessory_Persist = SAItem_Think;
+        // fighter_data->cb.Accessory1 = SAItem_Think;
+        // fighter_data->cb.Accessory4 = SAItem_Think;
+            // void (*Accessory1)(GOBJ *fighter);           // 0x21b0
+            // void (*Accessory_Persist)(GOBJ *fighter);    // 0x21b4, persists across states while the fighter is alive, death clears this ptr, so re-init on Respawn cb. phys position is copied to tonp and fighter jobj matrices are updated after this cb runs
+            // void (*Accessory_Freeze)(GOBJ *fighter);     // 0x21b8, only runs during hitlag
+            // void (*Accessory4)(GOBJ *fighter);           // 0x21bc
+    }
+
+	// Set the accessory callback for SA item. Triggers item action when the flag0 is set
+	fighter_data->cb.Accessory4 = SAItem_Think;
+	return;
 }
 
 ////////////////////////
@@ -556,3 +573,5 @@ void Fire_CollCallback(GOBJ *gobj);
 // bool SASecondary_OnUnknown1(GOBJ *item);
 // bool SASecondary_OnUnknown2(GOBJ *gobj);
 // void SASecondary_OnUnknown3(GOBJ *gobj, GOBJ *fighter);
+
+#endif

@@ -5,7 +5,6 @@
 #include "leap.c"
 #include "kicks.c"
 #include "item_testgun.c"
-#include "itemfire_primary_testgun.c"
 
 
 ///////////////////////
@@ -48,7 +47,7 @@ void OnLoad(GOBJ *gobj)
 void OnSpawn(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
-    TestCharVar *charvar = &fighter_data->fighter_var;
+    SACharVar *charvar = &fighter_data->fighter_var;
 
 	// clear the fighter flags
 	Fighter_SetCharacterFlags(gobj, 0, 0);

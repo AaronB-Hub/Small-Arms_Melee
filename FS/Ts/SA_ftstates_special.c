@@ -1,4 +1,5 @@
-#include "SA_char.h"
+// #include "SA_char.h"
+#include "test.h"
 
 #pragma region SpecialStates
 __attribute__((used)) static struct FtState move_logic[] = {
