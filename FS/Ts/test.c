@@ -48,18 +48,14 @@ void OnLoad(GOBJ *gobj)
 void OnSpawn(GOBJ *gobj)
 {
 	FighterData *fighter_data = gobj->userdata;
-    SACharVar *charvar = &fighter_data->fighter_var;
+    //SACharVar *charvar = &fighter_data->fighter_var;
+    TestCharVar *charvar = &fighter_data->fighter_var;
 
 	// clear the fighter flags
 	Fighter_SetCharacterFlags(gobj, 0, 0);
 
-	// // reset character variables 1-6
-	// charvar->var1 = 9;
-	// charvar->var2 = 9;
-	// charvar->var3 = 0;
-	// charvar->var4 = 0;
-	// charvar->var5 = 0;
-	// charvar->var6 = 0;
+	// reset character variables
+	charvar->x222C_blasterGObj = 0;
 
     SAItem_OnSpawn(gobj);
 
@@ -67,7 +63,7 @@ void OnSpawn(GOBJ *gobj)
 }
 
 
-// New stuf from https://github.com/doldecomp/melee/blob/master/src/melee/ft/chara/ftFox/ftfox.c
+// Stuff from https://github.com/doldecomp/melee/blob/master/src/melee/ft/chara/ftFox/ftfox.c
 /*
 bool func_800E5534(HSD_GObj* gobj)
 {

@@ -106,10 +106,6 @@ typedef struct ItemVar
     int var12;                                      // 0xe00
 } ItemVar;
 
-// __attribute__((used)) static struct ItemState SAItem_state_table[];
-// __attribute__((used)) static struct ItemState SAPrimaryFire_state_table[];
-// __attribute__((used)) static struct ItemState SASecondaryFire_state_table[];
-
 ////////////////////////
 //  Helper Functions  //
 ////////////////////////
@@ -155,14 +151,18 @@ inline void *Item_GetItemVar(GOBJ *item)
 void SAItem_RemoveItem(GOBJ *fighter)
 {
     FighterData *fd = (FighterData *)fighter->userdata;
-	SACharVar *charvar = (SACharVar *)&fd->fighter_var;
+	//SACharVar *charvar = (SACharVar *)&fd->fighter_var;
+	TestCharVar *charvar = (TestCharVar *)&fd->fighter_var;
 
     // clear hitlag flag
-    if (charvar->SAItem != 0)
-        Item_ClearHitlagFlag(charvar->SAItem);
+    //if (charvar->SAItem != 0)
+    if (charvar->x222C_blasterGObj != 0)
+        //Item_ClearHitlagFlag(charvar->SAItem);
+        Item_ClearHitlagFlag(charvar->x222C_blasterGObj);
 
     // clear reference to SA item
-    charvar->SAItem = 0;
+    //charvar->SAItem = 0;
+    charvar->x222C_blasterGObj = 0;
 
     // clear callbacks
     fd->cb.OnDeath_State = 0;
@@ -228,6 +228,9 @@ void SAItem_InputCheck(GOBJ *fighter)
 // 
 
 void SAItem_Think(GOBJ *gobj);
+GOBJ *SAItem_SpawnItem(GOBJ *fighter);
+GOBJ *SAItem_SpawnPrimaryFire(GOBJ *fighter);
+GOBJ *SAItem_SpawnSecondaryFire(GOBJ *fighter);
 
 /// @brief
 /// @param item 
@@ -318,11 +321,6 @@ void SAItem_OnLoad(GOBJ *fighter)
 
     return;
 }
-
-
-GOBJ *SAItem_SpawnItem(GOBJ *fighter);
-GOBJ *SAItem_SpawnPrimaryFire(GOBJ *fighter);
-GOBJ *SAItem_SpawnSecondaryFire(GOBJ *fighter);
 
 ////////////////////////
 //  State Functions   //

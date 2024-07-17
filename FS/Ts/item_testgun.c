@@ -233,8 +233,10 @@ void SAItem_Think(GOBJ *fighter)
     //GOBJ *item = fighter_data->item_held;
     //GOBJ *item = fighter_data->item_held_spec;
     // GOBJ *item = fighter_data->fighter_var.ft_var5;
-    SACharVar *TsVars = &fighter_data->fighter_var;
-    GOBJ *item = TsVars->SAItem;
+    //SACharVar *charvar = &fighter_data->fighter_var;
+    TestCharVar *charvar = &fighter_data->fighter_var;
+    //GOBJ *item = charvar->SAItem;
+    GOBJ *item = charvar->x222C_blasterGObj;
     //ItemData *item_data = fighter->userdata;
     ItemData *item_data = item->userdata;
 	// ItemFtCmd *item_flags = &item_data->itcmd_var;
