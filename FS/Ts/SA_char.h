@@ -185,10 +185,6 @@ void Custom_Controls_SA(GOBJ *gobj)
 //     return;
 // }
 
-// Pre-declaring these functions to avoid 'Could not resolve external symbol' error with inline definition that is called in the same header file
-void SAItem_InputCheck(GOBJ *fighter);
-GOBJ *SAItem_SpawnItem(GOBJ *fighter, int SAitem_type);
-
 // Common Moves (Vanilla)
 void CommonGuardOn_AnimationCallback(GOBJ *gobj);
 
