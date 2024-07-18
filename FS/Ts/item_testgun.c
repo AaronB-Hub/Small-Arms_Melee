@@ -155,7 +155,8 @@ GOBJ *SAItem_SpawnItem(GOBJ *fighter)
     //memcpy(fighter_items[MEX_ITEM_FXBLASTER]->unqiue_attributes, ItemData->itData->param_ext, sizeof(ItemAttr))
 
     // Get the SA item's custom attributes
-    ItemAttr *attributes = item_data->itData->param_ext;
+    //ItemAttr *attributes = item_data->itData->param_ext;
+    TestItemAttr *attr = (TestItemAttr *)item_data->itData->param_ext;
     
     // Set item states
     //if (SAitem_type == MEX_ITEM_GUN)
@@ -194,6 +195,11 @@ GOBJ *SAItem_SpawnItem(GOBJ *fighter)
         //{
             // have char hold the item
 		    Item_Hold(item, fighter, bone_index);
+
+            // set the accessory callback for mario's cape
+            // this function will spawn the cape item in mario's hand
+            // fighter_data->cb.Accessory4 = SpecialS_SpawnCapeThink;
+            fighter_data->cb.Accessory_Persist = SAItem_Think;
         //}
 
 		// copy develop mode stuff

@@ -38,7 +38,7 @@ void SAItemPrimaryFireStart(GOBJ *gobj)
     // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
     fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
 
-    ItemFtCmd *script_flags = &fighter_data->ftcmd_var;
+    TestItCmdFlags *script_flags = &fighter_data->ftcmd_var;
     script_flags->fire1 = 0;
     script_flags->fire2 = 0;
     script_flags->interruptable = 0;

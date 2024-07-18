@@ -55,11 +55,36 @@
 //      Structs      //
 ///////////////////////
 
-typedef struct ItemAttr
+// ItemData *item_data = item->userdata;
+
+
+// In HSDRAW, item_data->itCommonAttr are stored in Articles > Article # > Parameters_
+// In HSDRAW, item_data->itData->param_ext are stored in Articles > Article # > Parameters_
+    // Call like: TestItemAttr *attr = (TestItemAttr *)item_data->itData->param_ext;
+typedef struct TestItemAttr
+{
+    float x00;                                // x00
+    float x04;                                // x04
+    float x08;                                // x08
+    float x0C;                                // x0C
+    float x10;                                // x10
+    float x14;                                // x14
+    float x18;   // [3F 80 00 00 = 1?]        // x18
+    float x1C;                                // x1C
+    float x20;   // [40 00 00 00 = 2?]        // x20
+	float x24;                                // x24
+    float x28;                                // x28
+    float x2C;                                // x2C
+    float x30;                                // x30
+	float x34;                                // x34
+    int SA_ITEM_INPUT_FLAG;                   // x38
+} TestItemAttr;                               // size: 0x3C
+
+typedef struct TestLaserAttr
 {
     float life;  // [42 0c 00 00 = 35 frames] // x00
     float x04;   // [40 40 00 00 = 3?]        // x04
-    float x08;   // using for angle           // x08
+    float x08;                                // x08
     float x0C;                                // x0C
     float x10;                                // x10
     float x14;                                // x14
@@ -72,39 +97,156 @@ typedef struct ItemAttr
     float x30;                                // x30
 	float x34;                                // x34
     float x38;                                // x38
-    int SA_ITEM_INPUT_FLAG;                   // ??
-} ItemAttr;                                // size: 0x3C + ??
+} TestLaserAttr;                              // size: 0x3C
 
-typedef struct SAItCmdFlags
+typedef struct TestIllusionAttr
 {
-	int spawn_effect1;
-	int spawn_effect2;
-} SAItCmdFlags;
+    float x0;   // [40 A0 00 00 = 5?]         // x00
+    float x4;   // [40 00 00 00 = 2?]         // x04
+} TestIllusionAttr;                           // size: 0x8
 
-typedef struct ItemFtCmd
-{
-	int fire1;
-    int fire2;
-    int interruptable;
-    int needs_charge;
-    int is_charged;
-} ItemFtCmd;
 
-typedef struct ItemVar
+typedef struct TestItCmdFlags
 {
-	int var1;                                       // 0xdd4
-    int var2;                                       // 0xdd8
-    int var3;                                       // 0xddc
-    int var4;                                       // 0xde0
-    int var5;                                       // 0xde4
-    int var6;                                       // 0xde8
-    int var7;                                       // 0xdec
-    int var8;                                       // 0xdf0
-    int var9;                                       // 0xdf4
-    int var10;                                      // 0xdf8
-    int var11;                                      // 0xdfc
-    int var12;                                      // 0xe00
-} ItemVar;
+	int fire1;              // item_data->itcmd_var->flag1
+    int fire2;              // item_data->itcmd_var->flag2
+    int interruptable;      // item_data->itcmd_var->flag3
+    int needs_charge;       // item_data->itcmd_var->flag4
+    int is_charged;         // item_data->itcmd_var->flag5
+} TestItCmdFlags;
+
+typedef struct TestItemVar
+{
+	int var1;                                       // 0xdd4  item_data->item_var->var1  For blaster item gobj, this var is the Laser's *item
+    int var2;                                       // 0xdd8  item_data->item_var->var2
+    int var3;                                       // 0xddc  item_data->item_var->var3
+    int var4;                                       // 0xde0  item_data->item_var->var4
+    int var5;                                       // 0xde4  item_data->item_var->var5
+    int var6;                                       // 0xde8  item_data->item_var->var6
+    int var7;                                       // 0xdec  item_data->item_var->var7
+    int var8;                                       // 0xdf0  item_data->item_var->var8
+    int var9;                                       // 0xdf4  item_data->item_var->var9
+    int var10;                                      // 0xdf8  item_data->item_var->var10
+    int var11;                                      // 0xdfc  item_data->item_var->var11
+    int var12;                                      // 0xe00  item_data->item_var->var12
+} TestItemVar;
+
+typedef struct TestLaserVars {
+    float xDD4;                 // item_data->item_var->var1
+    float xDD8;                 // item_data->item_var->var2
+    float xDDC;                 // item_data->item_var->var3
+    Vec3 xDE0;                  // item_data->item_var->var4
+} TestLaserVars;
+
+typedef struct TestIllusionVars {
+    JOBJDesc* xDD4;             // item_data->item_var->var1  [HSD_Joint* = JOBJDesc*]
+    float xDD8;                 // item_data->item_var->var2
+    JOBJ* xDDC;                 // item_data->item_var->var3 [HSD_JObj* = JOBJ*]
+} TestIllusionVars;
+
+// typedef struct ItemLogicTable ItemLogicTable;
+// typedef struct ItemStateTable ItemStateTable;
+// typedef struct itSword_UnkArticle1 itSword_UnkArticle1;
+// typedef struct itSword_UnkBytes itSword_UnkBytes;
+
+// Fox/Falco blaster - ItemStateTable it_803F6CA8[] = {
+//     {
+//         ?,                       // x0  enum_t anim_id;
+//         ?,      // x4  HSD_GObjPredicate animated;
+//         ?,      // x8  HSD_GObjEvent physics_updated;
+//         ?,      // xc  HSD_GObjPredicate collided;
+//     },
+//     ... (9 total states for vanilla fox blaster)
+// };
+
+// Fox/Falco laser - ItemStateTable it_803F67D0[] = {
+//     {
+//         0,                       // x0  enum_t anim_id;
+//         it_8029C6F4(*item),      // x4  HSD_GObjPredicate animated;
+//         it_8029C9CC(*item),      // x8  HSD_GObjEvent physics_updated;
+//         it_8029C9EC(*item),      // xc  HSD_GObjPredicate collided;
+//     },
+//     {
+//         1,                       // x0  enum_t anim_id;
+//         it_8029C6F4(*item),      // x4  HSD_GObjPredicate animated;
+//         it_8029C9CC(*item),      // x8  HSD_GObjEvent physics_updated;
+//         it_8029C9EC(*item),      // xc  HSD_GObjPredicate collided;
+//     },
+// };
+
+// item->*it_func = &ItemLogicTable
+// Fox/Falco blaster - ItemLogicTable
+// {
+//     // 
+//     it_803F6CA8,                 // x00  ItemStateTable* states;
+//     NULL,                        // x04  HSD_GObjEvent spawned;   [HSD_GObjEvent = GOBJ]
+//     NULL,                        // x08  HSD_GObjEvent destroyed;
+//     it_802AEB00(*item),          // x0c  HSD_GObjEvent picked_up;
+//     NULL,                        // x10  HSD_GObjEvent dropped;
+//     NULL,                        // x14  HSD_GObjEvent thrown;
+//     NULL,                        // x18  HSD_GObjPredicate dmg_dealt;   [HSD_GObjPredicate = GOBJ]
+//     NULL,                        // x1c  HSD_GObjPredicate dmg_received;
+//     NULL,                        // x20  HSD_GObjEvent entered_air;
+//     NULL,                        // x24  HSD_GObjPredicate reflected;
+//     NULL,                        // x28  HSD_GObjPredicate clanked;
+//     NULL,                        // x2c  HSD_GObjPredicate absorbed;
+//     NULL,                        // x30  HSD_GObjPredicate shield_bounced;
+//     NULL,                        // x34  HSD_GObjPredicate hit_shield;
+//     it_802AF184(*item, *item),   // x38  HSD_GObjInteraction evt_unk;   [HSD_GObjInteraction = (GOBJ, GOBJ)]
+// },
+
+// Fox/Falco laser - ItemLogicTable
+// {
+//     // 
+//     it_803F67D0,                 // x00  ItemStateTable* states
+//     NULL,                        // x04  HSD_GObjEvent spawned;
+//     NULL,                        // x08  SD_GObjEvent destroyed;
+//     NULL,                        // x0c  HSD_GObjEvent picked_up;
+//     NULL,                        // x10  HSD_GObjEvent dropped;
+//     NULL,                        // x14  HSD_GObjEvent thrown;
+//     it_8029CA78(*item),          // x18  HSD_GObjPredicate dmg_dealt;
+//     NULL,                        // x1c  HSD_GObjPredicate dmg_received;
+//     NULL,                        // x20  HSD_GObjEvent entered_air;
+//     it_8029CA80(*item),          // x24  HSD_GObjPredicate reflected;
+//     it_8029CA78(*item),          // x28  HSD_GObjPredicate clanked;
+//     it_8029CC4C(*item),          // x2c  HSD_GObjPredicate absorbed;
+//     it_8029CC54(*item),          // x30  HSD_GObjPredicate shield_bounced;
+//     it_8029CCF0(*item),          // x34  HSD_GObjPredicate hit_shield;
+//     it_8029CCF8(*item, *gobj),   // x38  HSD_GObjInteraction evt_unk;
+// },
+
+// struct itSword_UnkBytes {
+//     /*   +0 */ u8 x0;
+//     /*   +1 */ u8 x1;
+//     /*   +2 */ u8 x2;
+//     /*   +3 */ u8 x3;
+//     /*   +4 */ u8 x4;
+//     /*   +5 */ u8 x5;
+//     /*   +6 */ u8 x6;
+//     /*   +7 */ u8 x7;
+//     /*   +8 */ u8 x8;
+//     /*   +9 */ u8 x9;
+//     /*   +A */ u8 xA;
+//     /*   +B */ u8 xB;
+//     /*   +C */ u8 xC;
+//     /*   +D */ u8 xD;
+//     /*   +E */ u8 xE;
+//     /*   +F */ u8 xF;
+//     /*  +10 */ u8 x10;
+// };
+
+// struct itSword_UnkArticle1 {
+//     /*  +0 */ UNK_T x0;
+//     /*  +4 */ UNK_T x4;
+//     /*  +8 */ UNK_T x8;
+//     /*  +C */ float xC;
+//     /* +10 */ float x10;
+//     /* +14 */ float x14;
+//     /* +18 */ int x18;
+//     /* +1C */ itSword_UnkBytes x1C;
+// };
+
+
 
 ////////////////////////
 //  Helper Functions  //
@@ -188,7 +330,7 @@ void SAItem_InputCheck(GOBJ *fighter)
 
     // Get fighter data
 	FighterData *fighter_data = fighter->userdata;
-    ItemAttr* ItAttr = fighter_data->ftData->ext_attr;
+    TestItemAttr* ItAttr = fighter_data->ftData->ext_attr;
 
     // Get input data
     HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER (untouched by current implementation of L button disable)
@@ -215,7 +357,6 @@ void SAItem_InputCheck(GOBJ *fighter)
 
     if (ItAttr->SA_ITEM_INPUT_FLAG != 0)
     {
-        // SAItem_Think(fighter, ItAttr->SA_ITEM_INPUT_FLAG);
         SAItem_Think(fighter);
     }
     return;
@@ -229,8 +370,12 @@ void SAItem_InputCheck(GOBJ *fighter)
 
 void SAItem_Think(GOBJ *gobj);
 GOBJ *SAItem_SpawnItem(GOBJ *fighter);
+GOBJ *SAItem_SpawnPrimaryFireThink(GOBJ *fighter);
 GOBJ *SAItem_SpawnPrimaryFire(GOBJ *fighter);
+GOBJ *SAItem_SpawnPrimaryFireInitialize(GOBJ *fighter);
+GOBJ *SAItem_SpawnSecondaryFireThink(GOBJ *fighter);
 GOBJ *SAItem_SpawnSecondaryFire(GOBJ *fighter);
+GOBJ *SAItem_SpawnSecondaryFireInitialize(GOBJ *fighter);
 
 /// @brief
 /// @param item 
@@ -256,13 +401,14 @@ bool SAItem_OnDestroy(GOBJ *item)
 bool SAItem_OnPickup(GOBJ *item)
 {
     ItemData *id = item->userdata;
-    SAItCmdFlags *flags = Item_GetItCmdFlags(item);
+    TestItCmdFlags *flags = Item_GetItCmdFlags(item);
 
-    // clear itcmd flags
-    // these flags are set via action scripts
-    // within the fighter's files
-    flags->spawn_effect1 = 0;
-    flags->spawn_effect2 = 0;
+    // clear itcmd flags - these flags are set via action scripts within the fighter's files
+    flags->fire1 = 0;
+    flags->fire2 = 0;
+    flags->interruptable = 0;
+    flags->needs_charge = 0;
+    flags->is_charged = 0;
 
     // check if SA item is held by fighter
     if (id->fighter_gobj)
