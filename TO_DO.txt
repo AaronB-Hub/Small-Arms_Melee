@@ -1,4 +1,7 @@
 Changes to make:
+- Rewrite input check function to output values, then the Think callback can set the flags
+OR create simple functions to check for input values
+
 - Implement new/edited item functions?
 - use 'struct HSD_PollData', PADRead()/PADReset(), and/or 'struct PADStatus' for SA controls?
 - use GOBJ *GOBJ_EZCreator() for item creation?

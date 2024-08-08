@@ -21,6 +21,12 @@
 //  Special States   //
 ///////////////////////
 
+// Vanilla Fox states
+#define STATE_SPECIALN 341
+#define STATE_SPECIALNAIR 342
+#define STATE_SPECIALS 343
+#define STATE_SPECIALSAIR 344
+
 // Custom states (Known ID's unique to characters from https://smashboards.com/threads/internal-action-state-hack.440318/)
 #define STATE_SA_FLOAT 341
 #define STATE_SA_FLOATDASH 342
@@ -95,6 +101,7 @@ void SA_Disable_LTrigger(GOBJ *gobj);
 void SA_Disable_XButton(GOBJ *gobj);
 void SA_FloatButtonCheck(GOBJ *gobj);
 void SA_Swap_XAndZButtons(GOBJ *gobj);
+void SAItem_InputCheck(GOBJ *fighter);
 int HSD_BUTTON_FLOAT;
 void Custom_Controls_SA(GOBJ *gobj)
 {
@@ -119,6 +126,9 @@ void Custom_Controls_SA(GOBJ *gobj)
 
     // // Added at IASA update priority (3) to be performed just after inputs are received
     // GObj_AddProc(gobj, SA_Intercept_IASACallback, 3);
+
+    // Added a custom proc at Accessory update priority
+    // GObj_AddProc(gobj, SAItem_InputCheck, 8);
 
     return;
 }
@@ -192,3 +202,66 @@ void SADiveKick_CollisionCallback(GOBJ *gobj);
 // void SpecialSecondaryFire_IASACallback(GOBJ *gobj);
 // void SpecialSecondaryFire_PhysicCallback(GOBJ *gobj);
 // void SpecialSecondaryFire_CollisionCallback(GOBJ *gobj);
+
+////////////////////////
+//  Helper Functions  //
+////////////////////////
+
+// #define bool u8
+// #define true 1
+// #define false 0
+#include <stdbool.h>
+
+/// @brief checks item collision with any line and applies bounce physics if it touches any
+/// @param item
+/// @return TRUE if collision was made and FALSE otherwise
+bool (*Item_Coll_Bounce)(GOBJ *item) = (int *)0x8027781c;
+
+/// @brief removes all references to specificed fighter from item
+/// @param item
+/// @param fighter
+/// @return TRUE if fighter reference was removed and FALSE otherwise
+// bool (*Item_RemoveFighterReference)(GOBJ *item, GOBJ *fighter) = (int *)0x8026b894;
+
+/// @brief updates item flags related to hitlag TODO: better description
+/// @param item
+// void (*Item_ClearHitlagFlag)(GOBJ *item) = (void *)0x8026b73c;
+
+/// @brief 
+/// @param item 
+/// @return 
+inline void *Item_GetItCmdFlags(GOBJ *item)
+{
+    return &((ItemData *)item->userdata)->itcmd_var;
+}
+
+/// @brief 
+/// @param item 
+/// @return 
+inline void *Item_GetItemVar(GOBJ *item)
+{
+    return &((ItemData *)item->userdata)->item_var;
+}
+
+/// @brief Fighter Variables are used globally by the fighter
+/// @param fighter GOBJ of Fighter
+/// @return pointer to Fighter's "Fighter Variable" struct
+inline void *Fighter_GetFighterVars(GOBJ *fighter)
+{
+	return &((FighterData *)fighter->userdata)->fighter_var;
+}
+
+inline void *Fighter_GetStateVars(GOBJ *fighter)
+{
+	return &((FighterData *)fighter->userdata)->state_var;
+}
+
+inline void *Fighter_GetScriptVars(GOBJ *fighter)
+{
+	return &((FighterData *)fighter->userdata)->ftcmd_var;
+}
+
+inline void *Fighter_GetSpecialAttributes(GOBJ *fighter)
+{
+	return ((FighterData *)fighter->userdata)->special_attributes;
+}

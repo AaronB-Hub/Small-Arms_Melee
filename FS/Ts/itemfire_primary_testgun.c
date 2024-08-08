@@ -2,11 +2,6 @@
 // #include "SA_item.h"
 // #include "SA_itemstates.h"
 
-GOBJ *SAItem_SpawnPrimaryFire(GOBJ *fighter)
-{
-    return fighter;
-}
-
 ///////////////////////
 //    Initial Fire   //
 ///////////////////////
@@ -14,13 +9,152 @@ GOBJ *SAItem_SpawnPrimaryFire(GOBJ *fighter)
 ///
 ///
 
-void SAItemPrimaryFireStart(GOBJ *gobj)
-{
-    FighterData *fighter_data = gobj->userdata;
-    //ftFoxAttributes* foxAttrs = fighter_data->special_attributes;
-    TestAttr* tsAttr = fighter_data->ftData->ext_attr;
 
-    
+/// @brief Process any fire inputs and controls the logic/state flow of the SA item's primary fire/projectile
+/// @param fighter
+void SAItem_SpawnPrimaryFireThink(GOBJ *fighter) 
+{
+    // Get fighter data
+	FighterData *fighter_data = (FighterData *)fighter->userdata;
+    // TestCharVar *char_var = Fighter_GetFighterVars(fighter);
+	// TestAttr *tsAttr = Fighter_GetSpecialAttributes(fighter);
+	// TestgunCmdFlags *script_var = Fighter_GetScriptVars(fighter);
+
+    // Check for bitflag set by ftCmd subaction
+	if (fighter_data->flags.throw_1 != 0)
+	{
+		// Clear bit flag
+		fighter_data->flags.throw_1 = 0;
+
+		// Create item
+		SAItem_SpawnPrimaryFire(fighter);
+
+		// Create Primary Fire effect
+		// Effect_SpawnSync(VANILLA_EFFECT_FIREBALL, gobj, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
+	}
+
+    // // this flag is used to track if the cape has been spawned already
+	// if (script_var->spawn_cape == 0)
+	// {
+	// 	script_var->spawn_cape = 1;
+
+	// 	// get the index of mario's right holding bone (RHaveN)
+	// 	int bone_index = Fighter_BoneLookup(fd, RHaveN);
+
+	// 	// get the position of this bone
+	// 	Vec3 pos;
+	// 	JOBJ_GetWorldPosition(fd->bones[bone_index].joint, 0, &pos);
+
+	// 	// create the cape item
+	// 	// cape kind was originally stored in mario's attributes
+	// 	int mex_cape_kind = MEX_GetFtItemID(fighter, MEX_ITEM_CAPE);
+	// 	GOBJ *cape = SpecialS_SpawnCape(fighter, &pos, bone_index, mex_cape_kind, fd->facing_direction);
+
+	// 	// store the cape pointer to a ft_var5 and the special help item location
+	// 	char_var->item_cape = cape;
+	// 	fd->item_held_spec = cape;
+
+	// 	// if the cape successully spawned, set the callbacks to remove it
+	// 	if (char_var->item_cape != 0)
+	// 	{
+	// 		fd->cb.OnDeath_State = SpecialS_OnDamagedCB;
+	// 		fd->cb.OnTakeDamage = SpecialS_OnDamagedCB;
+	// 	}
+
+	// 	// set hitlag callbacks
+	// 	fd->cb.EnterHitlag = SpecialS_EnterHitlagCB;
+	// 	fd->cb.ExitHitlag = SpecialS_ExitHitlagCB;
+
+	// 	// clear the accessory callback so this function will no longer be called
+	// 	fd->cb.Accessory4 = 0;
+	// }
+
+    return;
+}
+
+/// @brief Spawn the SA item's primary fire/projectile into the game
+/// @param fighter
+GOBJ *SAItem_SpawnPrimaryFire(GOBJ *fighter)
+{
+    // Create base item
+    int primaryfire_id = MEX_GetFtItemID(fighter, MEX_ITEM_PRIMARYFIRE);
+    GOBJ *item = CreateBaseItem(fighter, primaryfire_id);
+
+    // Check if item successfully spawned
+    if (item != 0)
+    {
+        // Initialize the primary fire behavior
+        SAItem_SpawnPrimaryFireInitialize(item);
+
+        // Develop mode stuff
+        Item_CopyDevelopState(item, fighter);
+
+        // Update physics and collision for item
+        Item_UpdatePhysAndColl(item);
+    }
+
+	return item;
+}
+
+/// @brief Initializes the SA item's primary fire/projectile behavior (velocity, lifetime/timers, state, flags, etc.) upon spawn
+/// @param item
+void SAItem_SpawnPrimaryFireInitialize(GOBJ *item)
+{
+    // Get item data
+    ItemData *item_data = item->userdata;
+    TestgunAttr *it_attr = (TestgunAttr *)item_data->itData->param_ext;
+    TestgunCmdFlags *it_flags = (TestgunCmdFlags *)&item_data->itcmd_var;
+    TestgunItemVar *it_vars = (TestgunItemVar *)&item_data->item_var;
+    // FighterData *fighter_data = gobj->userdata;
+    // //ftFoxAttributes* foxAttrs = fighter_data->special_attributes;
+    // TestAttr* tsAttr = fighter_data->ftData->ext_attr;
+
+    // Determine spawn velocity
+    Vec3 vel;
+    //if (SAitem_type == MEX_ITEM_GUN)  // spawn velocity should be 0
+    if (true)  // spawn velocity should be 0
+    {
+        vel.X = 0;
+        vel.Y = 0;
+        vel.Z = 0;
+    } else
+    // {
+    //     float speed;
+    //     //if (SAitem_type == MEX_ITEM_PRIMARYFIRE)  // primary fire spawn velocity
+    //     //{
+    //     //    speed = 7;  // Eventually grab this from *attributes!!!
+    //     //} else if (SAitem_type == MEX_ITEM_SECONDARYFIRE)  // secondary fire spawn velocity
+    //     //{
+    //         speed = 7;  // Eventually grab this from *attributes!!!
+    //     //}
+        
+    //     float it_angle;
+    //     Vec2 cstick_angle = fighter_data->input.cstick;  // This will be 0 with current implementation of c-stick disable
+
+    //     HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER(untouched by current implementation of c-stick disable)
+    //     cstick_angle.X = pad->fsubstickX;
+    //     cstick_angle.Y = pad->fsubstickY;
+        
+        
+    //     // Use the facing direction as the direction to shoot if the c-stick is in neutral position
+    //     // Vanilla sets a deadzone of 0.28 in the X and Y axis, stored at 'stc_ftcommon->x0' and 'stc_ftcommon->x4' respectively
+    //     // Keeping this deadzone (for now), but allowing for all angles
+    //     if ( sqrtf( (cstick_angle.X * cstick_angle.X) + (cstick_angle.Y * cstick_angle.Y) ) < 0.1568) {  // (0.28)^2 + (0.28)^2 = 0.1568
+    //         if (fighter_data->facing_direction == 1) {
+    //             it_angle = 0;
+    //         } else {
+    //             it_angle = M_PI;
+    //         }
+    //     } else {
+    //         it_angle = atan2(cstick_angle.Y, cstick_angle.X);
+    //     }
+
+    //     vel.X = speed * cos(it_angle);
+    //     vel.Y = speed * sin(it_angle);
+    //     vel.Z = 0;
+    // }
+
+
     // if (fighter_data->action_flags.transn_phys_update) {
     //     fighter_data->phys.self_vel.x = fighter_data->transN_offset.z * fighter_data->facing_dir;
     // }
@@ -33,17 +167,10 @@ void SAItemPrimaryFireStart(GOBJ *gobj)
     // fighter_data->coll_data.ecb_lock = 0;
     // fighter_data->coll_data.flags &= 0xFFFFFFEF;
 
-    ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRESTART, 0, 0);
+    // ActionStateChange(0, 1, 0, gobj, STATE_SA_ITEMPRIMARYFIRESTART, 0, 0);
 
     // fighter_data->foxVars[0].SpecialN.isBlasterLoop = false;
-    fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
-
-    TestItCmdFlags *script_flags = &fighter_data->ftcmd_var;
-    script_flags->fire1 = 0;
-    script_flags->fire2 = 0;
-    script_flags->interruptable = 0;
-    script_flags->needs_charge = 0;
-    script_flags->is_charged = 0;
+    // fighter_data->state_var.state_var1 = false;  // 0x2340 - Check to allow repeated blaster shots
 
     // void** items = fighter_data->ftData->items;
     // GOBJ *blasterGObj;
