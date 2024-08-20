@@ -105,144 +105,84 @@ __attribute__((used)) static struct ItemState SAItem_state_table[] = {
     //     .physCallback = State8_PhysCallback,
     //     .collCallback = State8_CollCallback,
     // },
-        {
-            .state = 0,                     // 0x0
-            .animCallback = it_802AEBCC,
-            .physCallback = it_802AEED4,
-            .collCallback = it_802AEF08,
-        },
-        {
-            .state = 1,                     // 0x10
-            .animCallback = it_802AEBCC,
-            .physCallback = it_802AEED4,
-            .collCallback = it_802AEF08,
-        },
-        {
-            .state = 2,                     // 0x20
-            .animCallback = it_802AEBCC,
-            .physCallback = it_802AEED4,
-            .collCallback = it_802AEF08,
-        },
-        {
-            .state = 3,                     // 0x30
-            .animCallback = it_802AEBCC,
-            .physCallback = it_802AEED4,
-            .collCallback = it_802AEF08,
-        },
-        {
-            .state = 4,                     // 0x40
-            .animCallback = it_802AEBCC,
-            .physCallback = it_802AEED4,
-            .collCallback = it_802AEF08,
-        },
-        {
-            .state = 5,                     // 0x50
-            .animCallback = it_802AEBCC,
-            .physCallback = it_802AEED4,
-            .collCallback = it_802AEF08,
-        },
-        {
-            .state = 6,                     // 0x60
-            .animCallback = it_802AEBCC,
-            .physCallback = it_802AEED4,
-            .collCallback = it_802AEF08,
-        },
-        {
-            .state = 7,                     // 0x70
-            .animCallback = it_802AEBCC,
-            .physCallback = it_802AEED4,
-            .collCallback = it_802AEF08,
-        },
-        {
-            .state = 8,                     // 0x80
-            .animCallback = it_802AEBCC,
-            .physCallback = it_802AEED4,
-            .collCallback = it_802AEF08,
-        },
-        {
-            .state = -1,                    // 0x90
-            .animCallback = it_802AEF10,
-            .physCallback = it_802AEFB8,
-            .collCallback = it_802AEFBC,
-        },
-        {
-            .state = -1,                    // 0xA0
-            .animCallback = it_802AF064,
-            .physCallback = it_802AF178,
-            .collCallback = it_802AF17C,
-        },
-        // {
-        //     .state = 0,                     // 0xB0
-        //     .animCallback = (s32 (*)(HSD_GObj*))0xBF028F5C,
-        //     .physCallback = (void (*)(HSD_GObj*))0xBF828F5C,
-        //     .collCallback = (s32 (*)(HSD_GObj*))0xBFC3D70A,
-        // },
-        // {
-        //     .state = 0xBFB1EB85,            // 0xC0
-        //     .animCallback = (s32 (*)(HSD_GObj*))0xBFA020C5,
-        //     .physCallback = (void (*)(HSD_GObj*))0xBF8E5604,
-        //     .collCallback = (s32 (*)(HSD_GObj*))0xBF791687,
-        // },
-        // {
-        //     .state = 0xBF558106,            // 0xD0
-        //     .animCallback = (s32 (*)(HSD_GObj*))0xBF31EB85,
-        //     .physCallback = (void (*)(HSD_GObj*))0xBF0E5604,
-        //     .collCallback = (s32 (*)(HSD_GObj*))0xBED58106,
-        // },
-        // {
-        //     .state = 0xBE8E5604,            // 0xE0
-        //     .animCallback = (s32 (*)(HSD_GObj*))0xBE0E5604,
-        //     .physCallback = (void (*)(HSD_GObj*))0x3F000000,
-        //     .collCallback = (s32 (*)(HSD_GObj*))0x3F000000,
-        // },
-        // {
-        //     .state = 0x3FE00000,            // 0xF0
-        //     .animCallback = (s32 (*)(HSD_GObj*))0x40400000,
-        //     .physCallback = (void (*)(HSD_GObj*))0x40180000,
-        //     .collCallback = (s32 (*)(HSD_GObj*))0x3FE00000,
-        // },
-        // {
-        //     .state = 0x3F900000,            // 0x100
-        //     .animCallback = (s32 (*)(HSD_GObj*))0x3F000000,
-        //     .physCallback = (void (*)(HSD_GObj*))0x3F000000,
-        //     .collCallback = (s32 (*)(HSD_GObj*))0x3F000000,
-        // },
-        // {
-        //     .state = 0x3F000000,            // 0x110
-        //     .animCallback = (s32 (*)(HSD_GObj*))0x3F000000,
-        //     .physCallback = (void (*)(HSD_GObj*))0x3F000000,
-        //     .collCallback = (s32 (*)(HSD_GObj*))0x3F000000,
-        // },
-        // {
-        //     .state = 0,                     // 0x120
-        //     .animCallback = (s32 (*)(HSD_GObj*))0xC2280000,
-        //     .physCallback = (void (*)(HSD_GObj*))0xC1A00000,
-        //     .collCallback = NULL
-        // },
-        // {
-        //     .state = 0,                     // 0x130
-        //     .animCallback = NULL,
-        //     .physCallback = NULL,
-        //     .collCallback = NULL
-        // },
-        // {
-        //     .state = 0,                     // 0x140
-        //     .animCallback = NULL,
-        //     .physCallback = NULL,
-        //     .collCallback = NULL
-        // },
-        // {
-        //     .state = 0,                     // 0x150
-        //     .animCallback = NULL,
-        //     .physCallback = (void (*)(HSD_GObj*))0x21286A6F,
-        //     .collCallback = (s32 (*)(HSD_GObj*))0x626A2D3E
-        // },
-        // {
-        //     .state = 0x666C6167,            // 0x160
-        //     .animCallback = (s32 (*)(HSD_GObj*))0x73202620,
-        //     .physCallback = (void (*)(HSD_GObj*))0x4A4F424A,
-        //     .collCallback = (s32 (*)(HSD_GObj*))0x5F555345,
-        // },
+
+    // ftFx_MS_SpecialNStart
+    {
+        .state = 0,                     // 0x0
+        .animCallback = 0x802AEBCC,
+        .physCallback = 0x802AEED4,
+        .collCallback = 0x802AEF08,
+    },
+    // ftFx_MS_SpecialNLoop
+    {
+        .state = 1,                     // 0x10
+        .animCallback = 0x802AEBCC,
+        .physCallback = 0x802AEED4,
+        .collCallback = 0x802AEF08,
+    },
+    // ftFx_MS_SpecialNEnd
+    {
+        .state = 2,                     // 0x20
+        .animCallback = 0x802AEBCC,
+        .physCallback = 0x802AEED4,
+        .collCallback = 0x802AEF08,
+    },
+    // ftFx_MS_SpecialAirNStart
+    {
+        .state = 3,                     // 0x30
+        .animCallback = 0x802AEBCC,
+        .physCallback = 0x802AEED4,
+        .collCallback = 0x802AEF08,
+    },
+    // ftFx_MS_SpecialAirNLoop
+    {
+        .state = 4,                     // 0x40
+        .animCallback = 0x802AEBCC,
+        .physCallback = 0x802AEED4,
+        .collCallback = 0x802AEF08,
+    },
+    // ftFx_MS_SpecialAirNEnd
+    {
+        .state = 5,                     // 0x50
+        .animCallback = 0x802AEBCC,
+        .physCallback = 0x802AEED4,
+        .collCallback = 0x802AEF08,
+    },
+    // ftCo_MS_ThrowB
+    {
+        .state = 6,                     // 0x60
+        .animCallback = 0x802AEBCC,
+        .physCallback = 0x802AEED4,
+        .collCallback = 0x802AEF08,
+    },
+    // ftCo_MS_ThrowHi
+    {
+        .state = 7,                     // 0x70
+        .animCallback = 0x802AEBCC,
+        .physCallback = 0x802AEED4,
+        .collCallback = 0x802AEF08,
+    },
+    // ftCo_MS_ThrowLw
+    {
+        .state = 8,                     // 0x80
+        .animCallback = 0x802AEBCC,
+        .physCallback = 0x802AEED4,
+        .collCallback = 0x802AEF08,
+    },
+    // Clear blaster 1? - normal clear state
+    {
+        .state = -1,                    // 0x90
+        .animCallback = 0x802AEF10,
+        .physCallback = 0x802AEFB8,
+        .collCallback = 0x802AEFBC,
+    },
+    // Clear blaster 2? - used when item cmd vars are nonzero
+    {
+        .state = -1,                    // 0xA0
+        .animCallback = 0x802AF064,
+        .physCallback = 0x802AF178,
+        .collCallback = 0x802AF17C,
+    },
 };
 
 ///////////////////////
@@ -289,7 +229,7 @@ void SAItem_SpawnItemInitialize(GOBJ *item)
     //memcpy(fighter_items[MEX_ITEM_FXBLASTER]->unqiue_attributes, ItemData->itData->param_ext, sizeof(ItemAttr))
     
     // Set item states
-    // item_data->item_states = &SAItem_state_table;
+    item_data->item_states = &SAItem_state_table;
     // item_data->item_states = 0x803F6CA8;
     // item_data->item_states = &(ItemState[])0x803F6CA8;
 
@@ -358,6 +298,7 @@ void SAItem_Think(GOBJ *fighter)
         //     case 3: {item_data->cb.accessory = SAItem_State3;}
         //     break;
         // }
+
     }
     
     //if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )

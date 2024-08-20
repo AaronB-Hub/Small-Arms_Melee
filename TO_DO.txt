@@ -5,3 +5,5 @@ OR create simple functions to check for input values
 - Implement new/edited item functions?
 - use 'struct HSD_PollData', PADRead()/PADReset(), and/or 'struct PADStatus' for SA controls?
 - use GOBJ *GOBJ_EZCreator() for item creation?
+
+- (from 2021) Fighter_IASACheck_Turn - only checks turn conditions if stick is pushed further than 0.25 in the direction opposite you're facing 

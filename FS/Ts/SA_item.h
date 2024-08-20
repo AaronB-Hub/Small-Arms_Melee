@@ -107,6 +107,9 @@
 //      Structs      //
 ///////////////////////
 
+/// A null pointer
+#define NULL ((void*) 0)
+
 // ItemData *item_data = item->userdata;
 
 
@@ -428,7 +431,8 @@ GOBJ *CreateBaseItem(GOBJ *fighter, int SAitem_kind)
     };
 
 	// Create the new item
-	GOBJ *item = Item_CreateItem(&spawnItem);
+	// GOBJ *item = Item_CreateItem(&spawnItem);  // Vanilla fox code uses Item_CreateItem1, which calls Item_CreateItem plus sets spawnItem->x48_ground_or_air = 1 and ->x10 = 0
+    GOBJ *item = Item_CreateItem1(&spawnItem);
 
     return item;
 }

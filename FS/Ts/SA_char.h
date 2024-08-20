@@ -210,7 +210,7 @@ void SADiveKick_CollisionCallback(GOBJ *gobj);
 // #define bool u8
 // #define true 1
 // #define false 0
-#include <stdbool.h>
+// #include <stdbool.h>
 
 /// @brief checks item collision with any line and applies bounce physics if it touches any
 /// @param item
