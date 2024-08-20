@@ -1,5 +1,5 @@
-// #include "test.h"
-#include "SA_item.h"
+#include "test.h"
+// #include "SA_item.h"
 #include "itemfire_primary_testgun.c"
 #include "itemfire_secondary_testgun.c"
 
@@ -12,8 +12,91 @@
 This is the state struct that will get referenced when calling ItemStateChange\
 The added attribute tag is necessary to prevent this structure from getting\
 optimized away by certain compiler versions
-__attribute__((used)) static struct ItemState SAItem_state_table[] = {
-    // // State: 0 - Idle
+// __attribute__((used)) static struct ItemState SAItem_state_table[] = {
+__attribute__((used)) static struct ItemState item_state_table[] = {
+
+    // --- VANILLA ---
+
+    // // ftFx_MS_SpecialNStart
+    // {
+    //     .state = 0,                     // 0x0
+    //     .animCallback = 0x802AEBCC,
+    //     .physCallback = 0x802AEED4,
+    //     .collCallback = 0x802AEF08,
+    // },
+    // // ftFx_MS_SpecialNLoop
+    // {
+    //     .state = 1,                     // 0x10
+    //     .animCallback = 0x802AEBCC,
+    //     .physCallback = 0x802AEED4,
+    //     .collCallback = 0x802AEF08,
+    // },
+    // // ftFx_MS_SpecialNEnd
+    // {
+    //     .state = 2,                     // 0x20
+    //     .animCallback = 0x802AEBCC,
+    //     .physCallback = 0x802AEED4,
+    //     .collCallback = 0x802AEF08,
+    // },
+    // // ftFx_MS_SpecialAirNStart
+    // {
+    //     .state = 3,                     // 0x30
+    //     .animCallback = 0x802AEBCC,
+    //     .physCallback = 0x802AEED4,
+    //     .collCallback = 0x802AEF08,
+    // },
+    // // ftFx_MS_SpecialAirNLoop
+    // {
+    //     .state = 4,                     // 0x40
+    //     .animCallback = 0x802AEBCC,
+    //     .physCallback = 0x802AEED4,
+    //     .collCallback = 0x802AEF08,
+    // },
+    // // ftFx_MS_SpecialAirNEnd
+    // {
+    //     .state = 5,                     // 0x50
+    //     .animCallback = 0x802AEBCC,
+    //     .physCallback = 0x802AEED4,
+    //     .collCallback = 0x802AEF08,
+    // },
+    // // ftCo_MS_ThrowB
+    // {
+    //     .state = 6,                     // 0x60
+    //     .animCallback = 0x802AEBCC,
+    //     .physCallback = 0x802AEED4,
+    //     .collCallback = 0x802AEF08,
+    // },
+    // // ftCo_MS_ThrowHi
+    // {
+    //     .state = 7,                     // 0x70
+    //     .animCallback = 0x802AEBCC,
+    //     .physCallback = 0x802AEED4,
+    //     .collCallback = 0x802AEF08,
+    // },
+    // // ftCo_MS_ThrowLw
+    // {
+    //     .state = 8,                     // 0x80
+    //     .animCallback = 0x802AEBCC,
+    //     .physCallback = 0x802AEED4,
+    //     .collCallback = 0x802AEF08,
+    // },
+    // // Clear blaster 1? - normal clear state
+    // {
+    //     .state = -1,                    // 0x90
+    //     .animCallback = 0x802AEF10,
+    //     .physCallback = 0x802AEFB8,
+    //     .collCallback = 0x802AEFBC,
+    // },
+    // // Clear blaster 2? - used when item cmd vars are nonzero
+    // {
+    //     .state = -1,                    // 0xA0
+    //     .animCallback = 0x802AF064,
+    //     .physCallback = 0x802AF178,
+    //     .collCallback = 0x802AF17C,
+    // },
+
+    // --- Custom ---
+        // // State: 0 - Idle
     // {
     //     .state = 0,
     //     .animCallback = Idle_AnimCallback,
@@ -42,20 +125,20 @@ __attribute__((used)) static struct ItemState SAItem_state_table[] = {
     //     .collCallback = SecondaryFire_CollCallback,
     // },
 
-    // // state 0: ??
-    // {
-    //     .state = 0,
-    //     .animCallback = State0_AnimCallback,
-    //     .physCallback = State0_PhysCallback,
-    //     .collCallback = State0_CollCallback,
-    // },
-    // // state 1: ??
-    // {
-    //     .state = 1,
-    //     .animCallback = State1_AnimCallback,
-    //     .physCallback = State1_PhysCallback,
-    //     .collCallback = State1_CollCallback,
-    // },
+    // state 0: ??
+    {
+        .state = 0,
+        .animCallback = State0_AnimCallback,
+        .physCallback = State0_PhysCallback,
+        .collCallback = State0_CollCallback,
+    },
+    // state 1: ??
+    {
+        .state = 1,
+        .animCallback = State1_AnimCallback,
+        .physCallback = State1_PhysCallback,
+        .collCallback = State1_CollCallback,
+    },
     // // state 2: ??
     // {
     //     .state = 2,
@@ -105,89 +188,20 @@ __attribute__((used)) static struct ItemState SAItem_state_table[] = {
     //     .physCallback = State8_PhysCallback,
     //     .collCallback = State8_CollCallback,
     // },
-
-    // ftFx_MS_SpecialNStart
-    {
-        .state = 0,                     // 0x0
-        .animCallback = 0x802AEBCC,
-        .physCallback = 0x802AEED4,
-        .collCallback = 0x802AEF08,
-    },
-    // ftFx_MS_SpecialNLoop
-    {
-        .state = 1,                     // 0x10
-        .animCallback = 0x802AEBCC,
-        .physCallback = 0x802AEED4,
-        .collCallback = 0x802AEF08,
-    },
-    // ftFx_MS_SpecialNEnd
-    {
-        .state = 2,                     // 0x20
-        .animCallback = 0x802AEBCC,
-        .physCallback = 0x802AEED4,
-        .collCallback = 0x802AEF08,
-    },
-    // ftFx_MS_SpecialAirNStart
-    {
-        .state = 3,                     // 0x30
-        .animCallback = 0x802AEBCC,
-        .physCallback = 0x802AEED4,
-        .collCallback = 0x802AEF08,
-    },
-    // ftFx_MS_SpecialAirNLoop
-    {
-        .state = 4,                     // 0x40
-        .animCallback = 0x802AEBCC,
-        .physCallback = 0x802AEED4,
-        .collCallback = 0x802AEF08,
-    },
-    // ftFx_MS_SpecialAirNEnd
-    {
-        .state = 5,                     // 0x50
-        .animCallback = 0x802AEBCC,
-        .physCallback = 0x802AEED4,
-        .collCallback = 0x802AEF08,
-    },
-    // ftCo_MS_ThrowB
-    {
-        .state = 6,                     // 0x60
-        .animCallback = 0x802AEBCC,
-        .physCallback = 0x802AEED4,
-        .collCallback = 0x802AEF08,
-    },
-    // ftCo_MS_ThrowHi
-    {
-        .state = 7,                     // 0x70
-        .animCallback = 0x802AEBCC,
-        .physCallback = 0x802AEED4,
-        .collCallback = 0x802AEF08,
-    },
-    // ftCo_MS_ThrowLw
-    {
-        .state = 8,                     // 0x80
-        .animCallback = 0x802AEBCC,
-        .physCallback = 0x802AEED4,
-        .collCallback = 0x802AEF08,
-    },
-    // Clear blaster 1? - normal clear state
-    {
-        .state = -1,                    // 0x90
-        .animCallback = 0x802AEF10,
-        .physCallback = 0x802AEFB8,
-        .collCallback = 0x802AEFBC,
-    },
-    // Clear blaster 2? - used when item cmd vars are nonzero
-    {
-        .state = -1,                    // 0xA0
-        .animCallback = 0x802AF064,
-        .physCallback = 0x802AF178,
-        .collCallback = 0x802AF17C,
-    },
 };
 
 ///////////////////////
 //  Initial Testgun  //
 ///////////////////////
+
+void onpickup(GOBJ *item_gobj)
+{
+    int item_spawn_state = 0;
+    int item_spawn_flags = 2;  // 2 = ITEM_ANIM_UPDATE
+    ItemStateChange(item_gobj, item_spawn_state, item_spawn_flags);
+
+    Item_AnimateAndUpdateSubactions(item_gobj);
+}
 
 /// @brief Spawn the SA item into the game
 /// @param fighter
@@ -229,7 +243,7 @@ void SAItem_SpawnItemInitialize(GOBJ *item)
     //memcpy(fighter_items[MEX_ITEM_FXBLASTER]->unqiue_attributes, ItemData->itData->param_ext, sizeof(ItemAttr))
     
     // Set item states
-    item_data->item_states = &SAItem_state_table;
+    // item_data->item_states = &SAItem_state_table;
     // item_data->item_states = 0x803F6CA8;
     // item_data->item_states = &(ItemState[])0x803F6CA8;
 
@@ -278,8 +292,7 @@ void SAItem_Think(GOBJ *fighter)
     }
 
     // If the item is already in an active state, then run the associated Think function by setting it as the item accessory callback
-    int it_state = item_data->state;
-    if (it_state)
+    if (item_data->state)
     {
         // SAItem_State0(item);
         // SALeapKneeBend(fighter);

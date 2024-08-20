@@ -1,5 +1,5 @@
-D:\projects\Small-Arms_Melee\FS\Ts\build\test.o: \
- D:\projects\Small-Arms_Melee\FS\Ts\test.c \
+D:\projects\Small-Arms_Melee\FS\Ts\build\item_testgun.o: \
+ D:\projects\Small-Arms_Melee\FS\Ts\item_testgun.c \
  D:\projects\Small-Arms_Melee\FS\Ts\test.h \
  D:\projects\Small-Arms_Melee\FS\Ts\SA_char.h \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/mex.h \
@@ -48,12 +48,6 @@ D:\projects\Small-Arms_Melee\FS\Ts\build\test.o: \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/include/stage.h \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/include/text.h \
  D:\projects\Small-Arms_Melee\FS\Ts\SA_item.h \
- D:\projects\Small-Arms_Melee\FS\Ts\SA_ftstates_common.h \
- D:\projects\Small-Arms_Melee\FS\Ts\SA_ftstates_special.c \
- D:\projects\Small-Arms_Melee\FS\Ts\float.c \
- D:\projects\Small-Arms_Melee\FS\Ts\leap.c \
- D:\projects\Small-Arms_Melee\FS\Ts\kicks.c \
- D:\projects\Small-Arms_Melee\FS\Ts\item_testgun.c \
  D:\projects\Small-Arms_Melee\FS\Ts\itemfire_primary_testgun.c \
  D:\projects\Small-Arms_Melee\FS\Ts\itemfire_secondary_testgun.c
 D:\projects\Small-Arms_Melee\FS\Ts\test.h:
@@ -104,11 +98,5 @@ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/scene.h:
 D:\projects\Small-Arms_Melee\m-ex\MexTK/include/stage.h:
 D:\projects\Small-Arms_Melee\m-ex\MexTK/include/text.h:
 D:\projects\Small-Arms_Melee\FS\Ts\SA_item.h:
-D:\projects\Small-Arms_Melee\FS\Ts\SA_ftstates_common.h:
-D:\projects\Small-Arms_Melee\FS\Ts\SA_ftstates_special.c:
-D:\projects\Small-Arms_Melee\FS\Ts\float.c:
-D:\projects\Small-Arms_Melee\FS\Ts\leap.c:
-D:\projects\Small-Arms_Melee\FS\Ts\kicks.c:
-D:\projects\Small-Arms_Melee\FS\Ts\item_testgun.c:
 D:\projects\Small-Arms_Melee\FS\Ts\itemfire_primary_testgun.c:
 D:\projects\Small-Arms_Melee\FS\Ts\itemfire_secondary_testgun.c:

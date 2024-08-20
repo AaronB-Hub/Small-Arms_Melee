@@ -311,9 +311,50 @@ typedef struct TestIllusionVar {
 //     ItemDynamics* x14_dynamics;
 // };
 
+typedef struct TestCharVar2
+{
+    GOBJ *x222C_blasterGObj;
+} TestCharVar2;
+
 ////////////////////////
 //  Helper Functions  //
 ////////////////////////
+
+// #define bool u8
+// #define true 1
+// #define false 0
+// #include <stdbool.h>
+
+/// @brief checks item collision with any line and applies bounce physics if it touches any
+/// @param item
+/// @return TRUE if collision was made and FALSE otherwise
+bool (*Item_Coll_Bounce)(GOBJ *item) = (int *)0x8027781c;
+
+/// @brief removes all references to specificed fighter from item
+/// @param item
+/// @param fighter
+/// @return TRUE if fighter reference was removed and FALSE otherwise
+// bool (*Item_RemoveFighterReference)(GOBJ *item, GOBJ *fighter) = (int *)0x8026b894;
+
+/// @brief updates item flags related to hitlag TODO: better description
+/// @param item
+// void (*Item_ClearHitlagFlag)(GOBJ *item) = (void *)0x8026b73c;
+
+/// @brief 
+/// @param item 
+/// @return 
+inline void *Item_GetItCmdFlags(GOBJ *item)
+{
+    return &((ItemData *)item->userdata)->itcmd_var;
+}
+
+/// @brief 
+/// @param item 
+/// @return 
+inline void *Item_GetItemVar(GOBJ *item)
+{
+    return &((ItemData *)item->userdata)->item_var;
+}
 
 /// @brief removes reference to SA item from fighter
 /// @param fighter 
@@ -321,7 +362,7 @@ void SAItem_RemoveItem(GOBJ *fighter)
 {
     FighterData *fd = (FighterData *)fighter->userdata;
 	//SACharVar *charvar = (SACharVar *)&fd->fighter_var;
-	TestCharVar *charvar = (TestCharVar *)&fd->fighter_var;
+	TestCharVar2 *charvar = (TestCharVar2 *)&fd->fighter_var;
 
     // clear hitlag flag
     //if (charvar->SAItem != 0)
@@ -533,8 +574,9 @@ void SAItem_ResetItem(GOBJ *item)
     it_vars->var11 = 0;
     it_vars->var12 = 0;
 
-    // TO DO: set item state to 0, set velocity to 0?, other things?
-    
+    // TO DO: set item state to 0?, set velocity to 0?, other things?
+    // item_data->state = 0;
+
     return;
 }
 
@@ -631,7 +673,7 @@ void SAItem_OnSpawn(GOBJ *fighter)
 {
     // Get fighter data
 	FighterData *fighter_data = fighter->userdata;
-    TestCharVar *charvar = &fighter_data->fighter_var;
+    TestCharVar2 *charvar = &fighter_data->fighter_var;
 
     // Spawn item
     GOBJ *item = SAItem_SpawnItem(fighter);

@@ -2,6 +2,7 @@
 #define FT_TEST_H
 
 #include "SA_char.h"
+// #include "SA_item.h"
 
 ///////////////////////
 //      m-ex IDs     //
@@ -103,7 +104,6 @@ typedef struct TestAttr
     // void *special_attributes;              // 0x2D4
 // Which then copied to:
     // void *special_attributes2;             // 0x2D8
-
 
 
 

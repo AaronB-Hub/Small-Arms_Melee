@@ -1,6 +1,6 @@
 // #include "../../m-ex/MexTK/mex.h"
 #include "mex.h"
-// #include "SA_item.h"
+#include "SA_item.h"
 
 ///////////////////////
 //   Common States   //
@@ -82,7 +82,6 @@
 //     int var6;                           // x18  fighter_data->fighter_var->ft_var7
 // } SACharVar;
 
-
 typedef struct FloatFtCmd
 {
 	int interruptable;                  // x0  fighter_data->state_var->state_var1
@@ -137,6 +136,7 @@ void Custom_Controls_SA(GOBJ *gobj)
 //     SAItem_OnLoad(gobj);
 //     return;
 // }
+// void SAItem_OnLoad(GOBJ *fighter);
 
 // Common Moves (Vanilla)
 void CommonGuardOn_AnimationCallback(GOBJ *gobj);
@@ -206,42 +206,6 @@ void SADiveKick_CollisionCallback(GOBJ *gobj);
 ////////////////////////
 //  Helper Functions  //
 ////////////////////////
-
-// #define bool u8
-// #define true 1
-// #define false 0
-// #include <stdbool.h>
-
-/// @brief checks item collision with any line and applies bounce physics if it touches any
-/// @param item
-/// @return TRUE if collision was made and FALSE otherwise
-bool (*Item_Coll_Bounce)(GOBJ *item) = (int *)0x8027781c;
-
-/// @brief removes all references to specificed fighter from item
-/// @param item
-/// @param fighter
-/// @return TRUE if fighter reference was removed and FALSE otherwise
-// bool (*Item_RemoveFighterReference)(GOBJ *item, GOBJ *fighter) = (int *)0x8026b894;
-
-/// @brief updates item flags related to hitlag TODO: better description
-/// @param item
-// void (*Item_ClearHitlagFlag)(GOBJ *item) = (void *)0x8026b73c;
-
-/// @brief 
-/// @param item 
-/// @return 
-inline void *Item_GetItCmdFlags(GOBJ *item)
-{
-    return &((ItemData *)item->userdata)->itcmd_var;
-}
-
-/// @brief 
-/// @param item 
-/// @return 
-inline void *Item_GetItemVar(GOBJ *item)
-{
-    return &((ItemData *)item->userdata)->item_var;
-}
 
 /// @brief Fighter Variables are used globally by the fighter
 /// @param fighter GOBJ of Fighter

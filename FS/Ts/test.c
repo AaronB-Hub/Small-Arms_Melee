@@ -48,7 +48,6 @@ void OnLoad(GOBJ *fighter)
 ///
 ///
 ///
-// void OnSpawn(GOBJ *fighter)
 void OnRespawn(GOBJ *fighter)
 {
 	FighterData *fighter_data = fighter->userdata;
