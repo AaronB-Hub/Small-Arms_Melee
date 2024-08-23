@@ -246,6 +246,7 @@ void SAItem_SpawnItemInitialize(GOBJ *item)
     // item_data->item_states = &SAItem_state_table;
     // item_data->item_states = 0x803F6CA8;
     // item_data->item_states = &(ItemState[])0x803F6CA8;
+    item_data->item_states = &item_state_table;  // Is this necessary when using the reserved name 'item_state_table'?
 
     // Reset the item
     SAItem_ResetItem(item);
