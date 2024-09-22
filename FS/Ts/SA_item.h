@@ -456,6 +456,7 @@ GOBJ *CreateBaseItem(GOBJ *fighter, int SAitem_kind)
         .parent_gobj = fighter,
         .parent_gobj2 = fighter,
         .it_kind = SAitem_kind,     // id of the item to spawn
+        // .it_kind = ITEM_RAYGUN,
         //.hold_kind = ITHOLD_SWORD,  // defines the behavior of the item, such as thrown and pickup. 0 = capsule
         .unk2 = 0,
         .pos = spawn_position,
