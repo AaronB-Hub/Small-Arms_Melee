@@ -1,0 +1,29 @@
+-- Call Item_Hold w/ SA Item ID --
+Invalid read from 0x00000dcd, PC = 0x80273178 (it_80273168 ?)
+Invalid read from 0x00000d70, PC = 0x80273184 (it_80273168 ?)
+Invalid write to 0x00000d6c, PC = 0x8026aed0 (sfx)
+Invalid read from 0x000000c8, PC = 0x80274324 (it_802742F4 - gfx, sfx)
+Invalid read from 0x00000038, PC = 0x802684b4 (scale)
+
+
+-- Call Item_Hold w/ lgun Item ID --
+Invalid read from 0x82000001, PC = 0x803643c4 (HSD_AObjLoadDesc)
+Invalid read from 0x82000005, PC = 0x803643ec
+Invalid read from 0x82000009, PC = 0x803643f4
+Invalid read from 0x8200000d, PC = 0x8036441c (HSD_AObjRemove)
+Invalid read from 0x98000f08, PC = 0x8036fa58 (HSD_JObjAddAnim)
+Invalid read from 0x98000f0c, PC = 0x8036fabc
+
+
+-- No Item_Hold, but added in Logic Table (? action, vs kirby) --
+Invalid read from 0x000000cc, PC = 0x8026b2b8 (it_8026B2B4 - temp_item->xCC_item_attr->x0_is_heavy)
+Invalid read from 0x00000000, PC = 0x8026b2bc
+Invalid read from 0x00000010, PC = 0x8026b304 (itGetKind - gobj->user_data->kind;)
+Invalid read from 0x00000010, PC = 0x8026b304
+" "...
+
+-- No Item_Hold, but added in Logic Table (infinitely throwing item, vs fox) --
+Invalid read from 0x000000c4, PC = 0x80272ca0 (it_80272C90 - item throw)
+Invalid read from 0x00000004, PC = 0x8000b1f8 (lb_8000B1CC - HSD_JObj*, Vec3*, Vec3*)
+Invalid read from 0x00000008, PC = 0x8000b204 (lb_8000B1CC - HSD_JObj*, Vec3*, Vec3*)
+Invalid read from 0x000000cc, PC = 0x8026b2b8 (it_8026B2B4 - temp_item->xCC_item_attr->x0_is_heavy)

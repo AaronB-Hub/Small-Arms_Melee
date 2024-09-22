@@ -15,7 +15,7 @@ optimized away by certain compiler versions
 // __attribute__((used)) static struct ItemState SAItem_state_table[] = {
 __attribute__((used)) static struct ItemState item_state_table[] = {
 
-    // --- VANILLA ---
+    // --- VANILLA FOX BLASTER ---
 
     // // ftFx_MS_SpecialNStart
     // {
@@ -95,8 +95,48 @@ __attribute__((used)) static struct ItemState item_state_table[] = {
     //     .collCallback = 0x802AF17C,
     // },
 
+    // --- VANILLA LGUN ITEM ---
+
+    {
+        .state = -1,
+        .animCallback = 0x8028E828,
+        .physCallback = 0x8028E830,
+        .collCallback = 0x8028E834,
+    },
+    {
+        .state = -1,
+        .animCallback = 0x8028E888,
+        .physCallback = 0x8028E890,
+        .collCallback = 0x8028E8C0,
+    },
+    {
+        .state = -1,
+        .animCallback = 0x8028E92C,
+        .physCallback = 0x8028E934,
+        .collCallback = NULL,
+    },
+    {
+        .state = 0,
+        .animCallback = 0x8028E96C,
+        .physCallback = 0x8028E9B4,
+        .collCallback = NULL,
+    },
+    {
+        .state = 1,
+        .animCallback = 0x8028E888,
+        .physCallback = 0x8028EA08,
+        .collCallback = 0x8028E8C0,
+    },
+    {
+        .state = -1,
+        .animCallback = 0x8028EB28,
+        .physCallback = 0x8028EB30,
+        .collCallback = 0x8028EB34,
+    },
+
     // --- Custom ---
-        // // State: 0 - Idle
+
+    // // State: 0 - Idle
     // {
     //     .state = 0,
     //     .animCallback = Idle_AnimCallback,
@@ -125,20 +165,20 @@ __attribute__((used)) static struct ItemState item_state_table[] = {
     //     .collCallback = SecondaryFire_CollCallback,
     // },
 
-    // state 0: ??
-    {
-        .state = 0,
-        .animCallback = State0_AnimCallback,
-        .physCallback = State0_PhysCallback,
-        .collCallback = State0_CollCallback,
-    },
-    // state 1: ??
-    {
-        .state = 1,
-        .animCallback = State1_AnimCallback,
-        .physCallback = State1_PhysCallback,
-        .collCallback = State1_CollCallback,
-    },
+    // // state 0: ??
+    // {
+    //     .state = 0,
+    //     .animCallback = State0_AnimCallback,
+    //     .physCallback = State0_PhysCallback,
+    //     .collCallback = State0_CollCallback,
+    // },
+    // // state 1: ??
+    // {
+    //     .state = 1,
+    //     .animCallback = State1_AnimCallback,
+    //     .physCallback = State1_PhysCallback,
+    //     .collCallback = State1_CollCallback,
+    // },
     // // state 2: ??
     // {
     //     .state = 2,
@@ -188,6 +228,31 @@ __attribute__((used)) static struct ItemState item_state_table[] = {
     //     .physCallback = State8_PhysCallback,
     //     .collCallback = State8_CollCallback,
     // },
+};
+
+__attribute__((used)) static struct ItemLogic item_logic_table[] = {
+
+    // --- VANILLA LGUN ITEM ---
+    {
+        // .item_states = 0x803F5CC8,
+        .item_states = &item_state_table,
+        .OnCreate       = 0x8028E738,
+        .OnDestroy      = NULL,
+        .OnPickup       = 0x8028E904,
+        .OnDrop         = 0x8028E9B8,
+        .OnThrow        = 0x8028E9E0,
+        .OnGiveDamage   = 0x8028EA54,
+        .OnTakeDamage   = NULL,
+        .OnEnterAir     = 0x8028EB00,
+        .OnReflect      = 0x8028EAC0,
+        .OnClank        = 0x8028EA78,
+        .OnAbsorb       = NULL,
+        .OnShieldBounce = 0x8028EAE0,
+        .OnShieldHit    = 0x8028EA9C,
+        .OnUnkEvent     = 0x8028EB68,
+    }
+
+    // --- Custom ---
 };
 
 ///////////////////////
@@ -247,6 +312,9 @@ void SAItem_SpawnItemInitialize(GOBJ *item)
     // item_data->item_states = 0x803F6CA8;
     // item_data->item_states = &(ItemState[])0x803F6CA8;
     item_data->item_states = &item_state_table;  // Is this necessary when using the reserved name 'item_state_table'?
+    // item_data->item_logic = &item_logic_table;
+    item_data->item_logic = &stc_itemlogic_common_items[ITEM_RAYGUN];
+    // item_data->item_states = &stc_itPublicData->common_items->states; // wrong type of state struct
 
     // Reset the item
     SAItem_ResetItem(item);

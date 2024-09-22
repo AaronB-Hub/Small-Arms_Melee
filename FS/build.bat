@@ -40,6 +40,6 @@ SET "TKPATH=%CD%"
 
 :: compile item code
 ::"MexTK.exe" -ff -item 0 "%TsPATH%\item_testgun.c" -s itFunction -t "%TKPATH%\itFunction.txt" -l "%TKPATH%\melee.link" -dat "%FilesPATH%\PlTs.dat" -ow
-"MexTK.exe" -ff -item 1 "%TsPATH%\item_testgun.c" -s itFunction -dat "%FilesPATH%\PlTs.dat" -ow
+"MexTK.exe" -ff -item 0 "%TsPATH%\item_testgun.c" -s itFunction -dat "%FilesPATH%\PlTs.dat" -ow
 
 pause

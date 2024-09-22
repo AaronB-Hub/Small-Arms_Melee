@@ -8,9 +8,13 @@
 ///////////////////////
 
 // Index of item within character's PlXx.dat Articles folder (MEX items are only dummy placeholders, but still necessary)
-#define MEX_ITEM_GUN 1
-#define MEX_ITEM_PRIMARYFIRE 0
-#define MEX_ITEM_SECONDARYFIRE 2
+// #define MEX_ITEM_GUN 1
+// #define MEX_ITEM_PRIMARYFIRE 0
+// #define MEX_ITEM_SECONDARYFIRE 2
+#define MEX_ITEM_GUN 0
+#define MEX_ITEM_PRIMARYFIRE 1
+#define MEX_ITEM_PRIMARYFIRE_GFX 2
+// #define MEX_ITEM_SECONDARYFIRE 2
 
 // M-ex fighter effects are indexed but they are abstracted for the sake of portability. Use 5XXX and 6XXX to spawn a fighter model effect and fighter particle generator respectively
 #define MEX_EFFECT_FXLASER 5005
@@ -118,48 +122,27 @@
     // Call like: TestItemAttr *attr = (TestItemAttr *)item_data->itData->param_ext;
 typedef struct TestgunAttr
 {
-    float x00;                                // x00
-    float x04;                                // x04
-    float x08;                                // x08
-    float x0C;                                // x0C
-    float x10;                                // x10
-    float x14;                                // x14
-    float x18;   // [3F 80 00 00 = 1?]        // x18
-    float x1C;                                // x1C
-    float x20;   // [40 00 00 00 = 2?]        // x20
-	float x24;                                // x24
-    float x28;                                // x28
-    float x2C;                                // x2C
-    float x30;                                // x30
-	float x34;                                // x34
-    int SA_ITEM_INPUT_FLAG;                   // x38
-} TestgunAttr;                               // size: 0x3C
+    int x00;     // [00 00 00 10 = 16?]       // x00
+    float x04;   // [00 00 00 00 = 0]         // x04
+    float x08;   // [40 08 31 27 = 2.128?]    // x08
+    float x0C;   // [40 D5 60 42 = 6.668?]    // x0C
+} TestgunAttr;                                // size: 0x10
 
-typedef struct TestLaserAttr
+typedef struct TestgunRayAttr
 {
-    float life;  // [42 0c 00 00 = 35 frames] // x00
-    float x04;   // [40 40 00 00 = 3?]        // x04
-    float x08;                                // x08
-    float x0C;                                // x0C
-    float x10;                                // x10
-    float x14;                                // x14
-    float x18;                                // x18
-    float x1C;                                // x1C
-    float x20;                                // x20
-	float x24;   // [3F 80 00 00 = 1?]        // x24
-    float x28;                                // x28
-    float x2C;                                // x2C
-    float x30;                                // x30
-	float x34;                                // x34
-    float x38;                                // x38
-} TestLaserAttr;                              // size: 0x3C
+    float x00;   // [40 A0 00 00 = 5]         // x00
+    float x04;   // [42 A0 00 00 = 80]        // x04
+    float x08;   // [40 40 00 00 = 3]         // x08
+} TestgunRayAttr;                              // size: 0xC
 
-typedef struct TestIllusionAttr
+typedef struct TestgunBeamAttr
 {
-    float x0;   // [40 A0 00 00 = 5?]         // x00
-    float x4;   // [40 00 00 00 = 2?]         // x04
-} TestIllusionAttr;                           // size: 0x8
-
+    float x00;   // [41 90 00 00 = 18]        // x00
+    float x04;   // [3F 80 00 00 = 1]         // x04
+    float x08;   // [40 00 00 00 = 2]         // x08
+    float x0C;   // [3F 9C 61 AA = 1.222?]    // x0C
+    float x10;   // [40 06 0A 92 = 2/3 * PI]  // x10
+} TestgunBeamAttr;                              // size: 0x14
 
 typedef struct TestgunCmdFlags
 {
@@ -173,17 +156,17 @@ typedef struct TestgunCmdFlags
 typedef struct TestgunItemVar
 {
 	int var1;  // Laser *item                       // 0xdd4  item_data->item_var->var1
-    int var2;                                       // 0xdd8  item_data->item_var->var2
-    int var3;                                       // 0xddc  item_data->item_var->var3
-    int var4;                                       // 0xde0  item_data->item_var->var4
-    int var5;                                       // 0xde4  item_data->item_var->var5
-    int var6;                                       // 0xde8  item_data->item_var->var6
-    int var7;                                       // 0xdec  item_data->item_var->var7
-    int var8;                                       // 0xdf0  item_data->item_var->var8
-    int var9;                                       // 0xdf4  item_data->item_var->var9
-    int var10;                                      // 0xdf8  item_data->item_var->var10
-    int var11;                                      // 0xdfc  item_data->item_var->var11
-    int var12;                                      // 0xe00  item_data->item_var->var12
+    // int var2;                                       // 0xdd8  item_data->item_var->var2
+    // int var3;                                       // 0xddc  item_data->item_var->var3
+    // int var4;                                       // 0xde0  item_data->item_var->var4
+    // int var5;                                       // 0xde4  item_data->item_var->var5
+    // int var6;                                       // 0xde8  item_data->item_var->var6
+    // int var7;                                       // 0xdec  item_data->item_var->var7
+    // int var8;                                       // 0xdf0  item_data->item_var->var8
+    // int var9;                                       // 0xdf4  item_data->item_var->var9
+    // int var10;                                      // 0xdf8  item_data->item_var->var10
+    // int var11;                                      // 0xdfc  item_data->item_var->var11
+    // int var12;                                      // 0xe00  item_data->item_var->var12
 } TestgunItemVar;  // Should this be longer?
 
 typedef struct TestLaserVar {
@@ -193,11 +176,11 @@ typedef struct TestLaserVar {
     Vec3 xDE0;   // spawn.pos                       // item_data->item_var->var4
 } TestLaserVar;
 
-typedef struct TestIllusionVar {
-    JOBJDesc* xDD4;             // item_data->item_var->var1  [HSD_Joint* = JOBJDesc*]
-    float xDD8;                 // item_data->item_var->var2
-    JOBJ* xDDC;                 // item_data->item_var->var3 [HSD_JObj* = JOBJ*]
-} TestIllusionVar;
+// typedef struct TestIllusionVar {
+//     JOBJDesc* xDD4;             // item_data->item_var->var1  [HSD_Joint* = JOBJDesc*]
+//     float xDD8;                 // item_data->item_var->var2
+//     JOBJ* xDDC;                 // item_data->item_var->var3 [HSD_JObj* = JOBJ*]
+// } TestIllusionVar;
 
 // typedef struct ItemLogicTable ItemLogicTable;
 // typedef struct ItemStateTable ItemStateTable;
@@ -434,7 +417,7 @@ float SAItem_InputCheck_Analog(GOBJ *fighter)
 void ItemAccessoryFunc(GOBJ *item, GOBJ *fighter)
 {
     ItemData *item_data = item->userdata;
-    return item_data->cb.accessory(fighter);
+    return item_data->cb.accessory(fighter);  // Shouldn't the item be the param to the accessory callback?
 }
 
 /// @brief creates a 'blank' version of the fighter's SA item
@@ -563,17 +546,17 @@ void SAItem_ResetItem(GOBJ *item)
 
     // Reset item variables
     it_vars->var1 = 0;
-    it_vars->var2 = 0;
-    it_vars->var3 = 0;
-    it_vars->var4 = 0;
-    it_vars->var5 = 0;
-    it_vars->var6 = 0;
-    it_vars->var7 = 0;
-    it_vars->var8 = 0;
-    it_vars->var9 = 0;
-    it_vars->var10 = 0;
-    it_vars->var11 = 0;
-    it_vars->var12 = 0;
+    // it_vars->var2 = 0;
+    // it_vars->var3 = 0;
+    // it_vars->var4 = 0;
+    // it_vars->var5 = 0;
+    // it_vars->var6 = 0;
+    // it_vars->var7 = 0;
+    // it_vars->var8 = 0;
+    // it_vars->var9 = 0;
+    // it_vars->var10 = 0;
+    // it_vars->var11 = 0;
+    // it_vars->var12 = 0;
 
     // TO DO: set item state to 0?, set velocity to 0?, other things?
     // item_data->state = 0;
@@ -663,7 +646,8 @@ void SAItem_OnLoad(GOBJ *fighter)
 	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_PRIMARYFIRE], MEX_ITEM_PRIMARYFIRE);
 
 	// Init Secondary Fire (Fxshadow)
-	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_SECONDARYFIRE], MEX_ITEM_SECONDARYFIRE);
+	// MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_SECONDARYFIRE], MEX_ITEM_SECONDARYFIRE);
+	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_PRIMARYFIRE_GFX], MEX_ITEM_PRIMARYFIRE_GFX);
 
     return;
 }
@@ -680,9 +664,9 @@ void SAItem_OnSpawn(GOBJ *fighter)
     GOBJ *item = SAItem_SpawnItem(fighter);
     ItemData *item_data = item->userdata;
 
-    // Have character hold the SA item
-    int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
-    Item_Hold(item, fighter, bone_index);
+        // Have character hold the SA item
+        int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
+        Item_Hold(item, fighter, bone_index);
 
     // Store the SA item pointer to a fighter var and the special help item location
     charvar->x222C_blasterGObj = item;
