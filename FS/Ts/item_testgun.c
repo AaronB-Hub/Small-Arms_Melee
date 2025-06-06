@@ -232,27 +232,92 @@ __attribute__((used)) static struct ItemState item_state_table[] = {
 
 __attribute__((used)) static struct ItemLogic item_logic_table[] = {
 
-    // --- VANILLA LGUN ITEM ---
-    {
-        // .item_states = 0x803F5CC8,
-        .item_states = &item_state_table,
+    // {  // --- VANILLA LGUN ITEM ---
+    //     .item_states    = 0x803F5CC8,
+    //     .OnCreate       = 0x8028E738,
+    //     .OnDestroy      = NULL,
+    //     .OnPickup       = 0x8028E904,
+    //     .OnDrop         = 0x8028E9B8,
+    //     .OnThrow        = 0x8028E9E0,
+    //     .OnGiveDamage   = 0x8028EA54,
+    //     .OnTakeDamage   = NULL,
+    //     .OnEnterAir     = 0x8028EB00,
+    //     .OnReflect      = 0x8028EAC0,
+    //     .OnClank        = 0x8028EA78,
+    //     .OnAbsorb       = NULL,
+    //     .OnShieldBounce = 0x8028EAE0,
+    //     .OnShieldHit    = 0x8028EA9C,
+    //     .OnUnkEvent     = 0x8028EB68,
+    // }
+    // {  // --- VANILLA RABBITC (Bunny Hood) ITEM ---
+        // .item_states    = 0x803F6270,
+        // .OnCreate       = 0x80295118,
+        // .OnDestroy      = NULL,
+        // .OnPickup       = 0x8029524C,
+        // .OnDrop         = 0x80295298,
+        // .OnThrow        = NULL,
+        // .OnGiveDamage   = NULL,
+        // .OnTakeDamage   = NULL,
+        // .OnEnterAir     = 0x80295340,
+        // .OnReflect      = NULL,
+        // .OnClank        = NULL,
+        // .OnAbsorb       = NULL,
+        // .OnShieldBounce = NULL,
+        // .OnShieldHit    = NULL,
+        // .OnUnkEvent     = 0x802953A8,
+    // }
+    // {  // --- VANILLA METALB (Metal Box) ITEM ---
+        // .item_states    = 0x803F62C0,
+        // .OnCreate       = 0x802953C8,
+        // .OnDestroy      = NULL,
+        // .OnPickup       = 0x80295524,
+        // .OnDrop         = 0x80295554,
+        // .OnThrow        = NULL,
+        // .OnGiveDamage   = NULL,
+        // .OnTakeDamage   = 0x802955E0,
+        // .OnEnterAir     = 0x80295684,
+        // .OnReflect      = NULL,
+        // .OnClank        = NULL,
+        // .OnAbsorb       = NULL,
+        // .OnShieldBounce = NULL,
+        // .OnShieldHit    = NULL,
+        // .OnUnkEvent     = 0x802956EC,
+    // }
+    // {  // --- VANILLA SPYCLOAK (Cloaking device) ITEM ---
+        // .item_states    = 0x803F6370,
+        // .OnCreate       = 0x80295C48,  // ItemStateChange to 1
+        // .OnDestroy      = NULL,
+        // .OnPickup       = 0x80295D90,  // ItemStateChange to 2
+        // .OnDrop         = 0x80295DC0,  // ItemStateChange to 1
+        // .OnThrow        = NULL,
+        // .OnGiveDamage   = NULL,
+        // .OnTakeDamage   = NULL,
+        // .OnEnterAir     = 0x80295E4C,  // ItemStateChange to 4
+        // .OnReflect      = NULL,
+        // .OnClank        = NULL,
+        // .OnAbsorb       = NULL,
+        // .OnShieldBounce = NULL,
+        // .OnShieldHit    = NULL,
+        // .OnUnkEvent     = 0x80295EB4,  // Item_RemoveFighterReference
+    // }
+    {  // --- CUSTOM ---
+        .item_states    = &item_state_table,
         .OnCreate       = 0x8028E738,
+        // .OnCreate       = 0x8028E860,
         .OnDestroy      = NULL,
         .OnPickup       = 0x8028E904,
         .OnDrop         = 0x8028E9B8,
-        .OnThrow        = 0x8028E9E0,
+        .OnThrow        = NULL,
         .OnGiveDamage   = 0x8028EA54,
         .OnTakeDamage   = NULL,
         .OnEnterAir     = 0x8028EB00,
-        .OnReflect      = 0x8028EAC0,
-        .OnClank        = 0x8028EA78,
+        .OnReflect      = NULL,
+        .OnClank        = NULL,
         .OnAbsorb       = NULL,
-        .OnShieldBounce = 0x8028EAE0,
-        .OnShieldHit    = 0x8028EA9C,
+        .OnShieldBounce = NULL,
+        .OnShieldHit    = NULL,
         .OnUnkEvent     = 0x8028EB68,
     }
-
-    // --- Custom ---
 };
 
 ///////////////////////
@@ -382,6 +447,10 @@ void SAItem_Think(GOBJ *fighter)
         // }
 
     }
+
+
+// Set accessory4 cb as spawn projectile function (will just run once)
+
     
     //if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
     // if (item_data->itcmd_var.flag1 == 1)

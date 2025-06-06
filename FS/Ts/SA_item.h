@@ -122,10 +122,11 @@
     // Call like: TestItemAttr *attr = (TestItemAttr *)item_data->itData->param_ext;
 typedef struct TestgunAttr
 {
-    int x00;     // [00 00 00 10 = 16?]       // x00
-    float x04;   // [00 00 00 00 = 0]         // x04
-    float x08;   // [40 08 31 27 = 2.128?]    // x08
-    float x0C;   // [40 D5 60 42 = 6.668?]    // x0C
+    int x00;     // [00 00 00 10 = 16]        // x00
+    Vec3 x04;                                 // x00
+        // x - [00 00 00 00 = 0]
+        // y - [40 08 31 27 = 2.128]
+        // z - [40 D5 60 42 = 6.668]
 } TestgunAttr;                                // size: 0x10
 
 typedef struct TestgunRayAttr
@@ -133,21 +134,21 @@ typedef struct TestgunRayAttr
     float x00;   // [40 A0 00 00 = 5]         // x00
     float x04;   // [42 A0 00 00 = 80]        // x04
     float x08;   // [40 40 00 00 = 3]         // x08
-} TestgunRayAttr;                              // size: 0xC
+} TestgunRayAttr;                             // size: 0xC
 
 typedef struct TestgunBeamAttr
 {
     float x00;   // [41 90 00 00 = 18]        // x00
     float x04;   // [3F 80 00 00 = 1]         // x04
     float x08;   // [40 00 00 00 = 2]         // x08
-    float x0C;   // [3F 9C 61 AA = 1.222?]    // x0C
+    float x0C;   // [3F 9C 61 AA = 1.22173]   // x0C
     float x10;   // [40 06 0A 92 = 2/3 * PI]  // x10
-} TestgunBeamAttr;                              // size: 0x14
+} TestgunBeamAttr;                            // size: 0x14
 
 typedef struct TestgunCmdFlags
 {
 	int fireinputs_digital;  // xDAC    // item_data->itcmd_var->flag1
-    int fireinputs_analog;  // xDB0     // item_data->itcmd_var->flag2
+    int fireinputs_analog;   // xDB0    // item_data->itcmd_var->flag2
     int xDB4;                           // item_data->itcmd_var->flag3
     int xDB8;                           // item_data->itcmd_var->flag4
     int xDBC;                           // item_data->itcmd_var->flag5
@@ -476,7 +477,7 @@ int GetFighterSAItemSpawnBone(GOBJ *fighter, int SAitem_kind)
     if (SAitem_kind == MEX_ITEM_GUN)  // spawn position should be player's hand
     {
         // Grab bone index of left 1st finger A?
-        bone_index = Fighter_BoneLookup(fighter_data, L1stNa);
+        bone_index = Fighter_BoneLookup(fighter_data, RHaveN);
 
     } else  // Spawn position should be end of gun
     {
@@ -641,6 +642,7 @@ void SAItem_OnLoad(GOBJ *fighter)
 
 	// Init SA item (Fxblaster)
     MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_GUN], MEX_ITEM_GUN);
+        // Does Item_StoreItemDataToCharItemTable as part of this
 
 	// Init Primary Fire (Fxlaser)
 	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_PRIMARYFIRE], MEX_ITEM_PRIMARYFIRE);
@@ -659,24 +661,62 @@ void SAItem_OnSpawn(GOBJ *fighter)
     // Get fighter data
 	FighterData *fighter_data = fighter->userdata;
     TestCharVar2 *charvar = &fighter_data->fighter_var;
+    ItemDesc **fighter_items = fighter_data->ftData->items;
 
     // Spawn item
     GOBJ *item = SAItem_SpawnItem(fighter);
     ItemData *item_data = item->userdata;
 
-        // Have character hold the SA item
+    
+
+    // Give the SA item to the character
+    // Seems like items that 
+
+    // Fighter_GiveItem(fighter, item);  // ftpickupitem_800948A8 (calls Item_Hold - part of this function is calling the item's pickup callback)
+                                      // Also sets fighter_data->item_held / x1978
+                                      // Does something with fighter_data->flags.ms
+                                      // gets called by ftpickupitem_Anim, which is the anim cb for the two item pickup fighter actions
+
+                                      // ftpickupitem_Coll -> sets ftpickupitem_80094B6C as a callback
+                                        // if ip->xCC_item_attr->x0_78 == 5, then will do a secondary check for item kind for specific behaviors
+                                        
+                                      // ftpickupitem_80094694 - sets ftpickupitem_80094DF8 as fp->take_dmg_cb - calls ftpickupitem_80094B6C
+
+        // // Have character hold the SA item
         int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
-        Item_Hold(item, fighter, bone_index);
+        Item_Hold(item, fighter, bone_index); // Item_8026AB54 - part of this function is calling the item's pickup callback
+                                              // Item_8026AB54 (aka Item_Hold) -> it_802742F4 -> it_80274F48 -> lb_8000C2F8 (aka JOBJ_AttachPositionRotation)
+                                              // Gets part as fighter->ftData->modelLookup->x11
+                                              // Calls it_80274F48 for part attachment
 
-    // Store the SA item pointer to a fighter var and the special help item location
-    charvar->x222C_blasterGObj = item;
-    fighter_data->item_held_spec = item;
+        // // Store the SA item pointer to the fighter held item var (common items) / a char var (fox blaster)
+        // charvar->x222C_blasterGObj = item;
+        // fighter_data->item_held_spec = item;
+            // GOBJ *item_held;                   // 0x1974
+            // GOBJ *x1978;                       // 0x1978
+            // int x197c;                         // 0x197c
+            // GOBJ *item_head;                   // 0x1980
+            // GOBJ *item_held_spec;              // 0x1984, special held item
 
-    // Set the accessory callback for the SA item and fires/projectiles, which will spawn them
-    fighter_data->cb.Accessory_Persist = SAItem_Think;
-    // item_data->it_func.x38 = SAItem_Think;
-    // fighter_data->cb.Accessory1 = SAItem_SpawnPrimaryFireThink;
-    // fighter_data->cb.Accessory4 = SAItem_SpawnSecondaryFireThink;
+
+    // Set SA item as fighter accessory + JOBJ_AttachPositionRotation(fp->x20A0_accessory, fp->parts[Fighter_BoneLookup(fp, FtPart_RThumbNb)].joint) + set the keep accessory flag (0x2000?) in any fighter state changes
+    // Fighter_StoreAccessoryJObj(fighter_data, item_data->joint);  // ftCommon_SetAccessory (sets the jobj fighter_data->accessory)
+    // Fighter_StoreAccessoryJObj(fighter_data, fighter_items[MEX_ITEM_GUN]->model->model->desc);
+    // Fighter_StoreAccessoryJObj(fighter_data, stc_itPublicData->common_items[ITEM_RAYGUN]->model->model->desc);
+
+            // ftCo_800C6408 - ftCo_Entry_Anim
+                // ftCo_800D4FF4 - Player_80032070 - L_8016719C - gm_80167320, L_8016CFE0, gm_8016D32C(- gm_803DA920 - gm_801A50A0 - gm_801A4CE0 - gm_801A4014 - gm_801A43A0 - gm_801A4510 - MAIN), gm_8016F00C( - gm_801BCAF0)
+
+        // item_data->accessory() ????
+        // Use fighter accessory function(s), use item accessory function, or both?
+
+            // Set the accessory callback for the SA item and fires/projectiles, which will spawn them
+            // fighter_data->cb.Accessory_Persist = SAItem_Think;
+            // item_data->it_func.x38 = SAItem_Think;
+            // fighter_data->cb.Accessory1 = SAItem_SpawnPrimaryFireThink;
+            // fighter_data->cb.Accessory4 = SAItem_SpawnSecondaryFireThink;
+
+            // Don't think MEX costume accessories are relevant
 
     return;
 }
