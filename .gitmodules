@@ -1,3 +1,6 @@
 [submodule "m-ex"]
 	path = m-ex
 	url = https://github.com/AaronB-Hub/m-ex.git
+[submodule "akaneia-build"]
+	path = akaneia-build
+	url = https://github.com/akaneia/akaneia-build.git
