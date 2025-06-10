@@ -2,7 +2,7 @@
   "name": "Falco",
   "seriesID": 2,
   "canWallJump": true,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 10,
   "ssmBitfield1": 0,
@@ -10,7 +10,7 @@
   "announcerCall": 510004,
   "victoryTheme": 16,
   "fighterMusic1": 84,
-  "fighterMusic2": 6,
+  "fighterMusic2": 84,
   "targetTestStage": 54,
   "classicTrophyId": 66,
   "adventureTrophyId": 67,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlFcNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyFalco5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_101",
-      "csp": "csp\\csp_090"
+      "csp": "csp\\csp_096"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlFcRe.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyFalco5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_102",
-      "csp": "csp\\csp_091"
+      "csp": "csp\\csp_097"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlFcBu.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyFalco5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_103",
-      "csp": "csp\\csp_092"
+      "csp": "csp\\csp_098"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlFcGr.dat",
@@ -131,7 +131,7 @@
         "materialSymbol": "PlyFalco5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_104",
-      "csp": "csp\\csp_093"
+      "csp": "csp\\csp_099"
     }
   ],
   "kirbyCostumes": [
@@ -192,7 +192,7 @@
     "onLoad": 2148834500,
     "onRespawn": 2148833996,
     "onDestroy": 0,
-    "moveLogicPointer": 2151487560,
+    "moveLogicPointer": 2151486616,
     "demoMoveLogicPointer": 0,
     "specialN": 2148425868,
     "specialNAir": 2148426152,

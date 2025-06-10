@@ -2,7 +2,7 @@
   "name": "Yoshi",
   "seriesID": 12,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 28,
   "ssmBitfield1": 0,
@@ -10,7 +10,7 @@
   "announcerCall": 510031,
   "victoryTheme": 29,
   "fighterMusic1": 96,
-  "fighterMusic2": 95,
+  "fighterMusic2": 96,
   "targetTestStage": 54,
   "classicTrophyId": 12,
   "adventureTrophyId": 13,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 0,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlYsNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyYoshi5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_062",
-      "csp": "csp\\csp_079"
+      "csp": "csp\\csp_057"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlYsRe.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyYoshi5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_063",
-      "csp": "csp\\csp_080"
+      "csp": "csp\\csp_058"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlYsBu.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyYoshi5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_064",
-      "csp": "csp\\csp_081"
+      "csp": "csp\\csp_059"
     },
     {
-      "name": "Yellow",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlYsYe.dat",
@@ -131,10 +131,10 @@
         "materialSymbol": "PlyYoshi5KYe_Share_matanim_joint"
       },
       "icon": "icons\\ft_065",
-      "csp": "csp\\csp_082"
+      "csp": "csp\\csp_060"
     },
     {
-      "name": "Pink",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlYsPi.dat",
@@ -142,10 +142,10 @@
         "materialSymbol": "PlyYoshi5KPi_Share_matanim_joint"
       },
       "icon": "icons\\ft_066",
-      "csp": "csp\\csp_083"
+      "csp": "csp\\csp_061"
     },
     {
-      "name": "Aqua",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 5,
         "fileName": "PlYsAq.dat",
@@ -153,7 +153,7 @@
         "materialSymbol": "PlyYoshi5KAq_Share_matanim_joint"
       },
       "icon": "icons\\ft_067",
-      "csp": "csp\\csp_084"
+      "csp": "csp\\csp_062"
     }
   ],
   "kirbyCostumes": [],
@@ -183,7 +183,7 @@
     "onLoad": 2148710812,
     "onRespawn": 2148710752,
     "onDestroy": 0,
-    "moveLogicPointer": 2151474896,
+    "moveLogicPointer": 2151469776,
     "demoMoveLogicPointer": 0,
     "specialN": 2148716008,
     "specialNAir": 2148716132,

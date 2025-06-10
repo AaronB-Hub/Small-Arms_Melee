@@ -2,7 +2,7 @@
   "name": "Bowser",
   "seriesID": 6,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 15,
   "ssmBitfield1": 0,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 0,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlKpNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyKoopa5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_026",
-      "csp": "csp\\csp_025"
+      "csp": "csp\\csp_026"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlKpRe.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyKoopa5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_027",
-      "csp": "csp\\csp_026"
+      "csp": "csp\\csp_027"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlKpBu.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyKoopa5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_028",
-      "csp": "csp\\csp_027"
+      "csp": "csp\\csp_028"
     },
     {
-      "name": "Black",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlKpBk.dat",
@@ -131,7 +131,7 @@
         "materialSymbol": "PlyKoopa5KBk_Share_matanim_joint"
       },
       "icon": "icons\\ft_029",
-      "csp": "csp\\csp_028"
+      "csp": "csp\\csp_029"
     }
   ],
   "kirbyCostumes": [],

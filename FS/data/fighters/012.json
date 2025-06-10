@@ -2,7 +2,7 @@
   "name": "Pikachu",
   "seriesID": 9,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 24,
   "ssmBitfield1": 0,
@@ -10,7 +10,7 @@
   "announcerCall": 510029,
   "victoryTheme": 24,
   "fighterMusic1": 64,
-  "fighterMusic2": 65,
+  "fighterMusic2": 64,
   "targetTestStage": 50,
   "classicTrophyId": 21,
   "adventureTrophyId": 22,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlPkNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyPikachu5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_053",
-      "csp": "csp\\csp_061"
+      "csp": "csp\\csp_048"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlPkRe.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyPikachu5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_054",
-      "csp": "csp\\csp_062"
+      "csp": "csp\\csp_049"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlPkBu.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyPikachu5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_055",
-      "csp": "csp\\csp_063"
+      "csp": "csp\\csp_050"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlPkGr.dat",
@@ -131,7 +131,7 @@
         "materialSymbol": "PlyPikachu5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_056",
-      "csp": "csp\\csp_064"
+      "csp": "csp\\csp_051"
     }
   ],
   "kirbyCostumes": [],
@@ -161,7 +161,7 @@
     "onLoad": 2148680676,
     "onRespawn": 2148680820,
     "onDestroy": 0,
-    "moveLogicPointer": 2151472504,
+    "moveLogicPointer": 2151468216,
     "demoMoveLogicPointer": 0,
     "specialN": 2148681776,
     "specialNAir": 2148681884,

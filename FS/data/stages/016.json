@@ -3,12 +3,7 @@
   "location": "Kanto",
   "seriesID": 9,
   "fileName": "/GrPs",
-  "additionalFiles": [
-    "GrPs1.dat",
-    "GrPs2.dat",
-    "GrPs3.dat",
-    "GrPs4.dat"
-  ],
+  "additionalFiles": [],
   "soundBank": 48,
   "reverbValue1": 1,
   "reverbValue2": 1,

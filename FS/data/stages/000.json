@@ -16,7 +16,7 @@
   "onUnknown2": 0,
   "onTouchLine": 0,
   "onUnknown4": 0,
-  "unknownValue": 0,
+  "unknownValue": 1,
   "movingCollisionPointer": 0,
   "movingCollisionCount": 0,
   "items": [],
@@ -24,7 +24,7 @@
     "entries": []
   },
   "assets": {
-    "icon": null,
-    "banner": null
+    "icon": "sss\\icon_058",
+    "banner": "sss\\icon_059"
   }
 }

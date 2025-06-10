@@ -2,7 +2,7 @@
   "name": "Luigi",
   "seriesID": 6,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 17,
   "ssmBitfield1": 0,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 0,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlLgNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyLuigi5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_077",
-      "csp": "csp\\csp_034"
+      "csp": "csp\\csp_072"
     },
     {
-      "name": "White",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlLgWh.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyLuigi5KWh_Share_matanim_joint"
       },
       "icon": "icons\\ft_078",
-      "csp": "csp\\csp_035"
+      "csp": "csp\\csp_073"
     },
     {
-      "name": "Aqua",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlLgAq.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyLuigi5KAq_Share_matanim_joint"
       },
       "icon": "icons\\ft_079",
-      "csp": "csp\\csp_036"
+      "csp": "csp\\csp_074"
     },
     {
-      "name": "Pink",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlLgPi.dat",
@@ -131,7 +131,7 @@
         "materialSymbol": "PlyLuigi5KPi_Share_matanim_joint"
       },
       "icon": "icons\\ft_080",
-      "csp": "csp\\csp_037"
+      "csp": "csp\\csp_075"
     }
   ],
   "kirbyCostumes": [],
@@ -161,8 +161,8 @@
     "onLoad": 2148803364,
     "onRespawn": 2148803304,
     "onDestroy": 0,
-    "moveLogicPointer": 2151482920,
-    "demoMoveLogicPointer": 2151483496,
+    "moveLogicPointer": 2151474896,
+    "demoMoveLogicPointer": 0,
     "specialN": 2148804220,
     "specialNAir": 2148804332,
     "specialHi": 2148810696,

@@ -3891,12 +3891,7 @@
         "loadFunction": 0,
         "unloadFunction": 0,
         "onBootFunction": 0,
-        "minorScene": {
-          "length": 0,
-          "stride": 24,
-          "array": [],
-          "trimmedSize": -1
-        },
+        "minorScene": null,
         "fileName": null
       }
     ],

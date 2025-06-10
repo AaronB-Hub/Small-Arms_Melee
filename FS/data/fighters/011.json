@@ -2,7 +2,7 @@
   "name": "Nana",
   "seriesID": 4,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 13,
   "ssmBitfield1": 0,
@@ -16,7 +16,7 @@
   "adventureTrophyId": 0,
   "allStarTrophyId": 0,
   "racetoTheFinishTime": 0,
-  "resultScreenScale": 0,
+  "resultScreenScale": 1,
   "endingScreenScale": 0,
   "items": [],
   "boneDefinitions": {
@@ -85,12 +85,12 @@
     "resultBannerBig": null,
     "resultSmallBig": null
   },
-  "redCostumeIndex": 100,
-  "blueCostumeIndex": 97,
-  "greenCostumeIndex": 116,
+  "redCostumeIndex": 0,
+  "blueCostumeIndex": 0,
+  "greenCostumeIndex": 0,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlNnNr.dat",
@@ -101,7 +101,7 @@
       "csp": null
     },
     {
-      "name": "Yellow",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlNnYe.dat",
@@ -112,7 +112,7 @@
       "csp": null
     },
     {
-      "name": "Aqua",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlNnAq.dat",
@@ -123,7 +123,7 @@
       "csp": null
     },
     {
-      "name": "White",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlNnWh.dat",
@@ -143,16 +143,16 @@
     "animFile": "PlNnAJ.dat",
     "animCount": 321,
     "demoFile": "",
-    "demoWait": "",
-    "demoResult": "",
-    "demoIntro": "",
-    "demoEnding": "",
-    "rstAnimFile": "",
+    "demoWait": "ftDemoViWaitMotionFilePopo",
+    "demoResult": "ftDemoResultMotionFileNana",
+    "demoIntro": "ftDemoIntroMotionFileNana",
+    "demoEnding": "ftDemoEndingMotionFileNana",
+    "rstAnimFile": "GmRstMSb.dat",
     "rstAnimCount": 14,
     "effectFile": "EfIcData.dat",
     "effectSymbol": "effIceclimberDataTable",
-    "kirbyCapFileName": "",
-    "kirbyCapSymbol": "",
+    "kirbyCapFileName": null,
+    "kirbyCapSymbol": null,
     "kirbyEffectFile": "EfKbIc.dat",
     "kirbyEffectSymbol": "effKirbyIceDataTable"
   },
@@ -161,7 +161,7 @@
     "onLoad": 2148675292,
     "onRespawn": 2148675368,
     "onDestroy": 0,
-    "moveLogicPointer": 2151471160,
+    "moveLogicPointer": 2151484160,
     "demoMoveLogicPointer": 0,
     "specialN": 2148659704,
     "specialNAir": 2148659820,

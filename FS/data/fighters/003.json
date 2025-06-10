@@ -2,7 +2,7 @@
   "name": "DK",
   "seriesID": 1,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 8,
   "ssmBitfield1": 0,
@@ -10,7 +10,7 @@
   "announcerCall": 510001,
   "victoryTheme": 13,
   "fighterMusic1": 50,
-  "fighterMusic2": 33,
+  "fighterMusic2": 50,
   "targetTestStage": 36,
   "classicTrophyId": 3,
   "adventureTrophyId": 4,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 4,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlDkNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyDonkey5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_015",
-      "csp": "csp\\csp_006"
+      "csp": "csp\\csp_015"
     },
     {
-      "name": "Black",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlDkBk.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyDonkey5KBk_Share_matanim_joint"
       },
       "icon": "icons\\ft_016",
-      "csp": "csp\\csp_007"
+      "csp": "csp\\csp_016"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlDkRe.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyDonkey5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_017",
-      "csp": "csp\\csp_008"
+      "csp": "csp\\csp_017"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlDkBu.dat",
@@ -131,10 +131,10 @@
         "materialSymbol": "PlyDonkey5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_018",
-      "csp": "csp\\csp_009"
+      "csp": "csp\\csp_018"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlDkGr.dat",
@@ -142,7 +142,7 @@
         "materialSymbol": "PlyDonkey5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_019",
-      "csp": "csp\\csp_010"
+      "csp": "csp\\csp_019"
     }
   ],
   "kirbyCostumes": [
@@ -203,7 +203,7 @@
     "onLoad": 2148587948,
     "onRespawn": 2148587328,
     "onDestroy": 0,
-    "moveLogicPointer": 2151462968,
+    "moveLogicPointer": 2151490536,
     "demoMoveLogicPointer": 0,
     "specialN": 2148590964,
     "specialNAir": 2148591260,

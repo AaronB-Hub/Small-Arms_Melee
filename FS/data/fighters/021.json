@@ -2,7 +2,7 @@
   "name": "Dr. Mario",
   "seriesID": 6,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 9,
   "ssmBitfield1": 0,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlDrNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyDrmario5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_096",
-      "csp": "csp\\csp_099"
+      "csp": "csp\\csp_091"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlDrRe.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyDrmario5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_097",
-      "csp": "csp\\csp_100"
+      "csp": "csp\\csp_092"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlDrBu.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyDrmario5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_098",
-      "csp": "csp\\csp_101"
+      "csp": "csp\\csp_093"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlDrGr.dat",
@@ -131,10 +131,10 @@
         "materialSymbol": "PlyDrmario5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_099",
-      "csp": "csp\\csp_102"
+      "csp": "csp\\csp_094"
     },
     {
-      "name": "Black",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlDrBk.dat",
@@ -142,7 +142,7 @@
         "materialSymbol": "PlyDrmario5KBk_Share_matanim_joint"
       },
       "icon": "icons\\ft_100",
-      "csp": "csp\\csp_103"
+      "csp": "csp\\csp_095"
     }
   ],
   "kirbyCostumes": [],
@@ -172,7 +172,7 @@
     "onLoad": 2148832484,
     "onRespawn": 2148832412,
     "onDestroy": 0,
-    "moveLogicPointer": 2151486616,
+    "moveLogicPointer": 2151485344,
     "demoMoveLogicPointer": 0,
     "specialN": 2148404648,
     "specialNAir": 2148405312,

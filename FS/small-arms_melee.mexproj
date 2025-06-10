@@ -20,11 +20,7 @@
     "entries": [
       {
         "musicID": 52,
-        "chanceToPlay": 75
-      },
-      {
-        "musicID": 54,
-        "chanceToPlay": 25
+        "chanceToPlay": 100
       }
     ]
   },
@@ -40,7 +36,7 @@
       "icons\\rs_007"
     ],
     "cssBack": "css\\back",
-    "cssNull": "css\\null",
+    "cssNull": null,
     "sssNull": "sss\\null",
     "sssLockedNull": "sss\\locked",
     "sssRandomBanner": "sss\\random",
@@ -88,7 +84,9 @@
       "029.json",
       "030.json",
       "031.json",
-      "032.json"
+      "032.json",
+      "033.json",
+      "034.json"
     ]
   },
   "stageSaveMap": {
@@ -163,7 +161,8 @@
       "067.json",
       "068.json",
       "069.json",
-      "070.json"
+      "070.json",
+      "071.json"
     ]
   },
   "soundSaveMap": {

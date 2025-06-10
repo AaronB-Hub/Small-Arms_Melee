@@ -2,7 +2,7 @@
   "name": "Ganondorf",
   "seriesID": 13,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 30,
   "ssmBitfield1": 0,
@@ -90,59 +90,59 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlGnNr.dat",
         "jointSymbol": "PlyGanon5K_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_113",
-      "csp": "csp\\csp_113"
+      "csp": "csp\\csp_108"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlGnRe.dat",
         "jointSymbol": "PlyGanon5KRe_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_114",
-      "csp": "csp\\csp_114"
+      "csp": "csp\\csp_109"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlGnBu.dat",
         "jointSymbol": "PlyGanon5KBu_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_115",
-      "csp": "csp\\csp_115"
+      "csp": "csp\\csp_110"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlGnGr.dat",
         "jointSymbol": "PlyGanon5KGr_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_116",
-      "csp": "csp\\csp_116"
+      "csp": "csp\\csp_111"
     },
     {
-      "name": "Purple",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlGnLa.dat",
         "jointSymbol": "PlyGanon5KLa_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_117",
-      "csp": "csp\\csp_117"
+      "csp": "csp\\csp_112"
     }
   ],
   "kirbyCostumes": [],

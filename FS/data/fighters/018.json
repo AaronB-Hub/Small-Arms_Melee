@@ -2,7 +2,7 @@
   "name": "Marth",
   "seriesID": 7,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 19,
   "ssmBitfield1": 0,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 2,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlMsNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyMars5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_081",
-      "csp": "csp\\csp_043"
+      "csp": "csp\\csp_076"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlMsRe.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyMars5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_082",
-      "csp": "csp\\csp_044"
+      "csp": "csp\\csp_077"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlMsGr.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyMars5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_083",
-      "csp": "csp\\csp_045"
+      "csp": "csp\\csp_078"
     },
     {
-      "name": "Black",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlMsBk.dat",
@@ -131,10 +131,10 @@
         "materialSymbol": "PlyMars5KBk_Share_matanim_joint"
       },
       "icon": "icons\\ft_084",
-      "csp": "csp\\csp_046"
+      "csp": "csp\\csp_079"
     },
     {
-      "name": "White",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlMsWh.dat",
@@ -142,7 +142,7 @@
         "materialSymbol": "PlyMars5KWh_Share_matanim_joint"
       },
       "icon": "icons\\ft_085",
-      "csp": "csp\\csp_047"
+      "csp": "csp\\csp_080"
     }
   ],
   "kirbyCostumes": [],
@@ -172,7 +172,7 @@
     "onLoad": 2148754604,
     "onRespawn": 2148754008,
     "onDestroy": 0,
-    "moveLogicPointer": 2151478304,
+    "moveLogicPointer": 2151479896,
     "demoMoveLogicPointer": 0,
     "specialN": 2148755268,
     "specialNAir": 2148755384,

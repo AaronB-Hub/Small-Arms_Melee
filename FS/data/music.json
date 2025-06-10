@@ -1,10 +1,10 @@
 [
   {
-    "name": "All-Star Rest Area",
+    "name": "All\uFF0DStar Rest Area",
     "fileName": "1p_qk.hps"
   },
   {
-    "name": "Fire Emblem (Meeting Theme)",
+    "name": "Fire Emblem \uFF08Meeting Theme\uFF09",
     "fileName": "akaneia.hps"
   },
   {
@@ -16,7 +16,7 @@
     "fileName": "bigblue.hps"
   },
   {
-    "name": "Princess Peach\u0027s Castle",
+    "name": "Princess Peach\u2019s Castle",
     "fileName": "castle.hps"
   },
   {
@@ -28,11 +28,11 @@
     "fileName": "corneria.hps"
   },
   {
-    "name": "Doctor Mario (Fever)",
+    "name": "Doctor Mario \uFF08Fever\uFF09",
     "fileName": "docmari.hps"
   },
   {
-    "name": "1-Player Mode Ending",
+    "name": "1\uFF0DPlayer Mode Ending",
     "fileName": "ending.hps"
   },
   {
@@ -40,11 +40,11 @@
     "fileName": "famidemo.hps"
   },
   {
-    "name": "1-Player Stage Clear Fanfare 1",
+    "name": "1\uFF0DPlayer Stage Clear Fanfare 1",
     "fileName": "ff_1p01.hps"
   },
   {
-    "name": "1-Player Stage Clear Fanfare 2",
+    "name": "1\uFF0DPlayer Stage Clear Fanfare 2",
     "fileName": "ff_1p02.hps"
   },
   {
@@ -60,7 +60,7 @@
     "fileName": "ff_emb.hps"
   },
   {
-    "name": "Game \u0026 Watch Fanfare",
+    "name": "Game \uFF06 Watch Fanfare",
     "fileName": "ff_flat.hps"
   },
   {
@@ -68,7 +68,7 @@
     "fileName": "ff_fox.hps"
   },
   {
-    "name": "F-Zero Fanfare",
+    "name": "F\uFF0DZero Fanfare",
     "fileName": "ff_fzero.hps"
   },
   {
@@ -152,11 +152,11 @@
     "fileName": "howto_s.hps"
   },
   {
-    "name": "Multi-Man Melee",
+    "name": "Multi\uFF0DMan Melee",
     "fileName": "hyaku.hps"
   },
   {
-    "name": "Multi-Man Melee (Alt)",
+    "name": "Multi\uFF0DMan Melee \uFF08Alt\uFF09",
     "fileName": "hyaku2.hps"
   },
   {
@@ -172,11 +172,11 @@
     "fileName": "inis1_02.hps"
   },
   {
-    "name": "Mushroom Kingdom (Alt)",
+    "name": "Mushroom Kingdom \uFF08Alt\uFF09",
     "fileName": "inis2_01.hps"
   },
   {
-    "name": "Mushroom Kingdom (Alt) 20 seconds",
+    "name": "Mushroom Kingdom \uFF08Alt\uFF09 20 seconds",
     "fileName": "inis2_02.hps"
   },
   {
@@ -216,7 +216,7 @@
     "fileName": "menu02.hps"
   },
   {
-    "name": "Menu (Alternate)",
+    "name": "Menu Alternate",
     "fileName": "menu3.hps"
   },
   {
@@ -236,7 +236,7 @@
     "fileName": "old_kb.hps"
   },
   {
-    "name": "N64 Yoshi\u0027s Island",
+    "name": "N64 Yoshi\u2019s Island",
     "fileName": "old_ys.hps"
   },
   {
@@ -296,7 +296,7 @@
     "fileName": "s_select.hps"
   },
   {
-    "name": "Saria\u0027s Song",
+    "name": "Saria\u2019s Song",
     "fileName": "saria.hps"
   },
   {
@@ -324,7 +324,7 @@
     "fileName": "sp_metal.hps"
   },
   {
-    "name": "Battlefield",
+    "name": "Race to the Finish",
     "fileName": "sp_zako.hps"
   },
   {
@@ -332,7 +332,7 @@
     "fileName": "swm_15min.hps"
   },
   {
-    "name": "Targets!",
+    "name": "Targets\uFF01",
     "fileName": "target.hps"
   },
   {
@@ -356,15 +356,15 @@
     "fileName": "vl_cosmos.hps"
   },
   {
-    "name": "Giant Bowser\u0027s Defeat (Alternative)",
+    "name": "Giant Bowser\u2019s Defeat \uFF08Alternative\uFF09",
     "fileName": "vl_figure1.hps"
   },
   {
-    "name": "Giga Bowser\u0027s Defeat",
+    "name": "Giga Bowser\u2019s Defeat",
     "fileName": "vl_figure2.hps"
   },
   {
-    "name": "Intro to Grand Prix",
+    "name": "Intro to Grand Prix stage",
     "fileName": "vl_fzero.hps"
   },
   {
@@ -380,11 +380,11 @@
     "fileName": "vs_hyou2.hps"
   },
   {
-    "name": "Yoshi\u0027s Island",
+    "name": "Yoshi\u2019s Island",
     "fileName": "yorster.hps"
   },
   {
-    "name": "Yoshi\u0027s Story",
+    "name": "Yoshi\u2019s Story",
     "fileName": "ystory.hps"
   },
   {

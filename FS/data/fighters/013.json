@@ -2,7 +2,7 @@
   "name": "Samus",
   "seriesID": 10,
   "canWallJump": true,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 26,
   "ssmBitfield1": 0,
@@ -10,7 +10,7 @@
   "announcerCall": 510030,
   "victoryTheme": 25,
   "fighterMusic1": 97,
-  "fighterMusic2": 51,
+  "fighterMusic2": 97,
   "targetTestStage": 52,
   "classicTrophyId": 9,
   "adventureTrophyId": 10,
@@ -90,59 +90,59 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlSsNr.dat",
         "jointSymbol": "PlySamus5K_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_057",
-      "csp": "csp\\csp_074"
+      "csp": "csp\\csp_052"
     },
     {
-      "name": "Pink",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlSsPi.dat",
         "jointSymbol": "PlySamus5KPi_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_058",
-      "csp": "csp\\csp_075"
+      "csp": "csp\\csp_053"
     },
     {
-      "name": "Black",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlSsBk.dat",
         "jointSymbol": "PlySamus5KBk_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_059",
-      "csp": "csp\\csp_076"
+      "csp": "csp\\csp_054"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlSsGr.dat",
         "jointSymbol": "PlySamus5KGr_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_060",
-      "csp": "csp\\csp_077"
+      "csp": "csp\\csp_055"
     },
     {
-      "name": "Purple",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlSsLa.dat",
         "jointSymbol": "PlySamus5KLa_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_061",
-      "csp": "csp\\csp_078"
+      "csp": "csp\\csp_056"
     }
   ],
   "kirbyCostumes": [],
@@ -172,7 +172,7 @@
     "onLoad": 2148696956,
     "onRespawn": 2148696876,
     "onDestroy": 0,
-    "moveLogicPointer": 2151473872,
+    "moveLogicPointer": 2151472504,
     "demoMoveLogicPointer": 0,
     "specialN": 2148701516,
     "specialNAir": 2148701680,

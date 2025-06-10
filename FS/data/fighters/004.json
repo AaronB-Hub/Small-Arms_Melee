@@ -2,7 +2,7 @@
   "name": "Kirby",
   "seriesID": 5,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 14,
   "ssmBitfield1": 0,
@@ -10,7 +10,7 @@
   "announcerCall": 510015,
   "victoryTheme": 20,
   "fighterMusic1": 35,
-  "fighterMusic2": 49,
+  "fighterMusic2": 35,
   "targetTestStage": 41,
   "classicTrophyId": 15,
   "adventureTrophyId": 16,
@@ -169,7 +169,7 @@
   "greenCostumeIndex": 4,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlKbNr.dat",
@@ -177,10 +177,10 @@
         "materialSymbol": "PlyKirby5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_020",
-      "csp": "csp\\csp_019"
+      "csp": "csp\\csp_020"
     },
     {
-      "name": "Yellow",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlKbYe.dat",
@@ -188,10 +188,10 @@
         "materialSymbol": "PlyKirby5KYe_Share_matanim_joint"
       },
       "icon": "icons\\ft_021",
-      "csp": "csp\\csp_020"
+      "csp": "csp\\csp_021"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlKbBu.dat",
@@ -199,10 +199,10 @@
         "materialSymbol": "PlyKirby5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_022",
-      "csp": "csp\\csp_021"
+      "csp": "csp\\csp_022"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlKbRe.dat",
@@ -210,10 +210,10 @@
         "materialSymbol": "PlyKirby5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_023",
-      "csp": "csp\\csp_022"
+      "csp": "csp\\csp_023"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlKbGr.dat",
@@ -221,10 +221,10 @@
         "materialSymbol": "PlyKirby5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_024",
-      "csp": "csp\\csp_023"
+      "csp": "csp\\csp_024"
     },
     {
-      "name": "White",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 5,
         "fileName": "PlKbWh.dat",
@@ -232,7 +232,7 @@
         "materialSymbol": "PlyKirby5KWh_Share_matanim_joint"
       },
       "icon": "icons\\ft_025",
-      "csp": "csp\\csp_024"
+      "csp": "csp\\csp_025"
     }
   ],
   "kirbyCostumes": [],
@@ -252,8 +252,8 @@
     "rstAnimCount": 18,
     "effectFile": "EfKbData.dat",
     "effectSymbol": "effKirbyDataTable",
-    "kirbyCapFileName": "",
-    "kirbyCapSymbol": "",
+    "kirbyCapFileName": null,
+    "kirbyCapSymbol": null,
     "kirbyEffectFile": "",
     "kirbyEffectSymbol": ""
   },

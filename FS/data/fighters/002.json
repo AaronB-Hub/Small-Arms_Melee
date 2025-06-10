@@ -2,7 +2,7 @@
   "name": "C. Falcon",
   "seriesID": 0,
   "canWallJump": true,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 6,
   "ssmBitfield1": 0,
@@ -10,7 +10,7 @@
   "announcerCall": 510000,
   "victoryTheme": 17,
   "fighterMusic1": 56,
-  "fighterMusic2": 3,
+  "fighterMusic2": 56,
   "targetTestStage": 34,
   "classicTrophyId": 27,
   "adventureTrophyId": 28,
@@ -90,70 +90,70 @@
   "greenCostumeIndex": 4,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlCaNr.dat",
         "jointSymbol": "PlyCaptain5K_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_009",
-      "csp": "csp\\csp"
+      "csp": "csp\\csp_009"
     },
     {
-      "name": "Gray",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlCaGy.dat",
         "jointSymbol": "PlyCaptain5KGy_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_010",
-      "csp": "csp\\csp_001"
+      "csp": "csp\\csp_010"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlCaRe.",
         "jointSymbol": "PlyCaptain5KRe_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_011",
-      "csp": "csp\\csp_002"
+      "csp": "csp\\csp_011"
     },
     {
-      "name": "White",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlCaWh.dat",
         "jointSymbol": "PlyCaptain5KWh_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_012",
-      "csp": "csp\\csp_003"
+      "csp": "csp\\csp_012"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlCaGr.dat",
         "jointSymbol": "PlyCaptain5KGr_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_013",
-      "csp": "csp\\csp_004"
+      "csp": "csp\\csp_013"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 5,
         "fileName": "PlCaBu.dat",
         "jointSymbol": "PlyCaptain5KBu_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_014",
-      "csp": "csp\\csp_005"
+      "csp": "csp\\csp_014"
     }
   ],
   "kirbyCostumes": [],
@@ -183,7 +183,7 @@
     "onLoad": 2148412140,
     "onRespawn": 2148411528,
     "onDestroy": 0,
-    "moveLogicPointer": 2151445176,
+    "moveLogicPointer": 2151446408,
     "demoMoveLogicPointer": 0,
     "specialN": 2148412288,
     "specialNAir": 2148412416,

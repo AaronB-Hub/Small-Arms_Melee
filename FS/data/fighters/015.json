@@ -2,7 +2,7 @@
   "name": "Jigglypuff",
   "seriesID": 9,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 25,
   "ssmBitfield1": 0,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlPrNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyPurin5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_068",
-      "csp": "csp\\csp_069"
+      "csp": "csp\\csp_063"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlPrRe.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyPurin5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_069",
-      "csp": "csp\\csp_070"
+      "csp": "csp\\csp_064"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlPrBu.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyPurin5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_070",
-      "csp": "csp\\csp_071"
+      "csp": "csp\\csp_065"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlPrGr.dat",
@@ -131,10 +131,10 @@
         "materialSymbol": "PlyPurin5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_071",
-      "csp": "csp\\csp_072"
+      "csp": "csp\\csp_066"
     },
     {
-      "name": "Yellow",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlPrYe.dat",
@@ -142,7 +142,7 @@
         "materialSymbol": "PlyPurin5KYe_Share_matanim_joint"
       },
       "icon": "icons\\ft_072",
-      "csp": "csp\\csp_073"
+      "csp": "csp\\csp_067"
     }
   ],
   "kirbyCostumes": [

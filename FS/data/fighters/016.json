@@ -2,7 +2,7 @@
   "name": "Mewtwo",
   "seriesID": 9,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 20,
   "ssmBitfield1": 0,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlMtNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyMewtwo5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_073",
-      "csp": "csp\\csp_048"
+      "csp": "csp\\csp_068"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlMtRe.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyMewtwo5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_074",
-      "csp": "csp\\csp_049"
+      "csp": "csp\\csp_069"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlMtBu.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyMewtwo5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_075",
-      "csp": "csp\\csp_050"
+      "csp": "csp\\csp_070"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlMtGr.dat",
@@ -131,7 +131,7 @@
         "materialSymbol": "PlyMewtwo5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_076",
-      "csp": "csp\\csp_051"
+      "csp": "csp\\csp_071"
     }
   ],
   "kirbyCostumes": [
@@ -192,7 +192,7 @@
     "onLoad": 2148814408,
     "onRespawn": 2148814332,
     "onDestroy": 0,
-    "moveLogicPointer": 2151484160,
+    "moveLogicPointer": 2151473872,
     "demoMoveLogicPointer": 0,
     "specialN": 2148823840,
     "specialNAir": 2148824052,

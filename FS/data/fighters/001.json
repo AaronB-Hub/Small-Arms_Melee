@@ -2,7 +2,7 @@
   "name": "Fox",
   "seriesID": 2,
   "canWallJump": true,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 11,
   "ssmBitfield1": 0,
@@ -10,7 +10,7 @@
   "announcerCall": 510005,
   "victoryTheme": 16,
   "fighterMusic1": 6,
-  "fighterMusic2": 84,
+  "fighterMusic2": 6,
   "targetTestStage": 39,
   "classicTrophyId": 18,
   "adventureTrophyId": 19,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlFxNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyFox5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_005",
-      "csp": "csp\\csp_011"
+      "csp": "csp\\csp_005"
     },
     {
-      "name": "Orange",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlFxOr.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyFox5KOr_Share_matanim_joint"
       },
       "icon": "icons\\ft_006",
-      "csp": "csp\\csp_012"
+      "csp": "csp\\csp_006"
     },
     {
-      "name": "Purple",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlFxLa.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyFox5KLa_Share_matanim_joint"
       },
       "icon": "icons\\ft_007",
-      "csp": "csp\\csp_013"
+      "csp": "csp\\csp_007"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlFxGr.dat",
@@ -131,7 +131,7 @@
         "materialSymbol": "PlyFox5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_008",
-      "csp": "csp\\csp_014"
+      "csp": "csp\\csp_008"
     }
   ],
   "kirbyCostumes": [],
@@ -161,7 +161,7 @@
     "onLoad": 2148423596,
     "onRespawn": 2148422996,
     "onDestroy": 0,
-    "moveLogicPointer": 2151446408,
+    "moveLogicPointer": 2151462968,
     "demoMoveLogicPointer": 0,
     "specialN": 2148425868,
     "specialNAir": 2148426152,

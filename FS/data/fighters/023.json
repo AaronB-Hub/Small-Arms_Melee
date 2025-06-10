@@ -2,7 +2,7 @@
   "name": "Pichu",
   "seriesID": 9,
   "canWallJump": true,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 23,
   "ssmBitfield1": 0,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlPcNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyPichu5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_105",
-      "csp": "csp\\csp_109"
+      "csp": "csp\\csp_100"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlPcRe.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyPichu5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_106",
-      "csp": "csp\\csp_110"
+      "csp": "csp\\csp_101"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlPcBu.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyPichu5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_107",
-      "csp": "csp\\csp_111"
+      "csp": "csp\\csp_102"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlPcGr.dat",
@@ -131,7 +131,7 @@
         "materialSymbol": "PlyPichu5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_108",
-      "csp": "csp\\csp_112"
+      "csp": "csp\\csp_103"
     }
   ],
   "kirbyCostumes": [],
@@ -161,7 +161,7 @@
     "onLoad": 2148834868,
     "onRespawn": 2148834988,
     "onDestroy": 0,
-    "moveLogicPointer": 2151489192,
+    "moveLogicPointer": 2151493248,
     "demoMoveLogicPointer": 0,
     "specialN": 2148681776,
     "specialNAir": 2148681884,

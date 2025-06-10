@@ -10,7 +10,7 @@
   "announcerCall": 510033,
   "victoryTheme": 21,
   "fighterMusic1": 34,
-  "fighterMusic2": 74,
+  "fighterMusic2": 34,
   "targetTestStage": 55,
   "classicTrophyId": 39,
   "adventureTrophyId": 40,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlZdNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyZelda5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_086",
-      "csp": "csp\\csp_085"
+      "csp": "csp\\csp_081"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlZdRe.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyZelda5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_087",
-      "csp": "csp\\csp_086"
+      "csp": "csp\\csp_082"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlZdBu.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyZelda5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_088",
-      "csp": "csp\\csp_087"
+      "csp": "csp\\csp_083"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlZdGr.dat",
@@ -131,10 +131,10 @@
         "materialSymbol": "PlyZelda5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_089",
-      "csp": "csp\\csp_088"
+      "csp": "csp\\csp_084"
     },
     {
-      "name": "White",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlZdWh.dat",
@@ -142,7 +142,7 @@
         "materialSymbol": "PlyZelda5KWh_Share_matanim_joint"
       },
       "icon": "icons\\ft_090",
-      "csp": "csp\\csp_089"
+      "csp": "csp\\csp_085"
     }
   ],
   "kirbyCostumes": [],
@@ -172,7 +172,7 @@
     "onLoad": 2148766516,
     "onRespawn": 2148766428,
     "onDestroy": 0,
-    "moveLogicPointer": 2151479896,
+    "moveLogicPointer": 2151465056,
     "demoMoveLogicPointer": 0,
     "specialN": 2148772136,
     "specialNAir": 2148772260,

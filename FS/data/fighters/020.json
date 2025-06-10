@@ -2,7 +2,7 @@
   "name": "Young Link",
   "seriesID": 13,
   "canWallJump": true,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 7,
   "ssmBitfield1": 0,
@@ -97,7 +97,7 @@
   "greenCostumeIndex": 0,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlClNr.dat",
@@ -105,10 +105,10 @@
         "materialSymbol": "PlyClink5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_091",
-      "csp": "csp\\csp_094"
+      "csp": "csp\\csp_086"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlClRe.dat",
@@ -116,10 +116,10 @@
         "materialSymbol": "PlyClink5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_092",
-      "csp": "csp\\csp_095"
+      "csp": "csp\\csp_087"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlClBu.dat",
@@ -127,10 +127,10 @@
         "materialSymbol": "PlyClink5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_093",
-      "csp": "csp\\csp_096"
+      "csp": "csp\\csp_088"
     },
     {
-      "name": "White",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlClWh.dat",
@@ -138,10 +138,10 @@
         "materialSymbol": "PlyClink5KWh_Share_matanim_joint"
       },
       "icon": "icons\\ft_094",
-      "csp": "csp\\csp_097"
+      "csp": "csp\\csp_089"
     },
     {
-      "name": "Black",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlClBk.dat",
@@ -149,7 +149,7 @@
         "materialSymbol": "PlyClink5KBk_Share_matanim_joint"
       },
       "icon": "icons\\ft_095",
-      "csp": "csp\\csp_098"
+      "csp": "csp\\csp_090"
     }
   ],
   "kirbyCostumes": [],
@@ -179,7 +179,7 @@
     "onLoad": 2148830436,
     "onRespawn": 2148830308,
     "onDestroy": 0,
-    "moveLogicPointer": 2151485344,
+    "moveLogicPointer": 2151487560,
     "demoMoveLogicPointer": 0,
     "specialN": 2148453804,
     "specialNAir": 2148454264,

@@ -10,7 +10,7 @@
   "announcerCall": 510011,
   "victoryTheme": 19,
   "fighterMusic1": 40,
-  "fighterMusic2": 2,
+  "fighterMusic2": 40,
   "targetTestStage": 40,
   "classicTrophyId": 36,
   "adventureTrophyId": 37,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 1,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlPpNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyPopo5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_049",
-      "csp": "csp\\csp_065"
+      "csp": "csp\\csp_044"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlPpGr.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyPopo5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_050",
-      "csp": "csp\\csp_066"
+      "csp": "csp\\csp_045"
     },
     {
-      "name": "Orange",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlPpOr.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyPopo5KOr_Share_matanim_joint"
       },
       "icon": "icons\\ft_051",
-      "csp": "csp\\csp_067"
+      "csp": "csp\\csp_046"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlPpRe.dat",
@@ -131,7 +131,7 @@
         "materialSymbol": "PlyPopo5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_052",
-      "csp": "csp\\csp_068"
+      "csp": "csp\\csp_047"
     }
   ],
   "kirbyCostumes": [],
@@ -161,7 +161,7 @@
     "onLoad": 2148659004,
     "onRespawn": 2148659176,
     "onDestroy": 0,
-    "moveLogicPointer": 2151469776,
+    "moveLogicPointer": 2151484160,
     "demoMoveLogicPointer": 0,
     "specialN": 2148659704,
     "specialNAir": 2148659820,

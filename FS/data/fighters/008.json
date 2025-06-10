@@ -2,7 +2,7 @@
   "name": "Ness",
   "seriesID": 8,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 21,
   "ssmBitfield1": 0,
@@ -10,7 +10,7 @@
   "announcerCall": 510026,
   "victoryTheme": 23,
   "fighterMusic1": 60,
-  "fighterMusic2": 31,
+  "fighterMusic2": 60,
   "targetTestStage": 47,
   "classicTrophyId": 24,
   "adventureTrophyId": 25,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlNsNr.dat",
@@ -98,10 +98,10 @@
         "materialSymbol": "PlyNess5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_040",
-      "csp": "csp\\csp_052"
+      "csp": "csp\\csp_035"
     },
     {
-      "name": "Yellow",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlNsYe.dat",
@@ -109,10 +109,10 @@
         "materialSymbol": "PlyNess5KYe_Share_matanim_joint"
       },
       "icon": "icons\\ft_041",
-      "csp": "csp\\csp_053"
+      "csp": "csp\\csp_036"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlNsBu.dat",
@@ -120,10 +120,10 @@
         "materialSymbol": "PlyNess5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_042",
-      "csp": "csp\\csp_054"
+      "csp": "csp\\csp_037"
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlNsGr.dat",
@@ -131,7 +131,7 @@
         "materialSymbol": "PlyNess5KGr_Share_matanim_joint"
       },
       "icon": "icons\\ft_043",
-      "csp": "csp\\csp_055"
+      "csp": "csp\\csp_038"
     }
   ],
   "kirbyCostumes": [],
@@ -161,8 +161,8 @@
     "onLoad": 2148616204,
     "onRespawn": 2148616128,
     "onDestroy": 0,
-    "moveLogicPointer": 2151466576,
-    "demoMoveLogicPointer": 0,
+    "moveLogicPointer": 2151444768,
+    "demoMoveLogicPointer": 2151445088,
     "specialN": 2148626324,
     "specialNAir": 2148626484,
     "specialHi": 2148630816,

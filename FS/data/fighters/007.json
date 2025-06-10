@@ -10,7 +10,7 @@
   "announcerCall": 510032,
   "victoryTheme": 21,
   "fighterMusic1": 34,
-  "fighterMusic2": 74,
+  "fighterMusic2": 34,
   "targetTestStage": 53,
   "classicTrophyId": 42,
   "adventureTrophyId": 43,
@@ -90,7 +90,7 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlSkNr.dat",
@@ -101,7 +101,7 @@
       "csp": null
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlSkRe.dat",
@@ -112,7 +112,7 @@
       "csp": null
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlSkBu.dat",
@@ -123,7 +123,7 @@
       "csp": null
     },
     {
-      "name": "Green",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlSkGr.dat",
@@ -134,7 +134,7 @@
       "csp": null
     },
     {
-      "name": "White",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlSkWh.dat",
@@ -172,8 +172,8 @@
     "onLoad": 2148597996,
     "onRespawn": 2148597908,
     "onDestroy": 0,
-    "moveLogicPointer": 2151465056,
-    "demoMoveLogicPointer": 0,
+    "moveLogicPointer": 2151482920,
+    "demoMoveLogicPointer": 2151483496,
     "specialN": 2148606184,
     "specialNAir": 2148606360,
     "specialHi": 2148610256,

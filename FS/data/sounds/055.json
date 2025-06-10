@@ -1,7 +1,11 @@
 {
-  "name": "",
+  "name": "Null",
   "fileName": "null.ssm",
   "groupFlags": 0,
   "flags": 0,
-  "sounds": []
+  "sounds": [
+    {
+      "name": ""
+    }
+  ]
 }

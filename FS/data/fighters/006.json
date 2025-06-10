@@ -2,7 +2,7 @@
   "name": "Link",
   "seriesID": 13,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 16,
   "ssmBitfield1": 0,
@@ -10,7 +10,7 @@
   "announcerCall": 510018,
   "victoryTheme": 21,
   "fighterMusic1": 34,
-  "fighterMusic2": 75,
+  "fighterMusic2": 34,
   "targetTestStage": 43,
   "classicTrophyId": 6,
   "adventureTrophyId": 7,
@@ -97,7 +97,7 @@
   "greenCostumeIndex": 0,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlLkNr.dat",
@@ -105,10 +105,10 @@
         "materialSymbol": "PlyLink5K_Share_matanim_joint"
       },
       "icon": "icons\\ft_030",
-      "csp": "csp\\csp_029"
+      "csp": "csp\\csp_030"
     },
     {
-      "name": "Red",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlLkRe.dat",
@@ -116,10 +116,10 @@
         "materialSymbol": "PlyLink5KRe_Share_matanim_joint"
       },
       "icon": "icons\\ft_031",
-      "csp": "csp\\csp_030"
+      "csp": "csp\\csp_031"
     },
     {
-      "name": "Blue",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlLkBu.dat",
@@ -127,10 +127,10 @@
         "materialSymbol": "PlyLink5KBu_Share_matanim_joint"
       },
       "icon": "icons\\ft_032",
-      "csp": "csp\\csp_031"
+      "csp": "csp\\csp_032"
     },
     {
-      "name": "Black",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlLkBk.dat",
@@ -138,10 +138,10 @@
         "materialSymbol": "PlyLink5KBk_Share_matanim_joint"
       },
       "icon": "icons\\ft_033",
-      "csp": "csp\\csp_032"
+      "csp": "csp\\csp_033"
     },
     {
-      "name": "White",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 4,
         "fileName": "PlLkWh.dat",
@@ -149,7 +149,7 @@
         "materialSymbol": "PlyLink5KWh_Share_matanim_joint"
       },
       "icon": "icons\\ft_034",
-      "csp": "csp\\csp_033"
+      "csp": "csp\\csp_034"
     }
   ],
   "kirbyCostumes": [],

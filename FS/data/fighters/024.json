@@ -1,8 +1,8 @@
 {
-  "name": "Mr. Game \u0026 Watch",
+  "name": "Game and Watch",
   "seriesID": 3,
   "canWallJump": false,
-  "subCharacter": 0,
+  "subCharacter": 255,
   "subCharacterBehavior": 0,
   "soundBank": 29,
   "ssmBitfield1": 0,
@@ -90,48 +90,48 @@
   "greenCostumeIndex": 3,
   "costumes": [
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 0,
         "fileName": "PlGwNr.dat",
         "jointSymbol": "PlyGamewatch5K_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_109",
-      "csp": "csp\\csp_015"
+      "csp": "csp\\csp_104"
     },
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 1,
         "fileName": "PlGwNr.dat",
         "jointSymbol": "PlyGamewatch5K_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_110",
-      "csp": "csp\\csp_016"
+      "csp": "csp\\csp_105"
     },
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 2,
         "fileName": "PlGwNr.dat",
         "jointSymbol": "PlyGamewatch5K_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_111",
-      "csp": "csp\\csp_017"
+      "csp": "csp\\csp_106"
     },
     {
-      "name": "Normal",
+      "name": "New Costume",
       "file": {
         "visibilityIndex": 3,
         "fileName": "PlGwNr.dat",
         "jointSymbol": "PlyGamewatch5K_Share_joint",
-        "materialSymbol": ""
+        "materialSymbol": null
       },
       "icon": "icons\\ft_112",
-      "csp": "csp\\csp_018"
+      "csp": "csp\\csp_107"
     }
   ],
   "kirbyCostumes": [
@@ -211,7 +211,7 @@
     "onLoad": 2148836220,
     "onRespawn": 2148835920,
     "onDestroy": 0,
-    "moveLogicPointer": 2151490536,
+    "moveLogicPointer": 2151489192,
     "demoMoveLogicPointer": 0,
     "specialN": 2148853316,
     "specialNAir": 2148853440,
