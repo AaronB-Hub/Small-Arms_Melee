@@ -1,4 +1,13 @@
 {
-  "C_Cpp.default.compilerPath": "",
-  "C_Cpp.errorSquiggles": "disabled"
+  "files.exclude": {
+    // "**/.git": true,
+    // "**/.svn": true,
+    // "**/.hg": true,
+    // "**/CVS": true,
+    // "**/.DS_Store": true,
+    "akaneia-build": true,
+    "FS_Vanilla": true,
+  },
+  // "C_Cpp.default.compilerPath": "",
+  // "C_Cpp.errorSquiggles": "disabled"
 }
