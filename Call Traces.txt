@@ -1,6 +1,59 @@
-Item @ Spawn Trace
+Item @ Load Trace:
+- OnLoad
+  - SAItem_OnLoad
+    - MEX_IndexFighterItem (aka 803D7058 - a struct indexed by fighter type with their items?)
+    --> Does Item_StoreItemDataToCharItemTable as part of this?
 
 
 
+Item @ Spawn Trace:
+- OnRespawn  // respawn function
 
-Item @ Primary Input Trace
+  - SAItem_OnSpawn  // Upon spawn, give the fighter their SA item (and add accessory functions for use?)
+
+    - SAItem_SpawnItem  // Spawn the SA item into the game
+
+      - CreateBaseItem  // creates a 'blank' version of the fighter's SA item
+
+        - GetSAItemSpawnPosition  // Get spawn position from item kind and it's associated bone to hold it
+          - GetFighterSAItemSpawnBone  // Identifies the correct bone to spawn the item at, according to its kind
+
+        - Item_CreateItem  // (aka 8026862C) Creates the item specified by the SpawnItem struct
+
+      - SAItem_SpawnItemInitialize  // Initializes the SA item's behavior (velocity, lifetime/timers, state, flags, etc.) upon spawn
+//        - SAItem_ResetItem  // Resets all item values to neutral
+
+      - Item_CopyDevelopState  // (aka 80225DD8)
+      - Item_UpdatePhysAndColl  // (aka 802750F8)
+
+
+    - GetFighterSAItemSpawnBone  // Identifies the correct bone to spawn the item at, according to its kind
+
+    - Item_Hold  // (aka 8026AB54)
+
+
+
+Goal flow:
+- item spawns
+- gets given to player
+  - part of that is setting fighter's accessory_persist cb to Think function (proc priority 8)
+  (accessory1 cb seems to be grabbed/captured things
+   accessory_persist cb seems to only be used by link hookshot/samus grapple in the AirCatch action
+   Accessory_Freeze cb is the same as accessory_persist, but only runs when fp->x2219_b5 flag is true (in hitlag?)
+   accessory4 cb seems to be used by fighter attacks)
+- Think function checks inputs and changes item state so that the corresponding callbacks run on next frame
+  - Item state callbacks control gun item
+  - Item's accessory callback creates projectiles
+
+
+
+Item @ Primary Input Trace:
+- SAItem_InputCheck_Digital  // Check for SA item fire digital inputs
+
+- SAItem_InputCheck_Analog  // Check for SA item fire analog input
+
+
+- ItemAccessoryFunc  // Calls accessory callback of item
+
+
+- SAItem_Think  // Process any fire inputs and controls the logic/state flow of SA item
