@@ -676,7 +676,7 @@ void SAItem_OnSpawn(GOBJ *fighter)
     // Give the SA item to the character
     // Seems like items that 
 
-    // Fighter_GiveItem(fighter, item);  // ftpickupitem_800948A8 (calls Item_Hold - part of this function is calling the item's pickup callback)
+    Fighter_GiveItem(fighter, item);  // ftpickupitem_800948A8 (calls Item_Hold - part of this function is calling the item's pickup callback)
                                       // Also sets fighter_data->item_held / x1978
                                       // Does something with fighter_data->flags.ms
                                       // gets called by ftpickupitem_Anim, which is the anim cb for the two item pickup fighter actions
@@ -687,8 +687,8 @@ void SAItem_OnSpawn(GOBJ *fighter)
                                       // ftpickupitem_80094694 - sets ftpickupitem_80094DF8 as fp->take_dmg_cb - calls ftpickupitem_80094B6C
 
         // // Have character hold the SA item
-        int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
-        Item_Hold(item, fighter, bone_index); // Item_8026AB54 - part of this function is calling the item's pickup callback
+        // int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
+        // Item_Hold(item, fighter, bone_index); // Item_8026AB54 - part of this function is calling the item's pickup callback: RunGObjCallback(gobj, item_data->xB8_itemLogicTable->picked_up);
                                               // Item_8026AB54 (aka Item_Hold) -> it_802742F4 -> it_80274F48 -> lb_8000C2F8 (aka JOBJ_AttachPositionRotation)
                                               // Gets part as fighter->ftData->modelLookup->x11
                                               // Calls it_80274F48 for part attachment
