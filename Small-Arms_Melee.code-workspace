@@ -1,13 +1,15 @@
 {
 	"folders": [
-		{ "path": "./", "name": "root" },
-		{ "path": "./akaneia-build", "name": "akaneia" },
-		{ "path": "./FS_Vanilla", "name": "vanilla" },
+		{ "path": "./" },
+		{ "path": "./akaneia-build" },
+		{ "path": "./FS_Vanilla" },
 	],
 	"settings": {
 		"files.associations": {
-			"*.c": "csharp",
-			"*.h": "csharp"
+			// "*.c": "csharp",
+			// "*.h": "csharp",
+			"*.c": "c",
+			"*.h": "c",
 		}
 	}
 }

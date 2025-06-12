@@ -1,0 +1,7 @@
+Diagnostics:
+  # Suppress: [
+  #   "init_conversion_failed", 
+  #   "-Wint-conversion",
+  #   "-Wmissing-declarations",
+  # ]
+  # Suppress: "*"

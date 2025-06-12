@@ -382,7 +382,7 @@ void SAItem_SpawnItemInitialize(GOBJ *item)
     // item_data->item_states = &stc_itPublicData->common_items->states; // wrong type of state struct
 
     // Reset the item
-    SAItem_ResetItem(item);
+    // SAItem_ResetItem(item);
 
     // NOT DOING THIS AS IT GETS RESET TO NULL (EVERY FRAME?): Set SA item's accessory callback to control functionality
     // item_data->cb.accessory = SAItem_Think;

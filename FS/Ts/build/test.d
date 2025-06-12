@@ -34,7 +34,7 @@ D:\projects\Small-Arms_Melee\FS\Ts\build\test.o: \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/include/fighter.h \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/include/hsd.h \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/include/inline.h \
- D:\projects\Small-Arms_Melee\m-ex\MexTK/include/mex.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/mxdt.h \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/include/math.h \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/include/preload.h \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/include/item.h \
@@ -49,6 +49,7 @@ D:\projects\Small-Arms_Melee\FS\Ts\build\test.o: \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/include/scene.h \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/include/stage.h \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/include/text.h \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/cpu.h \
  D:\projects\Small-Arms_Melee\FS\Ts\SA_item.h \
  D:\projects\Small-Arms_Melee\FS\Ts\SA_ftstates_common.h \
  D:\projects\Small-Arms_Melee\FS\Ts\SA_ftstates_special.c \
@@ -92,7 +93,7 @@ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/effects.h:
 D:\projects\Small-Arms_Melee\m-ex\MexTK/include/fighter.h:
 D:\projects\Small-Arms_Melee\m-ex\MexTK/include/hsd.h:
 D:\projects\Small-Arms_Melee\m-ex\MexTK/include/inline.h:
-D:\projects\Small-Arms_Melee\m-ex\MexTK/include/mex.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/mxdt.h:
 D:\projects\Small-Arms_Melee\m-ex\MexTK/include/math.h:
 D:\projects\Small-Arms_Melee\m-ex\MexTK/include/preload.h:
 D:\projects\Small-Arms_Melee\m-ex\MexTK/include/item.h:
@@ -107,6 +108,7 @@ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/preload.h:
 D:\projects\Small-Arms_Melee\m-ex\MexTK/include/scene.h:
 D:\projects\Small-Arms_Melee\m-ex\MexTK/include/stage.h:
 D:\projects\Small-Arms_Melee\m-ex\MexTK/include/text.h:
+D:\projects\Small-Arms_Melee\m-ex\MexTK/include/cpu.h:
 D:\projects\Small-Arms_Melee\FS\Ts\SA_item.h:
 D:\projects\Small-Arms_Melee\FS\Ts\SA_ftstates_common.h:
 D:\projects\Small-Arms_Melee\FS\Ts\SA_ftstates_special.c:

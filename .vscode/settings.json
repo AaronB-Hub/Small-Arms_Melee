@@ -8,6 +8,7 @@
     "akaneia-build": true,
     "FS_Vanilla": true,
   },
+  "C_Cpp.errorSquiggles": "disabled",
   // "C_Cpp.default.compilerPath": "",
   // "C_Cpp.errorSquiggles": "disabled"
 }

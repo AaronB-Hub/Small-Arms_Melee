@@ -8,9 +8,9 @@
 ///////////////////////
 
 // Index of item within character's PlXx.dat Articles folder (MEX items are only dummy placeholders, but still necessary)
-// #define MEX_ITEM_GUN 1
-// #define MEX_ITEM_PRIMARYFIRE 0
-// #define MEX_ITEM_SECONDARYFIRE 2
+// #define FOX_ITEM_GUN 1
+// #define FOX_ITEM_PRIMARYFIRE 0
+// #define FOX_ITEM_SECONDARYFIRE 2
 #define MEX_ITEM_GUN 0
 #define MEX_ITEM_PRIMARYFIRE 1
 #define MEX_ITEM_PRIMARYFIRE_GFX 2
@@ -122,8 +122,8 @@
     // Call like: TestItemAttr *attr = (TestItemAttr *)item_data->itData->param_ext;
 typedef struct TestgunAttr
 {
-    int x00;     // [00 00 00 10 = 16]        // x00
-    Vec3 x04;                                 // x00
+    int max_ammo;     // [00 00 00 10 = 16]        // x00
+    Vec3 pos;                                 // x00
         // x - [00 00 00 00 = 0]
         // y - [40 08 31 27 = 2.128]
         // z - [40 D5 60 42 = 6.668]
@@ -156,7 +156,11 @@ typedef struct TestgunCmdFlags
 
 typedef struct TestgunItemVar
 {
-	int var1;  // Laser *item                       // 0xdd4  item_data->item_var->var1
+// Vanilla LGun:
+    int timer;
+
+// Vanilla Fox:
+	// int var1;  // Laser *item                       // 0xdd4  item_data->item_var->var1
     // int var2;                                       // 0xdd8  item_data->item_var->var2
     // int var3;                                       // 0xddc  item_data->item_var->var3
     // int var4;                                       // 0xde0  item_data->item_var->var4
@@ -421,7 +425,7 @@ void ItemAccessoryFunc(GOBJ *item, GOBJ *fighter)
     return item_data->cb.accessory(fighter);  // Shouldn't the item be the param to the accessory callback?
 }
 
-/// @brief creates a 'blank' version of the fighter's SA item
+/// @brief Creates a 'blank' version of the fighter's SA item
 /// @param fighter
 /// @param SAitem_kind ID of item (from ItemID struct?)
 /// @return GOBJ of newly created item
@@ -439,8 +443,8 @@ GOBJ *CreateBaseItem(GOBJ *fighter, int SAitem_kind)
     {
         .parent_gobj = fighter,
         .parent_gobj2 = fighter,
-        .it_kind = SAitem_kind,     // id of the item to spawn
-        // .it_kind = ITEM_RAYGUN,
+        // .it_kind = SAitem_kind,     // id of the item to spawn
+        .it_kind = ITEM_RAYGUN,
         //.hold_kind = ITHOLD_SWORD,  // defines the behavior of the item, such as thrown and pickup. 0 = capsule
         .unk2 = 0,
         .pos = spawn_position,
@@ -457,8 +461,8 @@ GOBJ *CreateBaseItem(GOBJ *fighter, int SAitem_kind)
     };
 
 	// Create the new item
-	// GOBJ *item = Item_CreateItem(&spawnItem);  // Vanilla fox code uses Item_CreateItem1, which calls Item_CreateItem plus sets spawnItem->x48_ground_or_air = 1 and ->x10 = 0
-    GOBJ *item = Item_CreateItem1(&spawnItem);
+	GOBJ *item = Item_CreateItem(&spawnItem);  
+    // GOBJ *item = Item_CreateItem1(&spawnItem);  // Vanilla fox code uses Item_CreateItem1, which calls Item_CreateItem plus sets spawnItem->x48_ground_or_air = 1, ->x10 = 0, and hold_kind = 8
 
     return item;
 }
@@ -487,7 +491,7 @@ int GetFighterSAItemSpawnBone(GOBJ *fighter, int SAitem_kind)
     return bone_index;
 }
 
-/// @brief Identifies the correct bone to spawn the item at, according to its kind
+/// @brief Get spawn position from item kind and it's associated bone to hold it
 /// @param fighter
 /// @param SAitem_kind ID of item (from ItemID struct?)
 /// @param bone_position position vector passed in to be edited
@@ -546,7 +550,7 @@ void SAItem_ResetItem(GOBJ *item)
     it_flags->xDBC = 0;
 
     // Reset item variables
-    it_vars->var1 = 0;
+    it_vars->timer = 0;
     // it_vars->var2 = 0;
     // it_vars->var3 = 0;
     // it_vars->var4 = 0;
@@ -642,7 +646,7 @@ void SAItem_OnLoad(GOBJ *fighter)
 
 	// Init SA item (Fxblaster)
     MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_GUN], MEX_ITEM_GUN);
-        // Does Item_StoreItemDataToCharItemTable as part of this
+        // Does Item_StoreItemDataToCharItemTable as part of this?
 
 	// Init Primary Fire (Fxlaser)
 	MEX_IndexFighterItem(fighter_data->kind, fighter_items[MEX_ITEM_PRIMARYFIRE], MEX_ITEM_PRIMARYFIRE);
@@ -654,7 +658,7 @@ void SAItem_OnLoad(GOBJ *fighter)
     return;
 }
 
-/// @brief Upon spawn, give the fighter their SA item and add accessory functions for use (called by OnSpawn function in fighter's main .C file)
+/// @brief Upon spawn, give the fighter their SA item (and add accessory functions for use?) (called by OnSpawn function in fighter's main .C file)
 /// @param fighter
 void SAItem_OnSpawn(GOBJ *fighter)
 {
