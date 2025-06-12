@@ -37,7 +37,8 @@ Goal flow:
 - item spawns
 - gets given to player
   - part of that is setting fighter's accessory_persist cb to Think function (proc priority 8)
-  (accessory1 cb seems to be grabbed/captured things
+  (All fighter accessory callbacks only run if !fp->x221F_b3 == 1 (not sure what this is)
+   accessory1 cb seems to be grabbed/captured things
    accessory_persist cb seems to only be used by link hookshot/samus grapple in the AirCatch action
    Accessory_Freeze cb is the same as accessory_persist, but only runs when fp->x2219_b5 flag is true (in hitlag?)
    accessory4 cb seems to be used by fighter attacks)
