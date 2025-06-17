@@ -97,37 +97,38 @@ __attribute__((used)) static struct ItemState item_state_table[] = {
 
     // --- VANILLA LGUN ITEM ---
 
-    {
+    { // Neutral (Does nothing except calls Item_CollGround_PassLedge with the spawned callback as the event when the collCallback is ran)
+      // States 1, 4, and 5 set a transition to this state up
         .state = -1,
         .animCallback = 0x8028E828,
         .physCallback = 0x8028E830,
         .collCallback = 0x8028E834,
     },
-    {
+    { // Spawn (?)
         .state = -1,
         .animCallback = 0x8028E888,
         .physCallback = 0x8028E890,
         .collCallback = 0x8028E8C0,
     },
-    {
+    { // Pickup (do nothing)
         .state = -1,
         .animCallback = 0x8028E92C,
         .physCallback = 0x8028E934,
         .collCallback = NULL,
     },
-    {
+    { // Shooting?
         .state = 0,
         .animCallback = 0x8028E96C,
         .physCallback = 0x8028E9B4,
         .collCallback = NULL,
     },
-    {
+    { // Dropped/Thrown (?)
         .state = 1,
         .animCallback = 0x8028E888,
         .physCallback = 0x8028EA08,
         .collCallback = 0x8028E8C0,
     },
-    {
+    { // Entered air
         .state = -1,
         .animCallback = 0x8028EB28,
         .physCallback = 0x8028EB30,
@@ -344,7 +345,7 @@ GOBJ *SAItem_SpawnItem(GOBJ *fighter)
     // Check if item successfully spawned
     if (item != 0)
     {
-        // Moved having the character hold the SA item to the OnSpawn function
+        // Moved having the character hold the SA item to the OnSpawn function - this function should be as fighter-independent as possible
         // Initialize SA item behavior
         SAItem_SpawnItemInitialize(item);
 
@@ -382,7 +383,7 @@ void SAItem_SpawnItemInitialize(GOBJ *item)
     // item_data->item_states = &stc_itPublicData->common_items->states; // wrong type of state struct
 
     // Reset the item
-    // SAItem_ResetItem(item);
+    SAItem_ResetItem(item);
 
     // NOT DOING THIS AS IT GETS RESET TO NULL (EVERY FRAME?): Set SA item's accessory callback to control functionality
     // item_data->cb.accessory = SAItem_Think;

@@ -43,8 +43,14 @@ Goal flow:
    Accessory_Freeze cb is the same as accessory_persist, but only runs when fp->x2219_b5 flag is true (in hitlag?)
    accessory4 cb seems to be used by fighter attacks)
 - Think function checks inputs and changes item state so that the corresponding callbacks run on next frame
+---> Existing item input code relies upon detecting ftCo (aka common) attacks' inputs (redirects from "do a jab" to "use an item" if an item is being held). Don't want to use that, so will write separate input detection.
+
   - Item state callbacks control gun item
-  - Item's accessory callback creates projectiles
+
+  --> State transitions handled in itlgun.c; firing stuff handled in ft_0CDD.c
+
+  - Item's accessory callback creates projectiles (and this callback function gets wiped every frame)
+  ---> when spawning projectiles, x4_parent_gobj2 for spawnItem should be owner of SA item
 
 
 

@@ -461,7 +461,7 @@ GOBJ *CreateBaseItem(GOBJ *fighter, int SAitem_kind)
     };
 
 	// Create the new item
-	GOBJ *item = Item_CreateItem(&spawnItem);  
+	GOBJ *item = Item_CreateItem(&spawnItem); // runs item's spawn function from logic table as part of this
     // GOBJ *item = Item_CreateItem1(&spawnItem);  // Vanilla fox code uses Item_CreateItem1, which calls Item_CreateItem plus sets spawnItem->x48_ground_or_air = 1, ->x10 = 0, and hold_kind = 8
 
     return item;
@@ -676,7 +676,7 @@ void SAItem_OnSpawn(GOBJ *fighter)
     // Give the SA item to the character
     // Seems like items that 
 
-    Fighter_GiveItem(fighter, item);  // ftpickupitem_800948A8 (calls Item_Hold - part of this function is calling the item's pickup callback)
+    // Fighter_GiveItem(fighter, item);  // ftpickupitem_800948A8 (calls Item_Hold - part of this function is calling the item's pickup callback)
                                       // Also sets fighter_data->item_held / x1978
                                       // Does something with fighter_data->flags.ms
                                       // gets called by ftpickupitem_Anim, which is the anim cb for the two item pickup fighter actions
@@ -686,15 +686,16 @@ void SAItem_OnSpawn(GOBJ *fighter)
                                         
                                       // ftpickupitem_80094694 - sets ftpickupitem_80094DF8 as fp->take_dmg_cb - calls ftpickupitem_80094B6C
 
-        // // Have character hold the SA item
-        // int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
-        // Item_Hold(item, fighter, bone_index); // Item_8026AB54 - part of this function is calling the item's pickup callback: RunGObjCallback(gobj, item_data->xB8_itemLogicTable->picked_up);
+        // Have character hold the SA item
+        int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
+        Item_Hold(item, fighter, bone_index); // Item_8026AB54 - part of this function is calling the item's pickup callback: RunGObjCallback(gobj, item_data->xB8_itemLogicTable->picked_up);
                                               // Item_8026AB54 (aka Item_Hold) -> it_802742F4 -> it_80274F48 -> lb_8000C2F8 (aka JOBJ_AttachPositionRotation)
                                               // Gets part as fighter->ftData->modelLookup->x11
                                               // Calls it_80274F48 for part attachment
 
         // // Store the SA item pointer to the fighter held item var (common items) / a char var (fox blaster)
         // charvar->x222C_blasterGObj = item;
+        // fighter_data->x1978 = item;
         // fighter_data->item_held_spec = item;
             // GOBJ *item_held;                   // 0x1974
             // GOBJ *x1978;                       // 0x1978
@@ -714,13 +715,15 @@ void SAItem_OnSpawn(GOBJ *fighter)
         // item_data->accessory() ????
         // Use fighter accessory function(s), use item accessory function, or both?
 
-            // Set the accessory callback for the SA item and fires/projectiles, which will spawn them
-            // fighter_data->cb.Accessory_Persist = SAItem_Think;
+            // // Set the accessory callback for the SA item and fires/projectiles, which will spawn them
             // item_data->it_func.x38 = SAItem_Think;
             // fighter_data->cb.Accessory1 = SAItem_SpawnPrimaryFireThink;
             // fighter_data->cb.Accessory4 = SAItem_SpawnSecondaryFireThink;
 
-            // Don't think MEX costume accessories are relevant
+        // Set the accessory callback to process inputs and control item logic
+        fighter_data->cb.Accessory_Persist = SAItem_Think;
+
+        // Don't think MEX costume accessories are relevant
 
     return;
 }
