@@ -69,29 +69,6 @@
 #define VANILLA_SOUND_FXLASER_DESTROY 180025  // This value is incorrect, but not sure what correct value is
 
 ///////////////////////
-//    Item States    //
-///////////////////////
-
-// Main SA Item
-    // Vanilla Blaster
-    #define STATE_FXBLASTER 0
-
-    // Custom states
-    #define STATE_ITEM_IDLE 0
-    #define STATE_ITEM_CHARGE 1
-    #define STATE_ITEM_FIRE1 2
-    #define STATE_ITEM_FIRE2 3
-
-// Primary Fire states
-    // Vanilla laser
-    #define STATE_FXLASER1 0  // Normal shooting: does more damage and normal collision effect
-    #define STATE_FXLASER2 1  // Used in fox throws: does less damage, is electric and has a blue collision effect
-
-    // Custom
-    #define STATE_FIRE1_SPAWN 0
-    #define STATE_FIRE1_FIRE 0
-
-///////////////////////
 //    Item Inputs    //
 ///////////////////////
 
@@ -148,7 +125,7 @@ typedef struct TestgunBeamAttr
 typedef struct TestgunCmdFlags
 {
 	int fireinputs_digital;  // xDAC    // item_data->itcmd_var->flag1
-    int fireinputs_analog;   // xDB0    // item_data->itcmd_var->flag2
+    float fireinputs_analog;   // xDB0    // item_data->itcmd_var->flag2
     int xDB4;                           // item_data->itcmd_var->flag3
     int xDB8;                           // item_data->itcmd_var->flag4
     int xDBC;                           // item_data->itcmd_var->flag5
@@ -368,40 +345,39 @@ void SAItem_RemoveItem(GOBJ *fighter)
     return;
 }
 
-/// @brief Check for SA item fire digital inputs
+/// @brief Check for SA item fire digital inputs, then sets the flags to match
 /// @param fighter
-/// @return int representing the current SA digital inputs
-int SAItem_InputCheck_Digital(GOBJ *fighter)
+void SAItem_InputCheck_Digital(GOBJ *fighter)
 {
     // Get fighter data
 	FighterData *fighter_data = fighter->userdata;
 
     // Get input data
     HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER (untouched by current implementation of L button disable)
-    int input_dig = 0;
+
+    // Get item data
+    GOBJ *item = fighter_data->x1978;
+    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
     // Primary Fire
     // Vanilla sets a deadzone of 0.30 for the triggers, stored at 'stc_ftcommon->x10'
     // Keeping this deadzone (for now)
     if (pad->SA_ITEM_INPUT_PRIMARY > SA_ITEM_INPUT_PRIMARY_DEADZONE)  //
     {
-        input_dig += PRIMARY_FIRE_INPUT;
+        it_flags->fireinputs_digital += PRIMARY_FIRE_INPUT;
     }
 
     // Secondary Fire
     // if ( ((pad->held & SA_ITEM_INPUT_SECONDARY) != 0) || ((pad->down & SA_ITEM_INPUT_SECONDARY) != 0) )
     if ( (pad->down & SA_ITEM_INPUT_SECONDARY) != 0 )  // Alternate check that only triggers a secondary fire input when the trigger is initially pressed, not when held
     {
-        input_dig += SECONDARY_FIRE_INPUT;
+        it_flags->fireinputs_digital += SECONDARY_FIRE_INPUT;
     }
-
-    return input_dig;
 }
 
-/// @brief Check for SA item fire analog input
+/// @brief Check for SA item fire analog input and sets the Cmd var to match
 /// @param fighter
-/// @return float representing the current SA analog input
-float SAItem_InputCheck_Analog(GOBJ *fighter)
+void SAItem_InputCheck_Analog(GOBJ *fighter)
 {
     // Get fighter data
 	FighterData *fighter_data = fighter->userdata;
@@ -410,10 +386,12 @@ float SAItem_InputCheck_Analog(GOBJ *fighter)
     HSD_Pad *pad = PadGet(fighter_data->pad_index, 0);  // PADGET_MASTER (untouched by current implementation of L button disable)
     float input_ana = 0;
 
-    // Get analog press info
-    input_ana = pad->SA_ITEM_INPUT_PRIMARY;
+    // Get item data
+    GOBJ *item = fighter_data->x1978;
+    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
-    return input_ana;
+    // Get analog press info
+    it_flags->fireinputs_analog = pad->SA_ITEM_INPUT_PRIMARY;
 }
 
 /// @brief Calls accessory callback of item
@@ -422,7 +400,7 @@ float SAItem_InputCheck_Analog(GOBJ *fighter)
 void ItemAccessoryFunc(GOBJ *item, GOBJ *fighter)
 {
     ItemData *item_data = item->userdata;
-    return item_data->cb.accessory(fighter);  // Shouldn't the item be the param to the accessory callback?
+    return item_data->cb.accessory(item);
 }
 
 /// @brief Creates a 'blank' version of the fighter's SA item
@@ -461,8 +439,27 @@ GOBJ *CreateBaseItem(GOBJ *fighter, int SAitem_kind)
     };
 
 	// Create the new item
-	GOBJ *item = Item_CreateItem(&spawnItem); // runs item's spawn function from logic table as part of this
+	GOBJ *item = Item_CreateItem(&spawnItem); // (Item_8026862C) runs item's spawn function from logic table as part of this
     // GOBJ *item = Item_CreateItem1(&spawnItem);  // Vanilla fox code uses Item_CreateItem1, which calls Item_CreateItem plus sets spawnItem->x48_ground_or_air = 1, ->x10 = 0, and hold_kind = 8
+        // This calls Item_80267AA8 > Item_80267978, which loads xC4_article_data and xB8_itemLogicTable (and xBC_itemStateContainer) from common data sources. Need to overwrite both of these?
+            // After the copy, data from xC4_article_data is copied to all over item_data, so would need to overwrite all of it if using existing 'Item_CreateItem' function
+                // item_data->xC8_joint = item_data->xC4_article_data->x10_modelDesc->x0_joint;
+                // item_data->xCC_item_attr = item_data->xC4_article_data->x0_common_attr;
+            // This approach won't work if continuing to use 'Item_CreateItem' as this loaded data is used by subseqent functions within
+                // Better to somehow modify common data tables
+                    // /* 3F14C4 */ extern struct ItemLogicTable it_803F14C4[43];
+                    // /* 3F23CC */ extern struct ItemLogicTable it_803F23CC[];
+                    // /* 3F3100 */ extern struct ItemLogicTable it_803F3100[118];
+                    // /* 3F4D20 */ extern struct ItemLogicTable it_803F4D20[];
+                    // /* 4A0F60 */ extern Article* it_804A0F60[];
+                    // /* 4D6D24 */ extern Article* it_804D6D24[];
+                    // /* 4D6D30 */ extern Article* it_804D6D30[];
+                    // /* 4D6D38 */ extern Article* it_804D6D38[];
+                    // /* 4D6D28 */ extern ItemCommonData* it_804D6D28;
+
+        // Actually, this data is copied from ItCo.dat/usd (and fighter's .dat for character items). So just need to put custom article/data in both places
+
+        // Item_8026862C > Item_8026A810 > calls temp_item->xB8_itemLogicTable->spawned(gobj)
 
     return item;
 }
@@ -510,7 +507,6 @@ void GetSAItemSpawnPosition(GOBJ *fighter, int SAitem_kind, Vec3 *bone_position)
     // Get position of bone in world
     JOBJ_GetWorldPosition(fighter_data->bones[bone_index].joint, 0, bone_position);
 
-    //return &bone_position;
     return;
 }
 
@@ -672,36 +668,42 @@ void SAItem_OnSpawn(GOBJ *fighter)
     ItemData *item_data = item->userdata;
 
     
-
     // Give the SA item to the character
-    // Seems like items that 
 
-    // Fighter_GiveItem(fighter, item);  // ftpickupitem_800948A8 (calls Item_Hold - part of this function is calling the item's pickup callback)
-                                      // Also sets fighter_data->item_held / x1978
-                                      // Does something with fighter_data->flags.ms
-                                      // gets called by ftpickupitem_Anim, which is the anim cb for the two item pickup fighter actions
+            // Fighter_GiveItem(fighter, item);  // ftpickupitem_800948A8 (calls Item_Hold - part of this function is calling the item's pickup callback)
+                                            // Also sets fighter_data->item_held / x1978
+                                            // Does something with fighter_data->flags.ms
+                                            // gets called by ftpickupitem_Anim, which is the anim cb for the two item pickup fighter actions
 
-                                      // ftpickupitem_Coll -> sets ftpickupitem_80094B6C as a callback
-                                        // if ip->xCC_item_attr->x0_78 == 5, then will do a secondary check for item kind for specific behaviors
-                                        
-                                      // ftpickupitem_80094694 - sets ftpickupitem_80094DF8 as fp->take_dmg_cb - calls ftpickupitem_80094B6C
+                                            // ftpickupitem_Coll -> sets ftpickupitem_80094B6C as a callback
+                                                // if ip->xCC_item_attr->x0_78 == 5, then will do a secondary check for item kind for specific behaviors
+                                                
+                                            // ftpickupitem_80094694 - sets ftpickupitem_80094DF8 as fp->take_dmg_cb - calls ftpickupitem_80094B6C
 
         // Have character hold the SA item
+    if (item != 0) {
+        
+        // This function checks if there is a grabbable item in the vicinity and initiates the pickup action if so
+            // Usually runs downstream from IASA functions as part of checking for a A/Z press for an attack
+            // This will lead to ActionStateChange(0, 1, 0, fighter, ASID_LIGHTGET, 0, 0), which leads to Item_Hold(item, fighter, bone_index)
+        // bool (*cb_StartPickup)(GOBJ *gobj) = (bool *) 0x80094790;
+        // cb_StartPickup(fighter);
+
         int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
         Item_Hold(item, fighter, bone_index); // Item_8026AB54 - part of this function is calling the item's pickup callback: RunGObjCallback(gobj, item_data->xB8_itemLogicTable->picked_up);
                                               // Item_8026AB54 (aka Item_Hold) -> it_802742F4 -> it_80274F48 -> lb_8000C2F8 (aka JOBJ_AttachPositionRotation)
                                               // Gets part as fighter->ftData->modelLookup->x11
                                               // Calls it_80274F48 for part attachment
-
-        // // Store the SA item pointer to the fighter held item var (common items) / a char var (fox blaster)
-        // charvar->x222C_blasterGObj = item;
-        // fighter_data->x1978 = item;
-        // fighter_data->item_held_spec = item;
-            // GOBJ *item_held;                   // 0x1974
-            // GOBJ *x1978;                       // 0x1978
-            // int x197c;                         // 0x197c
-            // GOBJ *item_head;                   // 0x1980
-            // GOBJ *item_held_spec;              // 0x1984, special held item
+    }
+        // Store the SA item pointer to the fighter held item var (common items) / a char var (fox blaster)
+            fighter_data->x1978 = item;  // seems to only get reset on player init and from item dropped functions
+            // fighter_data->item_held = item;  // Not using this, as it is used by pretty much all other items, and want to avoid conflict if possible
+            // charvar->x222C_blasterGObj = item;  // Not using this, as it is a Fox charvar, so dependent on using Fox or SA character
+                // GOBJ *item_held;                   // 0x1974
+                // GOBJ *x1978;                       // 0x1978
+                // int x197c;                         // 0x197c
+                // GOBJ *item_head;                   // 0x1980 (not sure when these are used)
+                // GOBJ *item_held_spec;              // 0x1984, special held item (used for some character items)
 
 
     // Set SA item as fighter accessory + JOBJ_AttachPositionRotation(fp->x20A0_accessory, fp->parts[Fighter_BoneLookup(fp, FtPart_RThumbNb)].joint) + set the keep accessory flag (0x2000?) in any fighter state changes
@@ -734,80 +736,89 @@ void SAItem_OnSpawn(GOBJ *fighter)
 
 // Item-dependent functions (item_<gun>.c)
 void SAItem_State0(GOBJ *item);
-void State0_AnimCallback(GOBJ *item);
+bool State0_AnimCallback(GOBJ *item);
 void State0_PhysCallback(GOBJ *item);
-void State0_CollCallback(GOBJ *item);
+bool State0_CollCallback(GOBJ *item);
 
 void SAItem_State1(GOBJ *item);
-void State1_AnimCallback(GOBJ *item);
+bool State1_AnimCallback(GOBJ *item);
 void State1_PhysCallback(GOBJ *item);
-void State1_CollCallback(GOBJ *item);
+bool State1_CollCallback(GOBJ *item);
 
 void SAItem_State2(GOBJ *item);
-void State2_AnimCallback(GOBJ *item);
+bool State2_AnimCallback(GOBJ *item);
 void State2_PhysCallback(GOBJ *item);
-void State2_CollCallback(GOBJ *item);
+bool State2_CollCallback(GOBJ *item);
 
 void SAItem_State3(GOBJ *item);
-void State3_AnimCallback(GOBJ *item);
+bool State3_AnimCallback(GOBJ *item);
 void State3_PhysCallback(GOBJ *item);
-void State3_CollCallback(GOBJ *item);
+bool State3_CollCallback(GOBJ *item);
 
 void SAItem_State4(GOBJ *item);
-void State4_AnimCallback(GOBJ *item);
+bool State4_AnimCallback(GOBJ *item);
 void State4_PhysCallback(GOBJ *item);
-void State4_CollCallback(GOBJ *item);
+bool State4_CollCallback(GOBJ *item);
 
 void SAItem_State5(GOBJ *item);
-void State5_AnimCallback(GOBJ *item);
+bool State5_AnimCallback(GOBJ *item);
 void State5_PhysCallback(GOBJ *item);
-void State5_CollCallback(GOBJ *item);
+bool State5_CollCallback(GOBJ *item);
 
 void SAItem_State6(GOBJ *item);
-void State6_AnimCallback(GOBJ *item);
+bool State6_AnimCallback(GOBJ *item);
 void State6_PhysCallback(GOBJ *item);
-void State6_CollCallback(GOBJ *item);
+bool State6_CollCallback(GOBJ *item);
 
 void SAItem_State7(GOBJ *item);
-void State7_AnimCallback(GOBJ *item);
+bool State7_AnimCallback(GOBJ *item);
 void State7_PhysCallback(GOBJ *item);
-void State7_CollCallback(GOBJ *item);
+bool State7_CollCallback(GOBJ *item);
 
 void SAItem_State8(GOBJ *item);
-void State8_AnimCallback(GOBJ *item);
+bool State8_AnimCallback(GOBJ *item);
 void State8_PhysCallback(GOBJ *item);
-void State8_CollCallback(GOBJ *item);
+bool State8_CollCallback(GOBJ *item);
 
 
 
 
 
 // SA Item State functions (Shared by all SA items)
-void Idle_AnimCallback(GOBJ *gobj);
+bool Idle_AnimCallback(GOBJ *gobj);
 void Idle_PhysCallback(GOBJ *gobj);
-void Idle_CollCallback(GOBJ *gobj);
+bool Idle_CollCallback(GOBJ *gobj);
 
-void Charge_AnimCallback(GOBJ *gobj);
+bool Charge_AnimCallback(GOBJ *gobj);
 void Charge_PhysCallback(GOBJ *gobj);
-void Charge_CollCallback(GOBJ *gobj);
+bool Charge_CollCallback(GOBJ *gobj);
 
-void PrimaryFire_AnimCallback(GOBJ *gobj);
+bool PrimaryFire_AnimCallback(GOBJ *gobj);
 void PrimaryFire_PhysCallback(GOBJ *gobj);
-void PrimaryFire_CollCallback(GOBJ *gobj);
+bool PrimaryFire_CollCallback(GOBJ *gobj);
 
-void SecondaryFire_AnimCallback(GOBJ *gobj);
+bool SecondaryFire_AnimCallback(GOBJ *gobj);
 void SecondaryFire_PhysCallback(GOBJ *gobj);
-void SecondaryFire_CollCallback(GOBJ *gobj);
+bool SecondaryFire_CollCallback(GOBJ *gobj);
 
 int PrimaryFire_HitStageUpdate(GOBJ *gobj);
 
-void Spawn_AnimCallback(GOBJ *gobj);
+bool Spawn_AnimCallback(GOBJ *gobj);
 void Spawn_PhysCallback(GOBJ *gobj);
-void Spawn_CollCallback(GOBJ *gobj);
+bool Spawn_CollCallback(GOBJ *gobj);
 
-void Fire_AnimCallback(GOBJ *gobj);
+bool Fire_AnimCallback(GOBJ *gobj);
 void Fire_PhysCallback(GOBJ *gobj);
-void Fire_CollCallback(GOBJ *gobj);
+bool Fire_CollCallback(GOBJ *gobj);
+
+
+
+////////////////////////
+//   Logic Functions  //
+////////////////////////
+
+void testgun_OnCreate(GOBJ *gobj);
+void testgun_OnPickup(GOBJ *gobj);
 
 
 ////////////////////////

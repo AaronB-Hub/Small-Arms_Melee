@@ -42,7 +42,7 @@ Goal flow:
    accessory_persist cb seems to only be used by link hookshot/samus grapple in the AirCatch action
    Accessory_Freeze cb is the same as accessory_persist, but only runs when fp->x2219_b5 flag is true (in hitlag?)
    accessory4 cb seems to be used by fighter attacks)
-- Think function checks inputs and changes item state so that the corresponding callbacks run on next frame
+- Think function checks inputs, sets item flags to match inputs, and changes item state so that the corresponding callbacks run on next frame
 ---> Existing item input code relies upon detecting ftCo (aka common) attacks' inputs (redirects from "do a jab" to "use an item" if an item is being held). Don't want to use that, so will write separate input detection.
 
   - Item state callbacks control gun item

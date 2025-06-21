@@ -97,43 +97,43 @@ __attribute__((used)) static struct ItemState item_state_table[] = {
 
     // --- VANILLA LGUN ITEM ---
 
-    { // Neutral (Does nothing except calls Item_CollGround_PassLedge with the spawned callback as the event when the collCallback is ran)
-      // States 1, 4, and 5 set a transition to this state up
-        .state = -1,
-        .animCallback = 0x8028E828,
-        .physCallback = 0x8028E830,
-        .collCallback = 0x8028E834,
-    },
-    { // Spawn (?)
-        .state = -1,
-        .animCallback = 0x8028E888,
-        .physCallback = 0x8028E890,
-        .collCallback = 0x8028E8C0,
-    },
-    { // Pickup (do nothing)
-        .state = -1,
-        .animCallback = 0x8028E92C,
-        .physCallback = 0x8028E934,
-        .collCallback = NULL,
-    },
-    { // Shooting?
-        .state = 0,
-        .animCallback = 0x8028E96C,
-        .physCallback = 0x8028E9B4,
-        .collCallback = NULL,
-    },
-    { // Dropped/Thrown (?)
-        .state = 1,
-        .animCallback = 0x8028E888,
-        .physCallback = 0x8028EA08,
-        .collCallback = 0x8028E8C0,
-    },
-    { // Entered air
-        .state = -1,
-        .animCallback = 0x8028EB28,
-        .physCallback = 0x8028EB30,
-        .collCallback = 0x8028EB34,
-    },
+    // { // Neutral (Does nothing except calls Item_CollGround_PassLedge with the spawned callback as the event when the collCallback is ran)
+    //   // States 1, 4, and 5 set a transition to this state up
+    //     .state = -1,
+    //     .animCallback = 0x8028E828,
+    //     .physCallback = 0x8028E830,
+    //     .collCallback = 0x8028E834,
+    // },
+    // { // Spawn (?)
+    //     .state = -1,
+    //     .animCallback = 0x8028E888,
+    //     .physCallback = 0x8028E890,
+    //     .collCallback = 0x8028E8C0,
+    // },
+    // { // Pickup (do nothing)
+    //     .state = -1,
+    //     .animCallback = 0x8028E92C,
+    //     .physCallback = 0x8028E934,
+    //     .collCallback = NULL,
+    // },
+    // { // Shooting?
+    //     .state = 0,
+    //     .animCallback = 0x8028E96C,
+    //     .physCallback = 0x8028E9B4,
+    //     .collCallback = NULL,
+    // },
+    // { // Dropped/Thrown (?)
+    //     .state = 1,
+    //     .animCallback = 0x8028E888,
+    //     .physCallback = 0x8028EA08,
+    //     .collCallback = 0x8028E8C0,
+    // },
+    // { // Entered air
+    //     .state = -1,
+    //     .animCallback = 0x8028EB28,
+    //     .physCallback = 0x8028EB30,
+    //     .collCallback = 0x8028EB34,
+    // },
 
     // --- Custom ---
 
@@ -166,64 +166,61 @@ __attribute__((used)) static struct ItemState item_state_table[] = {
     //     .collCallback = SecondaryFire_CollCallback,
     // },
 
-    // // state 0: ??
-    // {
-    //     .state = 0,
-    //     .animCallback = State0_AnimCallback,
-    //     .physCallback = State0_PhysCallback,
-    //     .collCallback = State0_CollCallback,
-    // },
-    // // state 1: ??
-    // {
-    //     .state = 1,
-    //     .animCallback = State1_AnimCallback,
-    //     .physCallback = State1_PhysCallback,
-    //     .collCallback = State1_CollCallback,
-    // },
-    // // state 2: ??
-    // {
-    //     .state = 2,
-    //     .animCallback = State2_AnimCallback,
-    //     .physCallback = State2_PhysCallback,
-    //     .collCallback = State2_CollCallback,
-    // },
-    // // state 3: ??
-    // {
-    //     .state = 3,
-    //     .animCallback = State3_AnimCallback,
-    //     .physCallback = State3_PhysCallback,
-    //     .collCallback = State3_CollCallback,
-    // },
-    // // state 4: ??
-    // {
-    //     .state = 4,
-    //     .animCallback = State4_AnimCallback,
-    //     .physCallback = State4_PhysCallback,
-    //     .collCallback = State4_CollCallback,
-    // },
-    // // state 5: ??
-    // {
-    //     .state = 5,
-    //     .animCallback = State5_AnimCallback,
-    //     .physCallback = State5_PhysCallback,
-    //     .collCallback = State5_CollCallback,
-    // },
-    // // state 6: ??
-    // {
+    { // state 0: ??
+        // .state = 0,
+        .state = -1,
+        .animCallback = State0_AnimCallback,
+        .physCallback = State0_PhysCallback,
+        .collCallback = State0_CollCallback,
+    },
+    { // state 1: ??
+        // .state = 1,
+        .state = -1,
+        .animCallback = State1_AnimCallback,
+        .physCallback = State1_PhysCallback,
+        .collCallback = State1_CollCallback,
+    },
+    { // state 2: ??
+        // .state = 2,
+        .state = -1,
+        .animCallback = State2_AnimCallback,
+        .physCallback = State2_PhysCallback,
+        .collCallback = State2_CollCallback,
+    },
+    { // state 3: ??
+        // .state = 3,
+        .state = 0,
+        .animCallback = State3_AnimCallback,
+        .physCallback = State3_PhysCallback,
+        .collCallback = State3_CollCallback,
+    },
+    { // state 4: ??
+        // .state = 4,
+        .state = 1,
+        .animCallback = State4_AnimCallback,
+        .physCallback = State4_PhysCallback,
+        .collCallback = State4_CollCallback,
+    },
+    { // state 5: ??
+        // .state = 5,
+        .state = -1,
+        .animCallback = State5_AnimCallback,
+        .physCallback = State5_PhysCallback,
+        .collCallback = State5_CollCallback,
+    },
+    // { // state 6: ??
     //     .state = 6,
     //     .animCallback = State6_AnimCallback,
     //     .physCallback = State6_PhysCallback,
     //     .collCallback = State6_CollCallback,
     // },
-    // // state 7: ??
-    // {
+    // { // state 7: ??
     //     .state = 7,
     //     .animCallback = State7_AnimCallback,
     //     .physCallback = State7_PhysCallback,
     //     .collCallback = State7_CollCallback,
     // },
-    // // state 8: ??
-    // {
+    // { // state 8: ??
     //     .state = 8,
     //     .animCallback = State8_AnimCallback,
     //     .physCallback = State8_PhysCallback,
@@ -303,26 +300,63 @@ __attribute__((used)) static struct ItemLogic item_logic_table[] = {
     // }
     {  // --- CUSTOM ---
         .item_states    = &item_state_table,
-        .OnCreate       = 0x8028E738,
-        // .OnCreate       = 0x8028E860,
+        // .OnCreate       = 0x8028E738,
+        // // .OnCreate       = 0x8028E860,
+        // .OnDestroy      = NULL,
+        // .OnPickup       = 0x8028E904,
+        // .OnDrop         = 0x8028E9B8,
+        // .OnThrow        = NULL,
+        // .OnGiveDamage   = 0x8028EA54,
+        // .OnTakeDamage   = NULL,
+        // .OnEnterAir     = 0x8028EB00,
+        // .OnReflect      = NULL,
+        // .OnClank        = NULL,
+        // .OnAbsorb       = NULL,
+        // .OnShieldBounce = NULL,
+        // .OnShieldHit    = NULL,
+        // .OnUnkEvent     = 0x8028EB68,
+
+        // LGun
+        // .OnCreate       = 0x8028E738,
+        .OnCreate       = testgun_OnCreate,
         .OnDestroy      = NULL,
-        .OnPickup       = 0x8028E904,
+        // .OnPickup       = 0x8028E904,
+        .OnPickup       = testgun_OnPickup,
         .OnDrop         = 0x8028E9B8,
-        .OnThrow        = NULL,
+        .OnThrow        = 0x8028E9E0,
         .OnGiveDamage   = 0x8028EA54,
         .OnTakeDamage   = NULL,
         .OnEnterAir     = 0x8028EB00,
-        .OnReflect      = NULL,
-        .OnClank        = NULL,
+        .OnReflect      = 0x8028EAC0,
+        .OnClank        = 0x8028EA78,
         .OnAbsorb       = NULL,
-        .OnShieldBounce = NULL,
-        .OnShieldHit    = NULL,
+        .OnShieldBounce = 0x8028EAE0,
+        .OnShieldHit    = 0x8028EA9C,
         .OnUnkEvent     = 0x8028EB68,
     }
 };
 
+// Main SA Item
+    // Vanilla Blaster
+    #define STATE_FXBLASTER 0
+
+    // Custom states
+    #define STATE_ITEM_IDLE 0
+    #define STATE_ITEM_CHARGE 1
+    #define STATE_ITEM_FIRE1 2
+    #define STATE_ITEM_FIRE2 3
+
+// Primary Fire states
+    // Vanilla laser
+    #define STATE_FXLASER1 0  // Normal shooting: does more damage and normal collision effect
+    #define STATE_FXLASER2 1  // Used in fox throws: does less damage, is electric and has a blue collision effect
+
+    // Custom
+    #define STATE_FIRE1_SPAWN 0
+    #define STATE_FIRE1_FIRE 0
+
 ///////////////////////
-//  Initial Testgun  //
+//  Setup Functions  //
 ///////////////////////
 
 void onpickup(GOBJ *item_gobj)
@@ -370,30 +404,26 @@ void SAItem_SpawnItemInitialize(GOBJ *item)
     // Get item data
     ItemData *item_data = item->userdata;
 
-    // Set the SA item's custom attributes (do that here or somewhere else???)
-    //memcpy(fighter_items[MEX_ITEM_FXBLASTER]->unqiue_attributes, ItemData->itData->param_ext, sizeof(ItemAttr))
-    
-    // Set item states
-    // item_data->item_states = &SAItem_state_table;
-    // item_data->item_states = 0x803F6CA8;
-    // item_data->item_states = &(ItemState[])0x803F6CA8;
-    item_data->item_states = &item_state_table;  // Is this necessary when using the reserved name 'item_state_table'?
-    // item_data->item_logic = &item_logic_table;
-    item_data->item_logic = &stc_itemlogic_common_items[ITEM_RAYGUN];
-    // item_data->item_states = &stc_itPublicData->common_items->states; // wrong type of state struct
+    // Get fighter data
+	// ItemDesc **fighter_items = fighter_data->ftData->items;
+
+    // Overwrite the item data that was pulled from common data tables with custom data
+
+        // Set the SA item's custom attributes (do that here or somewhere else???)
+        // memcpy(fighter_items[MEX_ITEM_FXBLASTER]->unqiue_attributes, item_data->itData->param_ext, sizeof(ItemAttr));
+        
+        // Set item states
+        //item_data->item_logic = &stc_itemlogic_common_items[ITEM_RAYGUN];
+        item_data->item_logic = &item_logic_table;
+        // item_data->item_states = &stc_itPublicData->common_items->states; // wrong type of state struct
+        // item_data->item_states = &item_state_table;  // Is this necessary when using the reserved name 'item_state_table'?
+        item_data->item_states = item_data->item_logic->item_states;
 
     // Reset the item
     SAItem_ResetItem(item);
-
-    // NOT DOING THIS AS IT GETS RESET TO NULL (EVERY FRAME?): Set SA item's accessory callback to control functionality
-    // item_data->cb.accessory = SAItem_Think;
     
     return;
 }
-
-////////////////////////
-//  State Functions   //
-////////////////////////
 
 /// @brief Process any fire inputs and controls the logic/state flow of SA item
 /// @param fighter
@@ -407,24 +437,75 @@ void SAItem_Think(GOBJ *fighter)
     // }
 
     // Get fighter data
-    // FighterData *fighter_data = fighter->userdata;
+    FighterData *fighter_data = fighter->userdata;
     // TestAttr *tsAttr = Fighter_GetSpecialAttributes(fighter);
-    // TestAttr* tsAttr = fighter_data->ftData->ext_attr;
-    TestCharVar *char_var = Fighter_GetFighterVars(fighter);
-    // TestCharVar *char_var = &fighter_data->fighter_var;
+    //TestCharVar *char_var = Fighter_GetFighterVars(fighter);
 	// SpecialSVar *state_var = Fighter_GetStateVars(fighter);
 	// SpecialSFtCmd *script_var = Fighter_GetScriptVars(fighter);
 	
     // Get SA item data
-    GOBJ *item = char_var->x222C_blasterGObj;
+    //GOBJ *item = char_var->x222C_blasterGObj;
+    GOBJ *item = fighter_data->x1978;
     ItemData *item_data = item->userdata;
+    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
     // Check if fighter has an SA item. If not, then stop
     // if ( !(item != 0) )
     if (!(item))
     {
+        // Fighter_EnterSleep(fighter, 6000);
         return;
     }
+
+    // INPUT CHECK
+    SAItem_InputCheck_Digital(fighter);
+    SAItem_InputCheck_Analog(fighter);
+
+    // Get SA item's current state
+    int curr_state = item_data->state;
+
+    // Set SA item's next state based on input flags
+    switch (curr_state)
+    {
+        // case STATE_ITEM_IDLE:
+        //     if ((it_flags->fireinputs_digital & PRIMARY_FIRE_INPUT) != 0)
+        //     {
+        //         SAItem_State1(item);
+        //     }
+        //     break;
+        
+        default:
+            if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
+            {
+                SAItem_State1(item);
+            }
+            break;
+    }
+
+// // Custom states
+// #define STATE_ITEM_IDLE 0
+// #define STATE_ITEM_CHARGE 1
+// #define STATE_ITEM_FIRE1 2
+// #define STATE_ITEM_FIRE2 3
+
+// // ItemStateChange Flags
+// #define ITEMSTATE_UPDATEANIM 0x2
+// #define ITEMSTATE_GRAB 0x4
+// #define ITEMSTATE_KEEPHIT 0x10 // dont remove hitboxes on state change
+// typedef enum Item_StateChangeFlags {
+//     ITEM_UNK_0x1 = (1 << 0),
+//     ITEM_ANIM_UPDATE = (1 << 1),
+//     ITEM_DROP_UPDATE = (1 << 2),
+//     ITEM_MODEL_UPDATE = (1 << 3),
+//     ITEM_HIT_PRESERVE = (1 << 4),
+//     ITEM_SFX_PRESERVE = (1 << 5),
+//     ITEM_COLANIM_PRESERVE = (1 << 6),
+//     ITEM_UNK_UPDATE = (1 << 7),
+//     ITEM_CMD_UPDATE = (1 << 8),
+// } Item_StateChangeFlags;
+
+
+
 
     // If the item is already in an active state, then run the associated Think function by setting it as the item accessory callback
     if (item_data->state)
@@ -478,83 +559,234 @@ void SAItem_Think(GOBJ *fighter)
     return;
 }
 
-////////////////////////
-//   State Functions  //
-////////////////////////
-
+///////////////////////
+//  Initial Testgun  //
+///////////////////////
+///
 /// @brief State 0 (Original: ???)
 /// @param item 
 void SAItem_State0(GOBJ *item)
 {
-    // // Get item data
-    // ItemData *item_data = item->userdata;
-    // //TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
-    // // ItemFtCmd *it_flags = &item_data->itcmd_var;
-    // // ItemVar *item_vars = &item_data->item_var;
-    // // ItemAttr *attributes = &item_data->itData->param_ext;
+    // Get item data
+    ItemData *item_data = item->userdata;
+    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
+	// Clear flags that are going to be used by this action
+	it_flags->xDB4 = 0;
+	it_flags->xDB8 = 0;
+	it_flags->xDBC = 0;
 
-    // // INPUT CHECK
-    // GOBJ *fighter = item_data->fighter_gobj;
-    // // FighterData *fighter_data = fighter->userdata;
-    // int input_dig = SAItem_InputCheck_Digital(fighter);
-    // int input_ana = SAItem_InputCheck_Analog(fighter);
+	// Change state and update subaction
+	ItemStateChange(item, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);
+    // Item_AnimateAndUpdateSubactions(item);  // Should this be called? Or would/should it automatically take care of itself next frame
 
-    // // if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
-    // if ((input_dig & SECONDARY_FIRE_INPUT) != 0)
-    // {
-    //     // item_data->itcmd_var.flag1 = 1;
-    // }
-    // // if (item_data->itcmd_var.flag1 != 0)
-    // // {
-    // //     SALeapKneeBend(fighter);
-    // // }
-    return;
+	return;
 }
 
-void State0_AnimCallback(GOBJ *item) {return;}
-void State0_PhysCallback(GOBJ *item) {return;}
-void State0_CollCallback(GOBJ *item) {return;}
+///
+/// @brief State 1 (Original: ???)
+/// @param item 
+void SAItem_State1(GOBJ *item)
+{
+    // Get item data
+    ItemData *item_data = item->userdata;
+    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
-void SAItem_State1(GOBJ *item) {return;}
-void State1_AnimCallback(GOBJ *item) {return;}
-void State1_PhysCallback(GOBJ *item) {return;}
-void State1_CollCallback(GOBJ *item) {return;}
+	// Clear flags that are going to be used by this action
+	it_flags->xDB4 = 0;
+	it_flags->xDB8 = 0;
+	it_flags->xDBC = 0;
 
-void SAItem_State2(GOBJ *item) {return;}
-void State2_AnimCallback(GOBJ *item) {return;}
-void State2_PhysCallback(GOBJ *item) {return;}
-void State2_CollCallback(GOBJ *item) {return;}
+    // Create a test effect
+        // Get fighter data
+        GOBJ *fighter = item_data->fighter_gobj;
+        FighterData *fighter_data = fighter->userdata;
+        int bone_index = Fighter_BoneLookup(fighter_data, L1stNa);
+        Effect_SpawnSync(1073, fighter, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
+        Item_PlayOnDestroySFXAgain(item_data, 180025, 0x7f, 0x40);
 
-void SAItem_State3(GOBJ *item) {return;}
-void State3_AnimCallback(GOBJ *item) {return;}
-void State3_PhysCallback(GOBJ *item) {return;}
-void State3_CollCallback(GOBJ *item) {return;}
+    // JOBJ *jobj = (JOBJ *)item->hsd_object;
+    // Effect_SpawnAsync(item, &item_data->effect, 1, 1147, jobj);
 
-void SAItem_State4(GOBJ *item) {return;}
-void State4_AnimCallback(GOBJ *item) {return;}
-void State4_PhysCallback(GOBJ *item) {return;}
-void State4_CollCallback(GOBJ *item) {return;}
+    return;
 
-void SAItem_State5(GOBJ *item) {return;}
-void State5_AnimCallback(GOBJ *item) {return;}
-void State5_PhysCallback(GOBJ *item) {return;}
-void State5_CollCallback(GOBJ *item) {return;}
+
+	// Change state and update subaction
+	ItemStateChange(item, STATE_ITEM_CHARGE, ITEMSTATE_UPDATEANIM);
+    // Item_AnimateAndUpdateSubactions(item);  // Should this be called? Or would/should it automatically take care of itself next frame
+
+	return;
+}
+
+////////////////////////
+//   State Functions  //
+////////////////////////
+
+bool State0_AnimCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 0 anim callback
+    bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E828;
+    return cb_Anim(item);
+    // return true;
+}
+void State0_PhysCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 0 phys callback
+    void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028E830;
+    return cb_Phys(item);
+    // return true;
+}
+bool State0_CollCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 0 coll callback
+    bool (*cb_Coll)(GOBJ *gobj) = (bool *) 0x8028E834;
+    return cb_Coll(item);
+    // return true;
+}
+
+bool State1_AnimCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 1 anim callback
+    bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E888;
+    return cb_Anim(item);
+    // return true;
+}
+void State1_PhysCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 1 phys callback
+    void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028E890;
+    return cb_Phys(item);
+    // return true;
+}
+bool State1_CollCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 1 coll callback
+    bool (*cb_Coll)(GOBJ *gobj) = (bool *) 0x8028E8C0;
+    return cb_Coll(item);
+    // return true;
+}
+
+bool State2_AnimCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 2 anim callback
+    bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E92C;
+    return cb_Anim(item);
+    // return true;
+}
+void State2_PhysCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 2 phys callback
+    void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028E934;
+    return cb_Phys(item);
+    // return true;
+}
+bool State2_CollCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 2 coll callback
+    return false;
+}
+
+bool State3_AnimCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 3 anim callback
+    bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E96C;
+    return cb_Anim(item);
+    // return true;
+}
+void State3_PhysCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 3 phys callback
+    void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028E9B4;
+    return cb_Phys(item);
+    // return true;
+}
+bool State3_CollCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 3 coll callback
+    return false;
+}
+
+bool State4_AnimCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 4 anim callback
+    bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E888;
+    return cb_Anim(item);
+    // return true;
+}
+void State4_PhysCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 4 phys callback
+    void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028EA08;
+    return cb_Phys(item);
+    // return true;
+}
+bool State4_CollCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 4 coll callback
+    bool (*cb_Coll)(GOBJ *gobj) = (bool *) 0x8028E8C0;
+    return cb_Coll(item);
+    // return true;
+}
+
+bool State5_AnimCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 5 anim callback
+    bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028EB28;
+    return cb_Anim(item);
+    // return true;
+}
+void State5_PhysCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 5 phys callback
+    void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028EB30;
+    return cb_Phys(item);
+    // return true;
+}
+bool State5_CollCallback(GOBJ *item) {
+    // This block runs lgun's pre-existing state 5 coll callback
+    bool (*cb_Coll)(GOBJ *gobj) = (bool *) 0x8028EB34;
+    return cb_Coll(item);
+    // return true;
+}
+
+// bool State1_AnimCallback(GOBJ *item)
+// {
+//     // Get item data
+//     ItemData *item_data = item->userdata;
+//     JOBJ *jobj = (JOBJ *)item->hsd_object;
+
+//     // // Get fighter data
+//     // GOBJ *fighter = item_data->fighter_gobj;
+//     // FighterData *fighter_data = fighter->userdata;
+
+//     // Create a test effect
+//     Effect_SpawnAsync(item, &item_data->effect, 1, 1147, jobj);
+
+//     // Go back to original state
+//     ItemStateChange(item, STATE_ITEM_IDLE, 0);
+
+//     return true;
+// }
+// void State1_PhysCallback(GOBJ *item) {return;}
+// bool State1_CollCallback(GOBJ *item) {return true;}
+
+// void SAItem_State2(GOBJ *item) {return;}
+// bool State2_AnimCallback(GOBJ *item) {return true;}
+// void State2_PhysCallback(GOBJ *item) {return;}
+// bool State2_CollCallback(GOBJ *item) {return true;}
+
+// void SAItem_State3(GOBJ *item) {return;}
+// bool State3_AnimCallback(GOBJ *item) {return true;}
+// void State3_PhysCallback(GOBJ *item) {return;}
+// bool State3_CollCallback(GOBJ *item) {return true;}
+
+// void SAItem_State4(GOBJ *item) {return;}
+// bool State4_AnimCallback(GOBJ *item) {return true;}
+// void State4_PhysCallback(GOBJ *item) {return;}
+// bool State4_CollCallback(GOBJ *item) {return true;}
+
+// void SAItem_State5(GOBJ *item) {return;}
+// bool State5_AnimCallback(GOBJ *item) {return true;}
+// void State5_PhysCallback(GOBJ *item) {return;}
+// bool State5_CollCallback(GOBJ *item) {return true;}
 
 void SAItem_State6(GOBJ *item) {return;}
-void State6_AnimCallback(GOBJ *item) {return;}
+bool State6_AnimCallback(GOBJ *item) {return true;}
 void State6_PhysCallback(GOBJ *item) {return;}
-void State6_CollCallback(GOBJ *item) {return;}
+bool State6_CollCallback(GOBJ *item) {return true;}
 
 void SAItem_State7(GOBJ *item) {return;}
-void State7_AnimCallback(GOBJ *item) {return;}
+bool State7_AnimCallback(GOBJ *item) {return true;}
 void State7_PhysCallback(GOBJ *item) {return;}
-void State7_CollCallback(GOBJ *item) {return;}
+bool State7_CollCallback(GOBJ *item) {return true;}
 
 void SAItem_State8(GOBJ *item) {return;}
-void State8_AnimCallback(GOBJ *item) {return;}
+bool State8_AnimCallback(GOBJ *item) {return true;}
 void State8_PhysCallback(GOBJ *item) {return;}
-void State8_CollCallback(GOBJ *item) {return;}
+bool State8_CollCallback(GOBJ *item) {return true;}
 
 
 
@@ -563,7 +795,7 @@ void State8_CollCallback(GOBJ *item) {return;}
 ///
 ///
 ///
-void Idle_AnimCallback(GOBJ *item)
+bool Idle_AnimCallback(GOBJ *item)
 {
     // Spawn SA item
     // GOBJ *fire1_item = SAItem_SpawnItem(gobj, MEX_ITEM_PRIMARYFIRE);
@@ -572,64 +804,89 @@ void Idle_AnimCallback(GOBJ *item)
     //     ItemStateChange(fire1_item, STATE_FIRE1_SPAWN, 2);
     // }
     
-    return;
+    return true;
 }
 void Idle_PhysCallback(GOBJ *gobj)
 {
     return;
 }
-void Idle_CollCallback(GOBJ *gobj)
+bool Idle_CollCallback(GOBJ *gobj)
 {
-    return;
+    return true;
 }
 ///
 ///
 ///
-void Charge_AnimCallback(GOBJ *gobj)
+bool Charge_AnimCallback(GOBJ *gobj)
 {
   // For looping: https://discord.com/channels/768588005615075329/806988096343113770/811034180258365460
-    return;
+    return true;
 }
 void Charge_PhysCallback(GOBJ *gobj)
 {
     return;
 }
-void Charge_CollCallback(GOBJ *gobj)
+bool Charge_CollCallback(GOBJ *gobj)
 {
-    return;
+    return true;
 }
 ///
 ///
 ///
-void PrimaryFire_AnimCallback(GOBJ *gobj)
+bool PrimaryFire_AnimCallback(GOBJ *gobj)
 {
-    return;
+    return true;
 }
 void PrimaryFire_PhysCallback(GOBJ *gobj)
 {
     return;
 }
-void PrimaryFire_CollCallback(GOBJ *gobj)
+bool PrimaryFire_CollCallback(GOBJ *gobj)
 {
-    return;
+    return true;
 }
 ///
 ///
 ///
-void SecondaryFire_AnimCallback(GOBJ *gobj)
+bool SecondaryFire_AnimCallback(GOBJ *gobj)
 {
-    return;
+    return true;
 }
 void SecondaryFire_PhysCallback(GOBJ *gobj)
 {
     return;
 }
-void SecondaryFire_CollCallback(GOBJ *gobj)
+bool SecondaryFire_CollCallback(GOBJ *gobj)
 {
-    return;
+    return true;
 }
 
 
 ///
 ///
 ///
+
+////////////////////////
+//   Logic Functions  //
+////////////////////////
+
+void testgun_OnCreate(GOBJ *gobj)
+{
+    // Get item data
+    ItemData *item_data = gobj->userdata;
+    TestgunAttr *it_attr = (TestgunAttr *)item_data->itData->param_ext;
+    TestgunItemVar *it_vars = (TestgunItemVar *)&item_data->item_var;
+
+    // Initialize attributes
+    item_data->xd4c = it_attr->max_ammo;
+    it_vars->timer = 0;
+    
+    // Set initial state
+    ItemStateChange(gobj, STATE_ITEM_CHARGE, ITEMSTATE_UPDATEANIM);
+}
+
+void testgun_OnPickup(GOBJ *gobj)
+{
+    // Set pickup state
+    ItemStateChange(gobj, STATE_ITEM_FIRE1, ITEMSTATE_UPDATEANIM);
+}
