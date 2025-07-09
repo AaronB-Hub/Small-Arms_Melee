@@ -23,45 +23,10 @@
       "name": "Gun",
       "states": [
         {
-          "animID": -1,
-          "animationCallback": 2150164520,
-          "physicsCallback": 2150164528,
-          "collisionCallback": 2150164532,
-          "trimmedSize": -1
-        },
-        {
-          "animID": -1,
-          "animationCallback": 2150164616,
-          "physicsCallback": 2150164624,
-          "collisionCallback": 2150164672,
-          "trimmedSize": -1
-        },
-        {
-          "animID": -1,
-          "animationCallback": 2150164780,
-          "physicsCallback": 2150164788,
-          "collisionCallback": 0,
-          "trimmedSize": -1
-        },
-        {
           "animID": 0,
-          "animationCallback": 2150164844,
-          "physicsCallback": 2150164916,
+          "animationCallback": 0,
+          "physicsCallback": 0,
           "collisionCallback": 0,
-          "trimmedSize": -1
-        },
-        {
-          "animID": 1,
-          "animationCallback": 2150164616,
-          "physicsCallback": 2150165000,
-          "collisionCallback": 2150164672,
-          "trimmedSize": -1
-        },
-        {
-          "animID": -1,
-          "animationCallback": 2150165288,
-          "physicsCallback": 2150165296,
-          "collisionCallback": 2150165300,
           "trimmedSize": -1
         }
       ],
@@ -85,9 +50,9 @@
       "states": [
         {
           "animID": 0,
-          "animationCallback": 2150204160,
-          "physicsCallback": 2150204888,
-          "collisionCallback": 2150204920,
+          "animationCallback": 0,
+          "physicsCallback": 0,
+          "collisionCallback": 0,
           "trimmedSize": -1
         }
       ],
@@ -111,9 +76,9 @@
       "states": [
         {
           "animID": 0,
-          "animationCallback": 2150209948,
-          "physicsCallback": 2150210020,
-          "collisionCallback": 2150210152,
+          "animationCallback": 0,
+          "physicsCallback": 0,
+          "collisionCallback": 0,
           "trimmedSize": -1
         }
       ],

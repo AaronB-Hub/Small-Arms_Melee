@@ -464,7 +464,7 @@ GOBJ *CreateBaseItem(GOBJ *fighter, int SAitem_kind)
                 // Could edit article in character DAT file and then call the MEX character item in code so it copies from there?
 
             // Turns out the MEX item logic is initially copied from MxDt.DAT, so need to zero out item nodes in there ('0x00000' node is the state array)
-                // ====>> Current plan is to use character items, zero out item nodes in MxDt.DAT, and just define everything in code
+                // ====>> Current plan is to use character items, zero out item nodes in MxDt.DAT and in character's MEX JSON, and just define everything in code
                     // Can have more states in code than present in file's state array
 
     return item;
