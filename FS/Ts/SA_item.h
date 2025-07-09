@@ -440,10 +440,13 @@ GOBJ *CreateBaseItem(GOBJ *fighter, int SAitem_kind)
 	// Create the new item
     //GOBJ *item = Item_CreateItem1(&spawnItem);  // Vanilla fox code uses Item_CreateItem1, which calls Item_CreateItem plus sets spawnItem->x48_ground_or_air = 1, ->x10 = 0, and hold_kind = 8
 	GOBJ *item = Item_CreateItem(&spawnItem); // (Item_8026862C) runs item's spawn function from logic table as part of this
-        // This calls Item_80267AA8 > Item_80267978, which loads xC4_article_data and xB8_itemLogicTable (and xBC_itemStateContainer) from common data sources. Need to overwrite both of these?
+            // Item_8026862C > Item_8026A810 > calls temp_item->xB8_itemLogicTable->spawned(gobj)
+
+        // Item_8026862C calls Item_80267AA8 > Item_80267978, which loads xC4_article_data and xB8_itemLogicTable (and xBC_itemStateContainer) from common data sources. Need to overwrite both of these?
             // After the copy, data from xC4_article_data is copied to all over item_data, so would need to overwrite all of it if using existing 'Item_CreateItem' function
                 // item_data->xC8_joint = item_data->xC4_article_data->x10_modelDesc->x0_joint;
                 // item_data->xCC_item_attr = item_data->xC4_article_data->x0_common_attr;
+
             // This approach won't work if continuing to use 'Item_CreateItem' as this loaded data is used by subsequent functions within
                 // Better to somehow modify common data tables
                     // /* 3F14C4 */ extern struct ItemLogicTable it_803F14C4[43];
@@ -456,12 +459,13 @@ GOBJ *CreateBaseItem(GOBJ *fighter, int SAitem_kind)
                     // /* 4D6D38 */ extern Article* it_804D6D38[];
                     // /* 4D6D28 */ extern ItemCommonData* it_804D6D28;
 
-        // Actually, this data is copied from ItCo.dat/usd (and fighter's .dat for character items). So just need to put custom article/data in both places
-            // This works!! Deleting the just ray gun item from ItCo.usd (nowhere else) and running the code has the next item in the array (ice block) spawn
-            
-            // Plan for now is to edit article in character DAT file and then call the MEX character item in code so it copies from there
+            // Actually, this data is copied from ItCo.dat/usd (and fighter's .dat for character items). So just need to put custom article/data in both places
+                // This works!! Deleting the just ray gun item from ItCo.usd (nowhere else) and running the code has the next item in the array (ice block) spawn
+                // Could edit article in character DAT file and then call the MEX character item in code so it copies from there?
 
-        // Item_8026862C > Item_8026A810 > calls temp_item->xB8_itemLogicTable->spawned(gobj)
+            // Turns out the MEX item logic is initially copied from MxDt.DAT, so need to zero out item nodes in there ('0x00000' node is the state array)
+                // ====>> Current plan is to use character items, zero out item nodes in MxDt.DAT, and just define everything in code
+                    // Can have more states in code than present in file's state array
 
     return item;
 }

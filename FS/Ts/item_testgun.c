@@ -97,74 +97,74 @@ __attribute__((used)) static struct ItemState item_state_table[] = {
 
     // --- VANILLA LGUN ITEM ---
 
-    { // Neutral (Does nothing except calls Item_CollGround_PassLedge with the spawned callback as the event when the collCallback is ran)
-      // States 1, 4, and 5 set a transition to this state up
-        .state = -1,
-        .animCallback = 0x8028E828,
-        .physCallback = 0x8028E830,
-        .collCallback = 0x8028E834,
-    },
-    { // Spawn (?)
-        .state = -1,
-        .animCallback = 0x8028E888,
-        .physCallback = 0x8028E890,
-        .collCallback = 0x8028E8C0,
-    },
-    { // Pickup (do nothing)
-        .state = -1,
-        .animCallback = 0x8028E92C,
-        .physCallback = 0x8028E934,
-        .collCallback = NULL,
-    },
-    { // Shooting?
-        .state = 0,
-        .animCallback = 0x8028E96C,
-        .physCallback = 0x8028E9B4,
-        .collCallback = NULL,
-    },
-    { // Dropped/Thrown (?)
-        .state = 1,
-        .animCallback = 0x8028E888,
-        .physCallback = 0x8028EA08,
-        .collCallback = 0x8028E8C0,
-    },
-    { // Entered air
-        .state = -1,
-        .animCallback = 0x8028EB28,
-        .physCallback = 0x8028EB30,
-        .collCallback = 0x8028EB34,
-    },
+    // { // Neutral (Does nothing except calls Item_CollGround_PassLedge with the spawned callback as the event when the collCallback is ran)
+    //   // States 1, 4, and 5 set a transition to this state up
+    //     .state = -1,
+    //     .animCallback = 0x8028E828,
+    //     .physCallback = 0x8028E830,
+    //     .collCallback = 0x8028E834,
+    // },
+    // { // Spawn (?)
+    //     .state = -1,
+    //     .animCallback = 0x8028E888,
+    //     .physCallback = 0x8028E890,
+    //     .collCallback = 0x8028E8C0,
+    // },
+    // { // Pickup (do nothing)
+    //     .state = -1,
+    //     .animCallback = 0x8028E92C,
+    //     .physCallback = 0x8028E934,
+    //     .collCallback = NULL,
+    // },
+    // { // Shooting?
+    //     .state = 0,
+    //     .animCallback = 0x8028E96C,
+    //     .physCallback = 0x8028E9B4,
+    //     .collCallback = NULL,
+    // },
+    // { // Dropped/Thrown (?)
+    //     .state = 1,
+    //     .animCallback = 0x8028E888,
+    //     .physCallback = 0x8028EA08,
+    //     .collCallback = 0x8028E8C0,
+    // },
+    // { // Entered air
+    //     .state = -1,
+    //     .animCallback = 0x8028EB28,
+    //     .physCallback = 0x8028EB30,
+    //     .collCallback = 0x8028EB34,
+    // },
 
     // --- Custom ---
 
-    // // State: 0 - Idle
-    // {
-    //     .state = 0,
-    //     .animCallback = Idle_AnimCallback,
-    //     .physCallback = Idle_PhysCallback,
-    //     .collCallback = Idle_CollCallback,
-    // },
-    // // State: 1 - Charge
-    // {
-    //     .state = 1,
-    //     .animCallback = Charge_AnimCallback,
-    //     .physCallback = Charge_PhysCallback,
-    //     .collCallback = Charge_CollCallback,
-    // },
-    // // State: 2 - PrimaryFire
-    // {
-    //     .state = 2,
-    //     .animCallback = PrimaryFire_AnimCallback,
-    //     .physCallback = PrimaryFire_PhysCallback,
-    //     .collCallback = PrimaryFire_CollCallback,
-    // },
-    // // State: 3 - SecondaryFire
-    // {
-    //     .state = 3,
-    //     .animCallback = SecondaryFire_AnimCallback,
-    //     .physCallback = SecondaryFire_PhysCallback,
-    //     .collCallback = SecondaryFire_CollCallback,
-    // },
+    // State: 0 - Idle
+    {
+        .state = 0,
+        .animCallback = Idle_AnimCallback,
+        .physCallback = Idle_PhysCallback,
+        .collCallback = Idle_CollCallback,
+    },
+    // State: 1 - Charge
+    {
+        .state = 1,
+        .animCallback = Charge_AnimCallback,
+        .physCallback = Charge_PhysCallback,
+        .collCallback = Charge_CollCallback,
+    },
+    // State: 2 - PrimaryFire
+    {
+        .state = 2,
+        .animCallback = PrimaryFire_AnimCallback,
+        .physCallback = PrimaryFire_PhysCallback,
+        .collCallback = PrimaryFire_CollCallback,
+    },
+    // State: 3 - SecondaryFire
+    {
+        .state = 3,
+        .animCallback = SecondaryFire_AnimCallback,
+        .physCallback = SecondaryFire_PhysCallback,
+        .collCallback = SecondaryFire_CollCallback,
+    },
 
 
 
@@ -210,9 +210,6 @@ __attribute__((used)) static struct ItemState item_state_table[] = {
     //     .physCallback = State5_PhysCallback,
     //     .collCallback = State5_CollCallback,
     // },
-
-
-
     // { // state 6: ??
     //     .state = 6,
     //     .animCallback = State6_AnimCallback,
@@ -305,39 +302,36 @@ __attribute__((used)) static struct ItemLogic item_logic_table[] = {
     // }
     {  // --- CUSTOM ---
         .item_states    = &item_state_table,
-        // .OnCreate       = 0x8028E738,
-        // // .OnCreate       = 0x8028E860,
-        // .OnDestroy      = NULL,
-        // .OnPickup       = 0x8028E904,
-        // .OnDrop         = 0x8028E9B8,
-        // .OnThrow        = NULL,
-        // .OnGiveDamage   = 0x8028EA54,
-        // .OnTakeDamage   = NULL,
-        // .OnEnterAir     = 0x8028EB00,
-        // .OnReflect      = NULL,
-        // .OnClank        = NULL,
-        // .OnAbsorb       = NULL,
-        // .OnShieldBounce = NULL,
-        // .OnShieldHit    = NULL,
-        // .OnUnkEvent     = 0x8028EB68,
+        .OnCreate       = testgun_OnCreate,
+        .OnDestroy      = NULL,
+        .OnPickup       = testgun_OnPickup,
+        .OnDrop         = NULL,
+        .OnThrow        = NULL,
+        .OnGiveDamage   = NULL,
+        .OnTakeDamage   = NULL,
+        .OnEnterAir     = NULL,
+        .OnReflect      = NULL,
+        .OnClank        = NULL,
+        .OnAbsorb       = NULL,
+        .OnShieldBounce = NULL,
+        .OnShieldHit    = NULL,
+        .OnUnkEvent     = NULL,
 
         // LGun
         // .OnCreate       = 0x8028E738,
-        .OnCreate       = testgun_OnCreate,
-        .OnDestroy      = NULL,
+        // .OnDestroy      = NULL,
         // .OnPickup       = 0x8028E904,
-        .OnPickup       = testgun_OnPickup,
-        .OnDrop         = 0x8028E9B8,
-        .OnThrow        = 0x8028E9E0,
-        .OnGiveDamage   = 0x8028EA54,
-        .OnTakeDamage   = NULL,
-        .OnEnterAir     = 0x8028EB00,
-        .OnReflect      = 0x8028EAC0,
-        .OnClank        = 0x8028EA78,
-        .OnAbsorb       = NULL,
-        .OnShieldBounce = 0x8028EAE0,
-        .OnShieldHit    = 0x8028EA9C,
-        .OnUnkEvent     = 0x8028EB68,
+        // .OnDrop         = 0x8028E9B8,
+        // .OnThrow        = 0x8028E9E0,
+        // .OnGiveDamage   = 0x8028EA54,
+        // .OnTakeDamage   = NULL,
+        // .OnEnterAir     = 0x8028EB00,
+        // .OnReflect      = 0x8028EAC0,
+        // .OnClank        = 0x8028EA78,
+        // .OnAbsorb       = NULL,
+        // .OnShieldBounce = 0x8028EAE0,
+        // .OnShieldHit    = 0x8028EA9C,
+        // .OnUnkEvent     = 0x8028EB68,
     }
 };
 
@@ -602,7 +596,6 @@ void SAItem_State1(GOBJ *item)
 	it_flags->xDB4 = 0;
 	it_flags->xDB8 = 0;
 	it_flags->xDBC = 0;
-    return;
 
     // Create a test effect
         // Get fighter data
@@ -615,9 +608,6 @@ void SAItem_State1(GOBJ *item)
         // Effect_SpawnAsync(item, &item_data->effect, 0, 1147, fighter_data->bones[bone_index].joint);
         Item_PlayOnDestroySFXAgain(item_data, 180025, 0x7f, 0x40);
 
-    return;
-
-
 	// Change state and update subaction
 	ItemStateChange(item, STATE_ITEM_CHARGE, ITEMSTATE_UPDATEANIM);
     // Item_AnimateAndUpdateSubactions(item);  // Should this be called? Or would/should it automatically take care of itself next frame
@@ -629,115 +619,115 @@ void SAItem_State1(GOBJ *item)
 //   State Functions  //
 ////////////////////////
 
-bool State0_AnimCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 0 anim callback
-    bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E828;
-    return cb_Anim(item);
-    // return true;
-}
-void State0_PhysCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 0 phys callback
-    void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028E830;
-    return cb_Phys(item);
-    // return true;
-}
-bool State0_CollCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 0 coll callback
-    bool (*cb_Coll)(GOBJ *gobj) = (bool *) 0x8028E834;
-    return cb_Coll(item);
-    // return true;
-}
+// bool State0_AnimCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 0 anim callback
+//     // bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E828;
+//     // return cb_Anim(item);
+//     return false;
+// }
+// void State0_PhysCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 0 phys callback
+//     // void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028E830;
+//     // return cb_Phys(item);
+//     return;
+// }
+// bool State0_CollCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 0 coll callback
+//     // bool (*cb_Coll)(GOBJ *gobj) = (bool *) 0x8028E834;
+//     // return cb_Coll(item);
+//     return false;
+// }
 
-bool State1_AnimCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 1 anim callback
-    bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E888;
-    return cb_Anim(item);
-    // return true;
-}
-void State1_PhysCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 1 phys callback
-    void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028E890;
-    return cb_Phys(item);
-    // return true;
-}
-bool State1_CollCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 1 coll callback
-    bool (*cb_Coll)(GOBJ *gobj) = (bool *) 0x8028E8C0;
-    return cb_Coll(item);
-    // return true;
-}
+// bool State1_AnimCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 1 anim callback
+//     bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E888;
+//     return cb_Anim(item);
+//     // return false;
+// }
+// void State1_PhysCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 1 phys callback
+//     void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028E890;
+//     return cb_Phys(item);
+//     // return;
+// }
+// bool State1_CollCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 1 coll callback
+//     bool (*cb_Coll)(GOBJ *gobj) = (bool *) 0x8028E8C0;
+//     return cb_Coll(item);
+//     // return false;
+// }
 
-bool State2_AnimCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 2 anim callback
-    bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E92C;
-    return cb_Anim(item);
-    // return true;
-}
-void State2_PhysCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 2 phys callback
-    void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028E934;
-    return cb_Phys(item);
-    // return true;
-}
-bool State2_CollCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 2 coll callback
-    return false;
-}
+// bool State2_AnimCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 2 anim callback
+//     bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E92C;
+//     return cb_Anim(item);
+//     // return false;
+// }
+// void State2_PhysCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 2 phys callback
+//     void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028E934;
+//     return cb_Phys(item);
+//     // return;
+// }
+// bool State2_CollCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 2 coll callback
+//     return false;
+// }
 
-bool State3_AnimCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 3 anim callback
-    bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E96C;
-    return cb_Anim(item);
-    // return true;
-}
-void State3_PhysCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 3 phys callback
-    void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028E9B4;
-    return cb_Phys(item);
-    // return true;
-}
-bool State3_CollCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 3 coll callback
-    return false;
-}
+// bool State3_AnimCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 3 anim callback
+//     bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E96C;
+//     return cb_Anim(item);
+//     // return false;
+// }
+// void State3_PhysCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 3 phys callback
+//     void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028E9B4;
+//     return cb_Phys(item);
+//     // return;
+// }
+// bool State3_CollCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 3 coll callback
+//     return false;
+// }
 
-bool State4_AnimCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 4 anim callback
-    bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E888;
-    return cb_Anim(item);
-    // return true;
-}
-void State4_PhysCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 4 phys callback
-    void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028EA08;
-    return cb_Phys(item);
-    // return true;
-}
-bool State4_CollCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 4 coll callback
-    bool (*cb_Coll)(GOBJ *gobj) = (bool *) 0x8028E8C0;
-    return cb_Coll(item);
-    // return true;
-}
+// bool State4_AnimCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 4 anim callback
+//     bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028E888;
+//     return cb_Anim(item);
+//     // return false;
+// }
+// void State4_PhysCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 4 phys callback
+//     void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028EA08;
+//     return cb_Phys(item);
+//     // return;
+// }
+// bool State4_CollCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 4 coll callback
+//     bool (*cb_Coll)(GOBJ *gobj) = (bool *) 0x8028E8C0;
+//     return cb_Coll(item);
+//     // return false;
+// }
 
-bool State5_AnimCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 5 anim callback
-    bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028EB28;
-    return cb_Anim(item);
-    // return true;
-}
-void State5_PhysCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 5 phys callback
-    void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028EB30;
-    return cb_Phys(item);
-    // return true;
-}
-bool State5_CollCallback(GOBJ *item) {
-    // This block runs lgun's pre-existing state 5 coll callback
-    bool (*cb_Coll)(GOBJ *gobj) = (bool *) 0x8028EB34;
-    return cb_Coll(item);
-    // return true;
-}
+// bool State5_AnimCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 5 anim callback
+//     bool (*cb_Anim)(GOBJ *gobj) = (bool *) 0x8028EB28;
+//     return cb_Anim(item);
+//     // return false;
+// }
+// void State5_PhysCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 5 phys callback
+//     void (*cb_Phys)(GOBJ *gobj) = (void *) 0x8028EB30;
+//     return cb_Phys(item);
+//     // return;
+// }
+// bool State5_CollCallback(GOBJ *item) {
+//     // This block runs lgun's pre-existing state 5 coll callback
+//     bool (*cb_Coll)(GOBJ *gobj) = (bool *) 0x8028EB34;
+//     return cb_Coll(item);
+//     // return false;
+// }
 
 // bool State1_AnimCallback(GOBJ *item)
 // {
@@ -755,45 +745,45 @@ bool State5_CollCallback(GOBJ *item) {
 //     // Go back to original state
 //     ItemStateChange(item, STATE_ITEM_IDLE, 0);
 
-//     return true;
+//     return false;
 // }
 // void State1_PhysCallback(GOBJ *item) {return;}
-// bool State1_CollCallback(GOBJ *item) {return true;}
+// bool State1_CollCallback(GOBJ *item) {return false;}
 
 // void SAItem_State2(GOBJ *item) {return;}
-// bool State2_AnimCallback(GOBJ *item) {return true;}
+// bool State2_AnimCallback(GOBJ *item) {return false;}
 // void State2_PhysCallback(GOBJ *item) {return;}
-// bool State2_CollCallback(GOBJ *item) {return true;}
+// bool State2_CollCallback(GOBJ *item) {return false;}
 
 // void SAItem_State3(GOBJ *item) {return;}
-// bool State3_AnimCallback(GOBJ *item) {return true;}
+// bool State3_AnimCallback(GOBJ *item) {return false;}
 // void State3_PhysCallback(GOBJ *item) {return;}
-// bool State3_CollCallback(GOBJ *item) {return true;}
+// bool State3_CollCallback(GOBJ *item) {return false;}
 
 // void SAItem_State4(GOBJ *item) {return;}
-// bool State4_AnimCallback(GOBJ *item) {return true;}
+// bool State4_AnimCallback(GOBJ *item) {return false;}
 // void State4_PhysCallback(GOBJ *item) {return;}
-// bool State4_CollCallback(GOBJ *item) {return true;}
+// bool State4_CollCallback(GOBJ *item) {return false;}
 
 // void SAItem_State5(GOBJ *item) {return;}
-// bool State5_AnimCallback(GOBJ *item) {return true;}
+// bool State5_AnimCallback(GOBJ *item) {return false;}
 // void State5_PhysCallback(GOBJ *item) {return;}
-// bool State5_CollCallback(GOBJ *item) {return true;}
+// bool State5_CollCallback(GOBJ *item) {return false;}
 
 void SAItem_State6(GOBJ *item) {return;}
-bool State6_AnimCallback(GOBJ *item) {return true;}
+bool State6_AnimCallback(GOBJ *item) {return false;}
 void State6_PhysCallback(GOBJ *item) {return;}
-bool State6_CollCallback(GOBJ *item) {return true;}
+bool State6_CollCallback(GOBJ *item) {return false;}
 
 void SAItem_State7(GOBJ *item) {return;}
-bool State7_AnimCallback(GOBJ *item) {return true;}
+bool State7_AnimCallback(GOBJ *item) {return false;}
 void State7_PhysCallback(GOBJ *item) {return;}
-bool State7_CollCallback(GOBJ *item) {return true;}
+bool State7_CollCallback(GOBJ *item) {return false;}
 
 void SAItem_State8(GOBJ *item) {return;}
-bool State8_AnimCallback(GOBJ *item) {return true;}
+bool State8_AnimCallback(GOBJ *item) {return false;}
 void State8_PhysCallback(GOBJ *item) {return;}
-bool State8_CollCallback(GOBJ *item) {return true;}
+bool State8_CollCallback(GOBJ *item) {return false;}
 
 
 
@@ -811,7 +801,7 @@ bool Idle_AnimCallback(GOBJ *item)
     //     ItemStateChange(fire1_item, STATE_FIRE1_SPAWN, 2);
     // }
     
-    return true;
+    return false;
 }
 void Idle_PhysCallback(GOBJ *gobj)
 {
@@ -819,7 +809,7 @@ void Idle_PhysCallback(GOBJ *gobj)
 }
 bool Idle_CollCallback(GOBJ *gobj)
 {
-    return true;
+    return false;
 }
 ///
 ///
@@ -827,7 +817,7 @@ bool Idle_CollCallback(GOBJ *gobj)
 bool Charge_AnimCallback(GOBJ *gobj)
 {
   // For looping: https://discord.com/channels/768588005615075329/806988096343113770/811034180258365460
-    return true;
+    return false;
 }
 void Charge_PhysCallback(GOBJ *gobj)
 {
@@ -835,14 +825,14 @@ void Charge_PhysCallback(GOBJ *gobj)
 }
 bool Charge_CollCallback(GOBJ *gobj)
 {
-    return true;
+    return false;
 }
 ///
 ///
 ///
 bool PrimaryFire_AnimCallback(GOBJ *gobj)
 {
-    return true;
+    return false;
 }
 void PrimaryFire_PhysCallback(GOBJ *gobj)
 {
@@ -850,14 +840,14 @@ void PrimaryFire_PhysCallback(GOBJ *gobj)
 }
 bool PrimaryFire_CollCallback(GOBJ *gobj)
 {
-    return true;
+    return false;
 }
 ///
 ///
 ///
 bool SecondaryFire_AnimCallback(GOBJ *gobj)
 {
-    return true;
+    return false;
 }
 void SecondaryFire_PhysCallback(GOBJ *gobj)
 {
@@ -865,7 +855,7 @@ void SecondaryFire_PhysCallback(GOBJ *gobj)
 }
 bool SecondaryFire_CollCallback(GOBJ *gobj)
 {
-    return true;
+    return false;
 }
 
 
@@ -889,13 +879,13 @@ void testgun_OnCreate(GOBJ *gobj)
     it_vars->timer = 0;
     
     // Set initial state
-    ItemStateChange(gobj, STATE_ITEM_CHARGE, ITEMSTATE_UPDATEANIM);
-        // ItemStateChange(gobj, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);
+    // ItemStateChange(gobj, STATE_ITEM_CHARGE, ITEMSTATE_UPDATEANIM);
+        ItemStateChange(gobj, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);
 }
 
 void testgun_OnPickup(GOBJ *gobj)
 {
     // Set pickup state
-    ItemStateChange(gobj, STATE_ITEM_FIRE1, ITEMSTATE_UPDATEANIM);
-        // ItemStateChange(gobj, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);
+    // ItemStateChange(gobj, STATE_ITEM_FIRE1, ITEMSTATE_UPDATEANIM);
+        ItemStateChange(gobj, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);
 }
