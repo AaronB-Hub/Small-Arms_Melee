@@ -421,8 +421,7 @@ GOBJ *CreateBaseItem(GOBJ *fighter, int SAitem_kind)
     {
         .parent_gobj = fighter,
         .parent_gobj2 = fighter,
-        // .it_kind = SAitem_kind,     // id of the item to spawn
-        .it_kind = ITEM_RAYGUN,
+        .it_kind = SAitem_kind,     // id of the item to spawn
         //.hold_kind = ITHOLD_SWORD,  // defines the behavior of the item, such as thrown and pickup. 0 = capsule
         .unk2 = 0,
         .pos = spawn_position,
@@ -439,18 +438,18 @@ GOBJ *CreateBaseItem(GOBJ *fighter, int SAitem_kind)
     };
 
 	// Create the new item
+    //GOBJ *item = Item_CreateItem1(&spawnItem);  // Vanilla fox code uses Item_CreateItem1, which calls Item_CreateItem plus sets spawnItem->x48_ground_or_air = 1, ->x10 = 0, and hold_kind = 8
 	GOBJ *item = Item_CreateItem(&spawnItem); // (Item_8026862C) runs item's spawn function from logic table as part of this
-    // GOBJ *item = Item_CreateItem1(&spawnItem);  // Vanilla fox code uses Item_CreateItem1, which calls Item_CreateItem plus sets spawnItem->x48_ground_or_air = 1, ->x10 = 0, and hold_kind = 8
         // This calls Item_80267AA8 > Item_80267978, which loads xC4_article_data and xB8_itemLogicTable (and xBC_itemStateContainer) from common data sources. Need to overwrite both of these?
             // After the copy, data from xC4_article_data is copied to all over item_data, so would need to overwrite all of it if using existing 'Item_CreateItem' function
                 // item_data->xC8_joint = item_data->xC4_article_data->x10_modelDesc->x0_joint;
                 // item_data->xCC_item_attr = item_data->xC4_article_data->x0_common_attr;
-            // This approach won't work if continuing to use 'Item_CreateItem' as this loaded data is used by subseqent functions within
+            // This approach won't work if continuing to use 'Item_CreateItem' as this loaded data is used by subsequent functions within
                 // Better to somehow modify common data tables
                     // /* 3F14C4 */ extern struct ItemLogicTable it_803F14C4[43];
-                    // /* 3F23CC */ extern struct ItemLogicTable it_803F23CC[];
+                    // /* 3F23CC */ extern struct ItemLogicTable it_803F23CC[47];
                     // /* 3F3100 */ extern struct ItemLogicTable it_803F3100[118];
-                    // /* 3F4D20 */ extern struct ItemLogicTable it_803F4D20[];
+                    // /* 3F4D20 */ extern struct ItemLogicTable it_803F4D20[30];
                     // /* 4A0F60 */ extern Article* it_804A0F60[];
                     // /* 4D6D24 */ extern Article* it_804D6D24[];
                     // /* 4D6D30 */ extern Article* it_804D6D30[];
@@ -458,6 +457,9 @@ GOBJ *CreateBaseItem(GOBJ *fighter, int SAitem_kind)
                     // /* 4D6D28 */ extern ItemCommonData* it_804D6D28;
 
         // Actually, this data is copied from ItCo.dat/usd (and fighter's .dat for character items). So just need to put custom article/data in both places
+            // This works!! Deleting the just ray gun item from ItCo.usd (nowhere else) and running the code has the next item in the array (ice block) spawn
+            
+            // Plan for now is to edit article in character DAT file and then call the MEX character item in code so it copies from there
 
         // Item_8026862C > Item_8026A810 > calls temp_item->xB8_itemLogicTable->spawned(gobj)
 
@@ -667,7 +669,7 @@ void SAItem_OnSpawn(GOBJ *fighter)
     GOBJ *item = SAItem_SpawnItem(fighter);
     ItemData *item_data = item->userdata;
 
-    
+    if (item != 0) {    
     // Give the SA item to the character
 
             // Fighter_GiveItem(fighter, item);  // ftpickupitem_800948A8 (calls Item_Hold - part of this function is calling the item's pickup callback)
@@ -681,20 +683,20 @@ void SAItem_OnSpawn(GOBJ *fighter)
                                             // ftpickupitem_80094694 - sets ftpickupitem_80094DF8 as fp->take_dmg_cb - calls ftpickupitem_80094B6C
 
         // Have character hold the SA item
-    if (item != 0) {
         
-        // This function checks if there is a grabbable item in the vicinity and initiates the pickup action if so
-            // Usually runs downstream from IASA functions as part of checking for a A/Z press for an attack
-            // This will lead to ActionStateChange(0, 1, 0, fighter, ASID_LIGHTGET, 0, 0), which leads to Item_Hold(item, fighter, bone_index)
-        // bool (*cb_StartPickup)(GOBJ *gobj) = (bool *) 0x80094790;
-        // cb_StartPickup(fighter);
+            // This function checks if there is a grabbable item in the vicinity and initiates the pickup action if so
+                // Usually runs downstream from IASA functions as part of checking for a A/Z press for an attack
+                // This will lead to ActionStateChange(0, 1, 0, fighter, ASID_LIGHTGET, 0, 0), which leads to Item_Hold(item, fighter, bone_index)
+            // bool (*cb_StartPickup)(GOBJ *gobj) = (bool *) 0x80094790;
+            // cb_StartPickup(fighter);
 
         int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
         Item_Hold(item, fighter, bone_index); // Item_8026AB54 - part of this function is calling the item's pickup callback: RunGObjCallback(gobj, item_data->xB8_itemLogicTable->picked_up);
                                               // Item_8026AB54 (aka Item_Hold) -> it_802742F4 -> it_80274F48 -> lb_8000C2F8 (aka JOBJ_AttachPositionRotation)
                                               // Gets part as fighter->ftData->modelLookup->x11
                                               // Calls it_80274F48 for part attachment
-    }
+
+
         // Store the SA item pointer to the fighter held item var (common items) / a char var (fox blaster)
             fighter_data->x1978 = item;  // seems to only get reset on player init and from item dropped functions
             // fighter_data->item_held = item;  // Not using this, as it is used by pretty much all other items, and want to avoid conflict if possible
@@ -717,6 +719,7 @@ void SAItem_OnSpawn(GOBJ *fighter)
         // item_data->accessory() ????
         // Use fighter accessory function(s), use item accessory function, or both?
 
+        
             // // Set the accessory callback for the SA item and fires/projectiles, which will spawn them
             // item_data->it_func.x38 = SAItem_Think;
             // fighter_data->cb.Accessory1 = SAItem_SpawnPrimaryFireThink;
@@ -726,6 +729,11 @@ void SAItem_OnSpawn(GOBJ *fighter)
         fighter_data->cb.Accessory_Persist = SAItem_Think;
 
         // Don't think MEX costume accessories are relevant
+
+    } else {
+        Fighter_EnterSleep(fighter, 6000);
+    }
+
 
     return;
 }

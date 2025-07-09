@@ -297,7 +297,7 @@ void Item_80267AA8(GOBJ* item_gobj, SpawnItem* spawnItem)
     itCommonAttr* item_attr;
     ItemData* item_data = (ItemData*) item_gobj->userdata;
     item_data->kind = spawnItem->it_kind;
-    item_data->x14 = spawnItem->hold_kind;
+    item_data->hold_kind = spawnItem->hold_kind;
     item_data->x18 = spawnItem->unk2;
     item_data->x1c = 1; // ? originally = it_804D6D10++;
     item_data->item = item_gobj;

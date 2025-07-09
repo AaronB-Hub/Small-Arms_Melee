@@ -20,7 +20,7 @@
   "endingScreenScale": 0,
   "items": [
     {
-      "name": "New Item",
+      "name": "Gun",
       "states": [
         {
           "animID": -1,
@@ -65,23 +65,23 @@
           "trimmedSize": -1
         }
       ],
-      "onSpawn": 2150164280,
+      "onSpawn": 0,
       "onDestroy": 0,
-      "onPickup": 2150164740,
-      "onDrop": 2150164920,
-      "onThrow": 2150164960,
-      "onGiveDamage": 2150165076,
+      "onPickup": 0,
+      "onDrop": 0,
+      "onThrow": 0,
+      "onGiveDamage": 0,
       "onTakeDamage": 0,
-      "onEnterAir": 2150165248,
-      "onReflect": 2150165184,
-      "onClank": 2150165112,
+      "onEnterAir": 0,
+      "onReflect": 0,
+      "onClank": 0,
       "onUnk2": 0,
-      "onHitShieldBounce": 2150165216,
-      "onHitShieldDetermineDestroy": 2150165148,
-      "onUnk3": 2150165352
+      "onHitShieldBounce": 0,
+      "onHitShieldDetermineDestroy": 0,
+      "onUnk3": 0
     },
     {
-      "name": "New Item",
+      "name": "Beam",
       "states": [
         {
           "animID": 0,
@@ -96,18 +96,18 @@
       "onPickup": 0,
       "onDrop": 0,
       "onThrow": 0,
-      "onGiveDamage": 2150204980,
+      "onGiveDamage": 0,
       "onTakeDamage": 0,
       "onEnterAir": 0,
-      "onReflect": 2150205012,
-      "onClank": 2150204988,
-      "onUnk2": 2150205004,
-      "onHitShieldBounce": 2150205480,
-      "onHitShieldDetermineDestroy": 2150204996,
-      "onUnk3": 2150205636
+      "onReflect": 0,
+      "onClank": 0,
+      "onUnk2": 0,
+      "onHitShieldBounce": 0,
+      "onHitShieldDetermineDestroy": 0,
+      "onUnk3": 0
     },
     {
-      "name": "New Item",
+      "name": "Recoil Effect?",
       "states": [
         {
           "animID": 0,
@@ -122,15 +122,15 @@
       "onPickup": 0,
       "onDrop": 0,
       "onThrow": 0,
-      "onGiveDamage": 2150210412,
+      "onGiveDamage": 0,
       "onTakeDamage": 0,
       "onEnterAir": 0,
-      "onReflect": 2150210420,
-      "onClank": 2150210568,
-      "onUnk2": 2150210576,
-      "onHitShieldBounce": 2150210584,
-      "onHitShieldDetermineDestroy": 2150210592,
-      "onUnk3": 2150210600
+      "onReflect": 0,
+      "onClank": 0,
+      "onUnk2": 0,
+      "onHitShieldBounce": 0,
+      "onHitShieldDetermineDestroy": 0,
+      "onUnk3": 0
     }
   ],
   "boneDefinitions": {

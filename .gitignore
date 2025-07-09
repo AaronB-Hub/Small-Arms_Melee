@@ -1,2 +1,3 @@
 # ignore ALL .iso (aka compiled game) files
 *.iso
+New_folder/

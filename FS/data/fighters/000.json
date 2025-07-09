@@ -54,24 +54,6 @@
     },
     {
       "name": "New Item",
-      "states": [],
-      "onSpawn": 0,
-      "onDestroy": 0,
-      "onPickup": 0,
-      "onDrop": 0,
-      "onThrow": 0,
-      "onGiveDamage": 0,
-      "onTakeDamage": 0,
-      "onEnterAir": 0,
-      "onReflect": 0,
-      "onClank": 0,
-      "onUnk2": 0,
-      "onHitShieldBounce": 0,
-      "onHitShieldDetermineDestroy": 0,
-      "onUnk3": 0
-    },
-    {
-      "name": "New Item",
       "states": [
         {
           "animID": 0,
@@ -95,24 +77,6 @@
       "onHitShieldBounce": 2150218360,
       "onHitShieldDetermineDestroy": 2150218344,
       "onUnk3": 2150218392
-    },
-    {
-      "name": "New Item",
-      "states": [],
-      "onSpawn": 0,
-      "onDestroy": 0,
-      "onPickup": 0,
-      "onDrop": 0,
-      "onThrow": 0,
-      "onGiveDamage": 0,
-      "onTakeDamage": 0,
-      "onEnterAir": 0,
-      "onReflect": 0,
-      "onClank": 0,
-      "onUnk2": 0,
-      "onHitShieldBounce": 0,
-      "onHitShieldDetermineDestroy": 0,
-      "onUnk3": 0
     }
   ],
   "boneDefinitions": {

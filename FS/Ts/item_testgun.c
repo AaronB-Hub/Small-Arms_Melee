@@ -97,43 +97,43 @@ __attribute__((used)) static struct ItemState item_state_table[] = {
 
     // --- VANILLA LGUN ITEM ---
 
-    // { // Neutral (Does nothing except calls Item_CollGround_PassLedge with the spawned callback as the event when the collCallback is ran)
-    //   // States 1, 4, and 5 set a transition to this state up
-    //     .state = -1,
-    //     .animCallback = 0x8028E828,
-    //     .physCallback = 0x8028E830,
-    //     .collCallback = 0x8028E834,
-    // },
-    // { // Spawn (?)
-    //     .state = -1,
-    //     .animCallback = 0x8028E888,
-    //     .physCallback = 0x8028E890,
-    //     .collCallback = 0x8028E8C0,
-    // },
-    // { // Pickup (do nothing)
-    //     .state = -1,
-    //     .animCallback = 0x8028E92C,
-    //     .physCallback = 0x8028E934,
-    //     .collCallback = NULL,
-    // },
-    // { // Shooting?
-    //     .state = 0,
-    //     .animCallback = 0x8028E96C,
-    //     .physCallback = 0x8028E9B4,
-    //     .collCallback = NULL,
-    // },
-    // { // Dropped/Thrown (?)
-    //     .state = 1,
-    //     .animCallback = 0x8028E888,
-    //     .physCallback = 0x8028EA08,
-    //     .collCallback = 0x8028E8C0,
-    // },
-    // { // Entered air
-    //     .state = -1,
-    //     .animCallback = 0x8028EB28,
-    //     .physCallback = 0x8028EB30,
-    //     .collCallback = 0x8028EB34,
-    // },
+    { // Neutral (Does nothing except calls Item_CollGround_PassLedge with the spawned callback as the event when the collCallback is ran)
+      // States 1, 4, and 5 set a transition to this state up
+        .state = -1,
+        .animCallback = 0x8028E828,
+        .physCallback = 0x8028E830,
+        .collCallback = 0x8028E834,
+    },
+    { // Spawn (?)
+        .state = -1,
+        .animCallback = 0x8028E888,
+        .physCallback = 0x8028E890,
+        .collCallback = 0x8028E8C0,
+    },
+    { // Pickup (do nothing)
+        .state = -1,
+        .animCallback = 0x8028E92C,
+        .physCallback = 0x8028E934,
+        .collCallback = NULL,
+    },
+    { // Shooting?
+        .state = 0,
+        .animCallback = 0x8028E96C,
+        .physCallback = 0x8028E9B4,
+        .collCallback = NULL,
+    },
+    { // Dropped/Thrown (?)
+        .state = 1,
+        .animCallback = 0x8028E888,
+        .physCallback = 0x8028EA08,
+        .collCallback = 0x8028E8C0,
+    },
+    { // Entered air
+        .state = -1,
+        .animCallback = 0x8028EB28,
+        .physCallback = 0x8028EB30,
+        .collCallback = 0x8028EB34,
+    },
 
     // --- Custom ---
 
@@ -166,48 +166,53 @@ __attribute__((used)) static struct ItemState item_state_table[] = {
     //     .collCallback = SecondaryFire_CollCallback,
     // },
 
-    { // state 0: ??
-        // .state = 0,
-        .state = -1,
-        .animCallback = State0_AnimCallback,
-        .physCallback = State0_PhysCallback,
-        .collCallback = State0_CollCallback,
-    },
-    { // state 1: ??
-        // .state = 1,
-        .state = -1,
-        .animCallback = State1_AnimCallback,
-        .physCallback = State1_PhysCallback,
-        .collCallback = State1_CollCallback,
-    },
-    { // state 2: ??
-        // .state = 2,
-        .state = -1,
-        .animCallback = State2_AnimCallback,
-        .physCallback = State2_PhysCallback,
-        .collCallback = State2_CollCallback,
-    },
-    { // state 3: ??
-        // .state = 3,
-        .state = 0,
-        .animCallback = State3_AnimCallback,
-        .physCallback = State3_PhysCallback,
-        .collCallback = State3_CollCallback,
-    },
-    { // state 4: ??
-        // .state = 4,
-        .state = 1,
-        .animCallback = State4_AnimCallback,
-        .physCallback = State4_PhysCallback,
-        .collCallback = State4_CollCallback,
-    },
-    { // state 5: ??
-        // .state = 5,
-        .state = -1,
-        .animCallback = State5_AnimCallback,
-        .physCallback = State5_PhysCallback,
-        .collCallback = State5_CollCallback,
-    },
+
+
+    // { // state 0: ??
+    //     // .state = 0,
+    //     .state = -1,
+    //     .animCallback = State0_AnimCallback,
+    //     .physCallback = State0_PhysCallback,
+    //     .collCallback = State0_CollCallback,
+    // },
+    // { // state 1: ??
+    //     // .state = 1,
+    //     .state = -1,
+    //     .animCallback = State1_AnimCallback,
+    //     .physCallback = State1_PhysCallback,
+    //     .collCallback = State1_CollCallback,
+    // },
+    // { // state 2: ??
+    //     // .state = 2,
+    //     .state = -1,
+    //     .animCallback = State2_AnimCallback,
+    //     .physCallback = State2_PhysCallback,
+    //     .collCallback = State2_CollCallback,
+    // },
+    // { // state 3: ??
+    //     // .state = 3,
+    //     .state = 0,
+    //     .animCallback = State3_AnimCallback,
+    //     .physCallback = State3_PhysCallback,
+    //     .collCallback = State3_CollCallback,
+    // },
+    // { // state 4: ??
+    //     // .state = 4,
+    //     .state = 1,
+    //     .animCallback = State4_AnimCallback,
+    //     .physCallback = State4_PhysCallback,
+    //     .collCallback = State4_CollCallback,
+    // },
+    // { // state 5: ??
+    //     // .state = 5,
+    //     .state = -1,
+    //     .animCallback = State5_AnimCallback,
+    //     .physCallback = State5_PhysCallback,
+    //     .collCallback = State5_CollCallback,
+    // },
+
+
+
     // { // state 6: ??
     //     .state = 6,
     //     .animCallback = State6_AnimCallback,
@@ -373,6 +378,7 @@ void onpickup(GOBJ *item_gobj)
 GOBJ *SAItem_SpawnItem(GOBJ *fighter)
 {
     // Create base item
+    //int SAitem_id = ITEM_RAYGUN;
     int SAitem_id = MEX_GetFtItemID(fighter, MEX_ITEM_GUN);
     GOBJ *item = CreateBaseItem(fighter, SAitem_id);
 
@@ -457,9 +463,9 @@ void SAItem_Think(GOBJ *fighter)
         return;
     }
 
-    // INPUT CHECK
-    SAItem_InputCheck_Digital(fighter);
-    SAItem_InputCheck_Analog(fighter);
+    // // INPUT CHECK
+    // SAItem_InputCheck_Digital(fighter);
+    // SAItem_InputCheck_Analog(fighter);
 
     // Get SA item's current state
     int curr_state = item_data->state;
@@ -596,17 +602,18 @@ void SAItem_State1(GOBJ *item)
 	it_flags->xDB4 = 0;
 	it_flags->xDB8 = 0;
 	it_flags->xDBC = 0;
+    return;
 
     // Create a test effect
         // Get fighter data
         GOBJ *fighter = item_data->fighter_gobj;
         FighterData *fighter_data = fighter->userdata;
-        int bone_index = Fighter_BoneLookup(fighter_data, L1stNa);
+        int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
         Effect_SpawnSync(1073, fighter, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
+        // JOBJ *jobj = (JOBJ *)item->hsd_object;
+        // Effect_SpawnAsync(item, &item_data->effect, 1, 1147, jobj);
+        // Effect_SpawnAsync(item, &item_data->effect, 0, 1147, fighter_data->bones[bone_index].joint);
         Item_PlayOnDestroySFXAgain(item_data, 180025, 0x7f, 0x40);
-
-    // JOBJ *jobj = (JOBJ *)item->hsd_object;
-    // Effect_SpawnAsync(item, &item_data->effect, 1, 1147, jobj);
 
     return;
 
@@ -883,10 +890,12 @@ void testgun_OnCreate(GOBJ *gobj)
     
     // Set initial state
     ItemStateChange(gobj, STATE_ITEM_CHARGE, ITEMSTATE_UPDATEANIM);
+        // ItemStateChange(gobj, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);
 }
 
 void testgun_OnPickup(GOBJ *gobj)
 {
     // Set pickup state
     ItemStateChange(gobj, STATE_ITEM_FIRE1, ITEMSTATE_UPDATEANIM);
+        // ItemStateChange(gobj, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);
 }
