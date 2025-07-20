@@ -11,11 +11,17 @@
 
 
 /// @brief Process any fire inputs and controls the logic/state flow of the SA item's primary fire/projectile
-/// @param fighter
-void SAItem_SpawnPrimaryFireThink(GOBJ *fighter) 
+/// @param item
+void SAItem_SpawnPrimaryFireThink(GOBJ *item) 
 {
+    // Get item data
+    ItemData *item_data = item->userdata;
+
     // Get fighter data
-	FighterData *fighter_data = (FighterData *)fighter->userdata;
+    GOBJ *fighter = item_data->fighter_gobj;
+    FighterData *fighter_data = fighter->userdata;
+
+    // Get fighter data
     // TestCharVar *char_var = Fighter_GetFighterVars(fighter);
 	// TestAttr *tsAttr = Fighter_GetSpecialAttributes(fighter);
 	// TestgunCmdFlags *script_var = Fighter_GetScriptVars(fighter);
@@ -27,7 +33,7 @@ void SAItem_SpawnPrimaryFireThink(GOBJ *fighter)
 		fighter_data->flags.throw_1 = 0;
 
 		// Create item
-		SAItem_SpawnPrimaryFire(fighter);
+		SAItem_SpawnPrimaryFire(item);
 
 		// Create Primary Fire effect
 		// Effect_SpawnSync(VANILLA_EFFECT_FIREBALL, gobj, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
@@ -73,27 +79,34 @@ void SAItem_SpawnPrimaryFireThink(GOBJ *fighter)
 }
 
 /// @brief Spawn the SA item's primary fire/projectile into the game
-/// @param fighter
-GOBJ *SAItem_SpawnPrimaryFire(GOBJ *fighter)
+/// @param item
+GOBJ *SAItem_SpawnPrimaryFire(GOBJ *item)
 {
+    // Get item data
+    ItemData *item_data = item->userdata;
+
+    // Get fighter data
+    GOBJ *fighter = item_data->fighter_gobj;
+    FighterData *fighter_data = fighter->userdata;
+
     // Create base item
     int primaryfire_id = MEX_GetFtItemID(fighter, MEX_ITEM_PRIMARYFIRE);
-    GOBJ *item = CreateBaseItem(fighter, primaryfire_id);
+    GOBJ *fire1_item = CreateBaseItem(fighter, primaryfire_id);
 
     // Check if item successfully spawned
-    if (item != 0)
+    if (fire1_item != 0)
     {
         // Initialize the primary fire behavior
-        SAItem_SpawnPrimaryFireInitialize(item);
+        SAItem_SpawnPrimaryFireInitialize(fire1_item);
 
         // Develop mode stuff
-        Item_CopyDevelopState(item, fighter);
+        Item_CopyDevelopState(fire1_item, fighter);
 
         // Update physics and collision for item
-        Item_UpdatePhysAndColl(item);
+        Item_UpdatePhysAndColl(fire1_item);
     }
 
-	return item;
+	return fire1_item;
 }
 
 /// @brief Initializes the SA item's primary fire/projectile behavior (velocity, lifetime/timers, state, flags, etc.) upon spawn

@@ -403,6 +403,12 @@ void SAItem_SpawnItemInitialize(GOBJ *item)
 {
     // Get item data
     ItemData *item_data = item->userdata;
+    TestgunAttr *it_attr = Item_GetSpecialAttributes(item);
+    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
+    TestgunItemVar *it_vars = Item_GetItemVars(item);
+
+    // Reset all item vars, attributes, and cmd flags
+    SAItem_ResetItem(item);
 
     // Get fighter data
 	// ItemDesc **fighter_items = fighter_data->ftData->items;
@@ -419,8 +425,8 @@ void SAItem_SpawnItemInitialize(GOBJ *item)
         // item_data->item_states = &item_state_table;  // Is this necessary when using the reserved name 'item_state_table'?
         item_data->item_states = item_data->item_logic->item_states;
 
-    // Reset the item
-    SAItem_ResetItem(item);
+    // Set default item vars, attributes, and cmd flags
+    it_attr->charge_length = 60;
     
     return;
 }
@@ -458,69 +464,66 @@ void SAItem_Think(GOBJ *fighter)
     }
 
     // // INPUT CHECK
-    // SAItem_InputCheck_Digital(fighter);
-    // SAItem_InputCheck_Analog(fighter);
+    SAItem_InputCheck_Digital(fighter);
+    SAItem_InputCheck_Analog(fighter);
 
     // Get SA item's current state
     int curr_state = item_data->state;
 
     // Set SA item's next state based on input flags
+    void (*fireinput_state)(GOBJ *gobj);
     switch (curr_state)
     {
-        // case STATE_ITEM_IDLE:
-        //     if ((it_flags->fireinputs_digital & PRIMARY_FIRE_INPUT) != 0)
-        //     {
-        //         SAItem_State1(item);
-        //     }
-        //     break;
-        
+        case STATE_ITEM_FIRE2:
+        // // Always transition back to Idle after firing
+            //     SAItem_Idle(item);
+            //     break;
+
+        // Allow immediate transition back to primary fire
+            fireinput_state = SAItem_Charge;
+            goto block_default;
+        case STATE_ITEM_FIRE1:
+            fireinput_state = SAItem_PrimaryFire;
+            goto block_default;
+        case STATE_ITEM_IDLE:
+            fireinput_state = SAItem_Charge;
+            goto block_default;
+        case STATE_ITEM_CHARGE:
+            fireinput_state = SAItem_Charge;
+            goto block_default;
         default:
-            if ( ((fighter_data->input.held & HSD_BUTTON_DPAD_LEFT) != 0) || ((fighter_data->input.down & HSD_BUTTON_DPAD_LEFT) != 0) )
+            fireinput_state = SAItem_Charge;
+block_default:
+            if ((it_flags->fireinputs_digital & SECONDARY_FIRE_INPUT) != 0)
             {
-                SAItem_State1(item);
+                SAItem_SecondaryFire(item);
+            }
+            else if ((it_flags->fireinputs_digital & PRIMARY_FIRE_INPUT) != 0)
+            {
+                fireinput_state(item);
+            }
+            else
+            {
+                SAItem_Idle(item);
             }
             break;
     }
-
-// // Custom states
-// #define STATE_ITEM_IDLE 0
-// #define STATE_ITEM_CHARGE 1
-// #define STATE_ITEM_FIRE1 2
-// #define STATE_ITEM_FIRE2 3
-
-// // ItemStateChange Flags
-// #define ITEMSTATE_UPDATEANIM 0x2
-// #define ITEMSTATE_GRAB 0x4
-// #define ITEMSTATE_KEEPHIT 0x10 // dont remove hitboxes on state change
-// typedef enum Item_StateChangeFlags {
-//     ITEM_UNK_0x1 = (1 << 0),
-//     ITEM_ANIM_UPDATE = (1 << 1),
-//     ITEM_DROP_UPDATE = (1 << 2),
-//     ITEM_MODEL_UPDATE = (1 << 3),
-//     ITEM_HIT_PRESERVE = (1 << 4),
-//     ITEM_SFX_PRESERVE = (1 << 5),
-//     ITEM_COLANIM_PRESERVE = (1 << 6),
-//     ITEM_UNK_UPDATE = (1 << 7),
-//     ITEM_CMD_UPDATE = (1 << 8),
-// } Item_StateChangeFlags;
-
-
 
 
     // If the item is already in an active state, then run the associated Think function by setting it as the item accessory callback
     if (item_data->state)
     {
-        // SAItem_State0(item);
+        // SAItem_Idle(item);
         // SALeapKneeBend(fighter);
-        // item_data->cb.accessory = SAItem_State0;
+        // item_data->cb.accessory = SAItem_Idle;
 
         
         // // Set callback based on state
         // switch (it_state)
         // {
-        //     case 0: {item_data->cb.accessory = SAItem_State0;}
+        //     case 0: {item_data->cb.accessory = SAItem_Idle;}
         //     break;
-        //     case 1: {item_data->cb.accessory = SAItem_State1;}
+        //     case 1: {item_data->cb.accessory = SAItem_Charge;}
         //     break;
         //     case 2: {item_data->cb.accessory = SAItem_State2;}
         //     break;
@@ -563,16 +566,16 @@ void SAItem_Think(GOBJ *fighter)
 //  Initial Testgun  //
 ///////////////////////
 ///
-/// @brief State 0 (Original: ???)
+/// @brief State - Idle
 /// @param item 
-void SAItem_State0(GOBJ *item)
+void SAItem_Idle(GOBJ *item)
 {
     // Get item data
     ItemData *item_data = item->userdata;
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
 	// Clear flags that are going to be used by this action
-	it_flags->xDB4 = 0;
+	it_flags->state_frame_count = 0;
 	it_flags->xDB8 = 0;
 	it_flags->xDBC = 0;
 
@@ -582,42 +585,189 @@ void SAItem_State0(GOBJ *item)
 
 	return;
 }
-
 ///
-/// @brief State 1 (Original: ???)
+/// @brief State - Charge
 /// @param item 
-void SAItem_State1(GOBJ *item)
+void SAItem_Charge(GOBJ *item)
 {
     // Get item data
     ItemData *item_data = item->userdata;
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
+    TestgunAttr *it_attr = Item_GetSpecialAttributes(item);
+    int curr_state = item_data->state;
 
-	// Clear flags that are going to be used by this action
-	it_flags->xDB4 = 0;
-	it_flags->xDB8 = 0;
-	it_flags->xDBC = 0;
+    // Set flags
+    it_flags->state_frame_count++;
+        // // If entering Charge state, clear flags that are going to be used by this action
+        // // Otherwise preserve flags and iterate frame counter
+        // if (curr_state != STATE_ITEM_CHARGE) {
+        //     it_flags->xDB8 = 0;
+        //     it_flags->xDBC = 0;
+        // } else {
+        // }
 
-    // Create a test effect
+    // Transition to Primary Fire if finished charging
+    if (it_flags->state_frame_count >= it_attr->charge_length) {
+        return SAItem_PrimaryFire(item);
+    }
+
+	// Change state and update subaction
+	ItemStateChange(item, STATE_ITEM_CHARGE, ITEMSTATE_UPDATEANIM);
+
+	return;
+}
+///
+/// @brief State - Primary Fire
+/// @param item 
+void SAItem_PrimaryFire(GOBJ *item)
+{
+    // Get item data
+    ItemData *item_data = item->userdata;
+
+	// Change state and update subaction
+	ItemStateChange(item, STATE_ITEM_FIRE1, ITEMSTATE_UPDATEANIM);
+
+	// Set the accessory callback for SA Item
+	// This function will spawn the primary fire projectile
+	item_data->cb.accessory = SAItem_SpawnPrimaryFireThink;
+
+	return;
+}
+///
+/// @brief State - Secondary Fire
+/// @param item 
+void SAItem_SecondaryFire(GOBJ *item)
+{
+    // Get item data
+    ItemData *item_data = item->userdata;
+
+	// Change state and update subaction
+	ItemStateChange(item, STATE_ITEM_FIRE2, ITEMSTATE_UPDATEANIM);
+
+	return;
+}
+
+// // ItemStateChange Flags
+// #define ITEMSTATE_UPDATEANIM 0x2
+// #define ITEMSTATE_GRAB 0x4
+// #define ITEMSTATE_KEEPHIT 0x10 // dont remove hitboxes on state change
+// typedef enum Item_StateChangeFlags {
+//     ITEM_UNK_0x1 = (1 << 0),
+//     ITEM_ANIM_UPDATE = (1 << 1),
+//     ITEM_DROP_UPDATE = (1 << 2),
+//     ITEM_MODEL_UPDATE = (1 << 3),
+//     ITEM_HIT_PRESERVE = (1 << 4),
+//     ITEM_SFX_PRESERVE = (1 << 5),
+//     ITEM_COLANIM_PRESERVE = (1 << 6),
+//     ITEM_UNK_UPDATE = (1 << 7),
+//     ITEM_CMD_UPDATE = (1 << 8),
+// } Item_StateChangeFlags;
+
+////////////////////////
+//   State Functions  //
+////////////////////////
+///
+///
+///
+bool Idle_AnimCallback(GOBJ *item)
+{    
+    return false;
+}
+void Idle_PhysCallback(GOBJ *item)
+{
+    return;
+}
+bool Idle_CollCallback(GOBJ *item)
+{
+    return false;
+}
+///
+///
+///
+bool Charge_AnimCallback(GOBJ *item)
+{
+  // For looping: https://discord.com/channels/768588005615075329/806988096343113770/811034180258365460
+    return false;
+}
+void Charge_PhysCallback(GOBJ *item)
+{
+    return;
+}
+bool Charge_CollCallback(GOBJ *item)
+{
+    return false;
+}
+///
+///
+///
+bool PrimaryFire_AnimCallback(GOBJ *item)
+{
+    // Get item data
+    ItemData *item_data = item->userdata;
+
+        // Create a test effect
         // Get fighter data
         GOBJ *fighter = item_data->fighter_gobj;
         FighterData *fighter_data = fighter->userdata;
         int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
         Effect_SpawnSync(1073, fighter, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
+
+    return false;
+}
+void PrimaryFire_PhysCallback(GOBJ *item)
+{
+    // Get item data
+    ItemData *item_data = item->userdata;
+
+    // Spawn SA item
+    // GOBJ *fire1_item = SAItem_SpawnItem(item, MEX_ITEM_PRIMARYFIRE);
+    // GOBJ *fire1_item = SAItem_SpawnItem(fighter, MEX_ITEM_PRIMARYFIRE);
+        //Item_SetLifeTimer(fire1_item, attributes->life);
+        // ItemStateChange(fire1_item, STATE_FIRE1_SPAWN, ITEMSTATE_UPDATEANIM);
+
+    return;
+}
+bool PrimaryFire_CollCallback(GOBJ *item)
+{
+    return false;
+}
+///
+///
+///
+bool SecondaryFire_AnimCallback(GOBJ *item)
+{
+    // Get item data
+    ItemData *item_data = item->userdata;
+
+    // Create a test effect
+        // Get fighter data
+        GOBJ *fighter = item_data->fighter_gobj;
+        FighterData *fighter_data = fighter->userdata;
+        Vec3 pos;
+        GetSAItemSpawnPosition(fighter, MEX_ITEM_GUN, &pos);
+
+    // void Effect_SpawnItEffectLookup(GOBJ *gobj, int gfx_id, int bone, Vec3 *offset, Vec3 *scatter, int unk3);
+    // void Effect_SpawnItEffect(GOBJ *gobj, int gfx_id);
+        // Effect_SpawnSync(1071, fighter, &pos, &fighter_data->facing_direction);
+        Effect_SpawnSync(1073, fighter, &pos, &fighter_data->facing_direction);
+        // int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
+        // Effect_SpawnSync(1071, fighter, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
         // JOBJ *jobj = (JOBJ *)item->hsd_object;
         // Effect_SpawnAsync(item, &item_data->effect, 1, 1147, jobj);
         // Effect_SpawnAsync(item, &item_data->effect, 0, 1147, fighter_data->bones[bone_index].joint);
-        Item_PlayOnDestroySFXAgain(item_data, 180025, 0x7f, 0x40);
 
-	// Change state and update subaction
-	ItemStateChange(item, STATE_ITEM_CHARGE, ITEMSTATE_UPDATEANIM);
-    // Item_AnimateAndUpdateSubactions(item);  // Should this be called? Or would/should it automatically take care of itself next frame
-
-	return;
+    return false;
+}
+void SecondaryFire_PhysCallback(GOBJ *item)
+{
+    return;
+}
+bool SecondaryFire_CollCallback(GOBJ *item)
+{
+    return false;
 }
 
-////////////////////////
-//   State Functions  //
-////////////////////////
+
 
 // bool State0_AnimCallback(GOBJ *item) {
 //     // This block runs lgun's pre-existing state 0 anim callback
@@ -770,93 +920,25 @@ void SAItem_State1(GOBJ *item)
 // void State5_PhysCallback(GOBJ *item) {return;}
 // bool State5_CollCallback(GOBJ *item) {return false;}
 
-void SAItem_State6(GOBJ *item) {return;}
-bool State6_AnimCallback(GOBJ *item) {return false;}
-void State6_PhysCallback(GOBJ *item) {return;}
-bool State6_CollCallback(GOBJ *item) {return false;}
+// void SAItem_State6(GOBJ *item) {return;}
+// bool State6_AnimCallback(GOBJ *item) {return false;}
+// void State6_PhysCallback(GOBJ *item) {return;}
+// bool State6_CollCallback(GOBJ *item) {return false;}
 
-void SAItem_State7(GOBJ *item) {return;}
-bool State7_AnimCallback(GOBJ *item) {return false;}
-void State7_PhysCallback(GOBJ *item) {return;}
-bool State7_CollCallback(GOBJ *item) {return false;}
+// void SAItem_State7(GOBJ *item) {return;}
+// bool State7_AnimCallback(GOBJ *item) {return false;}
+// void State7_PhysCallback(GOBJ *item) {return;}
+// bool State7_CollCallback(GOBJ *item) {return false;}
 
-void SAItem_State8(GOBJ *item) {return;}
-bool State8_AnimCallback(GOBJ *item) {return false;}
-void State8_PhysCallback(GOBJ *item) {return;}
-bool State8_CollCallback(GOBJ *item) {return false;}
-
-
+// void SAItem_State8(GOBJ *item) {return;}
+// bool State8_AnimCallback(GOBJ *item) {return false;}
+// void State8_PhysCallback(GOBJ *item) {return;}
+// bool State8_CollCallback(GOBJ *item) {return false;}
 
 
 
-///
-///
-///
-bool Idle_AnimCallback(GOBJ *item)
-{
-    // Spawn SA item
-    // GOBJ *fire1_item = SAItem_SpawnItem(gobj, MEX_ITEM_PRIMARYFIRE);
-    //GOBJ *fire1_item = SAItem_SpawnItem(fighter_gobj, MEX_ITEM_PRIMARYFIRE);
-    //     //Item_SetLifeTimer(fire1_item, attributes->life);
-    //     ItemStateChange(fire1_item, STATE_FIRE1_SPAWN, 2);
-    // }
-    
-    return false;
-}
-void Idle_PhysCallback(GOBJ *gobj)
-{
-    return;
-}
-bool Idle_CollCallback(GOBJ *gobj)
-{
-    return false;
-}
-///
-///
-///
-bool Charge_AnimCallback(GOBJ *gobj)
-{
-  // For looping: https://discord.com/channels/768588005615075329/806988096343113770/811034180258365460
-    return false;
-}
-void Charge_PhysCallback(GOBJ *gobj)
-{
-    return;
-}
-bool Charge_CollCallback(GOBJ *gobj)
-{
-    return false;
-}
-///
-///
-///
-bool PrimaryFire_AnimCallback(GOBJ *gobj)
-{
-    return false;
-}
-void PrimaryFire_PhysCallback(GOBJ *gobj)
-{
-    return;
-}
-bool PrimaryFire_CollCallback(GOBJ *gobj)
-{
-    return false;
-}
-///
-///
-///
-bool SecondaryFire_AnimCallback(GOBJ *gobj)
-{
-    return false;
-}
-void SecondaryFire_PhysCallback(GOBJ *gobj)
-{
-    return;
-}
-bool SecondaryFire_CollCallback(GOBJ *gobj)
-{
-    return false;
-}
+
+
 
 
 ///
@@ -867,25 +949,29 @@ bool SecondaryFire_CollCallback(GOBJ *gobj)
 //   Logic Functions  //
 ////////////////////////
 
-void testgun_OnCreate(GOBJ *gobj)
+void testgun_OnCreate(GOBJ *item)
 {
-    // Get item data
-    ItemData *item_data = gobj->userdata;
-    TestgunAttr *it_attr = (TestgunAttr *)item_data->itData->param_ext;
-    TestgunItemVar *it_vars = (TestgunItemVar *)&item_data->item_var;
+    // // Get item data
+    // ItemData *item_data = item->userdata;
+    // TestgunAttr *it_attr = Item_GetSpecialAttributes(item);
+    // TestgunItemVar *it_vars = Item_GetItemVars(item);
 
-    // Initialize attributes
-    item_data->xd4c = it_attr->max_ammo;
-    it_vars->timer = 0;
+    // // Initialize attributes
+    // item_data->xd4c = it_attr->max_ammo;
+    // it_vars->timer = 0;
     
-    // Set initial state
-    // ItemStateChange(gobj, STATE_ITEM_CHARGE, ITEMSTATE_UPDATEANIM);
-        ItemStateChange(gobj, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);
+    // // Set initial state
+    // ItemStateChange(item, STATE_ITEM_CHARGE, ITEMSTATE_UPDATEANIM);
+
+
+    ItemStateChange(item, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);
 }
 
-void testgun_OnPickup(GOBJ *gobj)
+void testgun_OnPickup(GOBJ *item)
 {
-    // Set pickup state
-    // ItemStateChange(gobj, STATE_ITEM_FIRE1, ITEMSTATE_UPDATEANIM);
-        ItemStateChange(gobj, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);
+    // // Set pickup state
+    // ItemStateChange(item, STATE_ITEM_FIRE1, ITEMSTATE_UPDATEANIM);
+
+    
+    ItemStateChange(item, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);
 }

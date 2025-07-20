@@ -80,6 +80,7 @@
 #define SA_ITEM_INPUT_PRIMARY_DEADZONE 0.30
 // #define SA_ITEM_INPUT_PRIMARY_DEADZONE 0.28
 #define SA_ITEM_INPUT_SECONDARY HSD_TRIGGER_L
+// #define SA_ITEM_INPUT_SECONDARY HSD_BUTTON_DPAD_LEFT
 
 #define PRIMARY_FIRE_INPUT 0x1
 #define SECONDARY_FIRE_INPUT 0x2
@@ -97,14 +98,19 @@
 // In HSDRAW, item_data->itCommonAttr are stored in Articles > Article # > Parameters_
 // In HSDRAW, item_data->itData->param_ext are stored in Articles > Article # > ParametersExt_
     // Call like: TestItemAttr *attr = (TestItemAttr *)item_data->itData->param_ext;
+
+        // typedef struct LGunAttr
+        // {
+        //     int max_ammo;     // [00 00 00 10 = 16]        // x00
+        //     Vec3 pos;                                 // x00
+        //         // x - [00 00 00 00 = 0]
+        //         // y - [40 08 31 27 = 2.128]
+        //         // z - [40 D5 60 42 = 6.668]
+        // } LGunAttr;                                // size: 0x10
 typedef struct TestgunAttr
 {
-    int max_ammo;     // [00 00 00 10 = 16]        // x00
-    Vec3 pos;                                 // x00
-        // x - [00 00 00 00 = 0]
-        // y - [40 08 31 27 = 2.128]
-        // z - [40 D5 60 42 = 6.668]
-} TestgunAttr;                                // size: 0x10
+    int charge_length;     // x00
+} TestgunAttr;             // size: 0x04
 
 typedef struct TestgunRayAttr
 {
@@ -126,7 +132,7 @@ typedef struct TestgunCmdFlags
 {
 	int fireinputs_digital;  // xDAC    // item_data->itcmd_var->flag1
     float fireinputs_analog;   // xDB0    // item_data->itcmd_var->flag2
-    int xDB4;                           // item_data->itcmd_var->flag3
+    int state_frame_count;                           // item_data->itcmd_var->flag3
     int xDB8;                           // item_data->itcmd_var->flag4
     int xDBC;                           // item_data->itcmd_var->flag5
 } TestgunCmdFlags;
@@ -305,21 +311,35 @@ bool (*Item_Coll_Bounce)(GOBJ *item) = (int *)0x8027781c;
 /// @param item
 // void (*Item_ClearHitlagFlag)(GOBJ *item) = (void *)0x8026b73c;
 
-/// @brief 
+///
+/// @param item GOBJ of Item
+/// @return TestgunItemVar
+inline void *Item_GetItemVars(GOBJ *item)
+{
+    return &((ItemData *)item->userdata)->item_var;
+}
+///
 /// @param item 
-/// @return 
+/// @return TestgunCmdFlags
 inline void *Item_GetItCmdFlags(GOBJ *item)
 {
     return &((ItemData *)item->userdata)->itcmd_var;
 }
-
-/// @brief 
+///
 /// @param item 
-/// @return 
-inline void *Item_GetItemVar(GOBJ *item)
+/// @return itCommonAttr
+inline void *Item_GetCommonAttributes(GOBJ *item)
 {
-    return &((ItemData *)item->userdata)->item_var;
+	return ((ItemData *)item->userdata)->itData->param;
 }
+///
+/// @param item 
+/// @return TestgunAttr
+inline void *Item_GetSpecialAttributes(GOBJ *item)
+{
+	return ((ItemData *)item->userdata)->itData->param_ext;
+}
+
 
 /// @brief removes reference to SA item from fighter
 /// @param fighter 
@@ -359,6 +379,9 @@ void SAItem_InputCheck_Digital(GOBJ *fighter)
     GOBJ *item = fighter_data->x1978;
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
+    // Reset input flag for new check
+    it_flags->fireinputs_digital = 0;
+
     // Primary Fire
     // Vanilla sets a deadzone of 0.30 for the triggers, stored at 'stc_ftcommon->x10'
     // Keeping this deadzone (for now)
@@ -367,9 +390,19 @@ void SAItem_InputCheck_Digital(GOBJ *fighter)
         it_flags->fireinputs_digital += PRIMARY_FIRE_INPUT;
     }
 
+// u64 Pad_GetDown(int pad);
+// u64 Pad_GetRapidHeld(int pad);
+// u64 Pad_GetHeld(int pad);
+
     // Secondary Fire
-    // if ( ((pad->held & SA_ITEM_INPUT_SECONDARY) != 0) || ((pad->down & SA_ITEM_INPUT_SECONDARY) != 0) )
-    if ( (pad->down & SA_ITEM_INPUT_SECONDARY) != 0 )  // Alternate check that only triggers a secondary fire input when the trigger is initially pressed, not when held
+    // Check that only triggers a secondary fire input when the trigger is initially pressed, not when held
+    // if ( ((Pad_GetDown(pad) & SA_ITEM_INPUT_SECONDARY) != 0) )
+    if ( ((pad->down & SA_ITEM_INPUT_SECONDARY) != 0) )
+
+    // if ( ((pad->down & SA_ITEM_INPUT_SECONDARY) != 0) || ((pad->held & SA_ITEM_INPUT_SECONDARY) != 0) )
+    // if ( ((pad->down & SA_ITEM_INPUT_SECONDARY) != 0) && ((pad->held & SA_ITEM_INPUT_SECONDARY) == 0) )
+    // if ( ((pad->down & SA_ITEM_INPUT_SECONDARY) != 0) && ((pad->held & SA_ITEM_INPUT_SECONDARY) == 0) && ((pad->heldPrev & SA_ITEM_INPUT_SECONDARY) == 0) )
+    // if ( (pad->down & SA_ITEM_INPUT_SECONDARY) != 0 )  // Alternate check that only triggers a secondary fire input when the trigger is initially pressed, not when held
     {
         it_flags->fireinputs_digital += SECONDARY_FIRE_INPUT;
     }
@@ -389,6 +422,9 @@ void SAItem_InputCheck_Analog(GOBJ *fighter)
     // Get item data
     GOBJ *item = fighter_data->x1978;
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
+
+    // Reset input flag for new check
+    it_flags->fireinputs_analog = 0;
 
     // Get analog press info
     it_flags->fireinputs_analog = pad->SA_ITEM_INPUT_PRIMARY;
@@ -502,7 +538,6 @@ void GetSAItemSpawnPosition(GOBJ *fighter, int SAitem_kind, Vec3 *bone_position)
 {
     // Initialize variables
     int bone_index;
-    //Vec3 bone_position;
 
     // Get fighter data
 	FighterData *fighter_data = fighter->userdata;
@@ -539,15 +574,16 @@ void SAItem_ResetItem(GOBJ *item)
 {
     // Get item data
     ItemData *item_data = item->userdata;
-    TestgunAttr *it_attr = (TestgunAttr *)item_data->itData->param_ext;
+    TestgunAttr *it_attr = Item_GetSpecialAttributes(item);
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
-    //TestgunCmdFlags *it_flags = (TestgunCmdFlags *)&item_data->itcmd_var;
-    TestgunItemVar *it_vars = (TestgunItemVar *)&item_data->item_var;
+    TestgunItemVar *it_vars = Item_GetItemVars(item);
+
+    // @todo change these to iterative loops so that it works regardless of var names and amounts??
 
     // Clear the item flags - these flags are set via action scripts within the fighter's files
     it_flags->fireinputs_digital = 0;
     it_flags->fireinputs_analog = 0;
-    it_flags->xDB4 = 0;
+    it_flags->state_frame_count = 0;
     it_flags->xDB8 = 0;
     it_flags->xDBC = 0;
 
@@ -576,7 +612,7 @@ void SAItem_ResetItem(GOBJ *item)
 /// @return true if SA item should be destroyed and false otherwise
 bool SAItem_OnDestroy(GOBJ *item)
 {
-    ItemData *id = (ItemData *)item->userdata;
+    ItemData *id = item->userdata;
     GOBJ *fighter = id->fighter_gobj;
 
     // check if fighter is not null
@@ -666,6 +702,7 @@ void SAItem_OnSpawn(GOBJ *fighter)
 {
     // Get fighter data
 	FighterData *fighter_data = fighter->userdata;
+    // TestCharVar *charvar = Fighter_GetFighterVars(fighter);  // Can't use since SA_char.h not #included for this file
     TestCharVar2 *charvar = &fighter_data->fighter_var;
     ItemDesc **fighter_items = fighter_data->ftData->items;
 
@@ -747,12 +784,12 @@ void SAItem_OnSpawn(GOBJ *fighter)
 ////////////////////////
 
 // Item-dependent functions (item_<gun>.c)
-void SAItem_State0(GOBJ *item);
+void SAItem_Idle(GOBJ *item);
 bool State0_AnimCallback(GOBJ *item);
 void State0_PhysCallback(GOBJ *item);
 bool State0_CollCallback(GOBJ *item);
 
-void SAItem_State1(GOBJ *item);
+void SAItem_Charge(GOBJ *item);
 bool State1_AnimCallback(GOBJ *item);
 void State1_PhysCallback(GOBJ *item);
 bool State1_CollCallback(GOBJ *item);
@@ -797,31 +834,35 @@ bool State8_CollCallback(GOBJ *item);
 
 
 // SA Item State functions (Shared by all SA items)
-bool Idle_AnimCallback(GOBJ *gobj);
-void Idle_PhysCallback(GOBJ *gobj);
-bool Idle_CollCallback(GOBJ *gobj);
+void SAItem_Idle(GOBJ *item);
+bool Idle_AnimCallback(GOBJ *item);
+void Idle_PhysCallback(GOBJ *item);
+bool Idle_CollCallback(GOBJ *item);
 
-bool Charge_AnimCallback(GOBJ *gobj);
-void Charge_PhysCallback(GOBJ *gobj);
-bool Charge_CollCallback(GOBJ *gobj);
+void SAItem_Charge(GOBJ *item);
+bool Charge_AnimCallback(GOBJ *item);
+void Charge_PhysCallback(GOBJ *item);
+bool Charge_CollCallback(GOBJ *item);
 
-bool PrimaryFire_AnimCallback(GOBJ *gobj);
-void PrimaryFire_PhysCallback(GOBJ *gobj);
-bool PrimaryFire_CollCallback(GOBJ *gobj);
+void SAItem_PrimaryFire(GOBJ *item);
+bool PrimaryFire_AnimCallback(GOBJ *item);
+void PrimaryFire_PhysCallback(GOBJ *item);
+bool PrimaryFire_CollCallback(GOBJ *item);
 
-bool SecondaryFire_AnimCallback(GOBJ *gobj);
-void SecondaryFire_PhysCallback(GOBJ *gobj);
-bool SecondaryFire_CollCallback(GOBJ *gobj);
+void SAItem_SecondaryFire(GOBJ *item);
+bool SecondaryFire_AnimCallback(GOBJ *item);
+void SecondaryFire_PhysCallback(GOBJ *item);
+bool SecondaryFire_CollCallback(GOBJ *item);
 
-int PrimaryFire_HitStageUpdate(GOBJ *gobj);
+int PrimaryFire_HitStageUpdate(GOBJ *item);
 
-bool Spawn_AnimCallback(GOBJ *gobj);
-void Spawn_PhysCallback(GOBJ *gobj);
-bool Spawn_CollCallback(GOBJ *gobj);
+bool Spawn_AnimCallback(GOBJ *item);
+void Spawn_PhysCallback(GOBJ *item);
+bool Spawn_CollCallback(GOBJ *item);
 
-bool Fire_AnimCallback(GOBJ *gobj);
-void Fire_PhysCallback(GOBJ *gobj);
-bool Fire_CollCallback(GOBJ *gobj);
+bool Fire_AnimCallback(GOBJ *item);
+void Fire_PhysCallback(GOBJ *item);
+bool Fire_CollCallback(GOBJ *item);
 
 
 
@@ -829,8 +870,8 @@ bool Fire_CollCallback(GOBJ *gobj);
 //   Logic Functions  //
 ////////////////////////
 
-void testgun_OnCreate(GOBJ *gobj);
-void testgun_OnPickup(GOBJ *gobj);
+void testgun_OnCreate(GOBJ *item);
+void testgun_OnPickup(GOBJ *item);
 
 
 ////////////////////////

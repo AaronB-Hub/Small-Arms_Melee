@@ -209,7 +209,7 @@ void SADiveKick_CollisionCallback(GOBJ *gobj);
 
 /// @brief Fighter Variables are used globally by the fighter
 /// @param fighter GOBJ of Fighter
-/// @return pointer to Fighter's "Fighter Variable" struct
+/// @return TestCharVar
 inline void *Fighter_GetFighterVars(GOBJ *fighter)
 {
 	return &((FighterData *)fighter->userdata)->fighter_var;
