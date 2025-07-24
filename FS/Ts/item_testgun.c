@@ -425,8 +425,9 @@ void SAItem_SpawnItemInitialize(GOBJ *item)
         // item_data->item_states = &item_state_table;  // Is this necessary when using the reserved name 'item_state_table'?
         item_data->item_states = item_data->item_logic->item_states;
 
-
-    it_attr->max_primarycharge = 90;
+        // Set item attributes
+        // Doing it this way allows for defining the attributes in code instead of having to set them in the .DAT
+        item_data->itData->param_ext = &Default_attr;
 
     return;
 }
@@ -506,21 +507,21 @@ void SAItem_Think(GOBJ *fighter)
     {
         // SAItem_SecondaryFire(item);
 
-        // switch (curr_state)
-        // {
-        //     case STATE_ITEM_FIRE2:
-        //         if (it_vars->secondaryfire_cooldown_status == false) { break; } // No transition
-        //         goto block_default2;
-        //     case STATE_ITEM_FIRE1:
-        //         if ( (it_vars->secondaryfire_cooldown_status == true) && (it_flags->primarycharge_status == true) ) { break; } // No transition
-        //         goto block_default2;
-        //     case STATE_ITEM_CHARGE:
-        //         if ( (it_vars->secondaryfire_cooldown_status == true) && (it_flags->primarycharge_status == false) ) { break; } // No transition
-        //         goto block_default2;
-        //     case STATE_ITEM_IDLE:
-        //         goto block_default2;
-        //     default:
-        // block_default2:
+        switch (curr_state)
+        {
+            case STATE_ITEM_FIRE2:
+                if (it_vars->secondaryfire_cooldown_status == false) { break; } // No transition
+                goto block_default2;
+            case STATE_ITEM_FIRE1:
+                if ( (it_vars->secondaryfire_cooldown_status == true) && (it_flags->primarycharge_status == true) ) { break; } // No transition
+                goto block_default2;
+            case STATE_ITEM_CHARGE:
+                if ( (it_vars->secondaryfire_cooldown_status == true) && (it_flags->primarycharge_status == false) ) { break; } // No transition
+                goto block_default2;
+            case STATE_ITEM_IDLE:
+                goto block_default2;
+            default:
+        block_default2:
                 // If off cooldown, transition to Secondary Fire
                 if (it_vars->secondaryfire_cooldown_status == false)
                 {
@@ -536,27 +537,27 @@ void SAItem_Think(GOBJ *fighter)
                 {
                     SAItem_Charge(item);
                 }
-        //         break;
-        // }
+                break;
+        }
     }
     else if ((it_flags->fireinputs_digital & PRIMARY_FIRE_INPUT) != 0)
     {
         // SAItem_PrimaryFire(item);
 
-        // switch (curr_state)
-        // {
-        //     case STATE_ITEM_FIRE2:
-        //         goto block_default1;
-        //     case STATE_ITEM_FIRE1:
-        //         if (it_flags->primarycharge_status == true) { break; } // No transition
-        //         goto block_default1;
-        //     case STATE_ITEM_CHARGE:
-        //         if (it_flags->primarycharge_status == false) { break; } // No transition
-        //         goto block_default1;
-        //     case STATE_ITEM_IDLE:
-        //         goto block_default1;
-        //     default:
-        // block_default1:
+        switch (curr_state)
+        {
+            case STATE_ITEM_FIRE2:
+                goto block_default1;
+            case STATE_ITEM_FIRE1:
+                if (it_flags->primarycharge_status == true) { break; } // No transition
+                goto block_default1;
+            case STATE_ITEM_CHARGE:
+                if (it_flags->primarycharge_status == false) { break; } // No transition
+                goto block_default1;
+            case STATE_ITEM_IDLE:
+                goto block_default1;
+            default:
+        block_default1:
                 // If charged, transition to Primary Fire
                 if (it_flags->primarycharge_status == true)
                 {
@@ -567,8 +568,8 @@ void SAItem_Think(GOBJ *fighter)
                 {
                     SAItem_Charge(item);
                 }
-        //         break;
-        // }
+                break;
+        }
     }
     else
     {
@@ -678,10 +679,10 @@ void SAItem_PrimaryFire(GOBJ *item)
     ItemData *item_data = item->userdata;
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
-    // // Logic error handling: should not call this function if not charged
-    // if (it_flags->primarycharge_status == false) {
-    //     assert("Testgun not charged. Should not be in Primary Fire state");
-    // }
+    // Logic error handling: should not call this function if not charged
+    if (it_flags->primarycharge_status == false) {
+        assert("Testgun not charged. Should not be in Primary Fire state");
+    }
 
     // Reset frame count and clear flags that are going to be used by this action
     it_flags->state_frame_count = 0;
@@ -725,6 +726,63 @@ void SAItem_SecondaryFire(GOBJ *item)
 //     ITEM_CMD_UPDATE = (1 << 8),
 // } Item_StateChangeFlags;
 
+////////////////////////////
+// State Helper Functions //
+////////////////////////////
+///
+///
+///
+inline void check_PrimaryCharge(GOBJ *item)
+{
+    // Get item data
+    ItemData *item_data = item->userdata;
+    TestgunAttr *it_attr = Item_GetSpecialAttributes(item);
+    TestgunVars *it_vars = Item_GetItemVars(item);
+    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
+
+    // Check if fully charged
+    if (it_vars->primarycharge_count < it_attr->primarycharge_threshold)
+    {
+        it_flags->primarycharge_status = false;
+    }
+    else
+    {
+        it_flags->primarycharge_status = true;
+    }
+}
+inline void build_PrimaryCharge(GOBJ *item)
+{
+    // Get item data
+    ItemData *item_data = item->userdata;
+    TestgunAttr *it_attr = Item_GetSpecialAttributes(item);
+    TestgunVars *it_vars = Item_GetItemVars(item);
+    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
+
+    // Continue building up charge until max is reached
+    if (it_vars->primarycharge_count < it_attr->max_primarycharge) {
+        it_vars->primarycharge_count++;
+    }
+
+    // Check if charged
+    check_PrimaryCharge(item);
+}
+inline void lose_PrimaryCharge(GOBJ *item)
+{
+    // Get item data
+    ItemData *item_data = item->userdata;
+    TestgunAttr *it_attr = Item_GetSpecialAttributes(item);
+    TestgunVars *it_vars = Item_GetItemVars(item);
+    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
+
+    // Lose primary charge if item has decay
+    if ( (it_attr->primarycharge_decay == true) && (it_vars->primarycharge_count > 0) )
+    {
+        it_vars->primarycharge_count--;
+    }
+
+    // Check if charged
+    check_PrimaryCharge(item);
+}
 ////////////////////////
 //   State Functions  //
 ////////////////////////
@@ -739,21 +797,8 @@ bool Idle_AnimCallback(GOBJ *item)
     TestgunVars *it_vars = Item_GetItemVars(item);
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
-    // Lose primary charge if item has decay
-    if ( (it_attr->primarycharge_decay == true) && (it_vars->primarycharge_count > 0) )
-    {
-        it_vars->primarycharge_count--;
-    }
-
-    // Check if fully charged
-    if (it_vars->primarycharge_count >= it_attr->primarycharge_threshold)
-    {
-        it_flags->primarycharge_status = true;
-    }
-    else
-    {
-        it_flags->primarycharge_status = false;
-    }
+    // Lose primary charge
+    lose_PrimaryCharge(item);
 
     // Increase frame count
     it_flags->state_frame_count++;
@@ -780,16 +825,7 @@ bool Charge_AnimCallback(GOBJ *item)
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
     // Build up charge
-    if (it_vars->primarycharge_count < it_attr->max_primarycharge) {
-        it_vars->primarycharge_count++;
-    }
-
-    // Check if fully charged
-    if (it_vars->primarycharge_count >= it_attr->primarycharge_threshold) {
-        // if (it_vars->primarycharge_count == 0) {  // test check
-        // if (it_attr->max_primarycharge == 90) {  // test check
-        it_flags->primarycharge_status = true;
-    }
+    build_PrimaryCharge(item);
 
     // Increase frame count
     it_flags->state_frame_count++;
@@ -816,15 +852,14 @@ bool PrimaryFire_AnimCallback(GOBJ *item)
     TestgunVars *it_vars = Item_GetItemVars(item);
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
-    // Continue building up charge until max is reached
-    if (it_vars->primarycharge_count < it_attr->max_primarycharge) {
-        it_vars->primarycharge_count++;
-    }
+    // Continue building up charge
+    build_PrimaryCharge(item);
     
     // Control rate of Primary Fire via cooldown
     // (Still allows for fast fire by repeatedly re-entering Primary Fire state rather than staying in it (aka holding down the button))
-    // if (it_flags->state_frame_count % it_attr->primaryfire_cooldown == 0)
-    if (true) // test check
+    if ((it_flags->state_frame_count % it_attr->primaryfire_cooldown) == 0)
+    // if (it_flags->state_frame_count == 0)
+    // if (true) // test check
     {
         // Create a test effect
             // Get fighter data
@@ -871,10 +906,8 @@ bool SecondaryFire_AnimCallback(GOBJ *item)
     TestgunVars *it_vars = Item_GetItemVars(item);
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
-    // Continue building up charge until max is reached
-    if (it_vars->primarycharge_count < it_attr->max_primarycharge) {
-        it_vars->primarycharge_count++;
-    }
+    // Build up charge
+    build_PrimaryCharge(item);
     
     // Seconday Fire rate controlled via cooldown outside of this function
 
@@ -1093,23 +1126,6 @@ void testgun_OnCreate(GOBJ *item)
     TestgunAttr *it_attr = Item_GetSpecialAttributes(item);
     TestgunVars *it_vars = Item_GetItemVars(item);
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
-
-    // Initialize attributes
-    // // Create attribute struct with default values
-    // TestgunAttr default_attr =
-    // {
-    //     60,     // int primarycharge_threshold
-    //     90,     // int max_primarycharge
-    //     true,   // bool primarycharge_decay
-    //     10,     // int primaryfire_cooldown
-    //     180,    // int secondaryfire_cooldown
-    // };
-    // it_attr = &default_attr; // set this as the item's attribute struct
-    // it_attr->primarycharge_threshold = 60;
-    // it_attr->max_primarycharge = 90;
-    // it_attr->primarycharge_decay = true;
-    // it_attr->primaryfire_cooldown = 10;
-    // it_attr->secondaryfire_cooldown = 180;
 
     // Initialize vars
     it_vars->primarycharge_count = 0;

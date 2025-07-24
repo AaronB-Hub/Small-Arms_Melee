@@ -76,8 +76,8 @@
 #define SA_ITEM_INPUT_FLAG x6C_FOX_FIREFOX_BOUNCE_VAR
 
 // #define SA_ITEM_INPUT_PRIMARY pad->ftriggerLeft
-// #define SA_ITEM_INPUT_PRIMARY ftriggerLeft  // make this a pointer?
-#define SA_ITEM_INPUT_PRIMARY HSD_BUTTON_DPAD_LEFT
+#define SA_ITEM_INPUT_PRIMARY ftriggerLeft  // make this a pointer?
+// #define SA_ITEM_INPUT_PRIMARY HSD_BUTTON_DPAD_LEFT
 #define SA_ITEM_INPUT_PRIMARY_DEADZONE 0.30
 // #define SA_ITEM_INPUT_PRIMARY_DEADZONE 0.28
 #define SA_ITEM_INPUT_SECONDARY HSD_TRIGGER_L
@@ -113,9 +113,18 @@ typedef struct TestgunAttr
     int primarycharge_threshold;     // x00 - 60
     int max_primarycharge;           // x04 - 90
     bool primarycharge_decay;        // x08 - true
-    int primaryfire_cooldown;        // x0C - 10
+    int primaryfire_cooldown;        // x0C - 20 (aka 3 shots/sec)
     int secondaryfire_cooldown;      // x10 - 180
 } TestgunAttr;                       // size: 0x14
+
+    static struct TestgunAttr Default_attr =
+    {
+        60,     // int primarycharge_threshold
+        90,     // int max_primarycharge
+        true,   // bool primarycharge_decay
+        20,     // int primaryfire_cooldown
+        180,    // int secondaryfire_cooldown
+    };
 
         // typedef struct LGunVar
         // {
@@ -384,8 +393,8 @@ void SAItem_InputCheck_Digital(GOBJ *fighter)
     // Primary Fire
     // Vanilla sets a deadzone of 0.30 for the triggers, stored at 'stc_ftcommon->x10'
     // Keeping this deadzone (for now)
-    // if (pad->SA_ITEM_INPUT_PRIMARY > SA_ITEM_INPUT_PRIMARY_DEADZONE)
-        if ( ((pad->down & SA_ITEM_INPUT_PRIMARY) != 0) || ((pad->held & SA_ITEM_INPUT_PRIMARY) != 0) )  // Test check
+    if (pad->SA_ITEM_INPUT_PRIMARY > SA_ITEM_INPUT_PRIMARY_DEADZONE)
+        // if ( ((pad->down & SA_ITEM_INPUT_PRIMARY) != 0) || ((pad->held & SA_ITEM_INPUT_PRIMARY) != 0) )  // Test check
     {
         it_flags->fireinputs_digital += PRIMARY_FIRE_INPUT;
     }
@@ -427,7 +436,7 @@ void SAItem_InputCheck_Analog(GOBJ *fighter)
     it_flags->fireinputs_analog = 0;
 
     // Get analog press info
-    // it_flags->fireinputs_analog = pad->SA_ITEM_INPUT_PRIMARY;
+    it_flags->fireinputs_analog = pad->SA_ITEM_INPUT_PRIMARY;
 }
 
 /// @brief Calls accessory callback of item

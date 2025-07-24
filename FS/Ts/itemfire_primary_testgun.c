@@ -1,5 +1,6 @@
 // #include "test.h"
-// #include "SA_item.h"
+#include "SA_item.h"
+#include "fighter.h"
 // #include "SA_itemstates.h"
 
 ///////////////////////
@@ -16,28 +17,47 @@ void SAItem_SpawnPrimaryFireThink(GOBJ *item)
 {
     // Get item data
     ItemData *item_data = item->userdata;
+    TestgunAttr *it_attr = Item_GetSpecialAttributes(item);
+    TestgunVars *it_vars = Item_GetItemVars(item);
+    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
-    // Get fighter data
-    GOBJ *fighter = item_data->fighter_gobj;
-    FighterData *fighter_data = fighter->userdata;
+    // Create a test effect
+        // Get fighter data
+        GOBJ *fighter = item_data->fighter_gobj;
+        FighterData *fighter_data = fighter->userdata;
+        int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
+        Effect_SpawnSync(1073, fighter, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
 
-    // Get fighter data
-    // TestCharVar *char_var = Fighter_GetFighterVars(fighter);
-	// TestAttr *tsAttr = Fighter_GetSpecialAttributes(fighter);
-	// TestgunCmdFlags *script_var = Fighter_GetScriptVars(fighter);
 
-    // Check for bitflag set by ftCmd subaction
-	if (fighter_data->flags.throw_1 != 0)
-	{
-		// Clear bit flag
-		fighter_data->flags.throw_1 = 0;
 
-		// Create item
-		SAItem_SpawnPrimaryFire(item);
 
-		// Create Primary Fire effect
-		// Effect_SpawnSync(VANILLA_EFFECT_FIREBALL, gobj, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
-	}
+
+
+
+    // // Get item data
+    // ItemData *item_data = item->userdata;
+
+    // // Get fighter data
+    // GOBJ *fighter = item_data->fighter_gobj;
+    // FighterData *fighter_data = fighter->userdata;
+
+    // // Get fighter data
+    // // TestCharVar *char_var = Fighter_GetFighterVars(fighter);
+	// // TestAttr *tsAttr = Fighter_GetSpecialAttributes(fighter);
+	// // TestgunCmdFlags *script_var = Fighter_GetScriptVars(fighter);
+
+    // // Check for bitflag set by ftCmd subaction
+	// if (fighter_data->flags.throw_1 != 0)
+	// {
+	// 	// Clear bit flag
+	// 	fighter_data->flags.throw_1 = 0;
+
+	// 	// Create item
+	// 	SAItem_SpawnPrimaryFire(item);
+
+	// 	// Create Primary Fire effect
+	// 	// Effect_SpawnSync(VANILLA_EFFECT_FIREBALL, gobj, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
+	// }
 
     // // this flag is used to track if the cape has been spawned already
 	// if (script_var->spawn_cape == 0)

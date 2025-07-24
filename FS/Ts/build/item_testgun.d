@@ -52,6 +52,7 @@ D:\projects\Small-Arms_Melee\FS\Ts\build\item_testgun.o: \
  D:\projects\Small-Arms_Melee\m-ex\MexTK/include/cpu.h \
  D:\projects\Small-Arms_Melee\FS\Ts\SA_item.h \
  D:\projects\Small-Arms_Melee\FS\Ts\itemfire_primary_testgun.c \
+ D:\projects\Small-Arms_Melee\m-ex\MexTK\include/fighter.h \
  D:\projects\Small-Arms_Melee\FS\Ts\itemfire_secondary_testgun.c
 D:\projects\Small-Arms_Melee\FS\Ts\test.h:
 D:\projects\Small-Arms_Melee\FS\Ts\SA_char.h:
@@ -105,4 +106,5 @@ D:\projects\Small-Arms_Melee\m-ex\MexTK/include/text.h:
 D:\projects\Small-Arms_Melee\m-ex\MexTK/include/cpu.h:
 D:\projects\Small-Arms_Melee\FS\Ts\SA_item.h:
 D:\projects\Small-Arms_Melee\FS\Ts\itemfire_primary_testgun.c:
+D:\projects\Small-Arms_Melee\m-ex\MexTK\include/fighter.h:
 D:\projects\Small-Arms_Melee\FS\Ts\itemfire_secondary_testgun.c:
