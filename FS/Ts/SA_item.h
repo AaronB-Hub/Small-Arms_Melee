@@ -76,7 +76,8 @@
 #define SA_ITEM_INPUT_FLAG x6C_FOX_FIREFOX_BOUNCE_VAR
 
 // #define SA_ITEM_INPUT_PRIMARY pad->ftriggerLeft
-#define SA_ITEM_INPUT_PRIMARY ftriggerLeft  // make this a pointer?
+// #define SA_ITEM_INPUT_PRIMARY ftriggerLeft  // make this a pointer?
+#define SA_ITEM_INPUT_PRIMARY HSD_BUTTON_DPAD_LEFT
 #define SA_ITEM_INPUT_PRIMARY_DEADZONE 0.30
 // #define SA_ITEM_INPUT_PRIMARY_DEADZONE 0.28
 #define SA_ITEM_INPUT_SECONDARY HSD_TRIGGER_L
@@ -109,8 +110,42 @@
         // } LGunAttr;                                // size: 0x10
 typedef struct TestgunAttr
 {
-    int charge_length;     // x00
-} TestgunAttr;             // size: 0x04
+    int primarycharge_threshold;     // x00 - 60
+    int max_primarycharge;           // x04 - 90
+    bool primarycharge_decay;        // x08 - true
+    int primaryfire_cooldown;        // x0C - 10
+    int secondaryfire_cooldown;      // x10 - 180
+} TestgunAttr;                       // size: 0x14
+
+        // typedef struct LGunVar
+        // {
+        //     int timer;      // x00
+        // } LGunVar;  
+
+typedef struct TestgunVars
+{
+    // int state_frame_count;            // x00
+    int primarycharge_count;             // x04
+    // bool primarycharge_status;           // x08
+    bool secondaryfire_cooldown_status;  // x0C
+} TestgunVars;                           // size: 0x10
+
+typedef struct TestgunCmdFlags
+{
+	int fireinputs_digital;  // xDAC    // item_data->itcmd_var->flag1
+    float fireinputs_analog;   // xDB0    // item_data->itcmd_var->flag2
+    bool primarycharge_status;                           // item_data->itcmd_var->flag3
+    int state_frame_count;
+    // int xDB8;                           // item_data->itcmd_var->flag4
+    int xDBC;                           // item_data->itcmd_var->flag5
+} TestgunCmdFlags;
+
+typedef struct TestLaserVar {
+    float xDD4;  // laser speed (0.0F?)             // item_data->item_var->var1
+    float xDD8;  // angle                           // item_data->item_var->var2
+    float xDDC;  // arg9?                           // item_data->item_var->var3
+    Vec3 xDE0;   // spawn.pos                       // item_data->item_var->var4
+} TestLaserVar;
 
 typedef struct TestgunRayAttr
 {
@@ -127,42 +162,6 @@ typedef struct TestgunBeamAttr
     float x0C;   // [3F 9C 61 AA = 1.22173]   // x0C
     float x10;   // [40 06 0A 92 = 2/3 * PI]  // x10
 } TestgunBeamAttr;                            // size: 0x14
-
-typedef struct TestgunCmdFlags
-{
-	int fireinputs_digital;  // xDAC    // item_data->itcmd_var->flag1
-    float fireinputs_analog;   // xDB0    // item_data->itcmd_var->flag2
-    int state_frame_count;                           // item_data->itcmd_var->flag3
-    int xDB8;                           // item_data->itcmd_var->flag4
-    int xDBC;                           // item_data->itcmd_var->flag5
-} TestgunCmdFlags;
-
-typedef struct TestgunItemVar
-{
-// Vanilla LGun:
-    int timer;
-
-// Vanilla Fox:
-	// int var1;  // Laser *item                       // 0xdd4  item_data->item_var->var1
-    // int var2;                                       // 0xdd8  item_data->item_var->var2
-    // int var3;                                       // 0xddc  item_data->item_var->var3
-    // int var4;                                       // 0xde0  item_data->item_var->var4
-    // int var5;                                       // 0xde4  item_data->item_var->var5
-    // int var6;                                       // 0xde8  item_data->item_var->var6
-    // int var7;                                       // 0xdec  item_data->item_var->var7
-    // int var8;                                       // 0xdf0  item_data->item_var->var8
-    // int var9;                                       // 0xdf4  item_data->item_var->var9
-    // int var10;                                      // 0xdf8  item_data->item_var->var10
-    // int var11;                                      // 0xdfc  item_data->item_var->var11
-    // int var12;                                      // 0xe00  item_data->item_var->var12
-} TestgunItemVar;  // Should this be longer?
-
-typedef struct TestLaserVar {
-    float xDD4;  // laser speed (0.0F?)             // item_data->item_var->var1
-    float xDD8;  // angle                           // item_data->item_var->var2
-    float xDDC;  // arg9?                           // item_data->item_var->var3
-    Vec3 xDE0;   // spawn.pos                       // item_data->item_var->var4
-} TestLaserVar;
 
 // typedef struct TestIllusionVar {
 //     JOBJDesc* xDD4;             // item_data->item_var->var1  [HSD_Joint* = JOBJDesc*]
@@ -313,7 +312,7 @@ bool (*Item_Coll_Bounce)(GOBJ *item) = (int *)0x8027781c;
 
 ///
 /// @param item GOBJ of Item
-/// @return TestgunItemVar
+/// @return TestgunVars
 inline void *Item_GetItemVars(GOBJ *item)
 {
     return &((ItemData *)item->userdata)->item_var;
@@ -385,7 +384,8 @@ void SAItem_InputCheck_Digital(GOBJ *fighter)
     // Primary Fire
     // Vanilla sets a deadzone of 0.30 for the triggers, stored at 'stc_ftcommon->x10'
     // Keeping this deadzone (for now)
-    if (pad->SA_ITEM_INPUT_PRIMARY > SA_ITEM_INPUT_PRIMARY_DEADZONE)  //
+    // if (pad->SA_ITEM_INPUT_PRIMARY > SA_ITEM_INPUT_PRIMARY_DEADZONE)
+        if ( ((pad->down & SA_ITEM_INPUT_PRIMARY) != 0) || ((pad->held & SA_ITEM_INPUT_PRIMARY) != 0) )  // Test check
     {
         it_flags->fireinputs_digital += PRIMARY_FIRE_INPUT;
     }
@@ -427,7 +427,7 @@ void SAItem_InputCheck_Analog(GOBJ *fighter)
     it_flags->fireinputs_analog = 0;
 
     // Get analog press info
-    it_flags->fireinputs_analog = pad->SA_ITEM_INPUT_PRIMARY;
+    // it_flags->fireinputs_analog = pad->SA_ITEM_INPUT_PRIMARY;
 }
 
 /// @brief Calls accessory callback of item
@@ -576,19 +576,19 @@ void SAItem_ResetItem(GOBJ *item)
     ItemData *item_data = item->userdata;
     TestgunAttr *it_attr = Item_GetSpecialAttributes(item);
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
-    TestgunItemVar *it_vars = Item_GetItemVars(item);
+    TestgunVars *it_vars = Item_GetItemVars(item);
 
     // @todo change these to iterative loops so that it works regardless of var names and amounts??
 
     // Clear the item flags - these flags are set via action scripts within the fighter's files
     it_flags->fireinputs_digital = 0;
     it_flags->fireinputs_analog = 0;
+    it_flags->primarycharge_status = false;
     it_flags->state_frame_count = 0;
-    it_flags->xDB8 = 0;
     it_flags->xDBC = 0;
 
     // Reset item variables
-    it_vars->timer = 0;
+    // it_vars->timer = 0;
     // it_vars->var2 = 0;
     // it_vars->var3 = 0;
     // it_vars->var4 = 0;

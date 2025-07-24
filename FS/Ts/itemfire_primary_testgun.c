@@ -117,7 +117,7 @@ void SAItem_SpawnPrimaryFireInitialize(GOBJ *item)
     ItemData *item_data = item->userdata;
     TestgunAttr *it_attr = (TestgunAttr *)item_data->itData->param_ext;
     TestgunCmdFlags *it_flags = (TestgunCmdFlags *)&item_data->itcmd_var;
-    TestgunItemVar *it_vars = (TestgunItemVar *)&item_data->item_var;
+    TestgunVars *it_vars = (TestgunVars *)&item_data->item_var;
     // FighterData *fighter_data = gobj->userdata;
     // //ftFoxAttributes* foxAttrs = fighter_data->special_attributes;
     // TestAttr* tsAttr = fighter_data->ftData->ext_attr;
