@@ -1,6 +1,5 @@
 // #include "test.h"
 #include "SA_item.h"
-#include "fighter.h"
 // #include "SA_itemstates.h"
 
 ///////////////////////
@@ -31,7 +30,11 @@ void SAItem_SpawnPrimaryFireThink(GOBJ *item)
 
 
 
-
+    // Spawn SA item
+    // GOBJ *fire1_item = SAItem_SpawnItem(item, MEX_ITEM_PRIMARYFIRE);
+    // GOBJ *fire1_item = SAItem_SpawnItem(fighter, MEX_ITEM_PRIMARYFIRE);
+        //Item_SetLifeTimer(fire1_item, attributes->life);
+        // ItemStateChange(fire1_item, STATE_FIRE1_SPAWN, ITEMSTATE_UPDATEANIM);
 
 
     // // Get item data

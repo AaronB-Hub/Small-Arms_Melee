@@ -145,8 +145,7 @@ typedef struct TestgunCmdFlags
     float fireinputs_analog;   // xDB0    // item_data->itcmd_var->flag2
     bool primarycharge_status;                           // item_data->itcmd_var->flag3
     int state_frame_count;
-    // int xDB8;                           // item_data->itcmd_var->flag4
-    int xDBC;                           // item_data->itcmd_var->flag5
+    bool shoot_projectile;                           // item_data->itcmd_var->flag5
 } TestgunCmdFlags;
 
 typedef struct TestLaserVar {
@@ -594,7 +593,7 @@ void SAItem_ResetItem(GOBJ *item)
     it_flags->fireinputs_analog = 0;
     it_flags->primarycharge_status = false;
     it_flags->state_frame_count = 0;
-    it_flags->xDBC = 0;
+    it_flags->shoot_projectile = 0;
 
     // Reset item variables
     // it_vars->timer = 0;
@@ -792,54 +791,51 @@ void SAItem_OnSpawn(GOBJ *fighter)
 //  State Functions   //
 ////////////////////////
 
-// Item-dependent functions (item_<gun>.c)
-void SAItem_Idle(GOBJ *item);
-bool State0_AnimCallback(GOBJ *item);
-void State0_PhysCallback(GOBJ *item);
-bool State0_CollCallback(GOBJ *item);
+// // Item-dependent functions (item_<gun>.c)
+// void SAItem_Idle(GOBJ *item);
+// bool State0_AnimCallback(GOBJ *item);
+// void State0_PhysCallback(GOBJ *item);
+// bool State0_CollCallback(GOBJ *item);
 
-void SAItem_Charge(GOBJ *item);
-bool State1_AnimCallback(GOBJ *item);
-void State1_PhysCallback(GOBJ *item);
-bool State1_CollCallback(GOBJ *item);
+// void SAItem_Charge(GOBJ *item);
+// bool State1_AnimCallback(GOBJ *item);
+// void State1_PhysCallback(GOBJ *item);
+// bool State1_CollCallback(GOBJ *item);
 
-void SAItem_State2(GOBJ *item);
-bool State2_AnimCallback(GOBJ *item);
-void State2_PhysCallback(GOBJ *item);
-bool State2_CollCallback(GOBJ *item);
+// void SAItem_State2(GOBJ *item);
+// bool State2_AnimCallback(GOBJ *item);
+// void State2_PhysCallback(GOBJ *item);
+// bool State2_CollCallback(GOBJ *item);
 
-void SAItem_State3(GOBJ *item);
-bool State3_AnimCallback(GOBJ *item);
-void State3_PhysCallback(GOBJ *item);
-bool State3_CollCallback(GOBJ *item);
+// void SAItem_State3(GOBJ *item);
+// bool State3_AnimCallback(GOBJ *item);
+// void State3_PhysCallback(GOBJ *item);
+// bool State3_CollCallback(GOBJ *item);
 
-void SAItem_State4(GOBJ *item);
-bool State4_AnimCallback(GOBJ *item);
-void State4_PhysCallback(GOBJ *item);
-bool State4_CollCallback(GOBJ *item);
+// void SAItem_State4(GOBJ *item);
+// bool State4_AnimCallback(GOBJ *item);
+// void State4_PhysCallback(GOBJ *item);
+// bool State4_CollCallback(GOBJ *item);
 
-void SAItem_State5(GOBJ *item);
-bool State5_AnimCallback(GOBJ *item);
-void State5_PhysCallback(GOBJ *item);
-bool State5_CollCallback(GOBJ *item);
+// void SAItem_State5(GOBJ *item);
+// bool State5_AnimCallback(GOBJ *item);
+// void State5_PhysCallback(GOBJ *item);
+// bool State5_CollCallback(GOBJ *item);
 
-void SAItem_State6(GOBJ *item);
-bool State6_AnimCallback(GOBJ *item);
-void State6_PhysCallback(GOBJ *item);
-bool State6_CollCallback(GOBJ *item);
+// void SAItem_State6(GOBJ *item);
+// bool State6_AnimCallback(GOBJ *item);
+// void State6_PhysCallback(GOBJ *item);
+// bool State6_CollCallback(GOBJ *item);
 
-void SAItem_State7(GOBJ *item);
-bool State7_AnimCallback(GOBJ *item);
-void State7_PhysCallback(GOBJ *item);
-bool State7_CollCallback(GOBJ *item);
+// void SAItem_State7(GOBJ *item);
+// bool State7_AnimCallback(GOBJ *item);
+// void State7_PhysCallback(GOBJ *item);
+// bool State7_CollCallback(GOBJ *item);
 
-void SAItem_State8(GOBJ *item);
-bool State8_AnimCallback(GOBJ *item);
-void State8_PhysCallback(GOBJ *item);
-bool State8_CollCallback(GOBJ *item);
-
-
-
+// void SAItem_State8(GOBJ *item);
+// bool State8_AnimCallback(GOBJ *item);
+// void State8_PhysCallback(GOBJ *item);
+// bool State8_CollCallback(GOBJ *item);
 
 
 // SA Item State functions (Shared by all SA items)
@@ -873,6 +869,13 @@ bool Fire_AnimCallback(GOBJ *item);
 void Fire_PhysCallback(GOBJ *item);
 bool Fire_CollCallback(GOBJ *item);
 
+////////////////////////////
+// State Helper Functions //
+////////////////////////////
+void Idle_AccessoryCallback(GOBJ *item);
+void Charge_AccessoryCallback(GOBJ *item);
+void PrimaryFire_AccessoryCallback(GOBJ *item);
+void SecondaryFire_AccessoryCallback(GOBJ *item);
 
 
 ////////////////////////
