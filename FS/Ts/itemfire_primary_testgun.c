@@ -21,11 +21,7 @@ void SAItem_SpawnPrimaryFireThink(GOBJ *item)
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
     // Create a test effect
-        // Get fighter data
-        GOBJ *fighter = item_data->fighter_gobj;
-        FighterData *fighter_data = fighter->userdata;
-        int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
-        Effect_SpawnSync(1073, fighter, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
+    Create_TestEff1(item);
 
 
 

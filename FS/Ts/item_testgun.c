@@ -479,25 +479,25 @@ void SAItem_Think(GOBJ *fighter)
     // if (it_flags->primarycharge_status == true)
     // {
     //     // Allow immediate transition back to primary fire
-    //     // primaryfireinput_state = SAItem_PrimaryFire;
+    //     // primaryfireinput_state = SAItem_PrimaryFire_Enter;
     //     primaryfireinput_state = STATE_ITEM_FIRE1;
     // }
     // else
     // {
     //     // Transition to charging
-    //     // primaryfireinput_state = SAItem_Charge;
+    //     // primaryfireinput_state = SAItem_Charge_Enter;
     //     primaryfireinput_state = STATE_ITEM_CHARGE;
     // }
     // if (it_vars->secondaryfire_cooldown_status == false)
     // {
     //     // Allow immediate transition back to secondary fire
-    //     // secondaryfireinput_state = SAItem_SecondaryFire;
+    //     // secondaryfireinput_state = SAItem_SecondaryFire_Enter;
     //     secondaryfireinput_state = STATE_ITEM_FIRE2;
     // }
     // else
     // {
     //     // Transition back to primary fire (secondary fire still in cooldown)
-    //     // secondaryfireinput_state = SAItem_PrimaryFire;
+    //     // secondaryfireinput_state = SAItem_PrimaryFire_Enter;
     //     secondaryfireinput_state = STATE_ITEM_FIRE1;
     // }
 
@@ -505,7 +505,7 @@ void SAItem_Think(GOBJ *fighter)
     // if ( ((it_flags->fireinputs_digital & PRIMARY_FIRE_INPUT) != 0) || ((it_flags->fireinputs_digital & SECONDARY_FIRE_INPUT) != 0) )
     if ((it_flags->fireinputs_digital & SECONDARY_FIRE_INPUT) != 0)
     {
-        // SAItem_SecondaryFire(item);
+        // SAItem_SecondaryFire_Enter(item);
 
         switch (curr_state)
         {
@@ -525,24 +525,25 @@ void SAItem_Think(GOBJ *fighter)
                 // If off cooldown, transition to Secondary Fire
                 if (it_vars->secondaryfire_cooldown_status == false)
                 {
-                    SAItem_SecondaryFire(item);
+                    SAItem_SecondaryFire_Enter(item);
                 }
                 // If charged, transition to Primary Fire
                 else if (it_flags->primarycharge_status == true)
                 {
-                    SAItem_PrimaryFire(item);
+                    SAItem_PrimaryFire_Enter(item);
                 }
                 // If not charged, transition to charging
                 else
                 {
-                    SAItem_Charge(item);
+                    SAItem_Charge_Enter(item);
                 }
                 break;
         }
     }
     else if ((it_flags->fireinputs_digital & PRIMARY_FIRE_INPUT) != 0)
     {
-        // SAItem_PrimaryFire(item);
+        // it_flags->primarycharge_status = true;
+        // SAItem_PrimaryFire_Enter(item);
 
         switch (curr_state)
         {
@@ -561,12 +562,12 @@ void SAItem_Think(GOBJ *fighter)
                 // If charged, transition to Primary Fire
                 if (it_flags->primarycharge_status == true)
                 {
-                    SAItem_PrimaryFire(item);
+                    SAItem_PrimaryFire_Enter(item);
                 }
                 // If not charged, transition to charging
                 else
                 {
-                    SAItem_Charge(item);
+                    SAItem_Charge_Enter(item);
                 }
                 break;
         }
@@ -576,24 +577,24 @@ void SAItem_Think(GOBJ *fighter)
         // Transition to the idle state if not already there
         if (item_data->state != STATE_ITEM_IDLE)
         {
-            SAItem_Idle(item);
+            SAItem_Idle_Enter(item);
         }
     }
 
     // If the item is already in an active state, then run the associated Think function by setting it as the item accessory callback
     if (item_data->state)
     {
-        // SAItem_Idle(item);
+        // SAItem_Idle_Enter(item);
         // SALeapKneeBend(fighter);
-        // item_data->cb.accessory = SAItem_Idle;
+        // item_data->cb.accessory = SAItem_Idle_Enter;
 
         
         // // Set callback based on state
         // switch (it_state)
         // {
-        //     case 0: {item_data->cb.accessory = SAItem_Idle;}
+        //     case 0: {item_data->cb.accessory = SAItem_Idle_Enter;}
         //     break;
-        //     case 1: {item_data->cb.accessory = SAItem_Charge;}
+        //     case 1: {item_data->cb.accessory = SAItem_Charge_Enter;}
         //     break;
         //     case 2: {item_data->cb.accessory = SAItem_State2;}
         //     break;
@@ -638,51 +639,53 @@ void SAItem_Think(GOBJ *fighter)
 ///
 /// @brief State - Idle
 /// @param item 
-void SAItem_Idle(GOBJ *item)
+void SAItem_Idle_Enter(GOBJ *item)
 {
     // Get item data
     ItemData *item_data = item->userdata;
+    TestgunVars *it_vars = Item_GetItemVars(item);
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
 	// Reset frame count and other flags
     it_flags->state_frame_count = 0;
-    it_flags->shoot_projectile = false;
-
-    // Set the accessory callback for the SA Item
-    item_data->cb.accessory = Idle_AccessoryCallback;
+    it_vars->shoot_primary_projectile = false;
 
 	// Change state
     ItemStateChange(item, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);
     // ItemStateChange(item, STATE_ITEM_IDLE, 0);
     // Item_AnimateAndUpdateSubactions(item);  // Should this be called? Or would/should it automatically take care of itself next frame
 
+    // Set the accessory callback for the SA Item
+    item_data->cb.accessory = Idle_AccessoryCallback;
+
 	return;
 }
 ///
 /// @brief State - Charge
 /// @param item 
-void SAItem_Charge(GOBJ *item)
+void SAItem_Charge_Enter(GOBJ *item)
 {
     // Get item data
     ItemData *item_data = item->userdata;
+    TestgunVars *it_vars = Item_GetItemVars(item);
     TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
     // Reset frame count and clear flags that are used by this action
     it_flags->state_frame_count = 0;
-    it_flags->shoot_projectile = false;
-
-    // Set the accessory callback for the SA Item
-    item_data->cb.accessory = Charge_AccessoryCallback;
+    it_vars->shoot_primary_projectile = false;
 
 	// Change state
 	ItemStateChange(item, STATE_ITEM_CHARGE, ITEMSTATE_UPDATEANIM);
+
+    // Set the accessory callback for the SA Item
+    item_data->cb.accessory = Charge_AccessoryCallback;
 
 	return;
 }
 ///
 /// @brief State - Primary Fire
 /// @param item 
-void SAItem_PrimaryFire(GOBJ *item)
+void SAItem_PrimaryFire_Enter(GOBJ *item)
 {
     // Get item data
     ItemData *item_data = item->userdata;
@@ -693,21 +696,21 @@ void SAItem_PrimaryFire(GOBJ *item)
         assert("Testgun not charged. Should not be in Primary Fire state");
     }
 
-    // Set the accessory callback for the SA Item
-    item_data->cb.accessory = PrimaryFire_AccessoryCallback;
-
     // Reset frame count and clear flags that are used by this action
     it_flags->state_frame_count = 0;
 
 	// Change state
 	ItemStateChange(item, STATE_ITEM_FIRE1, ITEMSTATE_UPDATEANIM);
 
+    // Set the accessory callback for the SA Item
+    item_data->cb.accessory = PrimaryFire_AccessoryCallback;
+
 	return;
 }
 ///
 /// @brief State - Secondary Fire
 /// @param item 
-void SAItem_SecondaryFire(GOBJ *item)
+void SAItem_SecondaryFire_Enter(GOBJ *item)
 {
     // Get item data
     ItemData *item_data = item->userdata;
@@ -716,11 +719,11 @@ void SAItem_SecondaryFire(GOBJ *item)
     // Reset frame count and clear flags that are used by this action
     it_flags->state_frame_count = 0;
 
-    // Set the accessory callback for the SA Item
-    item_data->cb.accessory = SecondaryFire_AccessoryCallback;
-
 	// Change state
 	ItemStateChange(item, STATE_ITEM_FIRE2, ITEMSTATE_UPDATEANIM);
+
+    // Set the accessory callback for the SA Item
+    item_data->cb.accessory = SecondaryFire_AccessoryCallback;
 
 	return;
 }
@@ -798,6 +801,37 @@ inline void lose_PrimaryCharge(GOBJ *item)
     // Check if charged
     check_PrimaryCharge(item);
 }
+// Create a test effect - middle of stage
+void Create_TestEff1(GOBJ *item)
+{
+    // Get item data
+    ItemData *item_data = item->userdata;
+    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
+    
+    // Get fighter data
+    GOBJ *fighter = item_data->fighter_gobj;
+    FighterData *fighter_data = fighter->userdata;
+
+    // Create the test effect
+    int bone_index = GetFighterSAItemSpawnBone(fighter, MEX_ITEM_GUN);
+    Effect_SpawnSync(1073, fighter, fighter_data->bones[bone_index].joint, &fighter_data->facing_direction);
+}
+// Create a test effect - on character
+void Create_TestEff2(GOBJ *item)
+{
+    // Get item data
+    ItemData *item_data = item->userdata;
+    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
+    
+    // Get fighter data
+    GOBJ *fighter = item_data->fighter_gobj;
+    FighterData *fighter_data = fighter->userdata;
+
+    // Create the test effect
+    Vec3 pos;
+    GetSAItemSpawnPosition(fighter, MEX_ITEM_GUN, &pos);
+    Effect_SpawnSync(1073, fighter, &pos, &fighter_data->facing_direction);
+}
 
 /////////////////////////
 // Accessory Callbacks //
@@ -806,6 +840,8 @@ inline void lose_PrimaryCharge(GOBJ *item)
 /// SAItem_Think runs at GObjProc priority 8 (FTPRI_ACCESSORY), and these item accessory callbacks run at priority 9 (ITPRI_ACCESSORY)
 /// So, since that will call the state transition functions, it's safe to set flags that will run on the first frame of the new item state
 /// Also means that state_frame_count will match up to be 1 on the 1st frame of the new state
+// Accessory call trace: Item_80269A9C -> item_data->on_accessory(gobj) [only if item_data->xDC8_word.flags.x9 == 0 (hitlag??)]
+
 ///
 /// Currently planning to shoot on the frame after the input to sync up animations and physics
 /// Could potentially change this if the state change is called with those flags (ITEM_ANIM_UPDATE)
@@ -838,7 +874,7 @@ ItemStateChange (aka Item_80268E5C) function calls:
 - HSD_JObjSetScaleItem
 - HSD_JObjAnimAll
 - it_80279BE0
-- it_802799E4
+- it_802799E4 - clears itcmd_var.flag5/xDBC_itcmd_var4
 - HSD_JObjRemoveAnimAll
 - it_802714C0
 
@@ -846,7 +882,7 @@ ItemStateChange (aka Item_80268E5C) function calls:
 Item Anim Callback (aka Item_80269528) function calls:
 - Item_802694CC
     - HSD_JObjAnimAll
-    - it_802799E4
+    - it_802799E4 - clears itcmd_var.flag5/xDBC_itcmd_var4
 - Item_8026A8EC
     - efLib_DestroyAll
     - ItemSwitch
@@ -906,28 +942,41 @@ void PrimaryFire_AccessoryCallback(GOBJ *item)
 
     // Continue building up charge
     build_PrimaryCharge(item);
-    
+
     // Spawn projectile if on a shooting frame
-// if (it_flags->shoot_projectile) {}
+    if (it_vars->shoot_primary_projectile)
+    {
+        // // Create a test effect
+        // Create_TestEff1(item);
+
         SAItem_SpawnPrimaryFireThink(item);
+    }
 
     // Control rate of Primary Fire via cooldown
     // (Still allows for fast fire by repeatedly re-entering Primary Fire state rather than staying in it (aka holding down the button))
+    // Although, current behavior is to fire every time secondary fire goes off, because this automatically kicks back into primary fire state. Not sure if this is desired
     if ((it_flags->state_frame_count % it_attr->primaryfire_cooldown) == 0)
     {
-        it_flags->shoot_projectile = true;
+        it_vars->shoot_primary_projectile = true;
     }
     else
     {
-        it_flags->shoot_projectile = false;
+        it_vars->shoot_primary_projectile = false;
     }
     
+    // Increase frame count
+    it_flags->state_frame_count++;
 }
 
 // Controls firing rate logic and projectile spawning
 void SecondaryFire_AccessoryCallback(GOBJ *item)
 {
-    // Placeholder
+    // Create a test effect
+    Create_TestEff2(item);
+
+    // // Set the accessory callback for SA Item
+    // // This function will spawn the secondary fire projectile
+    // item_data->cb.accessory = SAItem_SpawnSecondaryFireThink;
 }
 
 ////////////////////////
@@ -969,14 +1018,14 @@ bool Charge_CollCallback(GOBJ *item)
 ///
 bool PrimaryFire_AnimCallback(GOBJ *item)
 {
-    // Get item data
-    ItemData *item_data = item->userdata;
-    TestgunAttr *it_attr = Item_GetSpecialAttributes(item);
-    TestgunVars *it_vars = Item_GetItemVars(item);
-    TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
+    // // Get item data
+    // ItemData *item_data = item->userdata;
+    // TestgunAttr *it_attr = Item_GetSpecialAttributes(item);
+    // TestgunVars *it_vars = Item_GetItemVars(item);
+    // TestgunCmdFlags *it_flags = Item_GetItCmdFlags(item);
 
     // // Control animation based on whether firing that frame or not?
-    // if (it_flags->shoot_projectile) {}
+    // if (it_vars->shoot_primary_projectile) {}
 
     return false;
 }
@@ -1003,18 +1052,6 @@ bool SecondaryFire_AnimCallback(GOBJ *item)
     build_PrimaryCharge(item);
     
     // Seconday Fire rate controlled via cooldown outside of this function
-
-    // Create a test effect
-        // Get fighter data
-        GOBJ *fighter = item_data->fighter_gobj;
-        FighterData *fighter_data = fighter->userdata;
-        Vec3 pos;
-        GetSAItemSpawnPosition(fighter, MEX_ITEM_GUN, &pos);
-        Effect_SpawnSync(1073, fighter, &pos, &fighter_data->facing_direction);
-
-    // // Set the accessory callback for SA Item
-    // // This function will spawn the secondary fire projectile
-    // item_data->cb.accessory = SAItem_SpawnSecondaryFireThink;
 
     // Increase frame count
     it_flags->state_frame_count++;
@@ -1223,13 +1260,13 @@ void testgun_OnCreate(GOBJ *item)
     // Initialize vars
     it_vars->primarycharge_count = 0;
     it_vars->secondaryfire_cooldown_status = false;
+    it_vars->shoot_primary_projectile = false;
 
     // Initialize cmd flags
     it_flags->fireinputs_digital = 0x0;
     it_flags->fireinputs_analog = 0.0f;
     it_flags->primarycharge_status = false;
     it_flags->state_frame_count = 0;
-    it_flags->shoot_projectile = false;
     
     // Set spawn state
     ItemStateChange(item, STATE_ITEM_IDLE, ITEMSTATE_UPDATEANIM);

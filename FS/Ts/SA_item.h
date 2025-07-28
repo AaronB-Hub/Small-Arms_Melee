@@ -137,7 +137,8 @@ typedef struct TestgunVars
     int primarycharge_count;             // x04
     // bool primarycharge_status;           // x08
     bool secondaryfire_cooldown_status;  // x0C
-} TestgunVars;                           // size: 0x10
+    bool shoot_primary_projectile;       // x10
+} TestgunVars;                           // size: 0x14
 
 typedef struct TestgunCmdFlags
 {
@@ -145,7 +146,7 @@ typedef struct TestgunCmdFlags
     float fireinputs_analog;   // xDB0    // item_data->itcmd_var->flag2
     bool primarycharge_status;                           // item_data->itcmd_var->flag3
     int state_frame_count;
-    bool shoot_projectile;                           // item_data->itcmd_var->flag5
+    int dont_use;                           // item_data->itcmd_var->flag5 - gets cleared in it_802799E4 on state changes and anim callbacks
 } TestgunCmdFlags;
 
 typedef struct TestLaserVar {
@@ -593,7 +594,7 @@ void SAItem_ResetItem(GOBJ *item)
     it_flags->fireinputs_analog = 0;
     it_flags->primarycharge_status = false;
     it_flags->state_frame_count = 0;
-    it_flags->shoot_projectile = 0;
+    it_flags->dont_use = 0;
 
     // Reset item variables
     // it_vars->timer = 0;
@@ -792,12 +793,12 @@ void SAItem_OnSpawn(GOBJ *fighter)
 ////////////////////////
 
 // // Item-dependent functions (item_<gun>.c)
-// void SAItem_Idle(GOBJ *item);
+// void SAItem_Idle_Enter(GOBJ *item);
 // bool State0_AnimCallback(GOBJ *item);
 // void State0_PhysCallback(GOBJ *item);
 // bool State0_CollCallback(GOBJ *item);
 
-// void SAItem_Charge(GOBJ *item);
+// void SAItem_Charge_Enter(GOBJ *item);
 // bool State1_AnimCallback(GOBJ *item);
 // void State1_PhysCallback(GOBJ *item);
 // bool State1_CollCallback(GOBJ *item);
@@ -839,22 +840,22 @@ void SAItem_OnSpawn(GOBJ *fighter)
 
 
 // SA Item State functions (Shared by all SA items)
-void SAItem_Idle(GOBJ *item);
+void SAItem_Idle_Enter(GOBJ *item);
 bool Idle_AnimCallback(GOBJ *item);
 void Idle_PhysCallback(GOBJ *item);
 bool Idle_CollCallback(GOBJ *item);
 
-void SAItem_Charge(GOBJ *item);
+void SAItem_Charge_Enter(GOBJ *item);
 bool Charge_AnimCallback(GOBJ *item);
 void Charge_PhysCallback(GOBJ *item);
 bool Charge_CollCallback(GOBJ *item);
 
-void SAItem_PrimaryFire(GOBJ *item);
+void SAItem_PrimaryFire_Enter(GOBJ *item);
 bool PrimaryFire_AnimCallback(GOBJ *item);
 void PrimaryFire_PhysCallback(GOBJ *item);
 bool PrimaryFire_CollCallback(GOBJ *item);
 
-void SAItem_SecondaryFire(GOBJ *item);
+void SAItem_SecondaryFire_Enter(GOBJ *item);
 bool SecondaryFire_AnimCallback(GOBJ *item);
 void SecondaryFire_PhysCallback(GOBJ *item);
 bool SecondaryFire_CollCallback(GOBJ *item);
@@ -877,6 +878,8 @@ void Charge_AccessoryCallback(GOBJ *item);
 void PrimaryFire_AccessoryCallback(GOBJ *item);
 void SecondaryFire_AccessoryCallback(GOBJ *item);
 
+void Create_TestEff1(GOBJ *item);
+void Create_TestEff2(GOBJ *item);
 
 ////////////////////////
 //   Logic Functions  //
